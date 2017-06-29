@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 from bs4 import BeautifulSoup
 import requests
 import json
@@ -15,6 +14,27 @@ TEAMS = {'ANAHEIM DUCKS': 'ANA', 'ARIZONA COYOTES': 'ARI', 'ATLANTA THRASHERS': 
          'PHOENIX COYOTES': 'PHX', 'PITTSBURGH PENGUINS': 'PIT', 'SAN JOSE SHARKS': 'S.J',  'ST. LOUIS BLUES': 'STL',
          'TAMPA BAY LIGHTNING': 'T.B', 'TORONTO MAPLE LEAFS': 'TOR', 'VANCOUVER CANUCKS': 'VAN',
          'Vegas Golden Knights': 'VGK', 'WINNIPEG JETS': 'WPG', 'WASHINGTON CAPITALS': 'WSH', }
+
+
+def analyze_shifts(shift, key, team):
+    """
+    Analyze shifts for each player when using.
+    Prior to this each player (in a dictionary) has a list with each entry being a shift.
+    This function is only used for the html
+    :param shift: 
+    :param key: 
+    :param team: 
+    :return: 
+    """
+    shifts = dict()
+    shifts['Player'] = key.upper()
+    shifts['Period'] = '4' if shift[1] == 'OT' else shift[1]
+    shifts['Team'] = TEAMS[team.get_text().strip(' ')]
+    shifts['Start'] = convertTime(shift[2].split('/')[0])
+    shifts['End'] = convertTime(shift[3].split('/')[0])
+    shifts['Duration'] = shifts['End'] - shifts['Start']
+
+    return shifts
 
 
 def convertTime(minutes):
@@ -66,6 +86,7 @@ def getShifts_json(game_id):
 
     return parse_json(shift_json)
 
+
 def getShifts_html(game_id):
     """
     Given a game_id it returns a DataFrame with the shifts for both teams
@@ -73,59 +94,68 @@ def getShifts_html(game_id):
     :return: DataFrame with all shifts
     http://www.nhl.com/scores/htmlreports/20162017/TV020971.HTM
     """
-    game_id=str(game_id)
+    game_id = str(game_id)
     home_url = 'http://www.nhl.com/scores/htmlreports/{}{}/TH{}.HTM'.format(game_id[:4], int(game_id[:4])+1, game_id[4:])
     away_url = 'http://www.nhl.com/scores/htmlreports/{}{}/TV{}.HTM'.format(game_id[:4], int(game_id[:4])+1, game_id[4:])
 
     home = requests.get(home_url)
     home.raise_for_status()
+    time.sleep(1)
 
     away = requests.get(away_url)
     away.raise_for_status()
-
     time.sleep(1)
 
     away_df=parse_html(away)
     home_df=parse_html(home)
 
     game_df = pd.concat([away_df, home_df], ignore_index=True)
-    game_df = game_df.sort_values(by=['Period', 'Start'], ascending=[True, True])  # Sort by period and by time
 
+    game_df = game_df.sort_values(by=['Period', 'Start'], ascending=[True, True])  # Sort by period and by time
     game_df = game_df.reset_index(drop=True)
-    game_df.to_csv('bar.csv', sep=',')
 
     return game_df
+
+
+def parse_shift_json(shift):
+    """
+    Parse shift for json
+    :param shift: 
+    :return: dict with shift info
+    """
+    shift_dict=dict()
+    shift_dict['Player'] = ' '.join([shift['firstName'].strip(' ').upper(), shift['lastName'].strip(' ').upper()])
+    shift_dict['Period'] = shift['period']
+    shift_dict['Team'] = shift['teamAbbrev']
+    shift_dict['Start'] = convertTime(shift['startTime'])
+    shift_dict['End'] = convertTime(shift['endTime'])
+    shift_dict['Duration'] = shift_dict['End'] - shift_dict['Start']
+
+    return shift_dict
+
 
 def parse_json(json):
     """
     Parse the json
     :param json: raw json
-    :return: Dataframe with info
+    :return: DataFrame with info
     """
     columns = ['Player', 'Period', 'Team', 'Start', 'End', 'Duration']
-    df = pd.DataFrame(columns=columns)
 
-    shift_dict={}
-    for shift in json['data']:
-        shift_dict['Player'] = ' '.join([shift['firstName'].strip(' ').upper(), shift['lastName'].strip(' ').upper()])
-        shift_dict['Period'] = shift['period']
-        shift_dict['Team'] = shift['teamAbbrev']
-        shift_dict['Start'] = convertTime(shift['startTime'])
-        shift_dict['End'] = convertTime(shift['endTime'])
-        shift_dict['Duration'] = shift_dict['End'] - shift_dict['Start']
+    shifts = [parse_shift_json(shift) for shift in json['data']]        # Go through the shifts
 
-        df=df.append(shift_dict, ignore_index=True)
-
-    df = df.sort_values(by=['Period', 'Start'], ascending=[True, True]) # Sort by period by time
+    df = pd.DataFrame(shifts, columns=columns)
+    df = df.sort_values(by=['Period', 'Start'], ascending=[True, True])  # Sort by period by time
     df = df.reset_index(drop=True)
 
     return df
+
 
 def parse_html(html):
     """
     Parse the html
     :param html: raw html
-    :return: Dataframe with info
+    :return: DataFrame with info
     """
 
     columns=['Player', 'Period', 'Team', 'Start', 'End', 'Duration']
@@ -136,35 +166,27 @@ def parse_html(html):
     td = soup.findAll(True, {'class': ['playerHeading + border', 'lborder + bborder']})
 
     """
-    The list 'td' is laid out with player name followed by every component of each shift shift. Each shift contains: 
+    The list 'td' is laid out with player name followed by every component of each shift. Each shift contains: 
     shift #, Period, begin, end, and duration. The shift event isn't included. 
     """
-    players = {}
+    players = dict()
     for t in td:
         t=t.get_text()
-        if ',' in t:     # If it has a comma in it we know it's a player's name
+        if ',' in t:     # If it has a comma in it we know it's a player's name...so add player to dict
             name=t
-
             # Just format the name normally...it's coded as: 'num# last name, first name'
             name = name.split(',')
             name = ' '.join([name[1].strip(' '), name[0][2:].strip(' ')])
             players[name]=[]
         else:
+            # Here we add all the shifts to whatever player we are up to
             players[name].extend([t])
 
-    # Create a list of lists (each length 5)...corresponds to 5 columns in html shifts
     for key in players.keys():
+        # Create a list of lists (each length 5)...corresponds to 5 columns in html shifts
         players[key] = [players[key][i:i + 5] for i in range(0, len(players[key]), 5)]
-
-        for shift in players[key]:
-            shift_dict={}
-            shift_dict['Player'] = key.upper()
-            shift_dict['Period'] = '4' if shift[1] == 'OT' else shift[1]
-            shift_dict['Team']= TEAMS[team.get_text().strip(' ')]
-            shift_dict['Start'] = convertTime(shift[2].split('/')[0])
-            shift_dict['End'] = convertTime(shift[3].split('/')[0])
-            shift_dict['Duration'] = shift_dict['End'] - shift_dict['Start']
-            df = df.append(shift_dict, ignore_index=True)
+        shifts = [analyze_shifts(shift, key, team) for shift in players[key]]           # Fix up info
+        df = df.append(shifts, ignore_index=True)
 
     return df
 
@@ -192,6 +214,7 @@ def scrapeGame(game_id):
     :param game_id: game
     :return: DataFrame with info for the game
     """
+    """
     try:
         game_df = getShifts_json(game_id)
         return game_df
@@ -201,6 +224,10 @@ def scrapeGame(game_id):
             return game_df
         except requests.exceptions.HTTPError:
             print("Game {} for shift isn't there".format(game_id))
+    """
+    game_df = getShifts_html(game_id)
+    game_df.to_csv('bar.csv', sep=',')
+    return game_df
 
 
 def scrapeYear(year):
@@ -218,4 +245,7 @@ def scrapeYear(year):
 
 
 """***Tests***"""
-#scrapeGame(2016020971)
+start = time.time()
+scrapeGame(2016020971)
+end = time.time()
+print(end - start)

@@ -1,6 +1,7 @@
 import PBP_Scraper as pbp
 import Shift_Scraper as shift
 import pandas as pd
+import time
 
 
 def scrape_game(game_id):
@@ -12,7 +13,7 @@ def scrape_game(game_id):
     shift_df = shift.scrapeGame(game_id)
     pbp_df = pbp.scrapeGame(game_id)
 
-    pbp_df.to_csv('bar.csv', sep=',')
+    #pbp_df.to_csv('bar.csv', sep=',')
 
     return [pbp_df, shift_df]
 
@@ -35,12 +36,22 @@ def scrapeYear(year):
         season_shift_df = season_shift_df.append(frames[1])
 
 """Test"""
-
-import time
-
 start = time.time()
 print(20001)
 scrape_game(2010020001)
-
+"""
+print(20101)
+scrape_game(2011020101)
+print(20201)
+scrape_game(2012020201)
+print(20301)
+scrape_game(2013020301)
+print(20401)
+scrape_game(2014020401)
+print(20501)
+scrape_game(2015020501)
+print(20601)
+scrape_game(2016020601)
+"""
 end = time.time()
 print(end - start)

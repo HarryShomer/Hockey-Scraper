@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 from bs4 import BeautifulSoup
 import requests
 import json
@@ -38,7 +37,7 @@ def get_players(json):
 
 def shot_type(play_description):
     """
-     Determine which zone the play occured in (unless one isn't listed)
+    Determine which zone the play occurred in (unless one isn't listed)
     :param play_description: the type would be in here
     :return: the type if it's there (otherwise just NA)
     """
@@ -81,55 +80,12 @@ def convert_to_seconds(minutes):
     """
     import datetime
 
-    # Check if the time format isn't correct (usually means nothing is there)
+    # Check if the time format isn't correct (can happen in html...usually means nothing is there)
     try:
         x = time.strptime(minutes.split(',')[0], '%M:%S')
-        return 1200-datetime.timedelta(hours=x.tm_hour, minutes=x.tm_min, seconds=x.tm_sec).total_seconds()
+        return datetime.timedelta(hours=x.tm_hour, minutes=x.tm_min, seconds=x.tm_sec).total_seconds()
     except ValueError:
         return ' '
-
-
-def clean_html_pbp(html):
-    """
-    Get rid of html and format the data
-    :param html: the requested url
-    :return: a list with all the info
-    """
-    pbp_html = BeautifulSoup(html.content, 'html.parser')
-    td = pbp_html.select('td.+.bborder') + pbp_html.select('td.+.bborder+rborder')
-
-    # Create a list of lists (each length 8)...corresponds to 8 columns in html pbp
-    td = [td[i:i + 8] for i in range(0, len(td), 8)]
-
-    for x in range(len(td)):
-        for y in range(len(td[x])):
-
-            # Get the 'br' tag for the time column...this get's us time remaining instead of elapsed and remaining combined
-            if y==3:
-                td[x][y]=td[x][y].find_all('br')[0].get_text()
-            elif (y==6 or y==7) and td[x][0]!='#':
-                # 6 & 7 These are the player one ice one's
-                # The second statement controls for when it's just a header
-
-                baz = td[x][y].find_all('td')
-                bar = [baz[z] for z in range(len(baz)) if z%4!=0]  # Because of previous step we get repeats...so delete some
-
-                # The setup in the list is now: Name/Number->Position->Blank...and repeat
-                # Now strip all the html
-                players=[]
-                for i in range(len(bar)):
-                    if i%3 == 0:
-                        name=return_name_html(bar[i].find('font')['title'])
-                        number=bar[i].get_text().strip('\n')  # Get number and strip leading/trailing endlines
-                    elif i%3 == 1:
-                        position=bar[i].get_text()
-                        players.append([name, number, position])
-
-                td[x][y]=players
-            else:
-                td[x][y]=td[x][y].get_text()
-
-    return td
 
 
 def getSchedule(year):
@@ -205,94 +161,158 @@ def scrapeSchedule(year):
     return schedule
 
 
-def parse_html_pbp(html, players):
+def strip_html_pbp(td):
+    """
+    Strip html tags and such 
+    :param td: pbp
+    :return: list of plays (which contain a list of info) stripped of html
+    """
+    for y in range(len(td)):
+        # Get the 'br' tag for the time column...this get's us time remaining instead of elapsed and remaining combined
+        if y == 3:
+            td[y] = td[y].find_all('br')[0].get_text()
+        elif (y == 6 or y == 7) and td[0]!= '#':
+            # 6 & 7 These are the player one ice one's
+            # The second statement controls for when it's just a header
 
-    columns = ['Period', 'Seconds_Elapsed', 'Strength', 'Time_Remaining', 'Event', 'Description', 'Type', 'Ev_Zone',
-               'awayPlayer1', 'awayPlayer1_id', 'awayPlayer2', 'awayPlayer2_id','awayPlayer3', 'awayPlayer3_id',
-               'awayPlayer4', 'awayPlayer4_id', 'awayPlayer5', 'awayPlayer5_id', 'awayPlayer6', 'awayPlayer6_id',
-               'homePlayer1', 'homePlayer1_id', 'homePlayer2', 'homePlayer2_id', 'homePlayer3', 'homePlayer3_id',
-               'homePlayer4', 'homePlayer4_id', 'homePlayer5', 'homePlayer5_id', 'homePlayer6', 'homePlayer6_id',
-               'Away_Goalie', 'Home_Goalie', 'Away_Skaters', 'Home_Skaters']
+            baz = td[y].find_all('td')
+            bar = [baz[z] for z in range(len(baz)) if z % 4 != 0]  # Because of previous step we get repeats...so delete some
 
-    df = pd.DataFrame(columns=columns)  # Create DataFrame for all game info
+            # The setup in the list is now: Name/Number->Position->Blank...and repeat
+            # Now strip all the html
+            players = []
+            for i in range(len(bar)):
+                if i % 3 == 0:
+                    name = return_name_html(bar[i].find('font')['title'])
+                    number = bar[i].get_text().strip('\n')  # Get number and strip leading/trailing endlines
+                elif i % 3 == 1:
+                    position = bar[i].get_text()
+                    players.append([name, number, position])
 
-    for i in html:
-        # Control for column headings
-        if i[0]!='#':
-            away_players=i[6]
-            home_players=i[7]
+            td[y]= players
+        else:
+            td[y]= td[y].get_text()
 
-            info_dict={}
+    return td
 
-            info_dict['Period']=i[1]
-            info_dict['Event']=i[4]
-            info_dict['Description']=i[5]
 
-            # Populate away and home player info
-            for j in range(6):
-                try:
-                    info_dict['awayPlayer{}'.format(j+1)]= away_players[j][0].upper()
-                    info_dict['awayPlayer{}_id'.format(j + 1)] = players[away_players[j][0].upper()]
-                except (KeyError, IndexError):
-                    info_dict['awayPlayer{}'.format(j + 1)] = 'NA'
-                    info_dict['awayPlayer{}_id'.format(j + 1)] = 'NA'
+def clean_html_pbp(html):
+    """
+    Get rid of html and format the data
+    :param html: the requested url
+    :return: a list with all the info
+    """
+    soup = BeautifulSoup(html.content, 'html.parser')
+    td = soup.select('td.+.bborder')
 
-                try:
-                    info_dict['homePlayer{}'.format(j+1)]= home_players[j][0].upper()
-                    info_dict['homePlayer{}_id'.format(j + 1)] = players[home_players[j][0].upper()]
-                except (KeyError, IndexError):
-                    info_dict['homePlayer{}'.format(j + 1)] = 'NA'
-                    info_dict['homePlayer{}_id'.format(j + 1)] = 'NA'
+    # Create a list of lists (each length 8)...corresponds to 8 columns in html pbp
+    td = [td[i:i + 8] for i in range(0, len(td), 8)]
 
-            # Did this because above method assumes goalie is at end of player list
-            for x in away_players:
-                if x[2]=='G':
-                    info_dict['Away_Goalie']=x[0].upper()
-                else:
-                    info_dict['Away_Goalie'] = 'NA'
+    cleaned_html = [strip_html_pbp(x) for x in td]
 
-            for x in home_players:
-                if x[2]=='G':
-                    info_dict['Home_Goalie']=x[0].upper()
-                else:
-                    info_dict['Home_Goalie'] = 'NA'
+    return cleaned_html
 
-            info_dict['Away_Skaters'] = len(away_players)
-            info_dict['Home_Skaters'] = len(home_players)
 
-            try:
-                home_skaters = info_dict['Home_Skaters'] - 1 if info_dict['Home_Goalie'] != 'NA' else len(home_players)
-                away_skaters = info_dict['Away_Skaters'] - 1 if info_dict['Away_Goalie'] != 'NA' else len(away_players)
-            except KeyError:
-                # Getting a key error here means that home/away goalie isn't there..which means home/away players are empty
-                home_skaters=0
-                away_skaters = 0
+def parseEvent_html(event, players):
+    """
+    Receievs an event and parses it
+    :param event: 
+    :param players: players in game
+    :return: dict with info
+    """
 
-            info_dict['Strength'] = 'x'.join([str(home_skaters), str(away_skaters)])
-            info_dict['Seconds_Elapsed']= convert_to_seconds(i[3])
-            info_dict['Time_Remaining']=i[3]
-            info_dict['Ev_Zone']= which_zone(info_dict['Description'])
-            info_dict['Type']=shot_type(i[5])
+    away_players = event[6]
+    home_players = event[7]
 
-            df = df.append(info_dict, ignore_index=True)
+    info_dict = dict()
 
-    return df
+    info_dict['Period'] = event[1]
+    info_dict['Event'] = event[4]
+    info_dict['Description'] = event[5]
 
-def parseEvent_json(event, home_team, away_team, columns):
+    # Populate away and home player info
+    for j in range(6):
+        try:
+            info_dict['awayPlayer{}'.format(j + 1)] = away_players[j][0].upper()
+            info_dict['awayPlayer{}_id'.format(j + 1)] = players[away_players[j][0].upper()]
+        except (KeyError, IndexError):
+            info_dict['awayPlayer{}'.format(j + 1)] = 'NA'
+            info_dict['awayPlayer{}_id'.format(j + 1)] = 'NA'
+
+        try:
+            info_dict['homePlayer{}'.format(j + 1)] = home_players[j][0].upper()
+            info_dict['homePlayer{}_id'.format(j + 1)] = players[home_players[j][0].upper()]
+        except (KeyError, IndexError):
+            info_dict['homePlayer{}'.format(j + 1)] = 'NA'
+            info_dict['homePlayer{}_id'.format(j + 1)] = 'NA'
+
+    # Did this because above method assumes goalie is at end of player list
+    for x in away_players:
+        if x[2] == 'G':
+            info_dict['Away_Goalie'] = x[0].upper()
+        else:
+            info_dict['Away_Goalie'] = 'NA'
+
+    for x in home_players:
+        if x[2] == 'G':
+            info_dict['Home_Goalie'] = x[0].upper()
+        else:
+            info_dict['Home_Goalie'] = 'NA'
+
+    info_dict['Away_Skaters'] = len(away_players)
+    info_dict['Home_Skaters'] = len(home_players)
+
+    try:
+        home_skaters = info_dict['Home_Skaters'] - 1 if info_dict['Home_Goalie'] != 'NA' else len(home_players)
+        away_skaters = info_dict['Away_Skaters'] - 1 if info_dict['Away_Goalie'] != 'NA' else len(away_players)
+    except KeyError:
+        # Getting a key error here means that home/away goalie isn't there..which means home/away players are empty
+        home_skaters = 0
+        away_skaters = 0
+
+    info_dict['Strength'] = 'x'.join([str(home_skaters), str(away_skaters)])
+    # info_dict['Seconds_Elapsed']= convert_to_seconds(i[3])
+    info_dict['Time_Remaining'] = event[3]
+    info_dict['Ev_Zone'] = which_zone(info_dict['Description'])
+    info_dict['Type'] = shot_type(event[5])
+
+    return info_dict
+
+
+def parse_html(html, players):
+    """
+    Parse html game pbp
+    :param html: 
+    :param players: players in the game (from json pbp)
+    :return: 
+    """
+
+    columns = ['Period', 'Time_Remaining', 'Event', 'Description', 'Type', 'Strength', 'Ev_Zone', 'awayPlayer1',
+               'awayPlayer1_id', 'awayPlayer2', 'awayPlayer2_id', 'awayPlayer3', 'awayPlayer3_id', 'awayPlayer4',
+               'awayPlayer4_id', 'awayPlayer5', 'awayPlayer5_id', 'awayPlayer6', 'awayPlayer6_id', 'homePlayer1',
+               'homePlayer1_id', 'homePlayer2', 'homePlayer2_id', 'homePlayer3', 'homePlayer3_id', 'homePlayer4',
+               'homePlayer4_id', 'homePlayer5', 'homePlayer5_id', 'homePlayer6', 'homePlayer6_id']
+
+    events = [parseEvent_html(event, players) for event in html if event[0] != '#']
+
+    return pd.DataFrame(events, columns=columns)
+
+
+def parseEvent_json(event, home_team, away_team):
     """
     Parses a single event when the info is in a json format
     :param event: json of event
     :param home_team: 
     :param away_team: 
-    :param columns: list of columns in DataFrame
     :return: dictionary with the info
     """
-    play=dict.fromkeys(columns, 'NA')
+    play=dict()
 
     play['Period'] = event['about']['period']
     play['Event'] = event['result']['eventTypeId']
     play['Description'] = event['result']['description']
     play['Time_Elapsed'] = event['about']['periodTime']
+    play['Seconds_Elapsed'] = convert_to_seconds(event['about']['periodTime'])
     play['Away_Team'] = away_team
     play['Home_Team'] = home_team
     play['Home_Score'] = event['about']['goals']['home']
@@ -357,92 +377,88 @@ def parseEvent_json(event, home_team, away_team, columns):
     return play
 
 
+def parse_json(game_json, game_id):
+    """
+    Scrape the json for a game
+    :param game_json: raw json
+    :param game_id: 
+    :return: DataFrame with info for the game
+    """
+
+    columns = ['Game_Id', 'Date', 'Period', 'Event', 'Description', 'Time_Elapsed', 'Seconds_Elapsed', 'Type', 'Ev_Team'
+               , 'Away_Team', 'Home_Team', 'p1_name', 'p1_ID', 'p2_name', 'p2_ID', 'p3_name', 'p3_ID',  'Away_Goalie',
+               'Home_Goalie', 'Away_Score', 'Home_Score', 'xC', 'yC']
+
+    away_team = game_json['gameData']['teams']['away']['triCode']
+    home_team = game_json['gameData']['teams']['home']['triCode']
+    date = game_json['gameData']['datetime']['dateTime']
+
+    plays = game_json['liveData']['plays']['allPlays'][2:]  # All the plays/events in a game
+
+    # Go through all events and store all the info in a list
+    # 'PERIOD READY' & 'PERIOD OFFICIAL' aren't found in html...so get rid of them
+    events = [parseEvent_json(play, home_team, away_team) for play in plays if (play['result']['eventTypeId'] !=
+                                                'PERIOD_READY' and play['result']['eventTypeId'] != 'PERIOD_OFFICIAL')]
+
+    game_df=pd.DataFrame(events, columns=columns)
+
+    game_df['Date'] = date[:10]
+    game_df['Game_Id'] = game_id
+
+    return game_df
+
+
 def scrapeGame(game_id):
     """
     Calls getPBP and scrapes the raw PBP json and HTML
     :param game_id: game to scrape
     :return: DataFrame of game info
     """
-    columns=['Period', 'Event', 'Description', 'Date', 'Game_ID', 'Ev_Team', 'p1_name', 'p1_ID', 'p2_name', 'p2_ID',
-             'p3_name', 'p3_ID', 'Ev_Zone', 'Type', 'Away_Team', 'Home_Team', 'Away_Goalie', 'Home_Goalie',
-             'Away_Score', 'Home_Score',  'xC', 'yC', 'Home_Zone']
 
     game_json=getPBP_json(game_id)  # Get json PBP
     game_html=getPBP_html(game_id)  # Get html PBP
 
-    game_df=pd.DataFrame(columns=columns)  # Create DataFrame for all game info
+    json_df = parse_json(game_json, game_id)                              # Go through json PBP
+    html_df = parse_html(game_html, get_players(game_json['gameData']))   # Go through html PBP
 
-    away_team=game_json['gameData']['teams']['away']['triCode']
-    home_team=game_json['gameData']['teams']['home']['triCode']
-    date=game_json['gameData']['datetime']['dateTime']
-
-    # Go through plays in json PBP and fill in DataFrame
-    plays=game_json['liveData']['plays']['allPlays'][2:]
-    for play in plays:
-        if play['result']['eventTypeId']!='PERIOD_READY' and play['result']['eventTypeId']!='PERIOD_OFFICIAL':
-            game_df=game_df.append(parseEvent_json(play, home_team, away_team, columns), ignore_index=True)
-
-    # Go through html PBP
-    html_df=parse_html_pbp(game_html, get_players(game_json['gameData']))
-
-    game_df['Date']=date[:10]
-    game_df['Game_ID']=game_id
-
-    game_df=join_html_json_pbp(game_df, html_df)
+    ##/////Fix when return false
+    game_df=join_html_json_pbp(json_df, html_df)
 
     return game_df
 
-def join_html_json_pbp(json, html):
 
+def join_html_json_pbp(json_df, html_df):
     """
     Join both data sources
-    # Home_Zone->Need to do this eventually
-    :param json: json pbp DataFrame
-    :param html: html pbp DataFrame
+    :param json_df: json pbp DataFrame
+    :param html_df: html pbp DataFrame
     :return: finished pbp
     """
-    # json.ix[json.Event == BLOCKED_SHOT', 'Event'] = 'BLOCK'
-    # json.ix[json.Event == 'MISSED_SHOT', 'Event'] = 'MISS'
+    columns = ['Game_Id', 'Date', 'Period', 'Event', 'Description', 'Time_Elapsed', 'Seconds_Elapsed', 'Strength',
+               'Ev_Zone', 'Type', 'Ev_Team', 'Away_Team', 'Home_Team', 'p1_name', 'p1_ID', 'p2_name', 'p2_ID',
+               'p3_name', 'p3_ID', 'awayPlayer1', 'awayPlayer1_id', 'awayPlayer2', 'awayPlayer2_id', 'awayPlayer3',
+               'awayPlayer3_id', 'awayPlayer4', 'awayPlayer4_id', 'awayPlayer5', 'awayPlayer5_id', 'awayPlayer6',
+               'awayPlayer6_id', 'homePlayer1', 'homePlayer1_id', 'homePlayer2', 'homePlayer2_id', 'homePlayer3',
+               'homePlayer3_id', 'homePlayer4', 'homePlayer4_id', 'homePlayer5', 'homePlayer5_id', 'homePlayer6',
+               'homePlayer6_id', 'Away_Score', 'Home_Score', 'xC', 'yC']
 
     # Check if same amount of events
-    if json.shape[0]!=html.shape[0]:
+    if json_df.shape[0]!=html_df.shape[0]:
         return False
 
     # Drop from json pbp
-    json = json.drop('Event', axis=1)
-    json = json.drop('Away_Goalie', axis=1)
-    json = json.drop('Home_Goalie', axis=1)
-    json = json.drop('Ev_Zone', axis=1)
+    json = json_df.drop('Event', axis=1)
+    json = json_df.drop('Away_Goalie', axis=1)
+    json = json_df.drop('Home_Goalie', axis=1)
 
     # Drop from html pbp
-    html = html.drop('Time_Remaining', axis=1)
-    html = html.drop('Period', axis=1)
-    html = html.drop('Type', axis=1)
-    html = html.drop('Description', axis=1)
+    html = html_df.drop('Time_Remaining', axis=1)
+    html = html_df.drop('Period', axis=1)
+    html = html_df.drop('Type', axis=1)
+    html = html_df.drop('Description', axis=1)
 
-    game_df=html       # It's easier if I just start off with html as the final
-
-    # Add all relevant columns in json to game_df (which is just html)
-    # Little clunky...but I wanted to put certain columns in certain spots
-    game_df.insert(0, 'Time_Elapsed', json['Time_Elapsed'])
-    game_df.insert(0, 'Description', json['Description'])
-    game_df.insert(0, 'Period', json['Period'])
-    game_df.insert(0, 'Date', json['Date'])
-    game_df.insert(0, 'Game_ID', json['Game_ID'])
-    game_df.insert(8, 'Type', json['Type'])
-    game_df.insert(9, 'Ev_Team', json['Ev_Team'])
-    game_df.insert(10, 'Away_Team', json['Away_Team'])
-    game_df.insert(11, 'Home_Team', json['Home_Team'])
-    game_df.insert(13, 'p1_name', json['p1_name'])
-    game_df.insert(14, 'p1_ID', json['p1_ID'])
-    game_df.insert(15, 'p2_name', json['p2_name'])
-    game_df.insert(16, 'p2_ID', json['p2_ID'])
-    game_df.insert(17, 'p3_name', json['p3_name'])
-    game_df.insert(18, 'p3_ID', json['p3_ID'])
-    game_df.insert(47, 'Away_Score', json['Away_Score'])
-    game_df.insert(48, 'Home_Score', json['Home_Score'])
-    game_df.insert(49, 'xC', json['xC'])
-    game_df.insert(50, 'yC', json['yC'])
+    game_df = pd.concat([html, json], axis=1)
+    game_df = game_df[columns]  # Make the columns in the order specified above
 
     return game_df
 
