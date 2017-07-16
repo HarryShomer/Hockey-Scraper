@@ -1,10 +1,11 @@
 import pandas as pd
 from bs4 import BeautifulSoup
 import requests
+import re
 import shared_functions
 
 
-def getPBP_html(game_id):
+def get_pbp(game_id):
     """
     Given a game_id it returns the raw html
     :param game_id: the game
@@ -31,9 +32,12 @@ def get_penalty(play_description):
 
     for i in range(len(play_description)):
         if ')' in play_description[i]:  # Search for end of time for penalty
-            penalty = ' '.join(
-                [play_description[j] for j in range(3, i + 1)])  # Join from after player name until index
-            return penalty.strip(',')
+            if '#' in play_description[2]:  # Check if player num is second...if not it's a team penalty
+                penalty = ' '.join( [play_description[j] for j in range(3, i + 1)]) # Join from after player name until index
+                return penalty.strip(',')
+            else:
+                penalty = ' '.join([play_description[j] for j in range(2, i + 1)])  # Join from after player name until index
+                return penalty.strip(',')
 
     return 'NA'
 
@@ -41,18 +45,14 @@ def get_penalty(play_description):
 def get_player_name(last_name, number, players, team, home_team):
     """
     This function is used for the description field in the html
-    Given a last name and a number return the player's full name
-
-     
-
+    Given a last name and a number it return the player's full name and id
     :param last_name: 
     :param number: 
     :param players: all players with info
     :param team: team of player
     :param home_team
-    :return: 
+    :return: dict with full and and id
     """
-
     if team == home_team:
         player = [{'name': name, 'id': players['Home'][name]['id']} for name in players['Home'].keys() if last_name in
                   name and players['Home'][name]['number'] == number]
@@ -123,14 +123,14 @@ def strip_html_pbp(td):
     for y in range(len(td)):
         # Get the 'br' tag for the time column...this get's us time remaining instead of elapsed and remaining combined
         if y == 3:
-            td[y] = td[y].find_all('br')[0].get_text()
+            td[y] = td[y].get_text()   # This gets us elapsed and remaining combined-< 3:0017:00
+            index = td[y].find(':')
+            td[y] = td[y][:index+3]
         elif (y == 6 or y == 7) and td[0] != '#':
             # 6 & 7-> These are the player one ice one's
             # The second statement controls for when it's just a header
-
             baz = td[y].find_all('td')
-            bar = [baz[z] for z in range(len(baz)) if
-                   z % 4 != 0]  # Because of previous step we get repeats...so delete some
+            bar = [baz[z] for z in range(len(baz)) if z % 4 != 0]  # Because of previous step we get repeats...delete some
 
             # The setup in the list is now: Name/Number->Position->Blank...and repeat
             # Now strip all the html
@@ -183,104 +183,112 @@ def get_event_players(event, players, home_team):
         'p3_name': '',
         'p3_ID': '',
     }
-    description = event[5]
-    ev_team = description[0]
+    description = event[5].strip()
+    period = event[1]
+    ev_team = description.split()[0]
 
-    if ev_team == home_team:
-        team_players = event[7]  # Player's on ice for team which had the event
-        opp_players = event[6]  # Player's on ice for other team
-    else:
-        team_players = event[6]
-        opp_players = event[7]
+    if 'FAC' == event[4]:
+        # MTL won Neu. Zone - MTL #11 GOMEZ vs TOR #37 BRENT
+        regex = re.compile(r'(.{3})\s+#(\d+)\s+(.*?(?=\s+vs)|.*?$)')
+        desc = regex.findall(description)  # [[Team, num, player], [Team, num, player]]
 
-    description = description.split()
-    description = [d for d in description if d != '' and d != ' ']
-
-    if 'FAC' in event[4]:
-        # Ex: NYR won Neu. Zone - N.J #14 HENRIQUE vs NYR #13 HAYES
-        if ev_team == description[5]:
-            p1 = get_player_name(description[7].upper(), description[6][1:], players, description[5], home_team)
+        if ev_team == desc[0][0]:
+            p1 = get_player_name(desc[0][2], desc[0][1], players, desc[0][0], home_team)
             info['p1_name'] = p1['name']
             info['p1_ID'] = p1['id']
-            p2 = get_player_name(description[7].upper(), description[6][1:], players, description[5], home_team)
+            p2 = get_player_name(desc[1][2], desc[1][1], players, desc[1][0], home_team)
             info['p2_name'] = p2['name']
             info['p2_ID'] = p2['id']
         else:
-            p1 = get_player_name(description[11].upper(), description[10][1:], players, description[9], home_team)
+            p1 = get_player_name(desc[1][2], desc[1][1], players, desc[1][0], home_team)
             info['p1_name'] = p1['name']
             info['p1_ID'] = p1['id']
-            p2 = get_player_name(description[7].upper(), description[6][1:], players, description[5], home_team)
+            p2 = get_player_name(desc[0][2], desc[0][1], players, desc[0][0], home_team)
             info['p2_name'] = p2['name']
             info['p2_ID'] = p2['id']
-    elif 'SHOT' in event[4]:
-        # Ex: NYR ONGOAL - #61 NASH, Wrist, Off. Zone, 50 ft.
-        p = get_player_name(description[4][:-1].upper(), description[3][1:], players, description[0], home_team)
+
+    elif event[4] in ['SHOT', 'MISS', 'GIVE', 'TAKE']:
+        # MTL ONGOAL - #81 ELLER, Wrist, Off. Zone, 11 ft.
+        # TOR GIVEAWAY - #35 GIGUERE, Def. Zone
+        # TOR TAKEAWAY - #9 ARMSTRONG, Off. Zone
+
+        regex = re.compile(r'#(\d+)\s+(.*?(?=,))')
+        desc = regex.search(description).groups()  # num, player
+
+        p = get_player_name(desc[1], desc[0], players, ev_team, home_team)
         info['p1_name'] = p['name']
         info['p1_ID'] = p['id']
-    elif 'MISS' in event[4]:
-        # N.J #38 FIDDLER, Tip-In, Wide of Net, Off. Zone, 12 ft.
-        p = get_player_name(description[2][:-1].upper(), description[1][1:], players, description[0], home_team)
-        info['p1_name'] = p['name']
-        info['p1_ID'] = p['id']
-    elif 'BLOCK' in event[4]:
-        # NYR #8 KLEIN BLOCKED BY N.J #51 KALININ, Wrist, Def. Zone
-        p1 = get_player_name(description[7][:-1].upper(), description[6][1:], players, description[5], home_team)
+
+    elif 'HIT' == event[4]:
+        # MTL #20 O'BYRNE HIT TOR #18 BROWN, Def. Zone
+        regex = re.compile(r'(.{3})\s+#(\d+)\s+(.*?(?=\s+HIT)|.*?(?=,))')
+        desc = regex.findall(description)  # [[Team, num, player], [Team, num, player]]
+
+        p1 = get_player_name(desc[0][2], desc[0][1], players, desc[0][0], home_team)
         info['p1_name'] = p1['name']
         info['p1_ID'] = p1['id']
-        p2 = get_player_name(description[2].upper(), description[1][1:], players, description[0], home_team)
+        p2 = get_player_name(desc[1][2], desc[1][1], players, desc[1][0], home_team)
         info['p2_name'] = p2['name']
         info['p2_ID'] = p2['id']
-    elif 'GOAL' in event[4]:
-        # N.J #11 PARENTEAU(7), Tip-In, Off. Zone, 10 ft. Assists: #21 PALMIERI(11); #28 SEVERSON(13)
-        description = [d for d in description if '(' in d or '#' in d]
-        i = description[1].index('(')  # As to not include the parentheses in the player's name
 
-        p1 = get_player_name(description[1][:i], description[0][1:], players, description[0], home_team)
+    elif 'BLOCK' == event[4]:
+        # MTL #76 SUBBAN BLOCKED BY TOR #2 SCHENN, Wrist, Def. Zone
+        regex = re.compile(r'(.{3})\s+#(\d+)\s+(.*?(?=\s+BLOCKED)|.*?(?=,))')
+        desc = regex.findall(description)  # [[Team, num, player], [Team, num, player]]
+
+        p1 = get_player_name(desc[1][2], desc[1][1], players, desc[1][0], home_team)
+        info['p1_name'] = p1['name']
+        info['p1_ID'] = p1['id']
+        p2 = get_player_name(desc[0][2], desc[0][1], players, desc[0][0], home_team)
+        info['p2_name'] = p2['name']
+        info['p2_ID'] = p2['id']
+
+    elif 'GOAL' == event[4]:
+        # TOR #81 KESSEL(1), Wrist, Off. Zone, 14 ft. Assists: #42 BOZAK(1); #8 KOMISAREK(1)
+        regex = re.compile(r'#(\d+)\s+(.*?(?=\()|.*?(?=,))')
+        desc = regex.findall(description)  # [[num, player]] -> ranging from 1 to 3 indices
+
+        p1 = get_player_name(desc[0][1], desc[0][0], players, ev_team, home_team)
         info['p1_name'] = p1['name']
         info['p1_ID'] = p1['id']
 
-        if len(description) >= 4:
-            # One Assist
-            i = description[3].index('(')
-            p2 = get_player_name(description[3][:i], description[2][1:], players, description[0], home_team)
+        if len(desc) >= 2:
+            p2 = get_player_name(desc[1][1], desc[1][0], players, ev_team, home_team)
             info['p2_name'] = p2['name']
             info['p2_ID'] = p2['id']
 
-        if len(description) == 6:
-            # Two Assists
-            i = description[5].index('(')
-            p3 = get_player_name(description[5][:i], description[4][1:], players, description[0], home_team)
-            info['p3_name'] = p3['name']
-            info['p3_ID'] = p3['id']
+            if len(desc) == 3:
+                p3 = get_player_name(desc[2][1], desc[2][0], players, ev_team, home_team)
+                info['p3_name'] = p3['name']
+                info['p3_ID'] = p3['id']
 
-    elif 'PENL' in event[4]:
+    elif 'PENL' == event[4]:
         # MTL #81 ELLER Hooking(2 min), Def. Zone Drawn By: TOR #11 SJOSTROM
-        p1 = get_player_name(description[2], description[1][1:], players, description[0], home_team)
-        info['p1_name'] = p1['name']
-        info['p1_ID'] = p1['id']
-        if 'By:' in description:
-            i = description.index('By:')
 
-            # If it's a penalty not drawn...the team isn't isn't after 'By:'
-            if 'Served' not in description:
-                p2 = get_player_name(description[i + 3].strip(','), description[i + 2][1:], players, description[i+1],
-                                     home_team)
-            else:
-                p2 = get_player_name(description[i + 2].strip(','), description[i + 1][1:], players, description[0],
-                                     home_team)
-            info['p2_name'] = p2['name']
-            info['p2_ID'] = p2['id']
+        if 'Served' or 'TEAM' in description:  # Check if it's a team penalty
+            info['p1_name'] = 'Team'           # Since it's a team penalty
+        else:
+            regex = re.compile(r'(.{3})\s+#(\d+)\s+(.*?(?=\s+\w+\()|.*?$)')
+            desc = regex.findall(description)  # [[num, player]] -> Either one or two indices
+
+            p1 = get_player_name(desc[0][1], desc[0][0], players, ev_team, home_team)
+            info['p1_name'] = p1['name']
+            info['p1_ID'] = p1['id']
+
+            if len(desc) == 2:
+                p2 = get_player_name(desc[1][1], desc[1][0], players, ev_team, home_team)
+                info['p2_name'] = p2['name']
+                info['p2_ID'] = p2['id']
 
     return info
 
 
-def parseEvent_html(event, players, home_team, away_team, if_plays_in_json, current_score):
+def parse_event(event, players, home_team, if_plays_in_json, current_score):
     """
     Receievs an event and parses it
     :param event: 
     :param players: players in game
     :param home_team:
-    :param away_team:
     :param if_plays_in_json: If the pbp json contains the plays
     :param current_score: current score for both teams
     :return: dict with info
@@ -353,27 +361,19 @@ def parseEvent_html(event, players, home_team, away_team, if_plays_in_json, curr
         event_dict['Type'] = shot_type(event[5]).upper()
 
     # If the json pbp is missing plays...we also do this stuff
-    if if_plays_in_json:
+    if not if_plays_in_json:
         event_dict['Period'] = event[1]
         event_dict['Time_Elapsed'] = event[3]
-        event_dict['Seconds_Elapsed'] = shared_functions.convert_to_seconds(event[3])
+
+        if event[3] != '':
+            event_dict['Seconds_Elapsed'] = shared_functions.convert_to_seconds(event[3])
+        else:
+            event_dict['Seconds_Elapsed']=9
+
         event_dict['Description'] = event[5]
 
-        print(event_dict['Event'], event_dict['Period'], event_dict['Time_Elapsed'])
         if event_dict['Event'] in ['GOAL', 'SHOT', 'MISS', 'BLOCK', 'PENL', 'FAC', 'HIT', 'TAKE', 'GIVE']:
             event_dict.update(get_event_players(event, players, home_team))  # Add players involves in event
-        """
-        try:
-            
-        except Exception as e:
-            print('Exception at ', event[5], e)
-            event_dict['p1_name'] = ' '
-            event_dict['p1_ID'] = ' '
-            event_dict['p2_name'] = ' '
-            event_dict['p2_ID'] = ' '
-            event_dict['p3_name'] = ' '
-            event_dict['p3_ID'] = ' '
-        """
 
     return [event_dict, current_score]
 
@@ -407,33 +407,12 @@ def parse_html(html, players, home_team, away_team, if_plays_in_json):
                    'Home_Score', 'Away_Score']
 
     current_score = {'Home': 0, 'Away': 0}
-    events, current_score = zip(*(parseEvent_html(event, players, home_team, away_team, if_plays_in_json, current_score)
+    events, current_score = zip(*(parse_event(event, players, home_team, if_plays_in_json, current_score)
                                   for event in html if event[0] != '#' and event[0] != 'GOFF'))
 
     return pd.DataFrame(list(events), columns=columns)
 
 
-def scrapeGame(game_id):
-    """
-    Calls getPBP and scrapes the raw PBP json and HTML
-    If one of the the pbp's (json or html) aren't there we return with nothing.
-    Also if something is wrong with one of them (or they don't align) we return nothing.
-    :param game_id: game to scrape
-    :return: DataFrame of game info
-    """
-    try:
-        game_html = getPBP_html(game_id)
-    except requests.exceptions.HTTPError as e:
-        print('Html pbp for game {} is not there'.format(game_id), e)
-        return None
 
-    try:
-        teams = getTeams_html(game_html)
-        html_df = parse_html(clean_html_pbp(game_html), {}, teams[0], teams[1],  False)
-    except Exception as e:
-        print('Error for html pbp for game {}'.format(game_id), e)
-        return None
-
-    return html_df
 
 

@@ -3,7 +3,7 @@ import requests
 import time
 
 
-def getRoster_html(game_id):
+def get_roster(game_id):
     """
     Given a game_id it returns the raw html
     :param game_id: the game
@@ -21,7 +21,7 @@ def getRoster_html(game_id):
 
 def fix_name(player):
     """
-    Sometimes a player had a (A) or (C) attached to their name...let's get rid of it
+    Sometimes a player had a (A) or (C) attached to their name
     :param player: list of player info -> [number, position, name]
     :return: fixed list
     """
@@ -104,7 +104,7 @@ def scrape_roster(game_id):
     :return: dict of players (home and away) an dict for both head coaches 
     """
     try:
-        roster = getRoster_html(game_id)
+        roster = get_roster(game_id)
     except requests.exceptions.HTTPError as e:
         print('Roster for game {} is not there'.format(game_id), e)
         raise Exception

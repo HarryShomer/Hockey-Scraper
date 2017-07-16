@@ -5,11 +5,11 @@ import time
 import shared_functions
 
 
-def getShifts_json(game_id):
+def get_shifts(game_id):
     """
-    Given a game_id it returns the parsed json
+    Given a game_id it returns the raw json
     :param game_id: the game
-    :return: DataFrame with info
+    :return: 
     """
     url = 'http://www.nhl.com/stats/rest/shiftcharts?cayenneExp=gameId={}'.format(game_id)
 
@@ -19,16 +19,10 @@ def getShifts_json(game_id):
     shift_json = json.loads(response.text)
     time.sleep(1)
 
-    try:
-        df = parse_json(shift_json)
-    except Exception:
-        print('Problem with the shift reports for game {}'.format(game_id))
-        return None
-
-    return df
+    return parse_json(shift_json)
 
 
-def parse_shift_json(shift):
+def parse_shift(shift):
     """
     Parse shift for json
     :param shift: 
@@ -39,9 +33,15 @@ def parse_shift_json(shift):
     shift_dict['Player_Id'] = shift['playerId']
     shift_dict['Period'] = shift['period']
     shift_dict['Team'] = shift['teamAbbrev']
-    shift_dict['Start'] = shared_functions.convert_to_seconds(shift['startTime'])
-    shift_dict['End'] = shared_functions.convert_to_seconds(shift['endTime'])
-    shift_dict['Duration'] = shift['duration']
+
+    # At the end of the json they list when all the goal events happened. They are the only one's which have their
+    # eventDescription be not null
+    if shift['eventDescription'] is None:
+        shift_dict['Start'] = shared_functions.convert_to_seconds(shift['startTime'])
+        shift_dict['End'] = shared_functions.convert_to_seconds(shift['endTime'])
+        shift_dict['Duration'] = shared_functions.convert_to_seconds(shift['duration'])
+    else:
+        shift_dict={}
 
     return shift_dict
 
@@ -54,7 +54,8 @@ def parse_json(json):
     """
     columns = ['Player', 'Player_Id', 'Period', 'Team', 'Start', 'End', 'Duration']
 
-    shifts = [parse_shift_json(shift) for shift in json['data']]       # Go through the shifts
+    shifts = [parse_shift(shift) for shift in json['data']]       # Go through the shifts
+    shifts = [shift for shift in shifts if shift != {}]  # Get rid of null shifts (which happen at end)
 
     df = pd.DataFrame(shifts, columns=columns)
     df = df.sort_values(by=['Period', 'Start'], ascending=[True, True])  # Sort by period by time
@@ -63,14 +64,14 @@ def parse_json(json):
     return df
 
 
-def scrapeGame(game_id):
+def scrape_game(game_id):
     """
     Scrape the game.
     Try the json first, if it's not there do the html (it should be there for all games)
     :param game_id: game
     :return: DataFrame with info for the game
     """
-    game_df = getShifts_json(game_id)
+    game_df = get_shifts(game_id)
 
     return game_df
 

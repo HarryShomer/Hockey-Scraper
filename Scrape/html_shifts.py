@@ -5,37 +5,40 @@ import time
 import shared_functions
 
 
-def analyze_shifts(shift, key, team, home_team, player_ids):
+def analyze_shifts(shift, name, team, home_team, player_ids):
     """
     Analyze shifts for each player when using.
     Prior to this each player (in a dictionary) has a list with each entry being a shift.
     This function is only used for the html
     :param shift: 
-    :param key: 
+    :param name: 
     :param team: 
-    :return: 
+    :param home_team:
+    :param player_ids:
+    :return: dict with info for shift
     """
     shifts = dict()
 
-    shifts['Player'] = key.upper()
+    shifts['Player'] = name.upper()
     shifts['Period'] = '4' if shift[1] == 'OT' else shift[1]
-    shifts['Team'] = shared_functions.TEAMS[team.get_text().strip(' ')]
+    shifts['Team'] = shared_functions.TEAMS[team.strip(' ')]
     shifts['Start'] = shared_functions.convert_to_seconds(shift[2].split('/')[0])
     shifts['End'] = shared_functions.convert_to_seconds(shift[3].split('/')[0])
     shifts['Duration'] = shared_functions.convert_to_seconds(shift[4].split('/')[0])
 
     if home_team == team:
-        shifts['Player_Id'] = player_ids['Home'][key.upper()]['id']
+        shifts['Player_Id'] = player_ids['Home'][name.upper()]['id']
     else:
-        shifts['Player_Id'] = player_ids['Away'][key.upper()]['id']
+        shifts['Player_Id'] = player_ids['Away'][name.upper()]['id']
 
     return shifts
 
 
-def getShifts_html(game_id):
+def get_shifts(game_id, players):
     """
     Given a game_id it returns a DataFrame with the shifts for both teams
     :param game_id: the game
+    :param players: list of players
     :return: DataFrame with all shifts, return None when an exception is thrown when parsing
     http://www.nhl.com/scores/htmlreports/20162017/TV020971.HTM
     """
@@ -51,12 +54,8 @@ def getShifts_html(game_id):
     away.raise_for_status()
     time.sleep(1)
 
-    try:
-        away_df=parse_html(away)
-        home_df=parse_html(home)
-    except Exception:
-        print('Problem parsing the html shift reports for game {}'.format(game_id))
-        return None
+    away_df = parse_html(away, players)
+    home_df = parse_html(home, players)
 
     game_df = pd.concat([away_df, home_df], ignore_index=True)
 
@@ -96,11 +95,11 @@ def parse_html(html, player_ids):
         t=t.get_text()
         if ',' in t:     # If it has a comma in it we know it's a player's name...so add player to dict
             name=t
-            # Just format the name normally...it's coded as: 'num# last name, first name'
+            # Just format the name normally...it's coded as: 'num last_name, first_name'
             name = name.split(',')
             name = ' '.join([name[1].strip(' '), name[0][2:].strip(' ')])
             players[name] = dict()
-            players[name]['number'] = name[0][:2]
+            players[name]['number'] = name[0][:2].strip()
             players[name]['Shifts'] = []
         else:
             # Here we add all the shifts to whatever player we are up to
@@ -108,14 +107,15 @@ def parse_html(html, player_ids):
 
     for key in players.keys():
         # Create a list of lists (each length 5)...corresponds to 5 columns in html shifts
-        players[key]['Shifts'] = [players[key]['Shifts'][i:i + 5] for i in range(0, len(players[key]), 5)]
-        shifts = [analyze_shifts(shift, key, team, home_team, player_ids) for shift in players[key]['Shifts']]  # Fix up info
+        players[key]['Shifts'] = [players[key]['Shifts'][i:i + 5] for i in range(0, len(players[key]['Shifts']), 5)]
+
+        shifts = [analyze_shifts(shift, key, team, home_team, player_ids) for shift in players[key]['Shifts']]
         df = df.append(shifts, ignore_index=True)
 
     return df
 
 
-def scrapeGame(game_id, player_ids):
+def scrape_game(game_id, player_ids):
     """
     Scrape the game.
     Try the json first, if it's not there do the html (it should be there for all games)
@@ -123,10 +123,10 @@ def scrapeGame(game_id, player_ids):
     :param player_ids: dict of home and away players
     :return: DataFrame with info for the game
     """
-    game_df = getShifts_html(game_id)
+    game_df = get_shifts(game_id, player_ids)
 
     return game_df
 
-#scrapeGame(2016020971)
+
 
 

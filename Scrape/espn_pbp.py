@@ -5,6 +5,19 @@ import time
 import shared_functions
 
 
+def event_type(play_description):
+    """
+    Returns the event type (ex: a SHOT or a GOAL...etc) given the event description 
+    :param play_description: 
+    :return: 
+    """
+    events = {'Goal scored': 'GOAL', 'Shot on goal': 'SHOT', 'Shot missed': 'MISS', 'shot blocked': 'BLOCK', 'Penalty': 'PENL',
+              'faceoff': 'FAC', 'hit': 'HIT',  'Takeaway': 'TAKE', 'Giveaway': 'GIVE', }
+
+    event = [events[e] for e in events.keys() if e in play_description]
+    return event[0] if event else None
+
+
 def get_espn_game_id(date, home_team, away_team):
     """
     Scrapes the day's schedule and gets the id for the given game
@@ -35,8 +48,8 @@ def get_espn_game_id(date, home_team, away_team):
     soup = BeautifulSoup(response.content, 'html.parser')
     teams = soup.findAll('td', class_='team')
     teams = [t.get_text() for t in teams if t.get_text() != '']  # Get Rid of blanks between pair of teams
-    teams = [shared_functions.TEAMS[t.upper()] for t in teams]  # Get Tricode
-    games = [teams[i:i + 2] for i in range(0, len(teams), 2)]  # Make a list of both teams for each game
+    teams = [shared_functions.TEAMS[t.upper()] for t in teams]   # Get Tricode
+    games = [teams[i:i + 2] for i in range(0, len(teams), 2)]    # Make a list of both teams for each game
 
     for i in range(len(games)):
         if home_team in games[i] or away_team in games[i]:
@@ -51,7 +64,7 @@ def get_espn(date, home_team, away_team):
     :param away_team: 
     :return: raw xml
     """
-    game_id = get_espn_game_id(date, shared_functions.TEAMS[home_team.upper()], shared_functions.TEAMS[away_team.upper()])
+    game_id = get_espn_game_id(date, home_team.upper(), away_team.upper())
     url = 'http://www.espn.com/nhl/gamecast/data/masterFeed?lang=en&isAll=true&gameId={}'.format(game_id)
 
     response = requests.get(url)
@@ -61,7 +74,7 @@ def get_espn(date, home_team, away_team):
     return parse_espn(response)
 
 
-def parse_event_espn(event):
+def parse_event(event):
     """
     Parse each event
     In the string each field is separated by a '~'. 
@@ -74,8 +87,9 @@ def parse_event_espn(event):
 
     info['xC'] = fields[0]
     info['yC'] = fields[1]
-    #info['Time_Remaining'] = shared_functions.convert_to_seconds(fields[3])
-    #info['Period'] = fields[4]
+    info['time_elapsed'] = shared_functions.convert_to_seconds(fields[3])
+    info['period'] = fields[4]
+    info['event'] = event_type(fields[8])
 
     return info
 
@@ -90,14 +104,27 @@ def parse_espn(espn_xml):
     tree = etree.fromstring(espn_xml.text)
     events = tree[1]
 
-    # columns = ['Period', 'Time_Remaining', 'xC', 'yC']
-    columns = ['xC', 'yC']
+    columns = ['period', 'time_elapsed', 'event', 'xC', 'yC']
+    plays = [parse_event(event.text) for event in events]
 
-    plays = [parse_event_espn(event.text) for event in events]
-    df = pd.DataFrame(plays, columns=columns)
+    return pd.DataFrame(plays, columns=columns)
 
-    # Sort by period by time...the plays aren't always in order
-    df = df.sort_values(by=['Period', 'Time_Remaining'], ascending=[True, True])
 
-    return df
+def scrape_game(date, home_team, away_team):
+    """
+    Scrape the game
+    :param date: ex: 2016-20-24
+    :param home_team: tricode
+    :param away_team: tricode
+    :return: dataframe with info 
+    """
+    try:
+        espn_xml = get_espn(date, home_team, away_team)
+    except requests.exceptions.HTTPError as e:
+        print('Espn pbp for game {a} {b} {c} is not there'.format(a=date, b=home_team, c=away_team), e)
+        return None
 
+    return parse_espn(espn_xml)
+
+
+# get_espn('2016-10-24', 'MTL', 'PHI') -> Used for Debugging

@@ -5,7 +5,7 @@ import time
 import shared_functions
 
 
-def getPBP_json(game_id):
+def get_pbp(game_id):
     """
     Given a game_id it returns the raw json
     :param game_id: the game
@@ -21,6 +21,7 @@ def getPBP_json(game_id):
 
     return pbp_json
 
+
 def get_teams(json):
     """
     Get teams 
@@ -31,7 +32,7 @@ def get_teams(json):
             'Away': shared_functions.TEAMS[json['gameData']['teams']['away']['name'].upper()]}
 
 
-def parseEvent_json(event, home_team, away_team):
+def parse_event(event, home_team, away_team):
     """
     Parses a single event when the info is in a json format
     :param event: json of event
@@ -51,7 +52,7 @@ def parseEvent_json(event, home_team, away_team):
 
     # If there's a players key that means an event occurred on the play.
     if 'players' in event.keys():
-        play['Ev_Team'] = shared_functions.TEAMS[event['team']['name'].upper()]  # If the triCode isn't there just use the name
+        play['Ev_Team'] = shared_functions.TEAMS[event['team']['name'].upper()]
 
         # NHL has Ev_Team for blocked shot as team who blocked it...flip it
         if play['Event'] == 'BLOCKED_SHOT':
@@ -65,6 +66,7 @@ def parseEvent_json(event, home_team, away_team):
                 play['p{}_name'.format(i + 1)] = event['players'][i]['player']['fullName'].upper()
                 play['p{}_ID'.format(i + 1)] = event['players'][i]['player']['id']
 
+        """
         # If it's a penalty include the type->minor/double/major...etc
         if play['Event'] == 'PENALTY':
             play['Type'] = '-'.join([event['result']['secondaryType'], event['result']['penaltySeverity']])
@@ -74,6 +76,7 @@ def parseEvent_json(event, home_team, away_team):
                     'secondaryType'].upper()  # Events like Faceoffs don't have secondaryType's
             except KeyError:
                 play['Type'] = ''
+        """
 
         # Coordinates aren't always there
         try:
@@ -114,7 +117,7 @@ def parse_json(game_json, game_id):
     :return: Either a DataFrame with info for the game 
     """
 
-    columns = ['Game_Id', 'Date', 'Period', 'Event', 'Description', 'Time_Elapsed', 'Seconds_Elapsed', 'Type', 'Ev_Team'
+    columns = ['Game_Id', 'Date', 'Period', 'Event', 'Description', 'Time_Elapsed', 'Seconds_Elapsed', 'Ev_Team'
         , 'Away_Team', 'Home_Team', 'p1_name', 'p1_ID', 'p2_name', 'p2_ID', 'p3_name', 'p3_ID', 'xC', 'yC']
 
     away_team = game_json['gameData']['teams']['away']['abbreviation']  # TriCode
@@ -124,13 +127,13 @@ def parse_json(game_json, game_id):
 
     # Go through all events and store all the info in a list
     # 'PERIOD READY' & 'PERIOD OFFICIAL' aren't found in html...so get rid of them
-    events = [parseEvent_json(play, home_team, away_team) for play in plays if (play['result']['eventTypeId'] !=
-                                                                                'PERIOD_READY' and play['result'][
-                                                                                    'eventTypeId'] != 'PERIOD_OFFICIAL')]
-
+    events = [parse_event(play, home_team, away_team) for play in plays if (play['result']['eventTypeId'] !=
+                                                                            'PERIOD_READY' and play['result'][
+                                                                            'eventTypeId'] != 'PERIOD_OFFICIAL')]
     game_df = pd.DataFrame(events, columns=columns)
 
-    game_df['Date'] = date[:10]
+    # Sometimes the dateTime does the next day so just take the date stamped for the first play
+    game_df['Date'] = game_json['liveData']['plays']['allPlays'][0]['about']['dateTime'][:10]
     game_df['Game_Id'] = game_id
 
     return game_df
@@ -138,14 +141,12 @@ def parse_json(game_json, game_id):
 
 def scrapeGame(game_id):
     """
-    Calls getPBP and scrapes the raw PBP json and HTML
-    If one of the the pbp's (json or html) aren't there we return with nothing.
-    Also if something is wrong with one of them (or they don't align) we return nothing.
+    Used for debugging 
     :param game_id: game to scrape
     :return: DataFrame of game info
     """
     try:
-        game_json = getPBP_json(game_id)
+        game_json = get_pbp(game_id)
     except requests.exceptions.HTTPError as e:
         print('Json pbp for game {} is not there'.format(game_id), e)
         return None
