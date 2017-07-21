@@ -1,8 +1,30 @@
 import pandas as pd
 from bs4 import BeautifulSoup
 import requests
+from requests.adapters import HTTPAdapter
+from requests.packages.urllib3.util.retry import Retry
 import time
-import shared_functions
+import shared
+
+
+def get_teams(soup):
+    """
+    Return the team for the TOI tables and the home team
+    :param soup: souped up html
+    :return: list with team and home team
+    <td align="center" style="font-size: 10px;font-weight:bold">MONTREAL CANADIENS<br/>Match/Game 1 Dom./Home 1</td> MONTREAL CANADIENSMatch/
+    """
+    import re
+
+    team = soup.find('td', class_='teamHeading + border')  # Team for shifts
+    team = team.get_text()
+
+    # Get Home Team
+    teams = soup.find_all('td', {'align': 'center', 'style': 'font-size: 10px;font-weight:bold'})
+    regex = re.compile(r'>(.*)<br/>')
+    home_team = regex.findall(str(teams[7]))
+
+    return [team, home_team[0]]
 
 
 def analyze_shifts(shift, name, team, home_team, player_ids):
@@ -10,35 +32,37 @@ def analyze_shifts(shift, name, team, home_team, player_ids):
     Analyze shifts for each player when using.
     Prior to this each player (in a dictionary) has a list with each entry being a shift.
     This function is only used for the html
-    :param shift: 
-    :param name: 
+    :param shift: info on shift
+    :param name: player name
     :param team: 
     :param home_team:
-    :param player_ids:
+    :param player_ids: dict with info on players
     :return: dict with info for shift
     """
     shifts = dict()
 
     shifts['Player'] = name.upper()
     shifts['Period'] = '4' if shift[1] == 'OT' else shift[1]
-    shifts['Team'] = shared_functions.TEAMS[team.strip(' ')]
-    shifts['Start'] = shared_functions.convert_to_seconds(shift[2].split('/')[0])
-    shifts['End'] = shared_functions.convert_to_seconds(shift[3].split('/')[0])
-    shifts['Duration'] = shared_functions.convert_to_seconds(shift[4].split('/')[0])
+    shifts['Team'] = shared.TEAMS[team.strip(' ')]
+    shifts['Start'] = shared.convert_to_seconds(shift[2].split('/')[0])
+    shifts['End'] = shared.convert_to_seconds(shift[3].split('/')[0])
+    shifts['Duration'] = shared.convert_to_seconds(shift[4].split('/')[0])
 
-    if home_team == team:
-        shifts['Player_Id'] = player_ids['Home'][name.upper()]['id']
-    else:
-        shifts['Player_Id'] = player_ids['Away'][name.upper()]['id']
+    try:
+        if home_team == team:
+            shifts['Player_Id'] = player_ids['Home'][name.upper()]['id']
+        else:
+            shifts['Player_Id'] = player_ids['Away'][name.upper()]['id']
+    except KeyError:
+        shifts['Player_Id'] = ''
 
     return shifts
 
 
-def get_shifts(game_id, players):
+def get_shifts(game_id):
     """
     Given a game_id it returns a DataFrame with the shifts for both teams
     :param game_id: the game
-    :param players: list of players
     :return: DataFrame with all shifts, return None when an exception is thrown when parsing
     http://www.nhl.com/scores/htmlreports/20162017/TV020971.HTM
     """
@@ -46,43 +70,36 @@ def get_shifts(game_id, players):
     home_url = 'http://www.nhl.com/scores/htmlreports/{}{}/TH{}.HTM'.format(game_id[:4], int(game_id[:4])+1, game_id[4:])
     away_url = 'http://www.nhl.com/scores/htmlreports/{}{}/TV{}.HTM'.format(game_id[:4], int(game_id[:4])+1, game_id[4:])
 
-    home = requests.get(home_url)
+    response = requests.Session()
+    retries = Retry(total=5, backoff_factor=.1)
+    response.mount('http://', HTTPAdapter(max_retries=retries))
+
+    home = response.get(home_url)
     home.raise_for_status()
     time.sleep(1)
 
-    away = requests.get(away_url)
+    away = response.get(away_url)
     away.raise_for_status()
     time.sleep(1)
 
-    away_df = parse_html(away, players)
-    home_df = parse_html(home, players)
-
-    game_df = pd.concat([away_df, home_df], ignore_index=True)
-
-    game_df = game_df.sort_values(by=['Period', 'Start'], ascending=[True, True])  # Sort by period and by time
-    game_df = game_df.reset_index(drop=True)
-
-    return game_df
+    return home, away
 
 
 def parse_html(html, player_ids):
     """
     Parse the html
-    :param html: raw html
+    :param html: cleaned up html
     :param player_ids: dict of home and away players
     :return: DataFrame with info
     """
-    columns=['Player', 'Player_Id', 'Period', 'Team', 'Start', 'End', 'Duration']
-    df= pd.DataFrame(columns=columns)
+    columns = ['Player', 'Player_Id', 'Period', 'Team', 'Start', 'End', 'Duration']
+    df = pd.DataFrame(columns=columns)
 
-    soup = BeautifulSoup(html.content, 'html.parser')
-    team = soup.find('td', class_='teamHeading + border')       # Team for shifts
-    team = team.get_text()
+    soup = BeautifulSoup(html.content, "lxml")
 
-    # Get Home Team
-    teams = soup.find_all('td', {'align': 'center', 'style': 'font-size: 10px;font-weight:bold'})
-    home_team = teams[7].get_text()
-    home_team = home_team[:home_team.index('Game')]
+    teams = get_teams(soup)
+    team = teams[0]
+    home_team = teams[1]
 
     td = soup.findAll(True, {'class': ['playerHeading + border', 'lborder + bborder']})
 
@@ -98,6 +115,7 @@ def parse_html(html, player_ids):
             # Just format the name normally...it's coded as: 'num last_name, first_name'
             name = name.split(',')
             name = ' '.join([name[1].strip(' '), name[0][2:].strip(' ')])
+            name = shared.fix_name(name)
             players[name] = dict()
             players[name]['number'] = name[0][:2].strip()
             players[name]['Shifts'] = []
@@ -115,18 +133,25 @@ def parse_html(html, player_ids):
     return df
 
 
-def scrape_game(game_id, player_ids):
+def scrape_game(game_id, players):
     """
     Scrape the game.
     Try the json first, if it's not there do the html (it should be there for all games)
     :param game_id: game
-    :param player_ids: dict of home and away players
+    :param players: list of players
     :return: DataFrame with info for the game
     """
-    game_df = get_shifts(game_id, player_ids)
+    home_html, away_html = get_shifts(game_id)
+
+    away_df = parse_html(away_html, players)
+    home_df = parse_html(home_html, players)
+
+    game_df = pd.concat([away_df, home_df], ignore_index=True)
+
+    game_df = game_df.sort_values(by=['Period', 'Start'], ascending=[True, True])  # Sort by period and by time
+    game_df = game_df.reset_index(drop=True)
 
     return game_df
-
 
 
 

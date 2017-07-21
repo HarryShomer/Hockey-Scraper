@@ -1,8 +1,10 @@
 import pandas as pd
 import requests
+from requests.adapters import HTTPAdapter
+from requests.packages.urllib3.util.retry import Retry
 import json
 import time
-import shared_functions
+import shared
 
 
 def get_pbp(game_id):
@@ -13,10 +15,19 @@ def get_pbp(game_id):
     """
     url = 'http://statsapi.web.nhl.com/api/v1/game/{}/feed/live'.format(game_id)
 
-    response = requests.get(url)
-    response.raise_for_status()
+    try:
+        response = requests.Session()
+        retries = Retry(total=5, backoff_factor=.1)
+        response.mount('http://', HTTPAdapter(max_retries=retries))
 
-    pbp_json = json.loads(response.text)
+        response = response.get(url)
+        response.raise_for_status()
+
+        pbp_json = json.loads(response.text)
+    except requests.exceptions.HTTPError as e:
+        print('Json pbp for game {} is not there'.format(game_id), e)
+        return None
+
     time.sleep(1)
 
     return pbp_json
@@ -26,10 +37,10 @@ def get_teams(json):
     """
     Get teams 
     :param json: pbp json
-    :return: dict with home adn away
+    :return: dict with home and away
     """
-    return {'Home': shared_functions.TEAMS[json['gameData']['teams']['home']['name'].upper()],
-            'Away': shared_functions.TEAMS[json['gameData']['teams']['away']['name'].upper()]}
+    return {'Home': shared.TEAMS[json['gameData']['teams']['home']['name'].upper()],
+            'Away': shared.TEAMS[json['gameData']['teams']['away']['name'].upper()]}
 
 
 def parse_event(event, home_team, away_team):
@@ -44,26 +55,25 @@ def parse_event(event, home_team, away_team):
 
     play['Period'] = event['about']['period']
     play['Event'] = event['result']['eventTypeId']
-    play['Description'] = event['result']['description']
     play['Time_Elapsed'] = event['about']['periodTime']
-    play['Seconds_Elapsed'] = shared_functions.convert_to_seconds(event['about']['periodTime'])
+    play['Seconds_Elapsed'] = shared.convert_to_seconds(event['about']['periodTime'])
     play['Away_Team'] = away_team
     play['Home_Team'] = home_team
 
     # If there's a players key that means an event occurred on the play.
     if 'players' in event.keys():
-        play['Ev_Team'] = shared_functions.TEAMS[event['team']['name'].upper()]
+        play['Ev_Team'] = shared.TEAMS[event['team']['name'].upper()]
 
         # NHL has Ev_Team for blocked shot as team who blocked it...flip it
         if play['Event'] == 'BLOCKED_SHOT':
             play['Ev_Team'] = away_team if play['Ev_Team'] == home_team else home_team
 
-        play['p1_name'] = event['players'][0]['player']['fullName']
+        play['p1_name'] = shared.fix_name(event['players'][0]['player']['fullName'])
         play['p1_ID'] = event['players'][0]['player']['id']
 
         for i in range(len(event['players'])):
             if event['players'][i]['playerType'] != 'Goalie':
-                play['p{}_name'.format(i + 1)] = event['players'][i]['player']['fullName'].upper()
+                play['p{}_name'.format(i + 1)] = shared.fix_name(event['players'][i]['player']['fullName'].upper())
                 play['p{}_ID'.format(i + 1)] = event['players'][i]['player']['id']
 
         """
@@ -86,8 +96,9 @@ def parse_event(event, home_team, away_team):
             play['xC'] = 'Na'
             play['yC'] = 'Na'
 
+    """
     # Sometimes they record events for shots in the wrong zone (or maybe not)...so change it
-    if play['Event'] == 'MISS' or play['Event'] == 'SHOT' or play['Event'] == 'GOAL' or play['Event'] == 'BLOCK':
+    if play['xC'] != 'Na' and play['yC'] != 'Na':
 
         if play['Ev_Team'] == home_team:
             # X should be negative in 1st and 3rd for home_team
@@ -105,6 +116,7 @@ def parse_event(event, home_team, away_team):
             elif play['Period'] == 2 and play['xC'] > 0:
                 play['xC'] = -int(play['xC'])
                 play['yC'] = -int(play['yC'])
+    """
 
     return play
 
@@ -117,29 +129,29 @@ def parse_json(game_json, game_id):
     :return: Either a DataFrame with info for the game 
     """
 
-    columns = ['Game_Id', 'Date', 'Period', 'Event', 'Description', 'Time_Elapsed', 'Seconds_Elapsed', 'Ev_Team'
+    columns = ['Game_Id', 'Date', 'Period', 'Event', 'Time_Elapsed', 'Seconds_Elapsed', 'Ev_Team'
         , 'Away_Team', 'Home_Team', 'p1_name', 'p1_ID', 'p2_name', 'p2_ID', 'p3_name', 'p3_ID', 'xC', 'yC']
 
     away_team = game_json['gameData']['teams']['away']['abbreviation']  # TriCode
     home_team = game_json['gameData']['teams']['home']['abbreviation']  # TriCode
-    date = game_json['gameData']['datetime']['dateTime']
+    date = game_json['liveData']['plays']['allPlays'][0]['about']['dateTime'][:10]
     plays = game_json['liveData']['plays']['allPlays'][2:]  # All the plays/events in a game
 
     # Go through all events and store all the info in a list
-    # 'PERIOD READY' & 'PERIOD OFFICIAL' aren't found in html...so get rid of them
-    events = [parse_event(play, home_team, away_team) for play in plays if (play['result']['eventTypeId'] !=
-                                                                            'PERIOD_READY' and play['result'][
-                                                                            'eventTypeId'] != 'PERIOD_OFFICIAL')]
+    # 'PERIOD READY' & 'PERIOD OFFICIAL'..etc aren't found in html...so get rid of them
+    event_to_ignore = ['PERIOD_READY', 'PERIOD_OFFICIAL', 'GAME_READY', 'GAME_OFFICIAL']
+    events = [parse_event(play, home_team, away_team) for play in plays if play['result']['eventTypeId'] not in
+              event_to_ignore]
     game_df = pd.DataFrame(events, columns=columns)
 
     # Sometimes the dateTime does the next day so just take the date stamped for the first play
-    game_df['Date'] = game_json['liveData']['plays']['allPlays'][0]['about']['dateTime'][:10]
+    game_df['Date'] = date
     game_df['Game_Id'] = game_id
 
     return game_df
 
 
-def scrapeGame(game_id):
+def scrape_game(game_id):
     """
     Used for debugging 
     :param game_id: game to scrape

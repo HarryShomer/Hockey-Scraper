@@ -1,8 +1,10 @@
 import pandas as pd
 import requests
+from requests.adapters import HTTPAdapter
+from requests.packages.urllib3.util.retry import Retry
 import json
 import time
-import shared_functions
+import shared
 
 
 def get_shifts(game_id):
@@ -13,13 +15,17 @@ def get_shifts(game_id):
     """
     url = 'http://www.nhl.com/stats/rest/shiftcharts?cayenneExp=gameId={}'.format(game_id)
 
-    response = requests.get(url)
+    response = requests.Session()
+    retries = Retry(total=5, backoff_factor=.1)
+    response.mount('http://', HTTPAdapter(max_retries=retries))
+
+    response = response.get(url)
     response.raise_for_status()
 
     shift_json = json.loads(response.text)
     time.sleep(1)
 
-    return parse_json(shift_json)
+    return parse_json(shift_json, game_id)
 
 
 def parse_shift(shift):
@@ -29,7 +35,8 @@ def parse_shift(shift):
     :return: dict with shift info
     """
     shift_dict = dict()
-    shift_dict['Player'] = ' '.join([shift['firstName'].strip(' ').upper(), shift['lastName'].strip(' ').upper()])
+    name = shared.fix_name(' '.join([shift['firstName'].strip(' ').upper(), shift['lastName'].strip(' ').upper()]))
+    shift_dict['Player'] = name
     shift_dict['Player_Id'] = shift['playerId']
     shift_dict['Period'] = shift['period']
     shift_dict['Team'] = shift['teamAbbrev']
@@ -37,27 +44,29 @@ def parse_shift(shift):
     # At the end of the json they list when all the goal events happened. They are the only one's which have their
     # eventDescription be not null
     if shift['eventDescription'] is None:
-        shift_dict['Start'] = shared_functions.convert_to_seconds(shift['startTime'])
-        shift_dict['End'] = shared_functions.convert_to_seconds(shift['endTime'])
-        shift_dict['Duration'] = shared_functions.convert_to_seconds(shift['duration'])
+        shift_dict['Start'] = shared.convert_to_seconds(shift['startTime'])
+        shift_dict['End'] = shared.convert_to_seconds(shift['endTime'])
+        shift_dict['Duration'] = shared.convert_to_seconds(shift['duration'])
     else:
-        shift_dict={}
+        shift_dict = dict()
 
     return shift_dict
 
 
-def parse_json(json):
+def parse_json(json, game_id):
     """
     Parse the json
     :param json: raw json
+    :param game_id:
     :return: DataFrame with info
     """
-    columns = ['Player', 'Player_Id', 'Period', 'Team', 'Start', 'End', 'Duration']
+    columns = ['Game_Id', 'Period', 'Team', 'Player', 'Player_Id', 'Start', 'End', 'Duration']
 
-    shifts = [parse_shift(shift) for shift in json['data']]       # Go through the shifts
-    shifts = [shift for shift in shifts if shift != {}]  # Get rid of null shifts (which happen at end)
+    shifts = [parse_shift(shift) for shift in json['data']]     # Go through the shifts
+    shifts = [shift for shift in shifts if shift != {}]         # Get rid of null shifts (which happen at end)
 
     df = pd.DataFrame(shifts, columns=columns)
+    df['Game_Id'] = game_id
     df = df.sort_values(by=['Period', 'Start'], ascending=[True, True])  # Sort by period by time
     df = df.reset_index(drop=True)
 

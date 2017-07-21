@@ -1,8 +1,10 @@
 import pandas as pd
 from bs4 import BeautifulSoup
 import requests
+from requests.adapters import HTTPAdapter
+from requests.packages.urllib3.util.retry import Retry
 import time
-import shared_functions
+import shared
 
 
 def event_type(play_description):
@@ -11,8 +13,8 @@ def event_type(play_description):
     :param play_description: 
     :return: 
     """
-    events = {'Goal scored': 'GOAL', 'Shot on goal': 'SHOT', 'Shot missed': 'MISS', 'shot blocked': 'BLOCK', 'Penalty': 'PENL',
-              'faceoff': 'FAC', 'hit': 'HIT',  'Takeaway': 'TAKE', 'Giveaway': 'GIVE', }
+    events = {'Goal scored': 'GOAL', 'Shot on goal': 'SHOT', 'Shot missed': 'MISS', 'shot blocked': 'BLOCK',
+              'Penalty': 'PENL', 'faceoff': 'FAC', 'hit': 'HIT',  'Takeaway': 'TAKE', 'Giveaway': 'GIVE', }
 
     event = [events[e] for e in events.keys() if e in play_description]
     return event[0] if event else None
@@ -27,7 +29,12 @@ def get_espn_game_id(date, home_team, away_team):
     :return: 9 digit game id
     """
     url = 'http://www.espn.com/nhl/scoreboard?date={}'.format(date.replace('-', ''))
-    response = requests.get(url)
+
+    response = requests.Session()
+    retries = Retry(total=5, backoff_factor=.1)
+    response.mount('http://', HTTPAdapter(max_retries=retries))
+
+    response = response.get(url)
     response.raise_for_status()
     time.sleep(1)
 
@@ -45,10 +52,10 @@ def get_espn_game_id(date, home_team, away_team):
         index += 2
 
     # Get teams for each game
-    soup = BeautifulSoup(response.content, 'html.parser')
+    soup = BeautifulSoup(response.content, 'lxml')
     teams = soup.findAll('td', class_='team')
     teams = [t.get_text() for t in teams if t.get_text() != '']  # Get Rid of blanks between pair of teams
-    teams = [shared_functions.TEAMS[t.upper()] for t in teams]   # Get Tricode
+    teams = [shared.TEAMS[t.upper()] for t in teams]             # Get Tricode
     games = [teams[i:i + 2] for i in range(0, len(teams), 2)]    # Make a list of both teams for each game
 
     for i in range(len(games)):
@@ -71,7 +78,7 @@ def get_espn(date, home_team, away_team):
     response.raise_for_status()
     time.sleep(1)
 
-    return parse_espn(response)
+    return response
 
 
 def parse_event(event):
@@ -87,7 +94,7 @@ def parse_event(event):
 
     info['xC'] = fields[0]
     info['yC'] = fields[1]
-    info['time_elapsed'] = shared_functions.convert_to_seconds(fields[3])
+    info['time_elapsed'] = shared.convert_to_seconds(fields[3])
     info['period'] = fields[4]
     info['event'] = event_type(fields[8])
 
@@ -124,7 +131,14 @@ def scrape_game(date, home_team, away_team):
         print('Espn pbp for game {a} {b} {c} is not there'.format(a=date, b=home_team, c=away_team), e)
         return None
 
-    return parse_espn(espn_xml)
+    espn_df = parse_espn(espn_xml)
+    try:
+        s=9
+    except Exception as e:
+        print('Error for Espn pbp for game {a} {b} {c} is not there'.format(a=date, b=home_team, c=away_team), e)
+        return None
+
+    return espn_df
 
 
 # get_espn('2016-10-24', 'MTL', 'PHI') -> Used for Debugging

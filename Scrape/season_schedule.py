@@ -1,4 +1,6 @@
 import requests
+from requests.adapters import HTTPAdapter
+from requests.packages.urllib3.util.retry import Retry
 import json
 import time
 
@@ -9,9 +11,13 @@ def get_schedule(year):
     :param year: given year
     :return: raw json of schedule 
     """
-    url = 'https://statsapi.web.nhl.com/api/v1/schedule?startDate={a}-10-01&endDate={b}-06-20'.format(a=year, b=year+1)
+    url = 'https://statsapi.web.nhl.com/api/v1/schedule?startDate={a}-10-01&endDate={b}-06-20'.format(a=year, b=str(year+1))
 
-    response = requests.get(url)
+    response = requests.Session()
+    retries = Retry(total=5, backoff_factor=.1)
+    response.mount('http://', HTTPAdapter(max_retries=retries))
+
+    response = response.get(url)
     response.raise_for_status()
 
     schedule_json = json.loads(response.text)
@@ -31,7 +37,7 @@ def scrape_schedule(year):
     schedule_json=get_schedule(year)
     for day in schedule_json['dates']:
         for game in day['games']:
-            schedule.extend([game['gamePk'], day['date']])
+            schedule.append([game['gamePk'], day['date']])
 
     return schedule
 

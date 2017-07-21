@@ -1,5 +1,7 @@
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, SoupStrainer
 import requests
+from requests.adapters import HTTPAdapter
+from requests.packages.urllib3.util.retry import Retry
 import time
 
 
@@ -12,7 +14,11 @@ def get_roster(game_id):
     game_id = str(game_id)
     url = 'http://www.nhl.com/scores/htmlreports/{}{}/RO{}.HTM'.format(game_id[:4], int(game_id[:4]) + 1, game_id[4:])
 
-    response = requests.get(url)
+    response = requests.Session()
+    retries = Retry(total=5, backoff_factor=.1)
+    response.mount('http://', HTTPAdapter(max_retries=retries))
+
+    response = response.get(url)
     response.raise_for_status()
     time.sleep(1)
 
@@ -91,8 +97,13 @@ def get_players(soup):
     home_players = home_starters + home_scratches
 
     # For those with (A) or (C) in name field get rid of it
-    players['Away'] = [fix_name(i) if i[2].find('(') != -1 else i for i in away_players]
-    players['Home'] = [fix_name(i) if i[2].find('(') != -1 else i for i in home_players]
+    # first condition is to control when we get whitespace as one of the indices
+    players['Away'] = [fix_name(i) if i[0] != '\xa0' and i[2].find('(') != -1 else i for i in away_players]
+    players['Home'] = [fix_name(i) if i[0] != '\xa0' and i[2].find('(') != -1 else i for i in home_players]
+
+    # Get rid when just whitespace
+    players['Away'] = [i for i in away_players if i[0] != '\xa0']
+    players['Home'] = [i for i in home_players if i[0] != '\xa0']
 
     return players
 
@@ -103,14 +114,21 @@ def scrape_roster(game_id):
     :param game_id: 
     :return: dict of players (home and away) an dict for both head coaches 
     """
+
     try:
         roster = get_roster(game_id)
     except requests.exceptions.HTTPError as e:
-        print('Roster for game {} is not there'.format(game_id), e)
+        print('Roster for game {} is not there'.format(game_id))
         raise Exception
 
-    soup = BeautifulSoup(roster.content, 'html.parser')
-    players = get_players(soup)
-    head_coaches = get_coaches(soup)
+    try:
+        soup = BeautifulSoup(roster.content, "html.parser")
+        players = get_players(soup)
+        head_coaches = get_coaches(soup)
+    except Exception as e:
+        print('Problem with playing roster for game {}'.format(game_id), e)
+        raise Exception
 
     return {'players': players, 'head_coaches': head_coaches}
+
+
