@@ -17,10 +17,10 @@ def get_pbp(game_id):
     url = 'http://www.nhl.com/scores/htmlreports/{}{}/PL{}.HTM'.format(game_id[:4], int(game_id[:4]) + 1, game_id[4:])
 
     response = requests.Session()
-    retries = Retry(total=5, backoff_factor=.1)
+    retries = Retry(total=10, backoff_factor=.1)
     response.mount('http://', HTTPAdapter(max_retries=retries))
 
-    response = response.get(url)
+    response = response.get(url, timeout=5)
     response.raise_for_status()
 
     return response
@@ -102,7 +102,7 @@ def if_valid_event(event):
     :return: boolean -True or False
     """
 
-    if event[4] != 'GOFF' and event[0] != '#':
+    if event[4] != 'GOFF' and event[0] != '#' and event[4] != 'CHL':
         return True
     else:
         return False
@@ -183,11 +183,16 @@ def strip_html_pbp(td):
             players = []
             for i in range(len(bar)):
                 if i % 3 == 0:
-                    name = return_name_html(bar[i].find('font')['title'])
-                    number = bar[i].get_text().strip('\n')  # Get number and strip leading/trailing endlines
+                    try:
+                        name = return_name_html(bar[i].find('font')['title'])
+                        number = bar[i].get_text().strip('\n')  # Get number and strip leading/trailing endlines
+                    except KeyError:
+                        name=''
+                        number=''
                 elif i % 3 == 1:
-                    position = bar[i].get_text()
-                    players.append([name, number, position])
+                    if name != '':
+                        position = bar[i].get_text()
+                        players.append([name, number, position])
 
             td[y] = players
         else:
@@ -342,18 +347,20 @@ def parse_event(event, players, home_team, if_plays_in_json, current_score):
     :param if_plays_in_json: If the pbp json contains the plays
     :param current_score: current score for both teams
     :return: dict with info
-    
-    
-    columns = ['Game_Id', 'Date', 'Period','Time_Elapsed', 'Seconds_Elapsed', 'Ev_Team' , 'Away_Team', 'Home_Team',] 
     """
+    event_dict = dict()
+
     away_players = event[6]
     home_players = event[7]
 
-    event_dict = dict()
+    try:
+        event_dict['Period'] = int(event[1])
+    except ValueError:
+        event_dict['Period'] = 0
 
     event_dict['Description'] = event[5]
+    event_dict['Event'] = str(event[4])
 
-    event_dict['Event'] = event[4]
     if event_dict['Event'] in ['GOAL', 'SHOT', 'MISS', 'BLOCK', 'PENL', 'FAC', 'HIT', 'TAKE', 'GIVE']:
         event_dict['Ev_Team'] = event[5].split()[0]  # Split the description and take the first thing (which is the team)
 
@@ -417,52 +424,59 @@ def parse_event(event, players, home_team, if_plays_in_json, current_score):
     else:
         event_dict['Type'] = shot_type(event[5]).upper()
 
+    event_dict['Time_Elapsed'] = str(event[3])
+
+    if event[3] != '':
+        event_dict['Seconds_Elapsed'] = shared.convert_to_seconds(event[3])
+    else:
+        event_dict['Seconds_Elapsed'] = ''
+
+    # I like getting the event players from the json
     if not if_plays_in_json:
-        event_dict['Period'] = event[1]
-        event_dict['Time_Elapsed'] = event[3]
-
-        if event[3] != '':
-            event_dict['Seconds_Elapsed'] = shared.convert_to_seconds(event[3])
-        else:
-            event_dict['Seconds_Elapsed']=''
-
         if event_dict['Event'] in ['GOAL', 'SHOT', 'MISS', 'BLOCK', 'PENL', 'FAC', 'HIT', 'TAKE', 'GIVE']:
             event_dict.update(get_event_players(event, players, home_team))  # Add players involves in event
 
     return [event_dict, current_score]
 
 
-def parse_html(html, players, home_team, if_plays_in_json):
+def parse_html(html, players, teams, if_plays_in_json):
     """
     Parse html game pbp
     :param html: 
     :param players: players in the game (from json pbp)
-    :param home_team:
+    :param teams: dict with home and away teams
     :param if_plays_in_json: If the pbp json contains the plays
-    :return: 
+    :return: DataFrame with info
     """
 
     if if_plays_in_json:
-        columns = ['Event', 'Type', 'Description', 'Strength', 'Ev_Zone', 'awayPlayer1', 'awayPlayer1_id', 'awayPlayer2',
-                   'awayPlayer2_id', 'awayPlayer3', 'awayPlayer3_id', 'awayPlayer4', 'awayPlayer4_id', 'awayPlayer5',
-                   'awayPlayer5_id', 'awayPlayer6', 'awayPlayer6_id', 'homePlayer1', 'homePlayer1_id', 'homePlayer2',
-                   'homePlayer2_id', 'homePlayer3', 'homePlayer3_id', 'homePlayer4', 'homePlayer4_id', 'homePlayer5',
-                   'homePlayer5_id', 'homePlayer6', 'homePlayer6_id', 'Away_Goalie', 'Home_Goalie',  'Away_Skaters',
-                   'Home_Skaters', 'Home_Score', 'Away_Score']
+        columns = ['Period', 'Event', 'Description', 'Time_Elapsed', 'Seconds_Elapsed', 'Strength', 'Ev_Zone', 'Type',
+                   'Ev_Team', 'Away_Team', 'Home_Team', 'awayPlayer1', 'awayPlayer1_id', 'awayPlayer2', 'awayPlayer2_id',
+                   'awayPlayer3', 'awayPlayer3_id', 'awayPlayer4', 'awayPlayer4_id', 'awayPlayer5', 'awayPlayer5_id',
+                   'awayPlayer6', 'awayPlayer6_id', 'homePlayer1', 'homePlayer1_id', 'homePlayer2', 'homePlayer2_id',
+                   'homePlayer3', 'homePlayer3_id', 'homePlayer4', 'homePlayer4_id', 'homePlayer5', 'homePlayer5_id',
+                   'homePlayer6', 'homePlayer6_id', 'Away_Goalie', 'Home_Goalie', 'Away_Skaters', 'Home_Skaters',
+                   'Away_Score', 'Home_Score']
     else:
         columns = ['Period', 'Event', 'Description', 'Time_Elapsed', 'Seconds_Elapsed', 'Strength', 'Ev_Zone', 'Type',
-                   'Ev_Team', 'p1_name', 'p1_ID', 'p2_name', 'p2_ID', 'p3_name', 'p3_ID', 'awayPlayer1',
-                   'awayPlayer1_id', 'awayPlayer2', 'awayPlayer2_id', 'awayPlayer3', 'awayPlayer3_id', 'awayPlayer4',
-                   'awayPlayer4_id', 'awayPlayer5', 'awayPlayer5_id', 'awayPlayer6', 'awayPlayer6_id', 'homePlayer1',
-                   'homePlayer1_id', 'homePlayer2', 'homePlayer2_id', 'homePlayer3', 'homePlayer3_id', 'homePlayer4',
-                   'homePlayer4_id', 'homePlayer5', 'homePlayer5_id', 'homePlayer6', 'homePlayer6_id', 'Away_Goalie',
-                   'Home_Goalie', 'Away_Skaters', 'Home_Skaters', 'Home_Score', 'Away_Score']
+                   'Ev_Team', 'Away_Team', 'Home_Team', 'p1_name', 'p1_ID', 'p2_name', 'p2_ID', 'p3_name', 'p3_ID',
+                   'awayPlayer1', 'awayPlayer1_id', 'awayPlayer2', 'awayPlayer2_id', 'awayPlayer3', 'awayPlayer3_id',
+                   'awayPlayer4', 'awayPlayer4_id', 'awayPlayer5', 'awayPlayer5_id', 'awayPlayer6', 'awayPlayer6_id',
+                   'homePlayer1', 'homePlayer1_id', 'homePlayer2', 'homePlayer2_id', 'homePlayer3', 'homePlayer3_id',
+                   'homePlayer4', 'homePlayer4_id', 'homePlayer5', 'homePlayer5_id', 'homePlayer6', 'homePlayer6_id',
+                   'Away_Goalie', 'Home_Goalie', 'Away_Skaters', 'Home_Skaters', 'Away_Score', 'Home_Score']
 
     current_score = {'Home': 0, 'Away': 0}
-    events, current_score = zip(*(parse_event(event, players, home_team, if_plays_in_json, current_score)
+    events, current_score = zip(*(parse_event(event, players, teams['Home'], if_plays_in_json, current_score)
                                   for event in html if if_valid_event(event)))
+    df = pd.DataFrame(list(events), columns=columns)
 
-    return pd.DataFrame(list(events), columns=columns)
+    df.drop(df[df.Time_Elapsed == '-16:0-'].index, inplace=True)       # This is seen sometimes...it's a duplicate row
+
+    df['Away_Team'] = teams['Away']
+    df['Home_Team'] = teams['Home']
+
+    return df
 
 
 def scrape_game(game_id, players, teams, if_plays_in_json):
@@ -476,12 +490,12 @@ def scrape_game(game_id, players, teams, if_plays_in_json):
     """
     try:
         game_html = get_pbp(game_id)
-    except requests.exceptions.HTTPError as e:
-        print('Html pbp for game {} is not there'.format(game_id), e)
+    except Exception as e:
+        print('Problem with getting html pbp for game {}'.format(game_id), e)
         return None
-
+    game_df = parse_html(clean_html_pbp(game_html), players, teams, if_plays_in_json)
     try:
-        game_df = parse_html(clean_html_pbp(game_html), players, teams['Home'], if_plays_in_json)
+        game_df = parse_html(clean_html_pbp(game_html), players, teams, if_plays_in_json)
     except Exception as e:
         print('Error for Html pbp for game {}'.format(game_id), e)
         return None

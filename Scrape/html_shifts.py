@@ -71,28 +71,31 @@ def get_shifts(game_id):
     away_url = 'http://www.nhl.com/scores/htmlreports/{}{}/TV{}.HTM'.format(game_id[:4], int(game_id[:4])+1, game_id[4:])
 
     response = requests.Session()
-    retries = Retry(total=5, backoff_factor=.1)
+    retries = Retry(total=10, backoff_factor=.1)
     response.mount('http://', HTTPAdapter(max_retries=retries))
-
-    home = response.get(home_url)
+    home = response.get(home_url, timeout=5)
     home.raise_for_status()
     time.sleep(1)
 
-    away = response.get(away_url)
+    response = requests.Session()
+    retries = Retry(total=10, backoff_factor=.1)
+    response.mount('http://', HTTPAdapter(max_retries=retries))
+    away = response.get(away_url, timeout=5)
     away.raise_for_status()
     time.sleep(1)
 
     return home, away
 
 
-def parse_html(html, player_ids):
+def parse_html(html, player_ids, game_id):
     """
     Parse the html
     :param html: cleaned up html
     :param player_ids: dict of home and away players
+    :param game_id:
     :return: DataFrame with info
     """
-    columns = ['Player', 'Player_Id', 'Period', 'Team', 'Start', 'End', 'Duration']
+    columns = ['Game_Id', 'Player', 'Player_Id', 'Period', 'Team', 'Start', 'End', 'Duration']
     df = pd.DataFrame(columns=columns)
 
     soup = BeautifulSoup(html.content, "lxml")
@@ -130,6 +133,7 @@ def parse_html(html, player_ids):
         shifts = [analyze_shifts(shift, key, team, home_team, player_ids) for shift in players[key]['Shifts']]
         df = df.append(shifts, ignore_index=True)
 
+    df['Game_Id'] = str(game_id)
     return df
 
 
@@ -143,8 +147,8 @@ def scrape_game(game_id, players):
     """
     home_html, away_html = get_shifts(game_id)
 
-    away_df = parse_html(away_html, players)
-    home_df = parse_html(home_html, players)
+    away_df = parse_html(away_html, players, game_id)
+    home_df = parse_html(home_html, players, game_id)
 
     game_df = pd.concat([away_df, home_df], ignore_index=True)
 

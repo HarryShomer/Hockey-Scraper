@@ -17,12 +17,9 @@ def get_pbp(game_id):
 
     try:
         response = requests.Session()
-        retries = Retry(total=5, backoff_factor=.1)
+        retries = Retry(total=10, backoff_factor=.1)
         response.mount('http://', HTTPAdapter(max_retries=retries))
-
-        response = response.get(url)
-        response.raise_for_status()
-
+        response = response.get(url, timeout=5)
         pbp_json = json.loads(response.text)
     except requests.exceptions.HTTPError as e:
         print('Json pbp for game {} is not there'.format(game_id), e)
@@ -31,6 +28,40 @@ def get_pbp(game_id):
     time.sleep(1)
 
     return pbp_json
+
+
+def change_event_name(event):
+    """
+    Change event names from json style to html
+    ex: BLOCKED_SHOT to BLOCK
+    :param event: event type
+    :return: fixed event type
+    EVENT_TYPES = {'EISTR': 'Early Intermission Start',
+                   'EIEND': 'Early Intermission End', 'SOC': 'Shootout Completed', 'GOFF': '', 'CHL': 'Challenge'}
+    """
+    event_types ={
+        'PERIOD_START': 'PSTR',
+        'FACEOFF': 'FAC',
+        'BLOCKED_SHOT': 'BLOCK',
+        'GAME_END': 'GEND',
+        'GIVEAWAY': 'GIVE',
+        'GOAL': 'GOAL',
+        'HIT': 'HIT',
+        'MISSED_SHOT': 'MISS',
+        'PERIOD_END': 'PEND',
+        'SHOT': 'SHOT',
+        'STOP': 'STOP',
+        'TAKEAWAY': 'TAKE',
+        'PENALTY': 'PENL',
+        'Early Intermission Start': 'EISTR',
+        'Early Intermission End': 'EIEND',
+        'Shootout Completed': 'SOC',
+    }
+
+    try:
+        return event_types[event]
+    except KeyError:
+        return event
 
 
 def get_teams(json):
@@ -43,31 +74,20 @@ def get_teams(json):
             'Away': shared.TEAMS[json['gameData']['teams']['away']['name'].upper()]}
 
 
-def parse_event(event, home_team, away_team):
+def parse_event(event):
     """
     Parses a single event when the info is in a json format
-    :param event: json of event
-    :param home_team: 
-    :param away_team: 
+    :param event: json of event 
     :return: dictionary with the info
     """
     play = dict()
 
-    play['Period'] = event['about']['period']
-    play['Event'] = event['result']['eventTypeId']
-    play['Time_Elapsed'] = event['about']['periodTime']
-    play['Seconds_Elapsed'] = shared.convert_to_seconds(event['about']['periodTime'])
-    play['Away_Team'] = away_team
-    play['Home_Team'] = home_team
+    play['period'] = event['about']['period']
+    play['event'] = str(change_event_name(event['result']['eventTypeId']))
+    play['seconds_elapsed'] = shared.convert_to_seconds(event['about']['periodTime'])
 
     # If there's a players key that means an event occurred on the play.
     if 'players' in event.keys():
-        play['Ev_Team'] = shared.TEAMS[event['team']['name'].upper()]
-
-        # NHL has Ev_Team for blocked shot as team who blocked it...flip it
-        if play['Event'] == 'BLOCKED_SHOT':
-            play['Ev_Team'] = away_team if play['Ev_Team'] == home_team else home_team
-
         play['p1_name'] = shared.fix_name(event['players'][0]['player']['fullName'])
         play['p1_ID'] = event['players'][0]['player']['id']
 
@@ -75,18 +95,6 @@ def parse_event(event, home_team, away_team):
             if event['players'][i]['playerType'] != 'Goalie':
                 play['p{}_name'.format(i + 1)] = shared.fix_name(event['players'][i]['player']['fullName'].upper())
                 play['p{}_ID'.format(i + 1)] = event['players'][i]['player']['id']
-
-        """
-        # If it's a penalty include the type->minor/double/major...etc
-        if play['Event'] == 'PENALTY':
-            play['Type'] = '-'.join([event['result']['secondaryType'], event['result']['penaltySeverity']])
-        else:
-            try:
-                play['Type'] = event['result'][
-                    'secondaryType'].upper()  # Events like Faceoffs don't have secondaryType's
-            except KeyError:
-                play['Type'] = ''
-        """
 
         # Coordinates aren't always there
         try:
@@ -121,40 +129,29 @@ def parse_event(event, home_team, away_team):
     return play
 
 
-def parse_json(game_json, game_id):
+def parse_json(game_json):
     """
     Scrape the json for a game
     :param game_json: raw json
-    :param game_id: 
     :return: Either a DataFrame with info for the game 
     """
+    columns = ['period', 'event', 'seconds_elapsed', 'p1_name', 'p1_ID', 'p2_name', 'p2_ID', 'p3_name', 'p3_ID', 'xC', 'yC']
 
-    columns = ['Game_Id', 'Date', 'Period', 'Event', 'Time_Elapsed', 'Seconds_Elapsed', 'Ev_Team'
-        , 'Away_Team', 'Home_Team', 'p1_name', 'p1_ID', 'p2_name', 'p2_ID', 'p3_name', 'p3_ID', 'xC', 'yC']
-
-    away_team = game_json['gameData']['teams']['away']['abbreviation']  # TriCode
-    home_team = game_json['gameData']['teams']['home']['abbreviation']  # TriCode
-    date = game_json['liveData']['plays']['allPlays'][0]['about']['dateTime'][:10]
     plays = game_json['liveData']['plays']['allPlays'][2:]  # All the plays/events in a game
 
     # Go through all events and store all the info in a list
     # 'PERIOD READY' & 'PERIOD OFFICIAL'..etc aren't found in html...so get rid of them
     event_to_ignore = ['PERIOD_READY', 'PERIOD_OFFICIAL', 'GAME_READY', 'GAME_OFFICIAL']
-    events = [parse_event(play, home_team, away_team) for play in plays if play['result']['eventTypeId'] not in
-              event_to_ignore]
-    game_df = pd.DataFrame(events, columns=columns)
+    events = [parse_event(play) for play in plays if play['result']['eventTypeId'] not in event_to_ignore]
 
-    # Sometimes the dateTime does the next day so just take the date stamped for the first play
-    game_df['Date'] = date
-    game_df['Game_Id'] = game_id
-
-    return game_df
+    return pd.DataFrame(events, columns=columns)
 
 
-def scrape_game(game_id):
+def scrape_game(game_id, date):
     """
     Used for debugging 
     :param game_id: game to scrape
+    :param date: '2016-10-24'
     :return: DataFrame of game info
     """
     try:
@@ -164,7 +161,7 @@ def scrape_game(game_id):
         return None
 
     try:
-        game_df = parse_json(game_json, game_id)
+        game_df = parse_json(game_json)
     except Exception as e:
         print('Error for Json pbp for game {}'.format(game_id), e)
         return None

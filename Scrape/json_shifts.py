@@ -16,15 +16,13 @@ def get_shifts(game_id):
     url = 'http://www.nhl.com/stats/rest/shiftcharts?cayenneExp=gameId={}'.format(game_id)
 
     response = requests.Session()
-    retries = Retry(total=5, backoff_factor=.1)
+    retries = Retry(total=10, backoff_factor=.1)
     response.mount('http://', HTTPAdapter(max_retries=retries))
-
-    response = response.get(url)
+    response = response.get(url, timeout=5)
     response.raise_for_status()
-
-    shift_json = json.loads(response.text)
     time.sleep(1)
 
+    shift_json = json.loads(response.text)
     return parse_json(shift_json, game_id)
 
 
@@ -66,7 +64,7 @@ def parse_json(json, game_id):
     shifts = [shift for shift in shifts if shift != {}]         # Get rid of null shifts (which happen at end)
 
     df = pd.DataFrame(shifts, columns=columns)
-    df['Game_Id'] = game_id
+    df['Game_Id'] = str(game_id)
     df = df.sort_values(by=['Period', 'Start'], ascending=[True, True])  # Sort by period by time
     df = df.reset_index(drop=True)
 

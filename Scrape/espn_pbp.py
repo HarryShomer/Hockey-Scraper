@@ -7,14 +7,17 @@ import time
 import shared
 
 
+espn_schedule_retries = 0
+
+
 def event_type(play_description):
     """
     Returns the event type (ex: a SHOT or a GOAL...etc) given the event description 
     :param play_description: 
     :return: 
     """
-    events = {'Goal scored': 'GOAL', 'Shot on goal': 'SHOT', 'Shot missed': 'MISS', 'shot blocked': 'BLOCK',
-              'Penalty': 'PENL', 'faceoff': 'FAC', 'hit': 'HIT',  'Takeaway': 'TAKE', 'Giveaway': 'GIVE', }
+    events = {'GOAL SCORED': 'GOAL', 'SHOT ON GOAL': 'SHOT', 'SHOT MISSED': 'MISS', 'SHOT BLOCKED': 'BLOCK',
+                  'PENALTY': 'PENL', 'FACEOFF': 'FAC', 'HIT': 'HIT', 'TAKEAWAY': 'TAKE', 'GIVEAWAY': 'GIVE'}
 
     event = [events[e] for e in events.keys() if e in play_description]
     return event[0] if event else None
@@ -28,28 +31,19 @@ def get_espn_game_id(date, home_team, away_team):
     :param away_team: 
     :return: 9 digit game id
     """
+    import re
+
     url = 'http://www.espn.com/nhl/scoreboard?date={}'.format(date.replace('-', ''))
 
     response = requests.Session()
-    retries = Retry(total=5, backoff_factor=.1)
+    retries = Retry(total=10, backoff_factor=.1)
     response.mount('http://', HTTPAdapter(max_retries=retries))
 
-    response = response.get(url)
+    response = response.get(url, timeout =5)
     response.raise_for_status()
-    time.sleep(1)
 
-    text = response.text
-
-    index = 0
-    game_ids = []
-
-    # Find all game id's
-    while index < len(response.text):
-        index = response.text.find('/nhl/recap?gameId=', index)
-        if index == -1:
-            break
-        game_ids.append(text[index + 18:index + 27])  # Move to end of substring and get game id
-        index += 2
+    regex = re.compile(r'/nhl/recap\?gameId=(\d+)')
+    game_ids = regex.findall(response.text)
 
     # Get teams for each game
     soup = BeautifulSoup(response.content, 'lxml')
@@ -74,7 +68,11 @@ def get_espn(date, home_team, away_team):
     game_id = get_espn_game_id(date, home_team.upper(), away_team.upper())
     url = 'http://www.espn.com/nhl/gamecast/data/masterFeed?lang=en&isAll=true&gameId={}'.format(game_id)
 
-    response = requests.get(url)
+    response = requests.Session()
+    retries = Retry(total=10, backoff_factor=.1)
+    response.mount('http://', HTTPAdapter(max_retries=retries))
+
+    response = response.get(url, timeout=5)
     response.raise_for_status()
     time.sleep(1)
 
@@ -92,11 +90,15 @@ def parse_event(event):
     info = dict()
     fields = event.split('~')
 
+    # Shootouts screw everything up so don't bother...coordinates don't matter here either way
+    if fields[4] == '5':
+        return None
+
     info['xC'] = fields[0]
     info['yC'] = fields[1]
     info['time_elapsed'] = shared.convert_to_seconds(fields[3])
     info['period'] = fields[4]
-    info['event'] = event_type(fields[8])
+    info['event'] = event_type(fields[8].upper())
 
     return info
 
@@ -113,6 +115,7 @@ def parse_espn(espn_xml):
 
     columns = ['period', 'time_elapsed', 'event', 'xC', 'yC']
     plays = [parse_event(event.text) for event in events]
+    plays = [play for play in plays if play is not None]
 
     return pd.DataFrame(plays, columns=columns)
 
@@ -126,14 +129,14 @@ def scrape_game(date, home_team, away_team):
     :return: dataframe with info 
     """
     try:
+        print('Using espn for pbp')
         espn_xml = get_espn(date, home_team, away_team)
-    except requests.exceptions.HTTPError as e:
+    except Exception as e:
         print('Espn pbp for game {a} {b} {c} is not there'.format(a=date, b=home_team, c=away_team), e)
         return None
 
-    espn_df = parse_espn(espn_xml)
     try:
-        s=9
+        espn_df = parse_espn(espn_xml)
     except Exception as e:
         print('Error for Espn pbp for game {a} {b} {c} is not there'.format(a=date, b=home_team, c=away_team), e)
         return None

@@ -14,14 +14,13 @@ def get_schedule(year):
     url = 'https://statsapi.web.nhl.com/api/v1/schedule?startDate={a}-10-01&endDate={b}-06-20'.format(a=year, b=str(year+1))
 
     response = requests.Session()
-    retries = Retry(total=5, backoff_factor=.1)
+    retries = Retry(total=10, backoff_factor=.1)
     response.mount('http://', HTTPAdapter(max_retries=retries))
-
-    response = response.get(url)
+    response = response.get(url, timeout=5)
     response.raise_for_status()
+    time.sleep(1)
 
     schedule_json = json.loads(response.text)
-    time.sleep(1)
 
     return schedule_json
 

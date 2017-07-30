@@ -89,7 +89,47 @@ Names = {'n/a': 'n/a', 'ALEXANDER OVECHKIN': 'Alex Ovechkin', 'TOBY ENSTROM': 'T
          'HARRISON ZOLNIERCZYK': 'Harry Zolnierczyk', 'MARTIN ST PIERRE': 'Martin St. Pierre',
          'DENIS GAUTHIER JR.': 'Denis Gauthier Jr.', 'MARC-ANDRE FLEURY': 'Marc-Andre Fleury', 'DAN LACOUTURE': 'Dan LaCouture',
          'RICK DIPIETRO': 'Rick DiPietro', 'JOEY MACDONALD': 'Joey MacDonald', 'B.J CROMBEEN': 'BJ Crombeen',
-         'TIMOTHY JR. THOMAS': 'Tim Thomas', 'ILJA BRYZGALOV': 'Ilya Bryzgalov'}
+         'TIMOTHY JR. THOMAS': 'Tim Thomas', 'ILJA BRYZGALOV': 'Ilya Bryzgalov', 'MATHEW DUMBA': 'Matt Dumba',
+         'MICHAËL BOURNIVAL': 'Michael Bournival'}
+
+"""
+Needs to be fixed:
+
+['11', 'C', 'BRADLEY MILLS']
+['25', 'D', 'ANDY SUTTON']
+['22', 'D', 'MIKE COMMODORE']
+['4', 'L', 'TAYLOR HALL']
+['4', 'D', 'CLAYTON STONER']
+['0', 'R', 'MICHAEL SISLO']
+['36', 'C', 'JONATHAN AUDY-MARCHESSAULT']
+['17', 'C', 'ALEXANDER KILLORN']
+['70', 'D', 'JOSEPH MORROW']
+['13', 'C', 'NICK BONINO']
+['20', 'C', 'ALEX STEEN']
+['70', 'D', 'JOSEPH MORROW']
+['43', 'D', 'CHRISTOPHER BREEN']
+['84', 'C', 'PHILIP VARONE']
+['0', 'L', 'BRYCE VAN BRABRANT']
+['10', 'C', 'MICHAEL SANTORELLI']
+['10', 'D', 'CHRISTIAN EHRHOFF']
+['27', 'R', 'CRAIG ADAMS']
+['79', 'L', 'MICHAEL FERLAND']
+['46', 'D', 'JARED SPURGEON']
+['19', 'C', 'NICOLAS PETAN']
+['48', 'C', 'VINCENT HINOSTROZA']
+['80', 'D', 'MATT TENNYSON']
+['18', 'C', 'JAY MCCLEMENT']
+['36', 'D', 'JOSHUA MORRISSEY']
+['46', 'D', 'JAKUB KINDL']
+['87', 'D', 'MAT BODIE']
+['83', 'D', 'MATTHEW BENNING']
+['46', 'L', 'AJ GREER']
+['4', 'D', 'ADAM CLENDENING']
+['17', 'R', 'ANTON RODIN']
+['37', 'L', 'JT COMPHER']
+['23', 'C', 'SAM REINHART']
+
+"""
 
 
 def fix_name(name):
@@ -111,6 +151,9 @@ def convert_to_seconds(minutes):
     :param minutes: time remaining
     :return: time elapsed in seconds
     """
+    if minutes == '-16:0-':
+        return '1200'      # Sometimes in the html at the end of the game the time is -16:0-
+
     import datetime
     x = time.strptime(minutes.strip(' '), '%M:%S')
 

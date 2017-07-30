@@ -1,8 +1,7 @@
-from bs4 import BeautifulSoup, SoupStrainer
+from bs4 import BeautifulSoup
 import requests
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
-import time
 
 
 def get_roster(game_id):
@@ -15,12 +14,10 @@ def get_roster(game_id):
     url = 'http://www.nhl.com/scores/htmlreports/{}{}/RO{}.HTM'.format(game_id[:4], int(game_id[:4]) + 1, game_id[4:])
 
     response = requests.Session()
-    retries = Retry(total=5, backoff_factor=.1)
+    retries = Retry(total=10, backoff_factor=.1)
     response.mount('http://', HTTPAdapter(max_retries=retries))
-
-    response = response.get(url)
+    response = response.get(url, timeout=5)
     response.raise_for_status()
-    time.sleep(1)
 
     return response
 
@@ -117,8 +114,8 @@ def scrape_roster(game_id):
 
     try:
         roster = get_roster(game_id)
-    except requests.exceptions.HTTPError as e:
-        print('Roster for game {} is not there'.format(game_id))
+    except Exception as e:
+        print('Roster for game {} is not there'.format(game_id), e)
         raise Exception
 
     try:
