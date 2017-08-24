@@ -37,9 +37,9 @@ the data. So just type in (and press enter):
 import scrape_functions  
 ```
 
-The function "scrape" is used to scrape data on a season by season level. It takes two
-arguments (by default the play-by-play is scraped, you need to specify whether or not
-you want to scrape the shifts:
+The function "scrape" (found, of course, in the scrape_functions file) is used to scrape 
+data on a season by season level. It takes two arguments (by default the play-by-play is 
+scraped, you need to specify whether or not you want to scrape the shifts):
 
 1. seasons - List of seasons you want to scrape (Note: A given season is referred to by
 the first of the two years it spans. So you would refer to the 2016-2017 season as 2016.
@@ -63,6 +63,10 @@ your computer (and in the same folder as your code):
 
 2. nhl_shifts20162017.csv and nhl_shifts20152016.csv which contains the shift info for each
    game each season 
+   
+
+It's important to note add that this does take some time to run. A season of just play
+by play data takes about ~2 hours to run and if you include shifts about ~2:30.  
 
 
 
