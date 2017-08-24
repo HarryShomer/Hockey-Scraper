@@ -1,25 +1,18 @@
 from bs4 import BeautifulSoup
-import requests
-from requests.adapters import HTTPAdapter
-from requests.packages.urllib3.util.retry import Retry
+import shared
 
 
 def get_roster(game_id):
     """
     Given a game_id it returns the raw html
+    Ex: http://www.nhl.com/scores/htmlreports/20162017/RO020475.HTM
     :param game_id: the game
     :return: raw html of game
     """
     game_id = str(game_id)
     url = 'http://www.nhl.com/scores/htmlreports/{}{}/RO{}.HTM'.format(game_id[:4], int(game_id[:4]) + 1, game_id[4:])
 
-    response = requests.Session()
-    retries = Retry(total=10, backoff_factor=.1)
-    response.mount('http://', HTTPAdapter(max_retries=retries))
-    response = response.get(url, timeout=5)
-    response.raise_for_status()
-
-    return response
+    return shared.get_url(url)
 
 
 def fix_name(player):

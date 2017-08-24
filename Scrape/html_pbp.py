@@ -1,8 +1,5 @@
 import pandas as pd
 from bs4 import BeautifulSoup, SoupStrainer
-import requests
-from requests.adapters import HTTPAdapter
-from requests.packages.urllib3.util.retry import Retry
 import re
 import shared
 
@@ -10,20 +7,14 @@ import shared
 def get_pbp(game_id):
     """
     Given a game_id it returns the raw html
+    Ex: http://www.nhl.com/scores/htmlreports/20162017/PL020475.HTM
     :param game_id: the game
     :return: raw html of game
     """
     game_id = str(game_id)
     url = 'http://www.nhl.com/scores/htmlreports/{}{}/PL{}.HTM'.format(game_id[:4], int(game_id[:4]) + 1, game_id[4:])
 
-    response = requests.Session()
-    retries = Retry(total=10, backoff_factor=.1)
-    response.mount('http://', HTTPAdapter(max_retries=retries))
-
-    response = response.get(url, timeout=5)
-    response.raise_for_status()
-
-    return response
+    return shared.get_url(url)
 
 
 def get_penalty(play_description):
@@ -31,8 +22,6 @@ def get_penalty(play_description):
     Get the penalty info
     :param play_description: 
     :return: penalty info
-    MTL #81 ELLER Hooking(2 min), Def. Zone Drawn By: TOR #11 SJOSTROM
-    T.B #88 VASILEVSKIY Delaying Game-Puck over glass(2 min) Served By: #27 DROUIN, Def. Zone
     """
     penalty_types = {'Instigator': 'Instigator', 'Broken stick': 'Broken stick', 'Clipping': 'Clipping',
                      'Holding the stick': 'Holding the stick', 'Slashing': 'Slashing', 'Roughing': 'Roughing',
@@ -66,10 +55,10 @@ def get_penalty(play_description):
     elif '10 min' in play_description:
         return ''.join([penalty, '(10 min)'])
 
-    if key != '':
-        return key
+    if penalty != '':
+        return penalty
     else:
-        return 'NA'
+        return ''
 
 
 def get_player_name(number, players, team, home_team):
@@ -97,7 +86,7 @@ def get_player_name(number, players, team, home_team):
 
 def if_valid_event(event):
     """
-    Checks if it's a valid event to parse
+    Checks if it's a valid event ('#' is meaningless and I don't like the other ones) to parse
     :param event: list of stuff in pbp
     :return: boolean -True or False
     """
@@ -136,7 +125,7 @@ def shot_type(play_description):
                 return ' '.join([p, 'shot'])
             else:
                 return p
-    return 'NA'
+    return ''
 
 
 def which_zone(play_description):
@@ -146,10 +135,10 @@ def which_zone(play_description):
     :return: Off, Def, Neu, or NA
     """
     s = [x.strip() for x in play_description.split(',')]  # Split by comma's into a list
-    zone = [x for x in s if 'Zone' in x]  # Find if list contains which zone
+    zone = [x for x in s if 'Zone' in x]                  # Find if list contains which zone
 
     if not zone:
-        return 'NA'
+        return ''
 
     if zone[0].find("Off") != -1:
         return 'Off'
@@ -187,8 +176,8 @@ def strip_html_pbp(td):
                         name = return_name_html(bar[i].find('font')['title'])
                         number = bar[i].get_text().strip('\n')  # Get number and strip leading/trailing endlines
                     except KeyError:
-                        name=''
-                        number=''
+                        name = ''
+                        number = ''
                 elif i % 3 == 1:
                     if name != '':
                         position = bar[i].get_text()
@@ -240,7 +229,6 @@ def get_event_players(event, players, home_team):
 
     if 'FAC' == event[4]:
         # MTL won Neu. Zone - MTL #11 GOMEZ vs TOR #37 BRENT
-        # regex = re.compile(r'(.{3})\s+#(\d+)\s+(.*?(?=\s+vs)|.*?$)')
         regex = re.compile(r'(.{3})\s+#(\d+)')
         desc = regex.findall(description)  # [[Team, num], [Team, num]]
 
@@ -264,7 +252,6 @@ def get_event_players(event, players, home_team):
         # TOR GIVEAWAY - #35 GIGUERE, Def. Zone
         # TOR TAKEAWAY - #9 ARMSTRONG, Off. Zone
 
-        # regex = re.compile(r'#(\d+)\s+(.*?(?=,))')
         regex = re.compile(r'#(\d+)')
         desc = regex.search(description).groups()  # num
 
@@ -274,7 +261,6 @@ def get_event_players(event, players, home_team):
 
     elif 'HIT' == event[4]:
         # MTL #20 O'BYRNE HIT TOR #18 BROWN, Def. Zone
-        # regex = re.compile(r'(.{3})\s+#(\d+)\s+(.*?(?=\s+HIT)|.*?(?=,))')
         regex = re.compile(r'(.{3})\s+#(\d+)')
         desc = regex.findall(description)  # [[Team, num], [Team, num]]
 
@@ -287,7 +273,7 @@ def get_event_players(event, players, home_team):
 
     elif 'BLOCK' == event[4]:
         # MTL #76 SUBBAN BLOCKED BY TOR #2 SCHENN, Wrist, Def. Zone
-        # regex = re.compile(r'(.{3})\s+#(\d+)\s+(.*?(?=\s+BLOCKED)|.*?(?=,))')
+
         regex = re.compile(r'(.{3})\s+#(\d+)')
         desc = regex.findall(description)  # [[Team, num], [Team, num]]
 
@@ -300,7 +286,7 @@ def get_event_players(event, players, home_team):
 
     elif 'GOAL' == event[4]:
         # TOR #81 KESSEL(1), Wrist, Off. Zone, 14 ft. Assists: #42 BOZAK(1); #8 KOMISAREK(1)
-        # regex = re.compile(r'#(\d+)\s+(.*?(?=\()|.*?(?=,))')
+
         regex = re.compile(r'#(\d+)\s+')
         desc = regex.findall(description)  # [num] -> ranging from 1 to 3 indices
 
@@ -380,37 +366,51 @@ def parse_event(event, players, home_team, if_plays_in_json, current_score):
             name = shared.fix_name(away_players[j][0].upper())
             event_dict['awayPlayer{}'.format(j + 1)] = name
             event_dict['awayPlayer{}_id'.format(j + 1)] = players['Away'][name]['id']
-        except (KeyError, IndexError):
-            event_dict['awayPlayer{}'.format(j + 1)] = 'NA'
+        except KeyError:
             event_dict['awayPlayer{}_id'.format(j + 1)] = 'NA'
+        except IndexError:
+            event_dict['awayPlayer{}'.format(j + 1)] = ''
+            event_dict['awayPlayer{}_id'.format(j + 1)] = ''
 
         try:
             name = shared.fix_name(home_players[j][0].upper())
             event_dict['homePlayer{}'.format(j + 1)] = name
             event_dict['homePlayer{}_id'.format(j + 1)] = players['Home'][name]['id']
-        except (KeyError, IndexError):
-            event_dict['homePlayer{}'.format(j + 1)] = 'NA'
+        except KeyError:
             event_dict['homePlayer{}_id'.format(j + 1)] = 'NA'
+        except IndexError:
+            event_dict['homePlayer{}'.format(j + 1)] = ''
+            event_dict['homePlayer{}_id'.format(j + 1)] = ''
 
-    # Did this because above method assumes goalie is at end of player list
+    # Did this because above method assumes the goalie is at end of player list
     for x in away_players:
         if x[2] == 'G':
             event_dict['Away_Goalie'] = shared.fix_name(x[0].upper())
+            try:
+                event_dict['Away_Goalie_Id'] = players['Away'][event_dict['Away_Goalie']]['id']
+            except KeyError:
+                event_dict['Away_Goalie_Id'] = 'NA'
         else:
-            event_dict['Away_Goalie'] = 'NA'
+            event_dict['Away_Goalie'] = ''
+            event_dict['Away_Goalie_Id'] = ''
 
     for x in home_players:
         if x[2] == 'G':
             event_dict['Home_Goalie'] = shared.fix_name(x[0].upper())
+            try:
+                event_dict['Home_Goalie_Id'] = players['Home'][event_dict['Home_Goalie']]['id']
+            except KeyError:
+                event_dict['Home_Goalie_Id'] = 'NA'
         else:
-            event_dict['Home_Goalie'] = 'NA'
+            event_dict['Home_Goalie'] = ''
+            event_dict['Home_Goalie_Id'] = ''
 
-    event_dict['Away_Skaters'] = len(away_players)
-    event_dict['Home_Skaters'] = len(home_players)
+    event_dict['Away_Players'] = len(away_players)
+    event_dict['Home_Players'] = len(home_players)
 
     try:
-        home_skaters = event_dict['Home_Skaters'] - 1 if event_dict['Home_Goalie'] != 'NA' else len(home_players)
-        away_skaters = event_dict['Away_Skaters'] - 1 if event_dict['Away_Goalie'] != 'NA' else len(away_players)
+        home_skaters = event_dict['Home_Players'] - 1 if event_dict['Home_Goalie'] != '' else len(home_players)
+        away_skaters = event_dict['Away_Players'] - 1 if event_dict['Away_Goalie'] != '' else len(away_players)
     except KeyError:
         # Getting a key error here means that home/away goalie isn't there..which means home/away players are empty
         home_skaters = 0
@@ -455,8 +455,8 @@ def parse_html(html, players, teams, if_plays_in_json):
                    'awayPlayer3', 'awayPlayer3_id', 'awayPlayer4', 'awayPlayer4_id', 'awayPlayer5', 'awayPlayer5_id',
                    'awayPlayer6', 'awayPlayer6_id', 'homePlayer1', 'homePlayer1_id', 'homePlayer2', 'homePlayer2_id',
                    'homePlayer3', 'homePlayer3_id', 'homePlayer4', 'homePlayer4_id', 'homePlayer5', 'homePlayer5_id',
-                   'homePlayer6', 'homePlayer6_id', 'Away_Goalie', 'Home_Goalie', 'Away_Skaters', 'Home_Skaters',
-                   'Away_Score', 'Home_Score']
+                   'homePlayer6', 'homePlayer6_id', 'Away_Goalie', 'Away_Goalie_Id', 'Home_Goalie', 'Home_Goalie_Id',
+                   'Away_Players', 'Home_Players', 'Away_Score', 'Home_Score']
     else:
         columns = ['Period', 'Event', 'Description', 'Time_Elapsed', 'Seconds_Elapsed', 'Strength', 'Ev_Zone', 'Type',
                    'Ev_Team', 'Away_Team', 'Home_Team', 'p1_name', 'p1_ID', 'p2_name', 'p2_ID', 'p3_name', 'p3_ID',
@@ -464,7 +464,8 @@ def parse_html(html, players, teams, if_plays_in_json):
                    'awayPlayer4', 'awayPlayer4_id', 'awayPlayer5', 'awayPlayer5_id', 'awayPlayer6', 'awayPlayer6_id',
                    'homePlayer1', 'homePlayer1_id', 'homePlayer2', 'homePlayer2_id', 'homePlayer3', 'homePlayer3_id',
                    'homePlayer4', 'homePlayer4_id', 'homePlayer5', 'homePlayer5_id', 'homePlayer6', 'homePlayer6_id',
-                   'Away_Goalie', 'Home_Goalie', 'Away_Skaters', 'Home_Skaters', 'Away_Score', 'Home_Score']
+                   'Away_Goalie', 'Away_Goalie_Id', 'Home_Goalie', 'Home_Goalie_Id', 'Away_Players', 'Home_Players',
+                   'Away_Score', 'Home_Score']
 
     current_score = {'Home': 0, 'Away': 0}
     events, current_score = zip(*(parse_event(event, players, teams['Home'], if_plays_in_json, current_score)
@@ -480,8 +481,7 @@ def parse_html(html, players, teams, if_plays_in_json):
 
 
 def scrape_game(game_id, players, teams, if_plays_in_json):
-    """
-    Used for debugging 
+    """ 
     :param game_id: game to scrape
     :param players: dict with player info
     :param teams: dict with home and away teams
@@ -493,7 +493,7 @@ def scrape_game(game_id, players, teams, if_plays_in_json):
     except Exception as e:
         print('Problem with getting html pbp for game {}'.format(game_id), e)
         return None
-    game_df = parse_html(clean_html_pbp(game_html), players, teams, if_plays_in_json)
+
     try:
         game_df = parse_html(clean_html_pbp(game_html), players, teams, if_plays_in_json)
     except Exception as e:

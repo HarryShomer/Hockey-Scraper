@@ -1,7 +1,5 @@
 import pandas as pd
 import requests
-from requests.adapters import HTTPAdapter
-from requests.packages.urllib3.util.retry import Retry
 import json
 import time
 import shared
@@ -10,23 +8,20 @@ import shared
 def get_pbp(game_id):
     """
     Given a game_id it returns the raw json
+    Ex: http://statsapi.web.nhl.com/api/v1/game/2016020475/feed/live
     :param game_id: the game
     :return: raw json of game
     """
     url = 'http://statsapi.web.nhl.com/api/v1/game/{}/feed/live'.format(game_id)
 
     try:
-        response = requests.Session()
-        retries = Retry(total=10, backoff_factor=.1)
-        response.mount('http://', HTTPAdapter(max_retries=retries))
-        response = response.get(url, timeout=5)
+        response = shared.get_url(url)
         pbp_json = json.loads(response.text)
     except requests.exceptions.HTTPError as e:
         print('Json pbp for game {} is not there'.format(game_id), e)
         return None
 
     time.sleep(1)
-
     return pbp_json
 
 
@@ -36,8 +31,6 @@ def change_event_name(event):
     ex: BLOCKED_SHOT to BLOCK
     :param event: event type
     :return: fixed event type
-    EVENT_TYPES = {'EISTR': 'Early Intermission Start',
-                   'EIEND': 'Early Intermission End', 'SOC': 'Shootout Completed', 'GOFF': '', 'CHL': 'Challenge'}
     """
     event_types ={
         'PERIOD_START': 'PSTR',
@@ -101,8 +94,8 @@ def parse_event(event):
             play['xC'] = event['coordinates']['x']
             play['yC'] = event['coordinates']['y']
         except KeyError:
-            play['xC'] = 'Na'
-            play['yC'] = 'Na'
+            play['xC'] = ''
+            play['yC'] = ''
 
     """
     # Sometimes they record events for shots in the wrong zone (or maybe not)...so change it
@@ -147,7 +140,7 @@ def parse_json(game_json):
     return pd.DataFrame(events, columns=columns)
 
 
-def scrape_game(game_id, date):
+def scrape_game(game_id):
     """
     Used for debugging 
     :param game_id: game to scrape

@@ -1,13 +1,7 @@
 import pandas as pd
 from bs4 import BeautifulSoup
-import requests
-from requests.adapters import HTTPAdapter
-from requests.packages.urllib3.util.retry import Retry
 import time
 import shared
-
-
-espn_schedule_retries = 0
 
 
 def event_type(play_description):
@@ -17,7 +11,7 @@ def event_type(play_description):
     :return: 
     """
     events = {'GOAL SCORED': 'GOAL', 'SHOT ON GOAL': 'SHOT', 'SHOT MISSED': 'MISS', 'SHOT BLOCKED': 'BLOCK',
-                  'PENALTY': 'PENL', 'FACEOFF': 'FAC', 'HIT': 'HIT', 'TAKEAWAY': 'TAKE', 'GIVEAWAY': 'GIVE'}
+              'PENALTY': 'PENL', 'FACEOFF': 'FAC', 'HIT': 'HIT', 'TAKEAWAY': 'TAKE', 'GIVEAWAY': 'GIVE'}
 
     event = [events[e] for e in events.keys() if e in play_description]
     return event[0] if event else None
@@ -26,6 +20,8 @@ def event_type(play_description):
 def get_espn_game_id(date, home_team, away_team):
     """
     Scrapes the day's schedule and gets the id for the given game
+    Ex: http://www.espn.com/nhl/scoreboard?date=20161024
+    
     :param date: format-> YearMonthDay-> 20161024
     :param home_team: 
     :param away_team: 
@@ -35,12 +31,7 @@ def get_espn_game_id(date, home_team, away_team):
 
     url = 'http://www.espn.com/nhl/scoreboard?date={}'.format(date.replace('-', ''))
 
-    response = requests.Session()
-    retries = Retry(total=10, backoff_factor=.1)
-    response.mount('http://', HTTPAdapter(max_retries=retries))
-
-    response = response.get(url, timeout =5)
-    response.raise_for_status()
+    response = shared.get_url(url)
 
     regex = re.compile(r'/nhl/recap\?gameId=(\d+)')
     game_ids = regex.findall(response.text)
@@ -60,6 +51,8 @@ def get_espn_game_id(date, home_team, away_team):
 def get_espn(date, home_team, away_team):
     """
     Gets the ESPN pbp feed 
+    Ex: http://www.espn.com/nhl/gamecast/data/masterFeed?lang=en&isAll=true&gameId=400885300
+    
     :param date: date of the game
     :param home_team: 
     :param away_team: 
@@ -68,12 +61,7 @@ def get_espn(date, home_team, away_team):
     game_id = get_espn_game_id(date, home_team.upper(), away_team.upper())
     url = 'http://www.espn.com/nhl/gamecast/data/masterFeed?lang=en&isAll=true&gameId={}'.format(game_id)
 
-    response = requests.Session()
-    retries = Retry(total=10, backoff_factor=.1)
-    response.mount('http://', HTTPAdapter(max_retries=retries))
-
-    response = response.get(url, timeout=5)
-    response.raise_for_status()
+    response = shared.get_url(url)
     time.sleep(1)
 
     return response

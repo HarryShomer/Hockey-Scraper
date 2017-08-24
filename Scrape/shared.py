@@ -1,4 +1,13 @@
 import time
+import requests
+from requests.adapters import HTTPAdapter
+from requests.packages.urllib3.util.retry import Retry
+
+
+"""
+This file is a bunch of the shared functions or just general stuff used by the different scrapers 
+in the scrape directory 
+"""
 
 
 TEAMS = {'ANAHEIM DUCKS': 'ANA', 'ARIZONA COYOTES': 'ARI', 'ATLANTA THRASHERS': 'ATL', 'BOSTON BRUINS': 'BOS',
@@ -12,11 +21,11 @@ TEAMS = {'ANAHEIM DUCKS': 'ANA', 'ARIZONA COYOTES': 'ARI', 'ATLANTA THRASHERS': 
          'VANCOUVER CANUCKS': 'VAN', 'VEGAS GOLDEN KNIGHTS': 'VGK', 'WINNIPEG JETS': 'WPG', 'WASHINGTON CAPITALS': 'WSH'}
 
 
-""" From Muneeb Alam (on twitter: @muneebalamcu) 
-    Found here -> https://github.com/muneebalam/Hockey/blob/master/NHL/Core/GetPbP.py
-    
-    
-    MICHAËL BOURNIVAL is missing an id number
+""" 
+Fixes some of the mistakes made with player names
+
+A majority of this is courtesy of Muneeb Alam (on twitter: @muneebalamcu) 
+Found here -> https://github.com/muneebalam/Hockey/blob/master/NHL/Core/GetPbP.py
 """
 Names = {'n/a': 'n/a', 'ALEXANDER OVECHKIN': 'Alex Ovechkin', 'TOBY ENSTROM': 'Tobias Enstrom', 'JAMIE MCGINN': 'Jamie McGinn',
          'CODY MCLEOD': 'Cody McLeod', 'MARC-EDOUARD VLASIC': 'Marc-Edouard Vlasic', 'RYAN MCDONAGH': 'Ryan McDonagh',
@@ -32,7 +41,7 @@ Names = {'n/a': 'n/a', 'ALEXANDER OVECHKIN': 'Alex Ovechkin', 'TOBY ENSTROM': 'T
          'PERNELL KARL SUBBAN': 'PK Subban', 'VOJTEK VOLSKI': 'Wojtek Wolski', 'VYACHESLAV VOYNOV': 'Slava Voynov',
          'FREDDY MODIN': 'Fredrik Modin', 'VACLAV PROSPAL': 'Vinny Prospal', 'KRISTOPHER LETANG': 'Kris Letang',
          'PIERRE ALEXANDRE PARENTEAU': 'PA Parenteau', 'T.J. OSHIE': 'TJ Oshie', 'JOHN HILLEN III': 'Jack Hillen',
-         'BRANDON CROMBEEN': 'BJ Crombeen', 'JEAN-PIERRE DUMONT': 'JP Dumont', 'RYAN NUGENT-HOPKINS': 'Ryan Nugent-Hopkins',
+         'BRANDON CROMBEEN': 'B.J. Crombeen', 'JEAN-PIERRE DUMONT': 'JP Dumont', 'RYAN NUGENT-HOPKINS': 'Ryan Nugent-Hopkins',
          'CONNOR MCDAVID': 'Connor McDavid', 'TREVOR VAN RIEMSDYK': 'Trevor van Riemsdyk', 'CALVIN DE HAAN': 'Calvin de Haan',
          'GREG MCKEGG': 'Greg McKegg', 'NATHAN MACKINNON': 'Nathan MacKinnon', 'KYLE MCLAREN': 'Kyle McLaren',
          'ADAM MCQUAID': 'Adam McQuaid', 'DYLAN MCILRATH': 'Dylan McIlrath', 'DANNY DEKEYSER': 'Danny DeKeyser',
@@ -44,7 +53,7 @@ Names = {'n/a': 'n/a', 'ALEXANDER OVECHKIN': 'Alex Ovechkin', 'TOBY ENSTROM': 'T
          'MARC-ANDRE CLICHE': 'Marc-Andre Cliche', 'J-P DUMONT': 'JP Dumont', 'JOSHUA BAILEY': 'Josh Bailey',
          'OLIVIER MAGNAN-GRENIER': 'Olivier Magnan-Grenier', 'FRÉDÉRIC ST-DENIS': 'Frederic St-Denis',
          'MARC-ANDRE BOURDON': 'Marc-Andre Bourdon', 'PIERRE-CEDRIC LABRIE': 'Pierre-Cedric Labrie',
-         'JONATHAN AUDY-MARCHESSAULT': 'Jonathan Audy-Marchessault', 'JEAN-GABRIEL PAGEAU': 'Jean-Gabriel Pageau',
+         'JONATHAN AUDY-MARCHESSAULT': 'Jonathan Marchessault', 'JEAN-GABRIEL PAGEAU': 'Jean-Gabriel Pageau',
          'JEAN-PHILIPPE COTE': 'Jean-Philippe Cote', 'PIERRE-EDOUARD BELLEMARE': 'Pierre-Edouard Bellemare',
          'COLIN (JOHN) WHITE': 'Colin White', 'BATES (JON) BATTAGLIA': 'Bates Battaglia', 'MATHEW DUBMA': 'Matt Dumba',
          'NIKOLAI ANTROPOV': 'Nik Antropov', 'KRYS BARCH': 'Krystofer Barch', 'CAMERON BARKER': 'Cam Barker',
@@ -53,7 +62,7 @@ Names = {'n/a': 'n/a', 'ALEXANDER OVECHKIN': 'Alex Ovechkin', 'TOBY ENSTROM': 'T
          'TJ BRENNAN': 'TJ Brennan', 'DANIEL BRIERE': 'Danny Briere', 'TJ BRODIE': 'TJ Brodie', 'J.T. BROWN': 'JT Brown',
          'ALEXANDRE BURROWS': 'Alex Burrows', 'MICHAEL CAMMALLERI': 'Mike Cammalleri', 'DANIEL CARCILLO': 'Dan Carcillo',
          'MATTHEW CARLE': 'Matt Carle', 'DANNY CLEARY': 'Dan Cleary', 'JOSEPH CORVO': 'Joe Corvo', 'JOSEPH CRABB': 'Joey Crabb',
-         'BJ CROMBEEN': 'BJ Crombeen', 'B.J. Crombeen': 'BJ Crombeen', 'EVGENII DADONOV': 'Evgeny Dadonov',
+         'BJ CROMBEEN': 'B.J. Crombeen',  'EVGENII DADONOV': 'Evgeny Dadonov', 'CHRIS VANDE VELDE': 'Chris VandeVelde',
          'JACOB DE LA ROSE': 'Jacob de la Rose', 'JOE DIPENTA': 'Joe DiPenta', 'JON DISALVATORE': 'Jon DiSalvatore',
          'JACOB DOWELL': 'Jake Dowell', 'NICHOLAS DRAZENOVIC': 'Nick Drazenovic', 'ROBERT EARL': 'Robbie Earl',
          'ALEXANDER FROLOV': 'Alex Frolov', 'T.J. GALIARDI': 'TJ Galiardi', 'TJ GALIARDI': 'TJ Galiardi',
@@ -88,48 +97,16 @@ Names = {'n/a': 'n/a', 'ALEXANDER OVECHKIN': 'Alex Ovechkin', 'TOBY ENSTROM': 'T
          'JAMES WYMAN': 'JT Wyman', 'JT WYMAN': 'JT Wyman', 'NIKOLAY ZHERDEV': 'Nikolai Zherdev',
          'HARRISON ZOLNIERCZYK': 'Harry Zolnierczyk', 'MARTIN ST PIERRE': 'Martin St. Pierre',
          'DENIS GAUTHIER JR.': 'Denis Gauthier Jr.', 'MARC-ANDRE FLEURY': 'Marc-Andre Fleury', 'DAN LACOUTURE': 'Dan LaCouture',
-         'RICK DIPIETRO': 'Rick DiPietro', 'JOEY MACDONALD': 'Joey MacDonald', 'B.J CROMBEEN': 'BJ Crombeen',
+         'RICK DIPIETRO': 'Rick DiPietro', 'JOEY MACDONALD': 'Joey MacDonald', 'B.J CROMBEEN': 'B.J. Crombeen',
          'TIMOTHY JR. THOMAS': 'Tim Thomas', 'ILJA BRYZGALOV': 'Ilya Bryzgalov', 'MATHEW DUMBA': 'Matt Dumba',
-         'MICHAËL BOURNIVAL': 'Michael Bournival'}
-
-"""
-Needs to be fixed:
-
-['11', 'C', 'BRADLEY MILLS']
-['25', 'D', 'ANDY SUTTON']
-['22', 'D', 'MIKE COMMODORE']
-['4', 'L', 'TAYLOR HALL']
-['4', 'D', 'CLAYTON STONER']
-['0', 'R', 'MICHAEL SISLO']
-['36', 'C', 'JONATHAN AUDY-MARCHESSAULT']
-['17', 'C', 'ALEXANDER KILLORN']
-['70', 'D', 'JOSEPH MORROW']
-['13', 'C', 'NICK BONINO']
-['20', 'C', 'ALEX STEEN']
-['70', 'D', 'JOSEPH MORROW']
-['43', 'D', 'CHRISTOPHER BREEN']
-['84', 'C', 'PHILIP VARONE']
-['0', 'L', 'BRYCE VAN BRABRANT']
-['10', 'C', 'MICHAEL SANTORELLI']
-['10', 'D', 'CHRISTIAN EHRHOFF']
-['27', 'R', 'CRAIG ADAMS']
-['79', 'L', 'MICHAEL FERLAND']
-['46', 'D', 'JARED SPURGEON']
-['19', 'C', 'NICOLAS PETAN']
-['48', 'C', 'VINCENT HINOSTROZA']
-['80', 'D', 'MATT TENNYSON']
-['18', 'C', 'JAY MCCLEMENT']
-['36', 'D', 'JOSHUA MORRISSEY']
-['46', 'D', 'JAKUB KINDL']
-['87', 'D', 'MAT BODIE']
-['83', 'D', 'MATTHEW BENNING']
-['46', 'L', 'AJ GREER']
-['4', 'D', 'ADAM CLENDENING']
-['17', 'R', 'ANTON RODIN']
-['37', 'L', 'JT COMPHER']
-['23', 'C', 'SAM REINHART']
-
-"""
+         'MICHAËL BOURNIVAL': 'Michael Bournival', 'MATTHEW BENNING': 'Matt Benning', 'ZACHARY SANFORD': 'Zach Sanford',
+         'AJ GREER': 'A.J. Greer', 'JT COMPHER': 'J.T. Compher', 'NICOLAS PETAN': 'Nic Petan',
+         'VINCENT HINOSTROZA': 'Vinnie  Hinostroza', 'PHILIP VARONE': 'Phil Varone', 'JOSHUA MORRISSEY': 'Josh Morrissey',
+         'Mathew Bodie': 'Mat Bodie', 'MICHAEL FERLAND': 'Micheal Ferland', 'MICHAEL SANTORELLI' :'Mike Santorelli',
+         'CHRISTOPHER BREEN': 'Chris Breen', 'BRYCE VAN BRABRANT': 'Bryce Van Brabant', 'ALEXANDER KILLORN': 'Alex Killorn',
+         'JOSEPH MORROW': 'Joe Morrow', 'ALEX STEEN': 'Alexander Steen', 'BRADLEY MILLS': 'Brad Mills',
+         'MICHAEL SISLO': 'Mike Sislo', 'MICHAEL VERNACE': 'Mike Vernace', 'STEVEN REINPRECHT': 'Steve Reinprecht',
+         'MATTHEW MURRAY': 'Matt Murray'}
 
 
 def fix_name(name):
@@ -158,6 +135,22 @@ def convert_to_seconds(minutes):
     x = time.strptime(minutes.strip(' '), '%M:%S')
 
     return datetime.timedelta(hours=x.tm_hour, minutes=x.tm_min, seconds=x.tm_sec).total_seconds()
+
+
+def get_url(url):
+    """
+    Get the url
+    :param url: given url
+    :return: page
+    """
+    response = requests.Session()
+    retries = Retry(total=10, backoff_factor=.1)
+    response.mount('http://', HTTPAdapter(max_retries=retries))
+
+    response = response.get(url, timeout=5)
+    response.raise_for_status()
+
+    return response
 
 
 

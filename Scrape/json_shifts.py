@@ -1,7 +1,4 @@
 import pandas as pd
-import requests
-from requests.adapters import HTTPAdapter
-from requests.packages.urllib3.util.retry import Retry
 import json
 import time
 import shared
@@ -10,16 +7,12 @@ import shared
 def get_shifts(game_id):
     """
     Given a game_id it returns the raw json
+    Ex: http://www.nhl.com/stats/rest/shiftcharts?cayenneExp=gameId=2010020001
     :param game_id: the game
     :return: 
     """
     url = 'http://www.nhl.com/stats/rest/shiftcharts?cayenneExp=gameId={}'.format(game_id)
-
-    response = requests.Session()
-    retries = Retry(total=10, backoff_factor=.1)
-    response.mount('http://', HTTPAdapter(max_retries=retries))
-    response = response.get(url, timeout=5)
-    response.raise_for_status()
+    response = shared.get_url(url)
     time.sleep(1)
 
     shift_json = json.loads(response.text)
@@ -51,7 +44,7 @@ def parse_shift(shift):
     return shift_dict
 
 
-def parse_json(json, game_id):
+def parse_json(shift_json, game_id):
     """
     Parse the json
     :param json: raw json
@@ -60,8 +53,8 @@ def parse_json(json, game_id):
     """
     columns = ['Game_Id', 'Period', 'Team', 'Player', 'Player_Id', 'Start', 'End', 'Duration']
 
-    shifts = [parse_shift(shift) for shift in json['data']]     # Go through the shifts
-    shifts = [shift for shift in shifts if shift != {}]         # Get rid of null shifts (which happen at end)
+    shifts = [parse_shift(shift) for shift in shift_json['data']]     # Go through the shifts
+    shifts = [shift for shift in shifts if shift != {}]               # Get rid of null shifts (which happen at end)
 
     df = pd.DataFrame(shifts, columns=columns)
     df['Game_Id'] = str(game_id)

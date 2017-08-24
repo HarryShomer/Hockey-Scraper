@@ -1,8 +1,5 @@
 import pandas as pd
 from bs4 import BeautifulSoup
-import requests
-from requests.adapters import HTTPAdapter
-from requests.packages.urllib3.util.retry import Retry
 import time
 import shared
 
@@ -12,7 +9,6 @@ def get_teams(soup):
     Return the team for the TOI tables and the home team
     :param soup: souped up html
     :return: list with team and home team
-    <td align="center" style="font-size: 10px;font-weight:bold">MONTREAL CANADIENS<br/>Match/Game 1 Dom./Home 1</td> MONTREAL CANADIENSMatch/
     """
     import re
 
@@ -62,26 +58,18 @@ def analyze_shifts(shift, name, team, home_team, player_ids):
 def get_shifts(game_id):
     """
     Given a game_id it returns a DataFrame with the shifts for both teams
+    Ex: http://www.nhl.com/scores/htmlreports/20162017/TV020971.HTM
     :param game_id: the game
     :return: DataFrame with all shifts, return None when an exception is thrown when parsing
-    http://www.nhl.com/scores/htmlreports/20162017/TV020971.HTM
     """
     game_id = str(game_id)
     home_url = 'http://www.nhl.com/scores/htmlreports/{}{}/TH{}.HTM'.format(game_id[:4], int(game_id[:4])+1, game_id[4:])
     away_url = 'http://www.nhl.com/scores/htmlreports/{}{}/TV{}.HTM'.format(game_id[:4], int(game_id[:4])+1, game_id[4:])
 
-    response = requests.Session()
-    retries = Retry(total=10, backoff_factor=.1)
-    response.mount('http://', HTTPAdapter(max_retries=retries))
-    home = response.get(home_url, timeout=5)
-    home.raise_for_status()
+    home = shared.get_url(home_url)
     time.sleep(1)
 
-    response = requests.Session()
-    retries = Retry(total=10, backoff_factor=.1)
-    response.mount('http://', HTTPAdapter(max_retries=retries))
-    away = response.get(away_url, timeout=5)
-    away.raise_for_status()
+    away = shared.get_url(away_url)
     time.sleep(1)
 
     return home, away
@@ -112,9 +100,9 @@ def parse_html(html, player_ids, game_id):
     """
     players = dict()
     for t in td:
-        t=t.get_text()
+        t = t.get_text()
         if ',' in t:     # If it has a comma in it we know it's a player's name...so add player to dict
-            name=t
+            name = t
             # Just format the name normally...it's coded as: 'num last_name, first_name'
             name = name.split(',')
             name = ' '.join([name[1].strip(' '), name[0][2:].strip(' ')])
