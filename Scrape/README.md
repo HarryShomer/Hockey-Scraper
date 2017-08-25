@@ -1,4 +1,4 @@
-# NHL Scraper
+# Hockey Scraper
 
 This project is designed to allow people to scrape Play by Play and Shift data off of the 
 National Hockey League (NHL) API and website for all regular season and playoff games
