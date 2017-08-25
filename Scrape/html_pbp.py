@@ -128,6 +128,28 @@ def shot_type(play_description):
     return ''
 
 
+def home_zone(ev_zone, ev_team, home_team):
+    """
+    Determines the zone relative to the home team
+    :param ev_zone: zone relative to event team
+    :param ev_team: event team
+    :param home_team: home team
+    :return: zone relative to home team
+    """
+    if ev_zone == '':
+        return ''
+
+    if ev_team != home_team:
+        if ev_zone == 'Off':
+            return 'Def'
+        elif ev_zone == 'Def':
+            return 'Off'
+        else:
+            return ev_zone
+    else:
+        return ev_zone
+
+
 def which_zone(play_description):
     """
     Determine which zone the play occurred in (unless one isn't listed)
@@ -349,6 +371,8 @@ def parse_event(event, players, home_team, if_plays_in_json, current_score):
 
     if event_dict['Event'] in ['GOAL', 'SHOT', 'MISS', 'BLOCK', 'PENL', 'FAC', 'HIT', 'TAKE', 'GIVE']:
         event_dict['Ev_Team'] = event[5].split()[0]  # Split the description and take the first thing (which is the team)
+    else:
+        event_dict['Ev_Team'] = ''
 
     # If it's a goal change the score
     if event[4] == 'GOAL':
@@ -418,6 +442,7 @@ def parse_event(event, players, home_team, if_plays_in_json, current_score):
 
     event_dict['Strength'] = 'x'.join([str(home_skaters), str(away_skaters)])
     event_dict['Ev_Zone'] = which_zone(event[5])
+    event_dict['Home_Zone'] = home_zone(event_dict['Ev_Zone'], event_dict['Ev_Team'], home_team)
 
     if 'PENL' in event[4]:
         event_dict['Type'] = get_penalty(event[5])
@@ -451,16 +476,16 @@ def parse_html(html, players, teams, if_plays_in_json):
 
     if if_plays_in_json:
         columns = ['Period', 'Event', 'Description', 'Time_Elapsed', 'Seconds_Elapsed', 'Strength', 'Ev_Zone', 'Type',
-                   'Ev_Team', 'Away_Team', 'Home_Team', 'awayPlayer1', 'awayPlayer1_id', 'awayPlayer2', 'awayPlayer2_id',
-                   'awayPlayer3', 'awayPlayer3_id', 'awayPlayer4', 'awayPlayer4_id', 'awayPlayer5', 'awayPlayer5_id',
-                   'awayPlayer6', 'awayPlayer6_id', 'homePlayer1', 'homePlayer1_id', 'homePlayer2', 'homePlayer2_id',
-                   'homePlayer3', 'homePlayer3_id', 'homePlayer4', 'homePlayer4_id', 'homePlayer5', 'homePlayer5_id',
-                   'homePlayer6', 'homePlayer6_id', 'Away_Goalie', 'Away_Goalie_Id', 'Home_Goalie', 'Home_Goalie_Id',
-                   'Away_Players', 'Home_Players', 'Away_Score', 'Home_Score']
+                   'Ev_Team', 'Home_Zone', 'Away_Team', 'Home_Team', 'awayPlayer1', 'awayPlayer1_id', 'awayPlayer2',
+                   'awayPlayer2_id', 'awayPlayer3', 'awayPlayer3_id', 'awayPlayer4', 'awayPlayer4_id', 'awayPlayer5',
+                   'awayPlayer5_id', 'awayPlayer6', 'awayPlayer6_id', 'homePlayer1', 'homePlayer1_id', 'homePlayer2',
+                   'homePlayer2_id', 'homePlayer3', 'homePlayer3_id', 'homePlayer4', 'homePlayer4_id', 'homePlayer5',
+                   'homePlayer5_id', 'homePlayer6', 'homePlayer6_id', 'Away_Goalie', 'Away_Goalie_Id', 'Home_Goalie',
+                   'Home_Goalie_Id', 'Away_Players', 'Home_Players', 'Away_Score', 'Home_Score']
     else:
         columns = ['Period', 'Event', 'Description', 'Time_Elapsed', 'Seconds_Elapsed', 'Strength', 'Ev_Zone', 'Type',
-                   'Ev_Team', 'Away_Team', 'Home_Team', 'p1_name', 'p1_ID', 'p2_name', 'p2_ID', 'p3_name', 'p3_ID',
-                   'awayPlayer1', 'awayPlayer1_id', 'awayPlayer2', 'awayPlayer2_id', 'awayPlayer3', 'awayPlayer3_id',
+                   'Ev_Team', 'Home_Zone', 'Away_Team', 'Home_Team', 'p1_name', 'p1_ID', 'p2_name', 'p2_ID', 'p3_name',
+                   'p3_ID', 'awayPlayer1', 'awayPlayer1_id', 'awayPlayer2', 'awayPlayer2_id', 'awayPlayer3', 'awayPlayer3_id',
                    'awayPlayer4', 'awayPlayer4_id', 'awayPlayer5', 'awayPlayer5_id', 'awayPlayer6', 'awayPlayer6_id',
                    'homePlayer1', 'homePlayer1_id', 'homePlayer2', 'homePlayer2_id', 'homePlayer3', 'homePlayer3_id',
                    'homePlayer4', 'homePlayer4_id', 'homePlayer5', 'homePlayer5_id', 'homePlayer6', 'homePlayer6_id',

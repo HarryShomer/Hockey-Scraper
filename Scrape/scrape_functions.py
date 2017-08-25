@@ -15,7 +15,7 @@ players_missing_ids = []
 espn_games = []
 
 columns = ['Game_Id', 'Date', 'Period', 'Event', 'Description', 'Time_Elapsed', 'Seconds_Elapsed', 'Strength',
-           'Ev_Zone', 'Type', 'Ev_Team', 'Away_Team', 'Home_Team', 'p1_name', 'p1_ID', 'p2_name', 'p2_ID',
+           'Ev_Zone', 'Type', 'Ev_Team', 'Home_Zone', 'Away_Team', 'Home_Team', 'p1_name', 'p1_ID', 'p2_name', 'p2_ID',
            'p3_name', 'p3_ID', 'awayPlayer1', 'awayPlayer1_id', 'awayPlayer2', 'awayPlayer2_id', 'awayPlayer3',
            'awayPlayer3_id', 'awayPlayer4', 'awayPlayer4_id', 'awayPlayer5', 'awayPlayer5_id', 'awayPlayer6',
            'awayPlayer6_id', 'homePlayer1', 'homePlayer1_id', 'homePlayer2', 'homePlayer2_id', 'homePlayer3',
@@ -103,14 +103,14 @@ def combine_html_json_pbp(json_df, html_df, game_id, date):
     Add game_id and date
     Get rid of period, event, time_elapsed
     """
+    html_df.Period = html_df.Period.astype(int)
+    game_df = pd.merge(html_df, json_df, left_on=['Period', 'Event', 'Seconds_Elapsed'],
+                       right_on=['period', 'event', 'seconds_elapsed'], how='left')
+
+    # This id because merge doesn't work well with shootouts
+    game_df = game_df.drop_duplicates(subset=['Period', 'Event', 'Description', 'Seconds_Elapsed'])
+
     try:
-        html_df.Period = html_df.Period.astype(int)
-        game_df = pd.merge(html_df, json_df, left_on=['Period', 'Event', 'Seconds_Elapsed'],
-                           right_on=['period', 'event', 'seconds_elapsed'], how='left')
-
-        # This id because merge doesn't work well with shootouts
-        game_df = game_df.drop_duplicates(subset=['Period', 'Event', 'Description', 'Seconds_Elapsed'])
-
         game_df['Game_Id'] = game_id[-5:]
         game_df['Date'] = date
         return pd.DataFrame(game_df, columns=columns)
@@ -265,7 +265,7 @@ def scrape_year(year, if_scrape_shifts):
     shifts_dfs = []
 
     for game in schedule:
-        print(game)
+        print(' '.join(['Scraping game', str(game[0]), game[1]]))
         pbp_df, shifts_df = scrape_game(game[0], game[1], if_scrape_shifts)
         if pbp_df is not None:
             pbp_dfs.extend([pbp_df])
@@ -311,8 +311,6 @@ def scrape(seasons, if_shifts):
     print('ESPN games')
     for x in espn_games:
         print(x)
-
-
 
 
 
