@@ -31,7 +31,7 @@ cd /Users/Username/Hockey/Scrape
 Then type in "python" to open the interactive python console. 
 
 You then want to import the file in the folder which contains the functions for scraping
-the data. So just type in (and press enter): 
+the data. That file is called scrape_functions.py. So just type in (and press enter): 
 
 ```
 import scrape_functions  
