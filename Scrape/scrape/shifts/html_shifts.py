@@ -1,7 +1,9 @@
-import pandas as pd
 from bs4 import BeautifulSoup
+import pandas as pd
 import time
-import shared
+import re
+
+from scrape import shared
 
 
 def get_teams(soup):
@@ -10,8 +12,6 @@ def get_teams(soup):
     :param soup: souped up html
     :return: list with team and home team
     """
-    import re
-
     team = soup.find('td', class_='teamHeading + border')  # Team for shifts
     team = team.get_text()
 
@@ -30,7 +30,7 @@ def analyze_shifts(shift, name, team, home_team, player_ids):
     This function is only used for the html
     :param shift: info on shift
     :param name: player name
-    :param team: 
+    :param team:
     :param home_team:
     :param player_ids: dict with info on players
     :return: dict with info for shift
@@ -95,8 +95,8 @@ def parse_html(html, player_ids, game_id):
     td = soup.findAll(True, {'class': ['playerHeading + border', 'lborder + bborder']})
 
     """
-    The list 'td' is laid out with player name followed by every component of each shift. Each shift contains: 
-    shift #, Period, begin, end, and duration. The shift event isn't included. 
+    The list 'td' is laid out with player name followed by every component of each shift. Each shift contains:
+    shift #, Period, begin, end, and duration. The shift event isn't included.
     """
     players = dict()
     for t in td:
@@ -144,6 +144,3 @@ def scrape_game(game_id, players):
     game_df = game_df.reset_index(drop=True)
 
     return game_df
-
-
-

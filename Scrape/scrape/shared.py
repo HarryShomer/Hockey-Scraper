@@ -1,12 +1,13 @@
 import time
 import requests
+from datetime import timedelta
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 
 
 """
-This file is a bunch of the shared functions or just general stuff used by the different scrapers 
-in the scrape directory 
+This file is a bunch of the shared functions or just general stuff used by the different scrapers
+in the scrape directory
 """
 
 
@@ -21,10 +22,10 @@ TEAMS = {'ANAHEIM DUCKS': 'ANA', 'ARIZONA COYOTES': 'ARI', 'ATLANTA THRASHERS': 
          'VANCOUVER CANUCKS': 'VAN', 'VEGAS GOLDEN KNIGHTS': 'VGK', 'WINNIPEG JETS': 'WPG', 'WASHINGTON CAPITALS': 'WSH'}
 
 
-""" 
+"""
 Fixes some of the mistakes made with player names
 
-A majority of this is courtesy of Muneeb Alam (on twitter: @muneebalamcu) 
+A majority of this is courtesy of Muneeb Alam (on twitter: @muneebalamcu)
 Found here -> https://github.com/muneebalam/Hockey/blob/master/NHL/Core/GetPbP.py
 """
 Names = {'n/a': 'n/a', 'ALEXANDER OVECHKIN': 'Alex Ovechkin', 'TOBY ENSTROM': 'Tobias Enstrom', 'JAMIE MCGINN': 'Jamie McGinn',
@@ -131,10 +132,9 @@ def convert_to_seconds(minutes):
     if minutes == '-16:0-':
         return '1200'      # Sometimes in the html at the end of the game the time is -16:0-
 
-    import datetime
     x = time.strptime(minutes.strip(' '), '%M:%S')
 
-    return datetime.timedelta(hours=x.tm_hour, minutes=x.tm_min, seconds=x.tm_sec).total_seconds()
+    return timedelta(hours=x.tm_hour, minutes=x.tm_min, seconds=x.tm_sec).total_seconds()
 
 
 def get_url(url):
@@ -151,9 +151,3 @@ def get_url(url):
     response.raise_for_status()
 
     return response
-
-
-
-
-
-

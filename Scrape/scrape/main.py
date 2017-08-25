@@ -1,12 +1,8 @@
-import json_pbp
-import html_pbp
-import espn_pbp
-import json_shifts
-import html_shifts
-import playing_roster
-import season_schedule
 import pandas as pd
-import shared
+
+from scrape.pbp import json_pbp, html_pbp, espn_pbp
+from scrape.shifts import json_shifts, html_shifts
+from scrape import playing_roster, season_schedule, shared
 
 # Holds list for broken games for shifts and pbp
 broken_shifts_games = []
@@ -40,7 +36,7 @@ def get_players_json(json):
     """
     Return dict of players for that game
     :param json: gameData section of json
-    :return: dict of players->keys are the name (in uppercase)  
+    :return: dict of players->keys are the name (in uppercase)
     """
     players = dict()
 
@@ -99,7 +95,7 @@ def combine_html_json_pbp(json_df, html_df, game_id, date):
     :param game_id:
     :param date:
     :return: finished pbp
-    
+
     Add game_id and date
     Get rid of period, event, time_elapsed
     """
@@ -154,7 +150,7 @@ def scrape_pbp(game_id, date, roster):
     Automatically scrapes the json and html, if the json is empty the html picks up some of the slack and the espn
     xml is also scraped for coordinates
     :param game_id: json game id
-    :param date: 
+    :param date:
     :param roster: list of players in pre game roster
     :return: DataFrame with info or None if it fails
              a dict of players with id's and numbers
@@ -203,7 +199,7 @@ def scrape_shifts(game_id, players):
     Scrape the Shift charts (or TOI tables)
     :param game_id: json game id
     :param players: dict of players with numbers and id's
-    :param 
+    :param
     :return: DataFrame with info or None if it fails
     """
     year = str(game_id)[:4]
@@ -287,7 +283,7 @@ def scrape(seasons, if_shifts):
     """
     Scrape the given seasons
     Pbp is automatically scraped, you decide whether or not for shifts
-    :param seasons: list of seasons 
+    :param seasons: list of seasons
     :param if_shifts: boolean -> whether or not to scrape shifts
     """
 
@@ -311,8 +307,3 @@ def scrape(seasons, if_shifts):
     print('ESPN games')
     for x in espn_games:
         print(x)
-
-
-
-
-

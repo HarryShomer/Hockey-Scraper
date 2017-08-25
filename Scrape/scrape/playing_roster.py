@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
-import shared
+
+from scrape import shared
 
 
 def get_roster(game_id):
@@ -31,7 +32,7 @@ def get_coaches(soup):
     """
     scrape head coaches
     :param soup: html
-    :return: 
+    :return:
     """
     head_coaches = dict()
 
@@ -45,9 +46,9 @@ def get_coaches(soup):
 
 def get_players(soup):
     """
-    scrape roster for players 
+    scrape roster for players
     :param soup: html
-    :return: 
+    :return:
     """
     players = dict()
 
@@ -101,8 +102,8 @@ def get_players(soup):
 def scrape_roster(game_id):
     """
     For a given game scrapes the roster
-    :param game_id: 
-    :return: dict of players (home and away) an dict for both head coaches 
+    :param game_id:
+    :return: dict of players (home and away) an dict for both head coaches
     """
 
     try:
@@ -120,5 +121,3 @@ def scrape_roster(game_id):
         raise Exception
 
     return {'players': players, 'head_coaches': head_coaches}
-
-

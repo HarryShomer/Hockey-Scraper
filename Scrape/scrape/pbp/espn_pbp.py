@@ -1,14 +1,16 @@
-import pandas as pd
 from bs4 import BeautifulSoup
+import pandas as pd
+import re
 import time
-import shared
+
+from scrape import shared
 
 
 def event_type(play_description):
     """
-    Returns the event type (ex: a SHOT or a GOAL...etc) given the event description 
-    :param play_description: 
-    :return: 
+    Returns the event type (ex: a SHOT or a GOAL...etc) given the event description
+    :param play_description:
+    :return:
     """
     events = {'GOAL SCORED': 'GOAL', 'SHOT ON GOAL': 'SHOT', 'SHOT MISSED': 'MISS', 'SHOT BLOCKED': 'BLOCK',
               'PENALTY': 'PENL', 'FACEOFF': 'FAC', 'HIT': 'HIT', 'TAKEAWAY': 'TAKE', 'GIVEAWAY': 'GIVE'}
@@ -21,14 +23,12 @@ def get_espn_game_id(date, home_team, away_team):
     """
     Scrapes the day's schedule and gets the id for the given game
     Ex: http://www.espn.com/nhl/scoreboard?date=20161024
-    
+
     :param date: format-> YearMonthDay-> 20161024
-    :param home_team: 
-    :param away_team: 
+    :param home_team:
+    :param away_team:
     :return: 9 digit game id
     """
-    import re
-
     url = 'http://www.espn.com/nhl/scoreboard?date={}'.format(date.replace('-', ''))
 
     response = shared.get_url(url)
@@ -50,12 +50,12 @@ def get_espn_game_id(date, home_team, away_team):
 
 def get_espn(date, home_team, away_team):
     """
-    Gets the ESPN pbp feed 
+    Gets the ESPN pbp feed
     Ex: http://www.espn.com/nhl/gamecast/data/masterFeed?lang=en&isAll=true&gameId=400885300
-    
+
     :param date: date of the game
-    :param home_team: 
-    :param away_team: 
+    :param home_team:
+    :param away_team:
     :return: raw xml
     """
     game_id = get_espn_game_id(date, home_team.upper(), away_team.upper())
@@ -70,7 +70,7 @@ def get_espn(date, home_team, away_team):
 def parse_event(event):
     """
     Parse each event
-    In the string each field is separated by a '~'. 
+    In the string each field is separated by a '~'.
     Relevant for here: The first two are the x and y coordinates. And the 4th and 5th are the time elapsed and period.
     :param event: string with info
     :return: return dict with relevant info
@@ -93,7 +93,7 @@ def parse_event(event):
 
 def parse_espn(espn_xml):
     """
-    Parse feed 
+    Parse feed
     :param espn_xml: raw xml of feed
     :return: DataFrame with info
     """
@@ -114,7 +114,7 @@ def scrape_game(date, home_team, away_team):
     :param date: ex: 2016-20-24
     :param home_team: tricode
     :param away_team: tricode
-    :return: dataframe with info 
+    :return: dataframe with info
     """
     try:
         print('Using espn for pbp')

@@ -1,8 +1,9 @@
+import json
 import pandas as pd
 import requests
-import json
 import time
-import shared
+
+from scrape import shared
 
 
 def get_pbp(game_id):
@@ -32,7 +33,7 @@ def change_event_name(event):
     :param event: event type
     :return: fixed event type
     """
-    event_types ={
+    event_types = {
         'PERIOD_START': 'PSTR',
         'FACEOFF': 'FAC',
         'BLOCKED_SHOT': 'BLOCK',
@@ -59,7 +60,7 @@ def change_event_name(event):
 
 def get_teams(json):
     """
-    Get teams 
+    Get teams
     :param json: pbp json
     :return: dict with home and away
     """
@@ -70,7 +71,7 @@ def get_teams(json):
 def parse_event(event):
     """
     Parses a single event when the info is in a json format
-    :param event: json of event 
+    :param event: json of event
     :return: dictionary with the info
     """
     play = dict()
@@ -126,7 +127,7 @@ def parse_json(game_json):
     """
     Scrape the json for a game
     :param game_json: raw json
-    :return: Either a DataFrame with info for the game 
+    :return: Either a DataFrame with info for the game
     """
     columns = ['period', 'event', 'seconds_elapsed', 'p1_name', 'p1_ID', 'p2_name', 'p2_ID', 'p3_name', 'p3_ID', 'xC', 'yC']
 
@@ -142,7 +143,7 @@ def parse_json(game_json):
 
 def scrape_game(game_id):
     """
-    Used for debugging 
+    Used for debugging
     :param game_id: game to scrape
     :param date: '2016-10-24'
     :return: DataFrame of game info
@@ -160,4 +161,3 @@ def scrape_game(game_id):
         return None
 
     return game_df
-
