@@ -325,14 +325,14 @@ retries = Retry(total=10, backoff_factor=.1)
 session.mount('http://', HTTPAdapter(max_retries=retries))
 
 
-def get_url(url):
+def get_url(url, params=None):
     """
     Get the url
 
     :param url: given url
     :return: page
     """
-    response = session.get(url, timeout=5)
+    response = session.get(url, params=params, timeout=5)
     response.raise_for_status()
 
     return response

@@ -86,3 +86,10 @@ desires, e.g. `py36` for python 3.6:
 $ pip install tox
 $ tox -e py36
 ```
+
+To run 'live' tests, i.e. those that run against a live, external service, such
+as the NHL schedule API, use the `--live` option:
+
+```bash
+$ tox -e py36 -- --live
+```
