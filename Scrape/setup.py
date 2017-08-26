@@ -7,6 +7,7 @@ if __name__ == '__main__':
         version='0.1.0',
 
         install_requires=[
+            'pandas',
             'beautifulsoup4',
             'requests',
             'lxml',
