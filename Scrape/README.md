@@ -75,3 +75,14 @@ your computer (and in the same folder as your code):
 
 It's important to note add that this does take some time to run. A season of just play
 by play data takes about ~2 hours to run and if you include shifts about ~2:30.  
+
+
+## Development
+
+To run tests, install `tox` and invoke with whatever python version your heart
+desires, e.g. `py36` for python 3.6:
+
+```bash
+$ pip install tox
+$ tox -e py36
+```

@@ -4,3 +4,7 @@
 *.pyc
 __pycache__
 *.csv
+.cache
+.coverage
+.tox
+*.egg-info
