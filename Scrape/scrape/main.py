@@ -232,7 +232,8 @@ def scrape_game(game_id, date, if_scrape_shifts):
 
     try:
         roster = playing_roster.scrape_roster(game_id)
-    except Exception:
+    except Exception as exc:
+        print(exc)
         broken_pbp_games.extend([game_id, date])
         return None, None     # Everything fails without the roster
 
