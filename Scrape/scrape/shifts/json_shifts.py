@@ -1,7 +1,8 @@
 import pandas as pd
 import json
 import time
-import shared
+
+from scrape import shared
 
 
 def get_shifts(game_id):
@@ -9,7 +10,7 @@ def get_shifts(game_id):
     Given a game_id it returns the raw json
     Ex: http://www.nhl.com/stats/rest/shiftcharts?cayenneExp=gameId=2010020001
     :param game_id: the game
-    :return: 
+    :return:
     """
     url = 'http://www.nhl.com/stats/rest/shiftcharts?cayenneExp=gameId={}'.format(game_id)
     response = shared.get_url(url)
@@ -22,7 +23,7 @@ def get_shifts(game_id):
 def parse_shift(shift):
     """
     Parse shift for json
-    :param shift: 
+    :param shift:
     :return: dict with shift info
     """
     shift_dict = dict()
@@ -74,6 +75,3 @@ def scrape_game(game_id):
     game_df = get_shifts(game_id)
 
     return game_df
-
-
-

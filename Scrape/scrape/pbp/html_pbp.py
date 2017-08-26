@@ -1,7 +1,8 @@
-import pandas as pd
 from bs4 import BeautifulSoup, SoupStrainer
+import pandas as pd
 import re
-import shared
+
+from scrape import shared
 
 
 def get_pbp(game_id):
@@ -20,7 +21,7 @@ def get_pbp(game_id):
 def get_penalty(play_description):
     """
     Get the penalty info
-    :param play_description: 
+    :param play_description:
     :return: penalty info
     """
     penalty_types = {'Instigator': 'Instigator', 'Broken stick': 'Broken stick', 'Clipping': 'Clipping',
@@ -172,7 +173,7 @@ def which_zone(play_description):
 
 def strip_html_pbp(td):
     """
-    Strip html tags and such 
+    Strip html tags and such
     :param td: pbp
     :return: list of plays (which contain a list of info) stripped of html
     """
@@ -236,7 +237,7 @@ def get_event_players(event, players, home_team):
     :param event: fixed up html
     :param players: dict of players and id's
     :param home_team:
-    :return: 
+    :return:
     """
     info = {
         'p1_name': '',
@@ -349,7 +350,7 @@ def get_event_players(event, players, home_team):
 def parse_event(event, players, home_team, if_plays_in_json, current_score):
     """
     Receievs an event and parses it
-    :param event: 
+    :param event:
     :param players: players in game
     :param home_team:
     :param if_plays_in_json: If the pbp json contains the plays
@@ -467,7 +468,7 @@ def parse_event(event, players, home_team, if_plays_in_json, current_score):
 def parse_html(html, players, teams, if_plays_in_json):
     """
     Parse html game pbp
-    :param html: 
+    :param html:
     :param players: players in the game (from json pbp)
     :param teams: dict with home and away teams
     :param if_plays_in_json: If the pbp json contains the plays
@@ -506,7 +507,7 @@ def parse_html(html, players, teams, if_plays_in_json):
 
 
 def scrape_game(game_id, players, teams, if_plays_in_json):
-    """ 
+    """
     :param game_id: game to scrape
     :param players: dict with player info
     :param teams: dict with home and away teams
