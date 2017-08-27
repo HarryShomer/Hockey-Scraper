@@ -20,7 +20,7 @@ columns = ['Game_Id', 'Date', 'Period', 'Event', 'Description', 'Time_Elapsed', 
            'awayPlayer3_id', 'awayPlayer4', 'awayPlayer4_id', 'awayPlayer5', 'awayPlayer5_id', 'awayPlayer6',
            'awayPlayer6_id', 'homePlayer1', 'homePlayer1_id', 'homePlayer2', 'homePlayer2_id', 'homePlayer3',
            'homePlayer3_id', 'homePlayer4', 'homePlayer4_id', 'homePlayer5', 'homePlayer5_id', 'homePlayer6',
-           'homePlayer6_id',  'Away_Players', 'Home_Players', 'Away_Score', 'Home_Score', 'Away_Goalie',
+           'homePlayer6_id',  'Away_Players', 'Home_Players', 'Away_Score', 'Home_Score', 'score_diff', 'Away_Goalie',
            'Away_Goalie_Id', 'Home_Goalie', 'Home_Goalie_Id', 'xC', 'yC', 'Home_Coach', 'Away_Coach']
 
 
@@ -311,6 +311,7 @@ def scrape(seasons, if_shifts):
     print('ESPN games')
     for x in espn_games:
         print(x)
+
 
 
 

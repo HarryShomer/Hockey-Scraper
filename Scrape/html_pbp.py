@@ -128,9 +128,10 @@ def shot_type(play_description):
     return ''
 
 
-def home_zone(ev_zone, ev_team, home_team):
+def home_zone(event, ev_zone, ev_team, home_team):
     """
     Determines the zone relative to the home team
+    :param event: event type
     :param ev_zone: zone relative to event team
     :param ev_team: event team
     :param home_team: home team
@@ -139,7 +140,7 @@ def home_zone(ev_zone, ev_team, home_team):
     if ev_zone == '':
         return ''
 
-    if ev_team != home_team:
+    if (ev_team != home_team and event != 'BLOCK') or (ev_team == home_team and event == 'BLOCK'):
         if ev_zone == 'Off':
             return 'Def'
         elif ev_zone == 'Def':
@@ -383,6 +384,7 @@ def parse_event(event, players, home_team, if_plays_in_json, current_score):
 
     event_dict['Home_Score'] = current_score['Home']
     event_dict['Away_Score'] = current_score['Away']
+    event_dict['score_diff'] = current_score['Home'] - current_score['Away']
 
     # Populate away and home player info
     for j in range(6):
@@ -442,7 +444,7 @@ def parse_event(event, players, home_team, if_plays_in_json, current_score):
 
     event_dict['Strength'] = 'x'.join([str(home_skaters), str(away_skaters)])
     event_dict['Ev_Zone'] = which_zone(event[5])
-    event_dict['Home_Zone'] = home_zone(event_dict['Ev_Zone'], event_dict['Ev_Team'], home_team)
+    event_dict['Home_Zone'] = home_zone(event_dict['Event'], event_dict['Ev_Zone'], event_dict['Ev_Team'], home_team)
 
     if 'PENL' in event[4]:
         event_dict['Type'] = get_penalty(event[5])
@@ -481,7 +483,7 @@ def parse_html(html, players, teams, if_plays_in_json):
                    'awayPlayer5_id', 'awayPlayer6', 'awayPlayer6_id', 'homePlayer1', 'homePlayer1_id', 'homePlayer2',
                    'homePlayer2_id', 'homePlayer3', 'homePlayer3_id', 'homePlayer4', 'homePlayer4_id', 'homePlayer5',
                    'homePlayer5_id', 'homePlayer6', 'homePlayer6_id', 'Away_Goalie', 'Away_Goalie_Id', 'Home_Goalie',
-                   'Home_Goalie_Id', 'Away_Players', 'Home_Players', 'Away_Score', 'Home_Score']
+                   'Home_Goalie_Id', 'Away_Players', 'Home_Players', 'Away_Score', 'Home_Score', 'score_diff']
     else:
         columns = ['Period', 'Event', 'Description', 'Time_Elapsed', 'Seconds_Elapsed', 'Strength', 'Ev_Zone', 'Type',
                    'Ev_Team', 'Home_Zone', 'Away_Team', 'Home_Team', 'p1_name', 'p1_ID', 'p2_name', 'p2_ID', 'p3_name',
@@ -490,7 +492,7 @@ def parse_html(html, players, teams, if_plays_in_json):
                    'homePlayer1', 'homePlayer1_id', 'homePlayer2', 'homePlayer2_id', 'homePlayer3', 'homePlayer3_id',
                    'homePlayer4', 'homePlayer4_id', 'homePlayer5', 'homePlayer5_id', 'homePlayer6', 'homePlayer6_id',
                    'Away_Goalie', 'Away_Goalie_Id', 'Home_Goalie', 'Home_Goalie_Id', 'Away_Players', 'Home_Players',
-                   'Away_Score', 'Home_Score']
+                   'Away_Score', 'Home_Score', 'score_diff']
 
     current_score = {'Home': 0, 'Away': 0}
     events, current_score = zip(*(parse_event(event, players, teams['Home'], if_plays_in_json, current_score)
