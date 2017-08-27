@@ -103,14 +103,13 @@ def combine_html_json_pbp(json_df, html_df, game_id, date):
     Add game_id and date
     Get rid of period, event, time_elapsed
     """
-    html_df.Period = html_df.Period.astype(int)
-    game_df = pd.merge(html_df, json_df, left_on=['Period', 'Event', 'Seconds_Elapsed'],
-                       right_on=['period', 'event', 'seconds_elapsed'], how='left')
-
-    # This id because merge doesn't work well with shootouts
-    game_df = game_df.drop_duplicates(subset=['Period', 'Event', 'Description', 'Seconds_Elapsed'])
-
     try:
+        html_df.Period = html_df.Period.astype(int)
+        game_df = pd.merge(html_df, json_df, left_on=['Period', 'Event', 'Seconds_Elapsed'],
+                           right_on=['period', 'event', 'seconds_elapsed'], how='left')
+
+        # This id because merge doesn't work well with shootouts
+        game_df = game_df.drop_duplicates(subset=['Period', 'Event', 'Description', 'Seconds_Elapsed'])
         game_df['Game_Id'] = game_id[-5:]
         game_df['Date'] = date
         return pd.DataFrame(game_df, columns=columns)
@@ -129,8 +128,8 @@ def combine_espn_html_pbp(html_df, espn_df, game_id, date, away_team, home_team)
     :param home_team
     :return: merged DataFrame
     """
-    espn_df.period = espn_df.period.astype(int)
     try:
+        espn_df.period = espn_df.period.astype(int)
         df = pd.merge(html_df, espn_df, left_on=['Period', 'Seconds_Elapsed', 'Event'],
                       right_on=['period', 'time_elapsed', 'event'], how='left')
 
