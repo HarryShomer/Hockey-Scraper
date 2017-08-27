@@ -233,6 +233,10 @@ def scrape_game(game_id, date, if_scrape_shifts):
     """
     shifts_df = None
 
+    # Don't bother with preseason
+    if int(game_id[5:]) < 20000:
+        return None, None
+
     try:
         roster = playing_roster.scrape_roster(game_id)
     except Exception:
@@ -264,8 +268,8 @@ def scrape_year(year, if_scrape_shifts):
     shifts_dfs = []
 
     for game in schedule:
-        print(' '.join(['Scraping game', str(game[0]), game[1]]))
-        pbp_df, shifts_df = scrape_game(game[0], game[1], if_scrape_shifts)
+        print(' '.join(['Scraping Game ', str(game[0]), game[1]]))
+        pbp_df, shifts_df = scrape_game(str(game[0]), game[1], if_scrape_shifts)
         if pbp_df is not None:
             pbp_dfs.extend([pbp_df])
         if shifts_df is not None:
@@ -303,7 +307,6 @@ def scrape(seasons, if_shifts):
 
     print('Missing ids')
     global players_missing_ids
-    players_missing_ids = list(set(players_missing_ids))  # Get rid of duplicates
     for x in players_missing_ids:
         print(x)
 
