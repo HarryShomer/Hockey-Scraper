@@ -7,7 +7,7 @@ import shared
 def event_type(play_description):
     """
     Returns the event type (ex: a SHOT or a GOAL...etc) given the event description 
-    :param play_description: 
+    :param play_description: description of play
     :return: 
     """
     events = {'GOAL SCORED': 'GOAL', 'SHOT ON GOAL': 'SHOT', 'SHOT MISSED': 'MISS', 'SHOT BLOCKED': 'BLOCK',
@@ -23,8 +23,8 @@ def get_espn_game_id(date, home_team, away_team):
     Ex: http://www.espn.com/nhl/scoreboard?date=20161024
     
     :param date: format-> YearMonthDay-> 20161024
-    :param home_team: 
-    :param away_team: 
+    :param home_team: home team
+    :param away_team: away team
     :return: 9 digit game id
     """
     import re
@@ -54,8 +54,8 @@ def get_espn(date, home_team, away_team):
     Ex: http://www.espn.com/nhl/gamecast/data/masterFeed?lang=en&isAll=true&gameId=400885300
     
     :param date: date of the game
-    :param home_team: 
-    :param away_team: 
+    :param home_team: home team
+    :param away_team: away team
     :return: raw xml
     """
     game_id = get_espn_game_id(date, home_team.upper(), away_team.upper())
@@ -132,4 +132,3 @@ def scrape_game(date, home_team, away_team):
     return espn_df
 
 
-# get_espn('2016-10-24', 'MTL', 'PHI') -> Used for Debugging

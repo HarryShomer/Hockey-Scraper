@@ -30,8 +30,8 @@ def analyze_shifts(shift, name, team, home_team, player_ids):
     This function is only used for the html
     :param shift: info on shift
     :param name: player name
-    :param team: 
-    :param home_team:
+    :param team: given team
+    :param home_team: home team for given game
     :param player_ids: dict with info on players
     :return: dict with info for shift
     """
@@ -80,7 +80,7 @@ def parse_html(html, player_ids, game_id):
     Parse the html
     :param html: cleaned up html
     :param player_ids: dict of home and away players
-    :param game_id:
+    :param game_id: id for game
     :return: DataFrame with info
     """
     columns = ['Game_Id', 'Player', 'Player_Id', 'Period', 'Team', 'Start', 'End', 'Duration']
@@ -129,7 +129,7 @@ def scrape_game(game_id, players):
     """
     Scrape the game.
     Try the json first, if it's not there do the html (it should be there for all games)
-    :param game_id: game
+    :param game_id: id for game
     :param players: list of players
     :return: DataFrame with info for the game
     """

@@ -20,7 +20,7 @@ def get_pbp(game_id):
 def get_penalty(play_description):
     """
     Get the penalty info
-    :param play_description: 
+    :param play_description: description of play field
     :return: penalty info
     """
     penalty_types = {'Instigator': 'Instigator', 'Broken stick': 'Broken stick', 'Clipping': 'Clipping',
@@ -68,7 +68,7 @@ def get_player_name(number, players, team, home_team):
     :param number: player's number
     :param players: all players with info
     :param team: team of player
-    :param home_team
+    :param home_team: home team
     :return: dict with full and and id
     """
     if team == home_team:
@@ -236,8 +236,8 @@ def get_event_players(event, players, home_team):
     returns a dict with the players involved in the event
     :param event: fixed up html
     :param players: dict of players and id's
-    :param home_team:
-    :return: 
+    :param home_team: home team
+    :return: dict with event players
     """
     info = {
         'p1_name': '',
@@ -350,9 +350,9 @@ def get_event_players(event, players, home_team):
 def parse_event(event, players, home_team, if_plays_in_json, current_score):
     """
     Receievs an event and parses it
-    :param event: 
+    :param event: event type
     :param players: players in game
-    :param home_team:
+    :param home_team: home team
     :param if_plays_in_json: If the pbp json contains the plays
     :param current_score: current score for both teams
     :return: dict with info
@@ -469,7 +469,7 @@ def parse_event(event, players, home_team, if_plays_in_json, current_score):
 def parse_html(html, players, teams, if_plays_in_json):
     """
     Parse html game pbp
-    :param html: 
+    :param html: raw html
     :param players: players in the game (from json pbp)
     :param teams: dict with home and away teams
     :param if_plays_in_json: If the pbp json contains the plays

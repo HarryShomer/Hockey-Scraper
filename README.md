@@ -22,7 +22,7 @@ First just download this folder onto your computer.
 
 Then open up the command line or terminal and navigate over to where the folder is placed
 on your computer. For example let's say that the folder is placed in a directory called
-'Hockey', you would then (on a mac) open up your terminal and type: 
+'Hockey', you would then (in a in OSX or Linux) open up your terminal and type: 
 
 ```
 cd /Users/Username/Hockey/Scrape
@@ -41,10 +41,10 @@ The function "scrape" (found, of course, in the scrape_functions file) is used t
 data on a season by season level. It takes two arguments (by default the play-by-play is 
 scraped, you need to specify whether or not you want to scrape the shifts):
 
-1. seasons - List of seasons you want to scrape (Note: A given season is referred to by
+1. 'seasons' - List of seasons you want to scrape (Note: A given season is referred to by
 the first of the two years it spans. So you would refer to the 2016-2017 season as 2016.
 
-2. if_shifts - Boolean indicating whether or not you want to scrape the shifts too 
+2. 'if_shifts' - Boolean indicating whether or not you want to scrape the shifts too 
 
 
 So let's say you want to get the play by play and shift data from the 2015-2016 and 

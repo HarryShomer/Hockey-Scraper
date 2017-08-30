@@ -144,7 +144,6 @@ def scrape_game(game_id):
     """
     Used for debugging 
     :param game_id: game to scrape
-    :param date: '2016-10-24'
     :return: DataFrame of game info
     """
     try:

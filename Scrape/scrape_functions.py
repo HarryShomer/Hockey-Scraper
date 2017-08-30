@@ -62,7 +62,7 @@ def combine_players_lists(json_players, roster_players, game_id):
     Combine the json list of players (which contains id's) with the list in the roster html
     :param json_players: dict of all players with id's
     :param roster_players: dict with home and and away keys for players
-    :param game_id:
+    :param game_id: id of game
     :return: dict containing home and away keys -> which contains list of info on each player
     """
     home_players = dict()
@@ -96,8 +96,8 @@ def combine_html_json_pbp(json_df, html_df, game_id, date):
     Join both data sources
     :param json_df: json pbp DataFrame
     :param html_df: html pbp DataFrame
-    :param game_id:
-    :param date:
+    :param game_id: id of game
+    :param date: date of game
     :return: finished pbp
     
     Add game_id and date
@@ -124,8 +124,8 @@ def combine_espn_html_pbp(html_df, espn_df, game_id, date, away_team, home_team)
     :param espn_df: dataframe with info from espn pbp
     :param game_id: json game id
     :param date: ex: 2016-10-24
-    :param away_team:
-    :param home_team
+    :param away_team: away team
+    :param home_team: home team
     :return: merged DataFrame
     """
     try:
@@ -153,7 +153,7 @@ def scrape_pbp(game_id, date, roster):
     Automatically scrapes the json and html, if the json is empty the html picks up some of the slack and the espn
     xml is also scraped for coordinates
     :param game_id: json game id
-    :param date: 
+    :param date: date of game
     :param roster: list of players in pre game roster
     :return: DataFrame with info or None if it fails
              a dict of players with id's and numbers
@@ -202,7 +202,6 @@ def scrape_shifts(game_id, players):
     Scrape the Shift charts (or TOI tables)
     :param game_id: json game id
     :param players: dict of players with numbers and id's
-    :param 
     :return: DataFrame with info or None if it fails
     """
     year = str(game_id)[:4]

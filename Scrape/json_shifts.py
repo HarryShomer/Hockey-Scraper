@@ -22,7 +22,7 @@ def get_shifts(game_id):
 def parse_shift(shift):
     """
     Parse shift for json
-    :param shift: 
+    :param shift: json for shift
     :return: dict with shift info
     """
     shift_dict = dict()
@@ -47,8 +47,8 @@ def parse_shift(shift):
 def parse_json(shift_json, game_id):
     """
     Parse the json
-    :param json: raw json
-    :param game_id:
+    :param shift_json: raw json
+    :param game_id: if of game
     :return: DataFrame with info
     """
     columns = ['Game_Id', 'Period', 'Team', 'Player', 'Player_Id', 'Start', 'End', 'Duration']

@@ -31,7 +31,7 @@ def get_coaches(soup):
     """
     scrape head coaches
     :param soup: html
-    :return: 
+    :return: dict of coaches for game
     """
     head_coaches = dict()
 
@@ -47,7 +47,7 @@ def get_players(soup):
     """
     scrape roster for players 
     :param soup: html
-    :return: 
+    :return: dict for home and away players
     """
     players = dict()
 
@@ -101,7 +101,7 @@ def get_players(soup):
 def scrape_roster(game_id):
     """
     For a given game scrapes the roster
-    :param game_id: 
+    :param game_id: id for game
     :return: dict of players (home and away) an dict for both head coaches 
     """
 
