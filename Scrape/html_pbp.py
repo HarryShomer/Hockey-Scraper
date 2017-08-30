@@ -483,7 +483,7 @@ def parse_html(html, players, teams, if_plays_in_json):
                    'awayPlayer5_id', 'awayPlayer6', 'awayPlayer6_id', 'homePlayer1', 'homePlayer1_id', 'homePlayer2',
                    'homePlayer2_id', 'homePlayer3', 'homePlayer3_id', 'homePlayer4', 'homePlayer4_id', 'homePlayer5',
                    'homePlayer5_id', 'homePlayer6', 'homePlayer6_id', 'Away_Goalie', 'Away_Goalie_Id', 'Home_Goalie',
-                   'Home_Goalie_Id', 'Away_Players', 'Home_Players', 'Away_Score', 'Home_Score', 'score_diff']
+                   'Home_Goalie_Id', 'Away_Players', 'Home_Players', 'Away_Score', 'Home_Score']
     else:
         columns = ['Period', 'Event', 'Description', 'Time_Elapsed', 'Seconds_Elapsed', 'Strength', 'Ev_Zone', 'Type',
                    'Ev_Team', 'Home_Zone', 'Away_Team', 'Home_Team', 'p1_name', 'p1_ID', 'p2_name', 'p2_ID', 'p3_name',
@@ -492,7 +492,7 @@ def parse_html(html, players, teams, if_plays_in_json):
                    'homePlayer1', 'homePlayer1_id', 'homePlayer2', 'homePlayer2_id', 'homePlayer3', 'homePlayer3_id',
                    'homePlayer4', 'homePlayer4_id', 'homePlayer5', 'homePlayer5_id', 'homePlayer6', 'homePlayer6_id',
                    'Away_Goalie', 'Away_Goalie_Id', 'Home_Goalie', 'Home_Goalie_Id', 'Away_Players', 'Home_Players',
-                   'Away_Score', 'Home_Score', 'score_diff']
+                   'Away_Score', 'Home_Score']
 
     current_score = {'Home': 0, 'Away': 0}
     events, current_score = zip(*(parse_event(event, players, teams['Home'], if_plays_in_json, current_score)
