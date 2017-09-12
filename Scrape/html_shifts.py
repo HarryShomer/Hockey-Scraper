@@ -121,7 +121,7 @@ def parse_html(html, player_ids, game_id):
         shifts = [analyze_shifts(shift, key, team, home_team, player_ids) for shift in players[key]['Shifts']]
         df = df.append(shifts, ignore_index=True)
 
-    df['Game_Id'] = str(game_id)
+    df['Game_Id'] = str(game_id)[5:]
     return df
 
 

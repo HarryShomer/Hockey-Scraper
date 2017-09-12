@@ -19,6 +19,24 @@ def get_shifts(game_id):
     return parse_json(shift_json, game_id)
 
 
+def fix_team_tricode(tricode):
+    """
+    Some of the tricodes are different than how I want them
+    :param tricode: 3 letter team name - ex: NYR
+    :return: fixed tricode
+    """
+    fixed_tricodes = {
+        'TBL':  'T.B',
+        'LAK': 'L.A',
+        'NJD': 'N.J',
+        'SJS': 'S.J'
+    }
+    if tricode.upper() in list(fixed_tricodes.keys()):
+        return fixed_tricodes[tricode.upper()]
+    else:
+        return tricode
+
+
 def parse_shift(shift):
     """
     Parse shift for json
@@ -30,7 +48,8 @@ def parse_shift(shift):
     shift_dict['Player'] = name
     shift_dict['Player_Id'] = shift['playerId']
     shift_dict['Period'] = shift['period']
-    shift_dict['Team'] = shift['teamAbbrev']
+
+    shift_dict['Team'] = fix_team_tricode(shift['teamAbbrev'])
 
     # At the end of the json they list when all the goal events happened. They are the only one's which have their
     # eventDescription be not null
@@ -57,7 +76,7 @@ def parse_json(shift_json, game_id):
     shifts = [shift for shift in shifts if shift != {}]               # Get rid of null shifts (which happen at end)
 
     df = pd.DataFrame(shifts, columns=columns)
-    df['Game_Id'] = str(game_id)
+    df['Game_Id'] = str(game_id)[5:]
     df = df.sort_values(by=['Period', 'Start'], ascending=[True, True])  # Sort by period by time
     df = df.reset_index(drop=True)
 

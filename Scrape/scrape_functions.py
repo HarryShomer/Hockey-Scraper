@@ -4,8 +4,10 @@ import espn_pbp
 import json_shifts
 import html_shifts
 import playing_roster
-import season_schedule
+import json_schedule
 import pandas as pd
+import time
+import datetime
 import shared
 
 # Holds list for broken games for shifts and pbp
@@ -230,11 +232,9 @@ def scrape_game(game_id, date, if_scrape_shifts):
     :return: DataFrame of pbp info
              (optional) DataFrame with shift info
     """
-    shifts_df = None
 
-    # Don't bother with preseason
-    if int(game_id[5:]) < 20000:
-        return None, None
+    print(' '.join(['Scraping Game ', game_id, date]))
+    shifts_df = None
 
     try:
         roster = playing_roster.scrape_roster(game_id)
@@ -253,50 +253,118 @@ def scrape_game(game_id, date, if_scrape_shifts):
     return pbp_df, shifts_df
 
 
-def scrape_year(year, if_scrape_shifts):
+def scrape_list_of_games(games, if_scrape_shifts):
     """
-    Calls scrapeSchedule to get the game_id's to scrape and then calls scrapeGame and combines
-    all the scraped games into one DataFrame
-    :param year: year to scrape
-    :param if_scrape_shifts: boolean, check if scrape shifts
-    :return: nothing
+    Given a list of game_id's (and a date for each game) it scrapes them
+    :param games: list of [game_id, date]
+    :param if_scrape_shifts: whether to scrape shifts
+    :return: DataFrame of pbp info, also shifts if specified
     """
-    schedule = season_schedule.scrape_schedule(year)
-
     pbp_dfs = []
     shifts_dfs = []
 
-    for game in schedule:
-        print(' '.join(['Scraping Game ', str(game[0]), game[1]]))
+    for game in games:
         pbp_df, shifts_df = scrape_game(str(game[0]), game[1], if_scrape_shifts)
         if pbp_df is not None:
             pbp_dfs.extend([pbp_df])
         if shifts_df is not None:
             shifts_dfs.extend([shifts_df])
 
-    season_pbp_df = pd.concat(pbp_dfs)
-    season_pbp_df = season_pbp_df.reset_index(drop=True)
-    season_pbp_df.to_csv('nhl_pbp{}{}.csv'.format(year, int(year)+1), sep=',')
-    season_pbp_df.apply(lambda row: check_goalie(row), axis=1)
+    # Check if any games
+    if len(pbp_dfs) == 0:
+        return None, None
+
+    pbp_df = pd.concat(pbp_dfs)
+    pbp_df = pbp_df.reset_index(drop=True)
+    pbp_df.apply(lambda row: check_goalie(row), axis=1)
 
     if if_scrape_shifts:
-        season_shifts_df = pd.concat(shifts_dfs)
-        season_shifts_df = season_shifts_df.reset_index(drop=True)
-        season_shifts_df.to_csv('nhl_shifts{}{}.csv'.format(year, int(year)+1), sep=',')
+        shifts_df = pd.concat(shifts_dfs)
+        shifts_df = shifts_df.reset_index(drop=True)
+    else:
+        shifts_df = None
+
+    return pbp_df, shifts_df
 
 
-def scrape(seasons, if_shifts):
+def scrape_date_range(from_date, to_date, if_scrape_shifts):
     """
-    Scrape the given seasons
-    Pbp is automatically scraped, you decide whether or not for shifts
-    :param seasons: list of seasons 
-    :param if_shifts: boolean -> whether or not to scrape shifts
+    Scrape games in given date range
+    :param from_date: date you want to scrape from
+    :param to_date: date you want to scrape to
+    :param if_scrape_shifts: boolean, check if scrape shifts
     """
+    try:
+        if time.strptime(to_date, "%Y-%m-%d") < time.strptime(from_date, "%Y-%m-%d"):
+            print("Error: The second date input is earlier than the first one")
+            return
+    except ValueError:
+        print("Incorrect format given for dates. They must be given like '2016-10-01' ")
+        return
 
+    games = json_schedule.scrape_schedule(from_date, to_date)
+    pbp_df, shifts_df = scrape_list_of_games(games, if_scrape_shifts)
+
+    if pbp_df is not None:
+        pbp_df.to_csv('nhl_pbp{}{}.csv'.format(from_date, to_date), sep=',')
+    if shifts_df is not None:
+        shifts_df.to_csv('nhl_shifts{}{}.csv'.format(from_date, to_date), sep=',')
+
+    print_errors()
+
+
+def scrape_seasons(seasons, if_scrape_shifts):
+    """
+    Given list of seasons -> scrape all seasons 
+    :param seasons: list of seasons
+    :param if_scrape_shifts: if scrape shifts
+    :return: nothing 
+    """
     for season in seasons:
-        scrape_year(season, if_shifts)
+        from_date = '-'.join([str(season), '10', '1'])
+        to_date = '-'.join([str(season + 1), '7', '01'])
 
-    print('Broken pbp:')
+        games = json_schedule.scrape_schedule(from_date, to_date)
+        pbp_df, shifts_df = scrape_list_of_games(games, if_scrape_shifts)
+
+        if pbp_df is not None:
+            pbp_df.to_csv('nhl_pbp{}{}.csv'.format(season, season+1), sep=',')
+        if shifts_df is not None:
+            shifts_df.to_csv('nhl_shifts{}{}.csv'.format(season, season+1), sep=',')
+
+    print_errors()
+
+
+def scrape_games(games, if_scrape_shifts):
+    """
+    Scrape a given game
+    :param games: list of game_ids
+    :param if_scrape_shifts: if scrape shifts 
+    :return: nothing
+    """
+    # Create List of game_id's and dates
+    games_list = json_schedule.get_dates(games)
+
+    pbp_df, shifts_df = scrape_list_of_games(games_list, if_scrape_shifts)
+
+    if pbp_df is not None:
+        pbp_df.to_csv('nhl_pbp_games-{}.csv'.format(str(datetime.datetime.now().time())), sep=',')
+    if shifts_df is not None:
+        shifts_df.to_csv('nhl_shifts_games-{}.csv'.format(str(datetime.datetime.now().time())), sep=',')
+
+    print_errors()
+
+
+def print_errors():
+    """
+    Print errors with scraping
+    """
+    global broken_shifts_games
+    global broken_pbp_games
+    global players_missing_ids
+    global espn_games
+
+    print('\nBroken pbp:')
     for x in broken_pbp_games:
         print(x)
 
@@ -304,14 +372,19 @@ def scrape(seasons, if_shifts):
     for x in broken_shifts_games:
         print(x)
 
-    print('Missing ids')
+    print('Missing ids:')
     global players_missing_ids
     for x in players_missing_ids:
         print(x)
 
-    print('ESPN games')
+    print('ESPN games:')
     for x in espn_games:
         print(x)
+
+    broken_shifts_games = []
+    broken_pbp_games = []
+    players_missing_ids = []
+    espn_games = []
 
 
 

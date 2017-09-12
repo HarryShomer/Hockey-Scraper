@@ -3,7 +3,7 @@
 This project is designed to allow people to scrape Play by Play and Shift data off of the 
 National Hockey League (NHL) API and website for all regular season and playoff games
 since the 2010-2011 season (further testing needs to be done to ensure it works for earlier
-seasons.  
+seasons).  
 
 
 ## Prerequisites
@@ -18,55 +18,85 @@ with a bunch of libraries pre-installed so it'll be easier to start off.
 
 ## How to Use
 
-First just download this folder onto your computer.
+First just download this repository onto your computer.
 
-Then open up the command line or terminal and navigate over to where the folder is placed
-on your computer. For example let's say that the folder is placed in a directory called
-'Hockey', you would then (in a in OSX or Linux) open up your terminal and type: 
-
-```
-cd /Users/Username/Hockey/Scrape
-``` 
-
-Then type in "python" to open the interactive python console. 
+Then open up the command line or terminal and navigate over to the folder which contains 
+the code. Then type in "python" to open the interactive python console.  
 
 You then want to import the file in the folder which contains the functions for scraping
 the data. That file is called scrape_functions.py. So just type in (and press enter): 
 
-```
-import scrape_functions  
-```
 
-The function "scrape" (found, of course, in the scrape_functions file) is used to scrape 
-data on a season by season level. It takes two arguments (by default the play-by-play is 
-scraped, you need to specify whether or not you want to scrape the shifts):
+    import scrape_functions  
+
+
+There are three relevant functions used for scraping data:
+
+1. "scrape_seasons"
+
+2. "scrape_games"
+
+3. "scrape\_date\_range"
+
+After any scraping function finishes
+running, the data scraped can be found in the folder which contains your code (the play-by-play
+and shifts are placed in different files). Also by default the play-by-play is 
+always scraped, so you need to specify if you want shifts in every function. 
+
+
+###1. scrape_seasons
+
+This function is used to scrape on a season by season level. It takes two arguments:
 
 1. 'seasons' - List of seasons you want to scrape (Note: A given season is referred to by
 the first of the two years it spans. So you would refer to the 2016-2017 season as 2016.
 
-2. 'if_shifts' - Boolean indicating whether or not you want to scrape the shifts too 
+2. 'if\_scrape\_shifts' - Boolean indicating whether or not you want to scrape the shifts too.
 
 
-So let's say you want to get the play by play and shift data from the 2015-2016 and 
-2016-2017 season. Assuming you have migrated over to the folder, opened up python, and 
-imported the scrape_functions file, you would type:
+    	# Scrapes 2015 & 2016 season with shifts
+    	scrape_functions.scrape_seasons([2015, 2016], True) 
 
-```
-scrape_functions.scrape([2015, 2016], True) 
-```
+    	# Scrapes 2016 season without shifts
+    	scrape_functions.scrape_seasons([2016], False)      
+	
+	
+###2. scrape_games
 
-And that's it. When the program is done you will find two new files for each season on 
-your computer (and in the same folder as your code):
+This function is used to scrape any collection of games you want. It takes two arguments: 
 
-1. nhl_pbp20162017.csv and nhl_pbp20152016.csv which contains the play by play info for
-   each game each season.
+1. 'games' - List of games you want to scrape. A game is identified by the game id used
+by the NHL (ex: 2016020001). The list of corresponding id's for games can be found here
+(https://statsapi.web.nhl.com/api/v1/schedule?startDate=2016-10-12&endDate=2016-10-12 - 
+Just fiddle with the start and end dates in the url to find the game you are looking for).
 
-2. nhl_shifts20162017.csv and nhl_shifts20152016.csv which contains the shift info for each
-   game each season 
+2. 'if\_scrape\_shifts' - Boolean indicating whether or not you want to scrape the shifts too.
+
+
+		# Scrapes first game of 2014, 2015, and 2016 seasons with shifts
+		scrape_functions.scrape_games([2014020001, 2015020001, 2016020001], True)      
+
+
+###3. scrape\_date\_range
+
+This functions is used to scrape any games in a given date range. All dates must be written 
+in the following format yyyy-mm-dd (ex: '2016-10-20'). It take three arguments:
+
+1. 'from_date' - Date of beginning of interval you want to scrape
+
+2. 'to_date' - Date of end of interval you want to scrape
+
+3. 'if\_scrape\_shifts' - Boolean indicating whether or not you want to scrape the shifts too.
+
+
+
+		# Scrapes games between 2016-10-10 and 2016-10-20 without shifts
+		scrape_functions.scrape_date_range('2016-10-10', '2016-10-20', False)      
+
+
+
    
 
-It's important to note add that this does take some time to run. A season of just play
-by play data takes about ~2 hours to run and if you include shifts about ~2:30.  
 
 
 

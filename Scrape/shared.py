@@ -106,7 +106,7 @@ Names = {'n/a': 'n/a', 'ALEXANDER OVECHKIN': 'Alex Ovechkin', 'TOBY ENSTROM': 'T
          'CHRISTOPHER BREEN': 'Chris Breen', 'BRYCE VAN BRABRANT': 'Bryce Van Brabant', 'ALEXANDER KILLORN': 'Alex Killorn',
          'JOSEPH MORROW': 'Joe Morrow', 'ALEX STEEN': 'Alexander Steen', 'BRADLEY MILLS': 'Brad Mills',
          'MICHAEL SISLO': 'Mike Sislo', 'MICHAEL VERNACE': 'Mike Vernace', 'STEVEN REINPRECHT': 'Steve Reinprecht',
-         'MATTHEW MURRAY': 'Matt Murray'}
+         'MATTHEW MURRAY': 'Matt Murray', 'THOMAS MCCOLLUM': 'TOM MCCOLLUM'}
 
 
 def fix_name(name):
