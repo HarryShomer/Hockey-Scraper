@@ -30,21 +30,11 @@ the data. That file is called scrape_functions.py. So just type in (and press en
     import scrape_functions  
 
 
-There are three relevant functions used for scraping data:
-
-1. "scrape_seasons"
-
-2. "scrape_games"
-
-3. "scrape\_date\_range"
-
-After any scraping function finishes
-running, the data scraped can be found in the folder which contains your code (the play-by-play
-and shifts are placed in different files). Also by default the play-by-play is 
-always scraped, so you need to specify if you want shifts in every function. 
+There are three relevant functions used for scraping data (After any scraping function finishes 
+running, the data scraped can be found in the folder which contains your code):
 
 
-###1. scrape_seasons
+**1. scrape_seasons:**
 
 This function is used to scrape on a season by season level. It takes two arguments:
 
@@ -61,7 +51,7 @@ the first of the two years it spans. So you would refer to the 2016-2017 season 
     	scrape_functions.scrape_seasons([2016], False)      
 	
 	
-###2. scrape_games
+**2. scrape_games:**
 
 This function is used to scrape any collection of games you want. It takes two arguments: 
 
@@ -77,7 +67,7 @@ Just fiddle with the start and end dates in the url to find the game you are loo
 		scrape_functions.scrape_games([2014020001, 2015020001, 2016020001], True)      
 
 
-###3. scrape\_date\_range
+**3. scrape\_date\_range:**
 
 This functions is used to scrape any games in a given date range. All dates must be written 
 in the following format yyyy-mm-dd (ex: '2016-10-20'). It take three arguments:
