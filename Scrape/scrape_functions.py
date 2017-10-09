@@ -16,7 +16,7 @@ broken_pbp_games = []
 players_missing_ids = []
 espn_games = []
 
-columns = ['Game_Id', 'Date', 'Period', 'Event', 'Description', 'Time_Elapsed', 'Seconds_Elapsed', 'Strength',
+pbp_columns = ['Game_Id', 'Date', 'Period', 'Event', 'Description', 'Time_Elapsed', 'Seconds_Elapsed', 'Strength',
            'Ev_Zone', 'Type', 'Ev_Team', 'Home_Zone', 'Away_Team', 'Home_Team', 'p1_name', 'p1_ID', 'p2_name', 'p2_ID',
            'p3_name', 'p3_ID', 'awayPlayer1', 'awayPlayer1_id', 'awayPlayer2', 'awayPlayer2_id', 'awayPlayer3',
            'awayPlayer3_id', 'awayPlayer4', 'awayPlayer4_id', 'awayPlayer5', 'awayPlayer5_id', 'awayPlayer6',
@@ -101,9 +101,6 @@ def combine_html_json_pbp(json_df, html_df, game_id, date):
     :param game_id: id of game
     :param date: date of game
     :return: finished pbp
-    
-    Add game_id and date
-    Get rid of period, event, time_elapsed
     """
     try:
         html_df.Period = html_df.Period.astype(int)
@@ -114,7 +111,7 @@ def combine_html_json_pbp(json_df, html_df, game_id, date):
         game_df = game_df.drop_duplicates(subset=['Period', 'Event', 'Description', 'Seconds_Elapsed'])
         game_df['Game_Id'] = game_id[-5:]
         game_df['Date'] = date
-        return pd.DataFrame(game_df, columns=columns)
+        return pd.DataFrame(game_df, columns=pbp_columns)
     except Exception as e:
         print('Problem combining Html Json pbp for game {}'.format(game_id, e))
 
@@ -146,7 +143,7 @@ def combine_espn_html_pbp(html_df, espn_df, game_id, date, away_team, home_team)
     df['Away_Team'] = away_team
     df['Home_Team'] = home_team
 
-    return pd.DataFrame(df, columns=columns)
+    return pd.DataFrame(df, columns=pbp_columns)
 
 
 def scrape_pbp(game_id, date, roster):
@@ -157,8 +154,8 @@ def scrape_pbp(game_id, date, roster):
     :param game_id: json game id
     :param date: date of game
     :param roster: list of players in pre game roster
-    :return: DataFrame with info or None if it fails
-             a dict of players with id's and numbers
+    :return: 1. DataFrame with info or None if it fails
+             2. a dict of players with id's and numbers
     """
     game_json = json_pbp.get_pbp(game_id)
     try:
@@ -199,11 +196,12 @@ def scrape_pbp(game_id, date, roster):
     return game_df, players
 
 
-def scrape_shifts(game_id, players):
+def scrape_shifts(game_id, players, date):
     """
     Scrape the Shift charts (or TOI tables)
     :param game_id: json game id
     :param players: dict of players with numbers and id's
+    :param date: date of game
     :return: DataFrame with info or None if it fails
     """
     year = str(game_id)[:4]
@@ -218,6 +216,8 @@ def scrape_shifts(game_id, players):
             broken_shifts_games.extend([game_id])
             print('Error for html shifts for game {}'.format(game_id), e)
             return None
+
+    shifts_df['Date'] = date
 
     return shifts_df
 
@@ -248,7 +248,7 @@ def scrape_game(game_id, date, if_scrape_shifts):
         broken_pbp_games.extend([game_id, date])
 
     if if_scrape_shifts and pbp_df is not None:
-        shifts_df = scrape_shifts(game_id, players)
+        shifts_df = scrape_shifts(game_id, players, date)
 
     return pbp_df, shifts_df
 
@@ -337,7 +337,7 @@ def scrape_seasons(seasons, if_scrape_shifts):
 
 def scrape_games(games, if_scrape_shifts):
     """
-    Scrape a given game
+    Scrape a list of games
     :param games: list of game_ids
     :param if_scrape_shifts: if scrape shifts 
     :return: nothing
