@@ -381,6 +381,8 @@ def print_errors():
     for x in espn_games:
         print(x)
 
+    print('\n')
+
     broken_shifts_games = []
     broken_pbp_games = []
     players_missing_ids = []
