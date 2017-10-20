@@ -27,6 +27,20 @@ To install just open up your terminal and type in:
     pip install hockey_scraper
 
 
+To use it just open up python:
+
+::
+
+    python
+
+
+And once inside import the package:
+
+::
+
+    import hockey_scraper
+
+
 There are three relevant functions used for scraping data (After any
 scraping function finishes running, the data scraped can be found in the
 folder which contains your code):
@@ -44,10 +58,10 @@ two arguments:
    scrape the shifts too. ::
 
        # Scrapes 2015 & 2016 season with shifts
-       scrape_functions.scrape_seasons([2015, 2016], True)
+       hockey_scraper.scrape_seasons([2015, 2016], True)
 
        # Scrapes 2016 season without shifts
-       scrape_functions.scrape_seasons([2016], False)
+       hockey_scraper.scrape_seasons([2016], False)
 
 **2. scrape\_games:**
 
@@ -65,7 +79,7 @@ takes two arguments:
    scrape the shifts too. ::
 
        # Scrapes first game of 2014, 2015, and 2016 seasons with shifts
-       scrape_functions.scrape_games([2014020001, 2015020001, 2016020001], True)
+       hockey_scraper.scrape_games([2014020001, 2015020001, 2016020001], True)
 
 **3. scrape\_date\_range:**
 
@@ -80,7 +94,7 @@ dates must be written in the following format yyyy-mm-dd (ex:
 3. ‘if\_scrape\_shifts’ - Boolean indicating whether or not you want to scrape the shifts too. ::
 
         # Scrapes games between 2016-10-10 and 2016-10-20 without shifts
-        scrape_functions.scrape_date_range('2016-10-10', '2016-10-20', False)
+        hockey_scraper.scrape_date_range('2016-10-10', '2016-10-20', False)
 
 
 
