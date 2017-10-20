@@ -1,6 +1,5 @@
 .idea/
 .csv/
-**/bin/lib/hockey_scraper/*.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -19,6 +18,7 @@ downloads/
 eggs/
 .eggs/
 lib/
+lib/hockey_scraper
 lib64/
 parts/
 sdist/
