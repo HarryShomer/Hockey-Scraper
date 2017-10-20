@@ -1,7 +1,7 @@
 import pandas as pd
 from bs4 import BeautifulSoup
 import time
-import shared
+import hockey_scraper.shared as shared
 
 
 def event_type(play_description):

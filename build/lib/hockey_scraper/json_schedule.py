@@ -1,6 +1,6 @@
 import json
 import time
-import shared
+import hockey_scraper.shared as shared
 
 
 def get_schedule(date_from, date_to):

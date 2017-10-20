@@ -2,7 +2,7 @@ import pandas as pd
 import requests
 import json
 import time
-import shared
+import hockey_scraper.shared as shared
 
 
 def get_pbp(game_id):

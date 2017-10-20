@@ -1,7 +1,7 @@
 import pandas as pd
 from bs4 import BeautifulSoup, SoupStrainer
 import re
-import shared
+import hockey_scraper.shared as shared
 
 
 def get_pbp(game_id):

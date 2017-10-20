@@ -20,19 +20,12 @@ libraries pre-installed so it’ll be easier to start off.
 How to Use
 ----------
 
-First just download this repository onto your computer.
-
-Then open up the command line or terminal and navigate over to the
-folder which contains the code. Then type in “python” to open the
-interactive python console.
-
-You then want to import the file in the folder which contains the
-functions for scraping the data. That file is called
-scrape\_functions.py. So just type in (and press enter):
+To install just open up your terminal and type in:
 
 ::
 
-    import scrape_functions
+    pip install hockey_scraper
+
 
 There are three relevant functions used for scraping data (After any
 scraping function finishes running, the data scraped can be found in the

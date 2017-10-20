@@ -1,7 +1,7 @@
 import pandas as pd
 import json
 import time
-import shared
+import hockey_scraper.shared as shared
 
 
 def get_shifts(game_id):

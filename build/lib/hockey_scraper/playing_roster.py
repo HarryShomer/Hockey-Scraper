@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-import shared
+import hockey_scraper.shared as shared
 
 
 def get_roster(game_id):

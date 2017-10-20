@@ -1,14 +1,15 @@
-import json_pbp
-import html_pbp
-import espn_pbp
-import json_shifts
-import html_shifts
-import playing_roster
-import json_schedule
+import hockey_scraper.json_pbp as json_pbp
+import hockey_scraper.html_pbp as html_pbp
+import hockey_scraper.espn_pbp as espn_pbp
+import hockey_scraper.json_shifts as json_shifts
+import hockey_scraper.html_shifts as html_shifts
+import hockey_scraper.playing_roster as playing_roster
+import hockey_scraper.json_schedule as json_schedule
+import hockey_scraper.shared as shared
 import pandas as pd
 import time
 import datetime
-import shared
+
 
 # Holds list for broken games for shifts and pbp
 broken_shifts_games = []
