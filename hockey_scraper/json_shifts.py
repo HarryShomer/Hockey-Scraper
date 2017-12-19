@@ -1,3 +1,7 @@
+"""
+This module contains functions to scrape the Json toi/shifts for any given game
+"""
+
 import pandas as pd
 import json
 import time
@@ -8,21 +12,28 @@ def get_shifts(game_id):
     """
     Given a game_id it returns the raw json
     Ex: http://www.nhl.com/stats/rest/shiftcharts?cayenneExp=gameId=2010020001
+    
     :param game_id: the game
-    :return: 
+    
+    :return: json or None
     """
     url = 'http://www.nhl.com/stats/rest/shiftcharts?cayenneExp=gameId={}'.format(game_id)
     response = shared.get_url(url)
     time.sleep(1)
 
-    shift_json = json.loads(response.text)
-    return parse_json(shift_json, game_id)
+    # Return None if can't get page
+    if not response:
+        return None
+
+    return json.loads(response.text)
 
 
 def fix_team_tricode(tricode):
     """
     Some of the tricodes are different than how I want them
+    
     :param tricode: 3 letter team name - ex: NYR
+    
     :return: fixed tricode
     """
     fixed_tricodes = {
@@ -31,6 +42,7 @@ def fix_team_tricode(tricode):
         'NJD': 'N.J',
         'SJS': 'S.J'
     }
+
     if tricode.upper() in list(fixed_tricodes.keys()):
         return fixed_tricodes[tricode.upper()]
     else:
@@ -40,15 +52,17 @@ def fix_team_tricode(tricode):
 def parse_shift(shift):
     """
     Parse shift for json
+    
     :param shift: json for shift
+    
     :return: dict with shift info
     """
     shift_dict = dict()
+
     name = shared.fix_name(' '.join([shift['firstName'].strip(' ').upper(), shift['lastName'].strip(' ').upper()]))
     shift_dict['Player'] = name
     shift_dict['Player_Id'] = shift['playerId']
     shift_dict['Period'] = shift['period']
-
     shift_dict['Team'] = fix_team_tricode(shift['teamAbbrev'])
 
     # At the end of the json they list when all the goal events happened. They are the only one's which have their
@@ -66,8 +80,10 @@ def parse_shift(shift):
 def parse_json(shift_json, game_id):
     """
     Parse the json
+    
     :param shift_json: raw json
     :param game_id: if of game
+    
     :return: DataFrame with info
     """
     columns = ['Game_Id', 'Period', 'Team', 'Player', 'Player_Id', 'Start', 'End', 'Duration']
@@ -85,12 +101,23 @@ def parse_json(shift_json, game_id):
 
 def scrape_game(game_id):
     """
-    Scrape the game.
-    Try the json first, if it's not there do the html (it should be there for all games)
+    Scrape the game. 
+    
     :param game_id: game
+    
     :return: DataFrame with info for the game
     """
-    game_df = get_shifts(game_id)
+    shifts_json = get_shifts(game_id)
+
+    if not shifts_json:
+        print("Json shifts for game {} is either not there or can't be obtained".format(game_id))
+        return None
+
+    try:
+        game_df = parse_json(shifts_json, game_id)
+    except Exception as e:
+        print('Error parsing Json shifts for game {}'.format(game_id), e)
+        return None
 
     return game_df
 
