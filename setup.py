@@ -7,13 +7,13 @@ def read():
 
 setup(
     name='hockey_scraper',
-    version='1.0.1',
-    description="""This project is designed to allow people to scrape Play by Play and Shift data off of the National
-                Hockey League (NHL) API and website for all regular season and playoff games since the 2010-2011 
-                season""",
+    version='1.1',
+    description="""This package is designed to allow people to scrape Play by Play and Shift data off of the National
+                Hockey League (NHL) API and website for all preseason, regular season and playoff games since the 
+                2007-2008 season""",
     long_description=read(),
     classifiers=[
-        "Development Status :: 4 - Beta",
+        "Development Status :: 5 - Production/Stable",
         'Intended Audience :: Science/Research',
         "License :: OSI Approved :: MIT License",
         'Programming Language :: Python :: 3'
@@ -24,7 +24,7 @@ setup(
     author_email='Harryshomer@gmail.com',
     license='MIT',
     packages=['hockey_scraper'],
-    install_requires=['pandas', 'BeautifulSoup4', 'requests', 'lxml'],
+    install_requires=['BeautifulSoup4', 'requests', 'lxml', 'html5lib', 'pandas', 'sphinx'],
     include_package_data=True,
     zip_safe=False
 )

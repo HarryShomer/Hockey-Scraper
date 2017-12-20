@@ -1,5 +1,6 @@
 .idea/
 .csv/
+tests.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -67,8 +68,6 @@ instance/
 # Scrapy stuff:
 .scrapy
 
-# Sphinx documentation
-docs/_build/
 
 # PyBuilder
 target/

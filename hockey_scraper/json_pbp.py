@@ -1,5 +1,8 @@
+"""
+This module contains functions to scrape the Json Play by Play for any given game
+"""
+
 import pandas as pd
-import requests
 import json
 import time
 import hockey_scraper.shared as shared
@@ -9,27 +12,31 @@ def get_pbp(game_id):
     """
     Given a game_id it returns the raw json
     Ex: http://statsapi.web.nhl.com/api/v1/game/2016020475/feed/live
+    
     :param game_id: the game
-    :return: raw json of game
+    
+    :return: raw json of game or None if couldn't get game
     """
     url = 'http://statsapi.web.nhl.com/api/v1/game/{}/feed/live'.format(game_id)
 
-    try:
-        response = shared.get_url(url)
-        pbp_json = json.loads(response.text)
-    except requests.exceptions.HTTPError as e:
-        print('Json pbp for game {} is not there'.format(game_id), e)
+    response = shared.get_url(url)
+    time.sleep(1)
+
+    # Return None if can't get page
+    if not response:
+        print("Json pbp for game {} is either not there or can't be obtained".format(game_id))
         return None
 
-    time.sleep(1)
-    return pbp_json
+    return json.loads(response.text)
 
 
 def change_event_name(event):
     """
     Change event names from json style to html
     ex: BLOCKED_SHOT to BLOCK
+    
     :param event: event type
+    
     :return: fixed event type
     """
     event_types ={
@@ -57,20 +64,24 @@ def change_event_name(event):
         return event
 
 
-def get_teams(json):
+def get_teams(pbp_json):
     """
     Get teams 
+    
     :param json: pbp json
+    
     :return: dict with home and away
     """
-    return {'Home': shared.TEAMS[json['gameData']['teams']['home']['name'].upper()],
-            'Away': shared.TEAMS[json['gameData']['teams']['away']['name'].upper()]}
+    return {'Home': shared.TEAMS[pbp_json['gameData']['teams']['home']['name'].upper()],
+            'Away': shared.TEAMS[pbp_json['gameData']['teams']['away']['name'].upper()]}
 
 
 def parse_event(event):
     """
     Parses a single event when the info is in a json format
+    
     :param event: json of event 
+    
     :return: dictionary with the info
     """
     play = dict()
@@ -97,65 +108,51 @@ def parse_event(event):
             play['xC'] = ''
             play['yC'] = ''
 
-    """
-    # Sometimes they record events for shots in the wrong zone (or maybe not)...so change it
-    if play['xC'] != 'Na' and play['yC'] != 'Na':
-
-        if play['Ev_Team'] == home_team:
-            # X should be negative in 1st and 3rd for home_team
-            if (play['Period'] == 1 or play['Period'] == 3) and play['xC'] > 0:
-                play['xC'] = -int(play['xC'])
-                play['yC'] = -int(play['yC'])
-            elif play['Period'] == 2 and play['xC'] < 0:
-                play['xC'] = -int(play['xC'])
-                play['yC'] = -int(play['yC'])
-        else:
-            # X should be positive in 1st and 3rd for away_team
-            if (play['Period'] == 1 or play['Period'] == 3) and play['xC'] < 0:
-                play['xC'] = -int(play['xC'])
-                play['yC'] = -int(play['yC'])
-            elif play['Period'] == 2 and play['xC'] > 0:
-                play['xC'] = -int(play['xC'])
-                play['yC'] = -int(play['yC'])
-    """
-
     return play
 
 
-def parse_json(game_json):
+def parse_json(game_json, game_id):
     """
     Scrape the json for a game
+    
     :param game_json: raw json
+    :param game_id: game id for game
+    
     :return: Either a DataFrame with info for the game 
     """
     columns = ['period', 'event', 'seconds_elapsed', 'p1_name', 'p1_ID', 'p2_name', 'p2_ID', 'p3_name', 'p3_ID', 'xC', 'yC']
 
-    plays = game_json['liveData']['plays']['allPlays'][2:]  # All the plays/events in a game
-
-    # Go through all events and store all the info in a list
     # 'PERIOD READY' & 'PERIOD OFFICIAL'..etc aren't found in html...so get rid of them
-    event_to_ignore = ['PERIOD_READY', 'PERIOD_OFFICIAL', 'GAME_READY', 'GAME_OFFICIAL']
-    events = [parse_event(play) for play in plays if play['result']['eventTypeId'] not in event_to_ignore]
+    events_to_ignore = ['PERIOD_READY', 'PERIOD_OFFICIAL', 'GAME_READY', 'GAME_OFFICIAL']
+
+    try:
+        plays = game_json['liveData']['plays']['allPlays'][2:]  # All the plays/events in a game
+        events = [parse_event(play) for play in plays if play['result']['eventTypeId'] not in events_to_ignore]
+    except Exception as e:
+        print('Error parsing Json pbp for game {}'.format(game_id), e)
+        return None
 
     return pd.DataFrame(events, columns=columns)
 
 
 def scrape_game(game_id):
     """
-    Used for debugging 
+    Used for debugging. HTML depends on json so can't follow this structure
+    
     :param game_id: game to scrape
+    
     :return: DataFrame of game info
     """
-    try:
-        game_json = get_pbp(game_id)
-    except requests.exceptions.HTTPError as e:
-        print('Json pbp for game {} is not there'.format(game_id), e)
+    game_json = get_pbp(game_id)
+
+    if not game_json:
+        print("Json pbp for game {} is not either not there or can't be obtained".format(game_id))
         return None
 
     try:
-        game_df = parse_json(game_json)
+        game_df = parse_json(game_json, game_id)
     except Exception as e:
-        print('Error for Json pbp for game {}'.format(game_id), e)
+        print('Error parsing Json pbp for game {}'.format(game_id), e)
         return None
 
     return game_df

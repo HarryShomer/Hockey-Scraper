@@ -1,66 +1,22 @@
+"""
+This module contains functions to scrape the Html Toi Tables (or shifts) for any given game
+"""
+
 import pandas as pd
 from bs4 import BeautifulSoup
 import time
+import re
 import hockey_scraper.shared as shared
-
-
-def get_teams(soup):
-    """
-    Return the team for the TOI tables and the home team
-    :param soup: souped up html
-    :return: list with team and home team
-    """
-    import re
-
-    team = soup.find('td', class_='teamHeading + border')  # Team for shifts
-    team = team.get_text()
-
-    # Get Home Team
-    teams = soup.find_all('td', {'align': 'center', 'style': 'font-size: 10px;font-weight:bold'})
-    regex = re.compile(r'>(.*)<br/>')
-    home_team = regex.findall(str(teams[7]))
-
-    return [team, home_team[0]]
-
-
-def analyze_shifts(shift, name, team, home_team, player_ids):
-    """
-    Analyze shifts for each player when using.
-    Prior to this each player (in a dictionary) has a list with each entry being a shift.
-    This function is only used for the html
-    :param shift: info on shift
-    :param name: player name
-    :param team: given team
-    :param home_team: home team for given game
-    :param player_ids: dict with info on players
-    :return: dict with info for shift
-    """
-    shifts = dict()
-
-    shifts['Player'] = name.upper()
-    shifts['Period'] = '4' if shift[1] == 'OT' else shift[1]
-    shifts['Team'] = shared.TEAMS[team.strip(' ')]
-    shifts['Start'] = shared.convert_to_seconds(shift[2].split('/')[0])
-    shifts['End'] = shared.convert_to_seconds(shift[3].split('/')[0])
-    shifts['Duration'] = shared.convert_to_seconds(shift[4].split('/')[0])
-
-    try:
-        if home_team == team:
-            shifts['Player_Id'] = player_ids['Home'][name.upper()]['id']
-        else:
-            shifts['Player_Id'] = player_ids['Away'][name.upper()]['id']
-    except KeyError:
-        shifts['Player_Id'] = ''
-
-    return shifts
 
 
 def get_shifts(game_id):
     """
     Given a game_id it returns a DataFrame with the shifts for both teams
     Ex: http://www.nhl.com/scores/htmlreports/20162017/TV020971.HTM
+    
     :param game_id: the game
-    :return: DataFrame with all shifts, return None when an exception is thrown when parsing
+    
+    :return: DataFrame with all shifts or None
     """
     game_id = str(game_id)
     home_url = 'http://www.nhl.com/scores/htmlreports/{}{}/TH{}.HTM'.format(game_id[:4], int(game_id[:4])+1, game_id[4:])
@@ -75,30 +31,110 @@ def get_shifts(game_id):
     return home, away
 
 
+def get_soup(shifts_html):
+    """
+    Uses Beautiful soup to parses the html document.
+    Some parsers work for some pages but don't work for others....I'm not sure why so I just try them all here in order
+    
+    :param shifts_html: html doc
+    
+    :return: "soupified" html and player_shifts portion of html (it's a bunch of td tags)
+    """
+    soup = BeautifulSoup(shifts_html.content, "lxml")
+    td = soup.findAll(True, {'class': ['playerHeading + border', 'lborder + bborder']})
+
+    if len(td) == 0:
+        soup = BeautifulSoup(shifts_html.content, "html.parser")
+        td = soup.findAll(True, {'class': ['playerHeading + border', 'lborder + bborder']})
+
+        if len(td) == 0:
+            soup = BeautifulSoup(shifts_html.content, "html5lib")
+            td = soup.findAll(True, {'class': ['playerHeading + border', 'lborder + bborder']})
+
+    return td, get_teams(soup)
+
+
+def get_teams(soup):
+    """
+    Return the team for the TOI tables and the home team
+    
+    :param soup: souped up html
+    
+    :return: list with team and home team
+    """
+    team = soup.find('td', class_='teamHeading + border')  # Team for shifts
+    team = team.get_text()
+
+    # Get Home Team
+    teams = soup.find_all('td', {'align': 'center', 'style': 'font-size: 10px;font-weight:bold'})
+    regex = re.compile(r'>(.*)<br/?>')
+    home_team = regex.findall(str(teams[7]))
+
+    return [team, home_team[0]]
+
+
+def analyze_shifts(shift, name, team, home_team, player_ids):
+    """
+    Analyze shifts for each player when using.
+    Prior to this each player (in a dictionary) has a list with each entry being a shift.
+
+    :param shift: info on shift
+    :param name: player name
+    :param team: given team
+    :param home_team: home team for given game
+    :param player_ids: dict with info on players
+    
+    :return: dict with info for shift
+    """
+    shifts = dict()
+
+    regex = re.compile('\d+')  # Used to check if something contains a number
+
+    shifts['Player'] = name.upper()
+    shifts['Period'] = '4' if shift[1] == 'OT' else shift[1]
+    shifts['Team'] = shared.TEAMS[team.strip(' ')]
+    shifts['Home_Team'] = shared.TEAMS[home_team.strip(' ')]
+    shifts['Start'] = shared.convert_to_seconds(shift[2].split('/')[0])
+    shifts['Duration'] = shared.convert_to_seconds(shift[4].split('/')[0])
+
+    # I've had problems with this one...if there are no digits the time is fucked up
+    if regex.findall(shift[3].split('/')[0]):
+        shifts['End'] = shared.convert_to_seconds(shift[3].split('/')[0])
+    else:
+        shifts['End'] = shifts['Start'] + shifts['Duration']
+
+    try:
+        if home_team == team:
+            shifts['Player_Id'] = player_ids['Home'][name.upper()]['id']
+        else:
+            shifts['Player_Id'] = player_ids['Away'][name.upper()]['id']
+    except KeyError:
+        shifts['Player_Id'] = ''
+
+    return shifts
+
+
 def parse_html(html, player_ids, game_id):
     """
     Parse the html
+    
     :param html: cleaned up html
     :param player_ids: dict of home and away players
     :param game_id: id for game
+    
     :return: DataFrame with info
     """
     columns = ['Game_Id', 'Player', 'Player_Id', 'Period', 'Team', 'Start', 'End', 'Duration']
     df = pd.DataFrame(columns=columns)
 
-    soup = BeautifulSoup(html.content, "lxml")
+    td, teams = get_soup(html)
 
-    teams = get_teams(soup)
     team = teams[0]
     home_team = teams[1]
-
-    td = soup.findAll(True, {'class': ['playerHeading + border', 'lborder + bborder']})
-
-    """
-    The list 'td' is laid out with player name followed by every component of each shift. Each shift contains: 
-    shift #, Period, begin, end, and duration. The shift event isn't included. 
-    """
     players = dict()
+
+    # The list 'td' is laid out with player name followed by every component of each shift. Each shift contains:
+    # shift #, Period, begin, end, and duration. The shift event isn't included.
     for t in td:
         t = t.get_text()
         if ',' in t:     # If it has a comma in it we know it's a player's name...so add player to dict
@@ -127,20 +163,32 @@ def parse_html(html, player_ids, game_id):
 
 def scrape_game(game_id, players):
     """
-    Scrape the game.
-    Try the json first, if it's not there do the html (it should be there for all games)
+    Scrape the game. 
+    
     :param game_id: id for game
     :param players: list of players
+    
     :return: DataFrame with info for the game
     """
+    columns = ['Game_Id', 'Period', 'Team', 'Player', 'Player_Id', 'Start', 'End', 'Duration']
+
     home_html, away_html = get_shifts(game_id)
 
-    away_df = parse_html(away_html, players, game_id)
-    home_df = parse_html(home_html, players, game_id)
+    if home_html is None or away_html is None:
+        print("Html shifts for game {} is either not there or can't be obtained".format(game_id))
+        return None
+
+    try:
+        away_df = parse_html(away_html, players, game_id)
+        home_df = parse_html(home_html, players, game_id)
+    except Exception as e:
+        print('Error parsing Html shifts for game {}'.format(game_id), e)
+        return None
 
     game_df = pd.concat([away_df, home_df], ignore_index=True)
+    game_df = pd.DataFrame(game_df, columns=columns)
 
-    game_df = game_df.sort_values(by=['Period', 'Start'], ascending=[True, True])  # Sort by period and by time
+    game_df = game_df.sort_values(by=['Period', 'Start'], ascending=[True, True])
     game_df = game_df.reset_index(drop=True)
 
     return game_df

@@ -1,3 +1,7 @@
+"""
+This module contains functions to scrape the Html game roster for any given game
+"""
+
 from bs4 import BeautifulSoup
 import hockey_scraper.shared as shared
 
@@ -6,7 +10,9 @@ def get_roster(game_id):
     """
     Given a game_id it returns the raw html
     Ex: http://www.nhl.com/scores/htmlreports/20162017/RO020475.HTM
+    
     :param game_id: the game
+    
     :return: raw html of game
     """
     game_id = str(game_id)
@@ -15,14 +21,44 @@ def get_roster(game_id):
     return shared.get_url(url)
 
 
+def get_content(roster):
+    """
+    Uses Beautiful soup to parses the html document.
+    Some parsers work for some pages but don't work for others....I'm not sure why so I just try them all here in order
+    
+    :param roster: doc
+    
+    :return: players and coaches
+    """
+    soup = BeautifulSoup(roster.content, "lxml")
+    players = get_players(soup)
+    head_coaches = get_coaches(soup)
+
+    if len(players) == 0:
+        soup = BeautifulSoup(roster.content, "html.parser")
+        players = get_players(soup)
+        head_coaches = get_coaches(soup)
+
+        if len(players) == 0:
+            soup = BeautifulSoup(roster.content, "html5lib")
+            players = get_players(soup)
+            head_coaches = get_coaches(soup)
+
+    return players, head_coaches
+
+
 def fix_name(player):
     """
-    Sometimes a player had a (A) or (C) attached to their name
+    Get rid of (A) or (C) when a player has it attached to their name
+    
     :param player: list of player info -> [number, position, name]
+    
     :return: fixed list
     """
-    player[2] = player[2][:player[2].find('(')]
-    player[2] = player[2].strip()
+    if player[2].find('(A)') != -1:
+        player[2] = player[2][:player[2].find('(A)')].strip()
+    elif player[2].find('(C)') != -1:
+        player[2] = player[2][:player[2].find('(C)')].strip()
 
     return player
 
@@ -30,28 +66,39 @@ def fix_name(player):
 def get_coaches(soup):
     """
     scrape head coaches
+    
     :param soup: html
+    
     :return: dict of coaches for game
     """
-    head_coaches = dict()
-
     coaches = soup.find_all('tr', {'id': "HeadCoaches"})
-    coaches = coaches[0].find_all('td')
-    head_coaches['Away'] = coaches[1].get_text()
-    head_coaches['Home'] = coaches[3].get_text()
 
-    return head_coaches
+    # If it picks up nothing just return the empty list
+    if not coaches:
+        return coaches
+
+    coaches = coaches[0].find_all('td')
+
+    return {
+        'Away': coaches[1].get_text(),
+        'Home': coaches[3].get_text()
+    }
 
 
 def get_players(soup):
     """
     scrape roster for players 
+    
     :param soup: html
+    
     :return: dict for home and away players
     """
-    players = dict()
-
     tables = soup.findAll('table', {'align': 'center', 'border': '0', 'cellpadding': '0', 'cellspacing': '0', 'width': '100%'})
+
+    # If it picks up nothing just return the empty list
+    if not tables:
+        return tables
+
     """
     There are 5 tables which correspond to the above criteria.
     tables[0] is nothing
@@ -61,39 +108,41 @@ def get_players(soup):
     tables[4] is home scratches
     """
 
-    away_starters = tables[1].find_all('td')
-    away_scratches = tables[3].find_all('td')
-    home_starters = tables[2].find_all('td')
-    home_scratches = tables[4].find_all('td')
+    del tables[0]
+    player_info = [table.find_all('td') for table in tables]
 
-    away_starters = [i.get_text() for i in away_starters]
-    away_scratches = [i.get_text() for i in away_scratches]
-    home_starters = [i.get_text() for i in home_starters]
-    home_scratches = [i.get_text() for i in home_scratches]
+    player_info = [[x.get_text() for x in group] for group in player_info]
 
     # Make list of list of 3 each. The three are: number, position, name (in that order)
-    away_starters = [away_starters[i:i + 3] for i in range(0, len(away_starters), 3)]
-    away_scratches = [away_scratches[i:i + 3] for i in range(0, len(away_scratches), 3)]
-    home_starters = [home_starters[i:i + 3] for i in range(0, len(home_starters), 3)]
-    home_scratches = [home_scratches[i:i + 3] for i in range(0, len(home_scratches), 3)]
+    player_info = [[group[i:i+3] for i in range(0, len(group), 3)] for group in player_info]
 
     # Get rid of header column
-    away_starters = [i for i in away_starters if i[0] != '#']
-    away_scratches = [i for i in away_scratches if i[0] != '#']
-    home_starters = [i for i in home_starters if i[0] != '#']
-    home_scratches = [i for i in home_scratches if i[0] != '#']
+    player_info = [[player for player in group if player[0] != '#'] for group in player_info]
 
-    away_players = away_starters + away_scratches
-    home_players = home_starters + home_scratches
+    # Add whether the player was a scratch
+    # 2 and 3 hold the scratches
+    for i in range(len(player_info)):
+        for j in range(len(player_info[i])):
+            if i == 2 or i == 3:
+                player_info[i][j].append(True)
+            else:
+                player_info[i][j].append(False)
+
+    players = {'Away': player_info[0], 'Home': player_info[1]}
+
+    # Scratches aren't always included
+    if len(player_info) == 4:
+        players['Away'] += player_info[2]
+        players['Home'] += player_info[3]
 
     # For those with (A) or (C) in name field get rid of it
-    # first condition is to control when we get whitespace as one of the indices
-    players['Away'] = [fix_name(i) if i[0] != '\xa0' and i[2].find('(') != -1 else i for i in away_players]
-    players['Home'] = [fix_name(i) if i[0] != '\xa0' and i[2].find('(') != -1 else i for i in home_players]
+    # First condition is to control when we get whitespace as one of the indices
+    players['Away'] = [fix_name(i) if i[0] != '\xa0' else i for i in players['Away']]
+    players['Home'] = [fix_name(i) if i[0] != '\xa0' else i for i in players['Home']]
 
     # Get rid when just whitespace
-    players['Away'] = [i for i in away_players if i[0] != '\xa0']
-    players['Home'] = [i for i in home_players if i[0] != '\xa0']
+    players['Away'] = [i for i in players['Away'] if i[0] != '\xa0']
+    players['Home'] = [i for i in players['Home'] if i[0] != '\xa0']
 
     return players
 
@@ -101,23 +150,22 @@ def get_players(soup):
 def scrape_roster(game_id):
     """
     For a given game scrapes the roster
+    
     :param game_id: id for game
+    
     :return: dict of players (home and away) an dict for both head coaches 
     """
+    roster = get_roster(game_id)
+
+    if not roster:
+        print("Roster for game {} is either not there or can't be obtained".format(game_id))
+        return None
 
     try:
-        roster = get_roster(game_id)
+        players, head_coaches = get_content(roster)
     except Exception as e:
-        print('Roster for game {} is not there'.format(game_id), e)
-        raise Exception
-
-    try:
-        soup = BeautifulSoup(roster.content, "html.parser")
-        players = get_players(soup)
-        head_coaches = get_coaches(soup)
-    except Exception as e:
-        print('Problem with playing roster for game {}'.format(game_id), e)
-        raise Exception
+        print('Error parsing Roster for game {}'.format(game_id), e)
+        return None
 
     return {'players': players, 'head_coaches': head_coaches}
 
