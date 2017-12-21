@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 """
 This file is a bunch of the shared functions or just general stuff used by the different scrapers in the package.
 """
