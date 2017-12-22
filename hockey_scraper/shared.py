@@ -125,11 +125,7 @@ def fix_name(name):
     
     :return: Either the given parameter or the fixed name
     """
-    if name in Names.keys():
-        return Names[name].upper()
-    else:
-        return name
-
+    return Names.get(name,name).upper()
 
 def convert_to_seconds(minutes):
     """
