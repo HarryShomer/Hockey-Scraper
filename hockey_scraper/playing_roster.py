@@ -141,8 +141,8 @@ def get_players(soup):
     players['Home'] = [fix_name(i) if i[0] != u'\xa0' else i for i in players['Home']]
 
     # Get rid when just whitespace
-    players['Away'] = [i for i in players['Away'] if i[0] != '\xa0']
-    players['Home'] = [i for i in players['Home'] if i[0] != '\xa0']
+    players['Away'] = [i for i in players['Away'] if i[0] != u'\xa0']
+    players['Home'] = [i for i in players['Home'] if i[0] != u'\xa0']
 
     return players
 
