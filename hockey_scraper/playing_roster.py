@@ -30,17 +30,17 @@ def get_content(roster):
     
     :return: players and coaches
     """
-    soup = BeautifulSoup(roster.content, "lxml")
+    soup = BeautifulSoup(roster.text, "lxml")
     players = get_players(soup)
     head_coaches = get_coaches(soup)
 
     if len(players) == 0:
-        soup = BeautifulSoup(roster.content, "html.parser")
+        soup = BeautifulSoup(roster.text, "html.parser")
         players = get_players(soup)
         head_coaches = get_coaches(soup)
 
         if len(players) == 0:
-            soup = BeautifulSoup(roster.content, "html5lib")
+            soup = BeautifulSoup(roster.text, "html5lib")
             players = get_players(soup)
             head_coaches = get_coaches(soup)
 
