@@ -137,8 +137,8 @@ def get_players(soup):
 
     # For those with (A) or (C) in name field get rid of it
     # First condition is to control when we get whitespace as one of the indices
-    players['Away'] = [fix_name(i) if i[0] != '\xa0' else i for i in players['Away']]
-    players['Home'] = [fix_name(i) if i[0] != '\xa0' else i for i in players['Home']]
+    players['Away'] = [fix_name(i) if i[0] != u'\xa0' else i for i in players['Away']]
+    players['Home'] = [fix_name(i) if i[0] != u'\xa0' else i for i in players['Home']]
 
     # Get rid when just whitespace
     players['Away'] = [i for i in players['Away'] if i[0] != '\xa0']
