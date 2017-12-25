@@ -145,9 +145,14 @@ def parse_espn(espn_xml):
     :return: DataFrame with info
     """
     columns = ['period', 'time_elapsed', 'event', 'xC', 'yC']
+    
+    text = espn_xml.text
+    # Occasionally we get malformed XML because of the presence of \x13 characters
+    # Let's just replace them with dashes
+    text = text.replace(u'\x13','-')
 
     try:
-        tree = etree.fromstring(espn_xml.text)
+        tree = etree.fromstring(text)
     except etree.ParseError:
         print("Espn pbp isn't valid xml, therefore coordinates can't be obtained for this game")
         return pd.DataFrame([], columns=columns)

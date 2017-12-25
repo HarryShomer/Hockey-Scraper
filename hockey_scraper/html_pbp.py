@@ -33,15 +33,15 @@ def get_soup(game_html):
     :return: "soupified" html and player_shifts portion of html (it's a bunch of td tags)
     """
     strainer = SoupStrainer('td', attrs={'class': re.compile(r'bborder')})
-    soup = BeautifulSoup(game_html.content, "lxml", parse_only=strainer)
+    soup = BeautifulSoup(game_html.text, "lxml", parse_only=strainer)
     soup = soup.select('td.+.bborder')
 
     if len(soup) == 0:
-        soup = BeautifulSoup(game_html.content, "html.parser", parse_only=strainer)
+        soup = BeautifulSoup(game_html.text, "html.parser", parse_only=strainer)
         soup = soup.select('td.+.bborder')
 
         if len(soup) == 0:
-            soup = BeautifulSoup(game_html.content, "html5lib")
+            soup = BeautifulSoup(game_html.text, "html5lib")
             soup = soup.select('td.+.bborder')
 
     return soup

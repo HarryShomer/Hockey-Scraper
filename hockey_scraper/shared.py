@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 """
 This file is a bunch of the shared functions or just general stuff used by the different scrapers in the package.
 """
@@ -12,7 +14,7 @@ TEAMS = {'ANAHEIM DUCKS': 'ANA', 'ARIZONA COYOTES': 'ARI', 'ATLANTA THRASHERS': 
          'BUFFALO SABRES': 'BUF', 'CAROLINA HURRICANES': 'CAR', 'COLUMBUS BLUE JACKETS': 'CBJ', 'CALGARY FLAMES': 'CGY',
          'CHICAGO BLACKHAWKS': 'CHI', 'COLORADO AVALANCHE': 'COL', 'DALLAS STARS': 'DAL', 'DETROIT RED WINGS': 'DET',
          'EDMONTON OILERS': 'EDM', 'FLORIDA PANTHERS': 'FLA', 'LOS ANGELES KINGS': 'L.A', 'MINNESOTA WILD': 'MIN',
-         'MONTREAL CANADIENS': 'MTL', 'MONTRÉAL CANADIENS': 'MTL', 'CANADIENS MONTREAL': 'MTL', 'NEW JERSEY DEVILS': 'N.J',
+         'MONTREAL CANADIENS': 'MTL', u'MONTRÉAL CANADIENS': 'MTL', 'CANADIENS MONTREAL': 'MTL', 'NEW JERSEY DEVILS': 'N.J',
          'NASHVILLE PREDATORS': 'NSH', 'NEW YORK ISLANDERS': 'NYI', 'NEW YORK RANGERS': 'NYR', 'OTTAWA SENATORS': 'OTT',
          'PHILADELPHIA FLYERS': 'PHI', 'PHOENIX COYOTES': 'PHX', 'PITTSBURGH PENGUINS': 'PIT', 'SAN JOSE SHARKS': 'S.J',
          'ST. LOUIS BLUES': 'STL', 'TAMPA BAY LIGHTNING': 'T.B', 'TORONTO MAPLE LEAFS': 'TOR', 'VANCOUVER CANUCKS': 'VAN',
@@ -47,7 +49,7 @@ Names = {'n/a': 'n/a', 'ALEXANDER OVECHKIN': 'Alex Ovechkin', 'TOBY ENSTROM': 'T
          'MARC-ANDRE GRAGNANI': 'Marc-Andre Gragnani', 'JORDAN LAVALLEE-SMOTHERMAN': 'Jordan Lavallee-Smotherman',
          'PIERRE-LUC LETOURNEAU-LEBLOND': 'Pierre Leblond', 'J-F JACQUES': 'JF Jacques', 'JP DUMONT': 'JP Dumont',
          'MARC-ANDRE CLICHE': 'Marc-Andre Cliche', 'J-P DUMONT': 'JP Dumont', 'JOSHUA BAILEY': 'Josh Bailey',
-         'OLIVIER MAGNAN-GRENIER': 'Olivier Magnan-Grenier', 'FRÉDÉRIC ST-DENIS': 'Frederic St-Denis',
+         'OLIVIER MAGNAN-GRENIER': 'Olivier Magnan-Grenier', u'FRÉDÉRIC ST-DENIS': 'Frederic St-Denis',
          'MARC-ANDRE BOURDON': 'Marc-Andre Bourdon', 'PIERRE-CEDRIC LABRIE': 'Pierre-Cedric Labrie',
          'JONATHAN AUDY-MARCHESSAULT': 'Jonathan Marchessault', 'JEAN-GABRIEL PAGEAU': 'Jean-Gabriel Pageau',
          'JEAN-PHILIPPE COTE': 'Jean-Philippe Cote', 'PIERRE-EDOUARD BELLEMARE': 'Pierre-Edouard Bellemare',
@@ -123,11 +125,7 @@ def fix_name(name):
     
     :return: Either the given parameter or the fixed name
     """
-    if name in Names.keys():
-        return Names[name].upper()
-    else:
-        return name
-
+    return Names.get(name,name).upper()
 
 def convert_to_seconds(minutes):
     """

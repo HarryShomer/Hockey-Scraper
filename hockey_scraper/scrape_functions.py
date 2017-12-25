@@ -54,10 +54,10 @@ def to_csv(file_name, pbp_df, shifts_df):
     """
     if pbp_df is not None:
         print("\nPbp data deposited in file - " + 'nhl_pbp{}.csv'.format(file_name))
-        pbp_df.to_csv('nhl_pbp{}.csv'.format(file_name), sep=',')
+        pbp_df.to_csv('nhl_pbp{}.csv'.format(file_name), sep=',', encoding='utf-8')
     if shifts_df is not None:
         print("Shift data deposited in file - " + 'nhl_shifts{}.csv'.format(file_name))
-        shifts_df.to_csv('nhl_shifts{}.csv'.format(file_name), sep=',')
+        shifts_df.to_csv('nhl_shifts{}.csv'.format(file_name), sep=',', encoding='utf-8')
 
 
 def scrape_list_of_games(games, if_scrape_shifts):
