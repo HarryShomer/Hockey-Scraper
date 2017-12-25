@@ -73,6 +73,7 @@ Play is automatically scraped.
 
 
    # When scraping by game or date range
+   "
    {
       'pbp': [
          Plays
@@ -81,8 +82,10 @@ Play is automatically scraped.
          Shifts
       ]
    }
+   "
 
    # When scraping by season
+   "
    {
       'pbp': {
          'Seasons': [
@@ -95,9 +98,10 @@ Play is automatically scraped.
          ]
       }
    }
-
+   "
 
    # For example, if you scraped the 2008 and 2009 seasons the Json will look like this:
+   "
    {
       'pbp': {
          '2008': [
@@ -116,7 +120,7 @@ Play is automatically scraped.
          ]
       }
    }
-
+   "
 
 
 Functions

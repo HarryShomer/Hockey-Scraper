@@ -308,25 +308,30 @@ def print_errors():
     global espn_games
     global missing_coords
 
-    print('\nBroken pbp:')
-    for x in broken_pbp_games:
-        print(x[0], x[1])
+    if broken_pbp_games:
+        print('\nBroken pbp:')
+        for x in broken_pbp_games:
+            print(x[0], x[1])
 
-    print('\nBroken shifts:')
-    for x in broken_shifts_games:
-        print(x[0], x[1])
+    if broken_shifts_games:
+        print('\nBroken shifts:')
+        for x in broken_shifts_games:
+            print(x[0], x[1])
 
-    print("\nPlayers missing ID's:")
-    for x in players_missing_ids:
-        print(x[0], x[1])
+    if players_missing_ids:
+        print("\nPlayers missing ID's:")
+        for x in players_missing_ids:
+            print(x[0], x[1])
 
-    print('\nESPN games:')
-    for x in espn_games:
-        print(x[0], x[1])
+    if espn_games:
+        print('\nESPN games:')
+        for x in espn_games:
+            print(x[0], x[1])
 
-    print('\nGames missing coordinates:')
-    for x in missing_coords:
-        print(x[0], x[1])
+    if missing_coords:
+        print('\nGames missing coordinates:')
+        for x in missing_coords:
+            print(x[0], x[1])
 
     print('\n')
 

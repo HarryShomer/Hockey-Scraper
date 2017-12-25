@@ -97,7 +97,7 @@ Names = {'n/a': 'n/a', 'ALEXANDER OVECHKIN': 'Alex Ovechkin', 'TOBY ENSTROM': 'T
          'TIMOTHY JR. THOMAS': 'Tim Thomas', 'ILJA BRYZGALOV': 'Ilya Bryzgalov', 'MATHEW DUMBA': 'Matt Dumba',
          'MICHAËL BOURNIVAL': 'Michael Bournival', 'MATTHEW BENNING': 'Matt Benning', 'ZACHARY SANFORD': 'Zach Sanford',
          'AJ GREER': 'A.J. Greer', 'JT COMPHER': 'J.T. Compher', 'NICOLAS PETAN': 'Nic Petan',
-         'VINCENT HINOSTROZA': 'Vinnie  Hinostroza', 'PHILIP VARONE': 'Phil Varone', 'JOSHUA MORRISSEY': 'Josh Morrissey',
+         'VINCENT HINOSTROZA': 'Vinnie Hinostroza', 'PHILIP VARONE': 'Phil Varone', 'JOSHUA MORRISSEY': 'Josh Morrissey',
          'Mathew Bodie': 'Mat Bodie', 'MICHAEL FERLAND': 'Micheal Ferland', 'MICHAEL SANTORELLI' :'Mike Santorelli',
          'CHRISTOPHER BREEN': 'Chris Breen', 'BRYCE VAN BRABRANT': 'Bryce Van Brabant', 'ALEXANDER KILLORN': 'Alex Killorn',
          'JOSEPH MORROW': 'Joe Morrow', 'ALEX STEEN': 'Alexander Steen', 'BRADLEY MILLS': 'Brad Mills',
@@ -111,7 +111,7 @@ Names = {'n/a': 'n/a', 'ALEXANDER OVECHKIN': 'Alex Ovechkin', 'TOBY ENSTROM': 'T
          'OLAF KOLZIG': 'OLIE KOLZIG', 'J-SEBASTIEN AUBIN': 'JEAN-SEBASTIEN AUBIN', 'ALEXANDER AULD': 'ALEX AULD',
          'JAMES HOWARD': 'JIMMY HOWARD', 'JEFF DROUIN-DESLAURIERS': 'JEFF DESLAURIERS', 'SIMEON VARLAMOV': 'SEMYON VARLAMOV',
          'ALEXANDER PECHURSKI': 'Alexander Pechurskiy', 'JEFFREY PENNER': 'JEFF PENNER', 'EMMANUEL FERNANDEZ': 'Manny FERNANDEZ',
-         'ALEXANDER PETROVIC': 'ALEX PETROVIC'
+         'ALEXANDER PETROVIC': 'ALEX PETROVIC',
          }
 
 

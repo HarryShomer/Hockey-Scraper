@@ -7,7 +7,7 @@ def read():
 
 setup(
     name='hockey_scraper',
-    version='1.1',
+    version='1.2',
     description="""This package is designed to allow people to scrape Play by Play and Shift data off of the National
                 Hockey League (NHL) API and website for all preseason, regular season and playoff games since the 
                 2007-2008 season""",
@@ -16,7 +16,8 @@ setup(
         "Development Status :: 5 - Production/Stable",
         'Intended Audience :: Science/Research',
         "License :: OSI Approved :: MIT License",
-        'Programming Language :: Python :: 3'
+        'Programming Language :: Python :: 3',
+        "Programming Language :: Python :: 2",
     ],
     keywords='NHL',
     url='https://github.com/HarryShomer/Hockey-Scraper',

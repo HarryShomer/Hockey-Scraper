@@ -166,7 +166,7 @@ def scrape_seasons(seasons, if_scrape_shifts, data_format='csv', preseason=False
     game_scraper.print_errors()
 
     # If we have something in there that means json was chosen
-    if len(json_dfs.keys()) > 0:
+    if len(json_dfs['pbp'].keys()) > 0:
         return json.dumps(json_dfs)
 
 
