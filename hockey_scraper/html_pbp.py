@@ -161,17 +161,19 @@ def add_zone(event_dict, play_description):
         event_dict['Ev_Zone'] = 'Def'
 
 
-def add_type(event_dict, event):
+def add_type(event_dict, event, players, home_team):
     """
     Add "type" for event -> either a penalty or a shot type
     
     :param event_dict: dict of event info
     :param event: list with parsed event info
+    :param players: dict of home and away players in game
+    :param home_team: home team for game
     
     :return: None
     """
     if 'PENL' in event[4]:
-        event_dict['Type'] = get_penalty(event[5])
+        event_dict['Type'] = get_penalty(event[5], players, home_team)
     else:
         event_dict['Type'] = shot_type(event[5]).upper()
 
@@ -269,19 +271,34 @@ def add_score(event_dict, event, current_score, home_team):
     event_dict['score_diff'] = current_score['Home'] - current_score['Away']
 
 
-def get_penalty(play_description):
+# TODO: Fix penalty name -> fucks up with names like Del Zotto
+# Note: Remember master list player name != html name!!!!!!!!
+def get_penalty(play_description, players, home_team):
     """
     Get the penalty info
     
     :param play_description: description of play field
+    :param players: all players with info
+    :param home_team: home team for game
     
     :return: penalty info
+     # Get player who took the penalty
+    player_regex = re.compile(r'(.{3})\s+#(\d+)')
+    desc = player_regex.findall(play_description)
+    player = get_player_name(desc[0][1], players, desc[0][0], home_team)
+
+    # Find where in the description his name is located
+    player_index = play_description.find(player)
+    if player_index == -1:
+        return
+        
+    player_description[player_index+len(players): play_description.find(")"]
     """
     regex = re.compile(r'.{3}\s+#\d+\s+\w+\s+(.*)\)')
     penalty = regex.findall(play_description)
 
     if penalty:
-        return penalty[0]+')'
+        return penalty[0] + ')'
     else:
         return ''
 
@@ -558,7 +575,7 @@ def parse_event(event, players, home_team, if_plays_in_json, current_score):
     add_score(event_dict, event, current_score, home_team)
     populate_players(event_dict, players, away_players, home_players)
     add_strength(event_dict, home_players, away_players)
-    add_type(event_dict, event)
+    add_type(event_dict, event, players, home_team)
     add_zone(event_dict, event[5])
     add_home_zone(event_dict, home_team)
 

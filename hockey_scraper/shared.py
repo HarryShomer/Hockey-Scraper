@@ -124,8 +124,12 @@ def fix_name(name):
     :param name: name in pbp
     
     :return: Either the given parameter or the fixed name
+    
+    if name == "SEBASTIAN AHO" and team == "CAR":
+    name = "SEBASTIAN ANTERO AHO"
     """
-    return Names.get(name,name).upper()
+    return Names.get(name, name).upper()
+
 
 def convert_to_seconds(minutes):
     """

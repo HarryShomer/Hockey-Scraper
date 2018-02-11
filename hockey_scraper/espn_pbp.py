@@ -127,8 +127,8 @@ def parse_event(event):
     if fields[4] == '5':
         return None
 
-    info['xC'] = fields[0]
-    info['yC'] = fields[1]
+    info['xC'] = float(fields[0])
+    info['yC'] = float(fields[1])
     info['time_elapsed'] = shared.convert_to_seconds(fields[3])
     info['period'] = fields[4]
     info['event'] = event_type(fields[8].upper())
@@ -149,7 +149,7 @@ def parse_espn(espn_xml):
     text = espn_xml.text
     # Occasionally we get malformed XML because of the presence of \x13 characters
     # Let's just replace them with dashes
-    text = text.replace(u'\x13','-')
+    text = text.replace(u'\x13', '-')
 
     try:
         tree = etree.fromstring(text)

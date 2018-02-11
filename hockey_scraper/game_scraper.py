@@ -163,10 +163,13 @@ def combine_espn_html_pbp(html_df, espn_df, game_id, date, away_team, home_team)
     if espn_df is not None:
         try:
             espn_df.period = espn_df.period.astype(int)
-            df = pd.merge(html_df, espn_df, left_on=['Period', 'Seconds_Elapsed', 'Event'],
-                          right_on=['period', 'time_elapsed', 'event'], how='left')
+            game_df = pd.merge(html_df, espn_df, left_on=['Period', 'Seconds_Elapsed', 'Event'],
+                               right_on=['period', 'time_elapsed', 'event'], how='left')
 
-            df = df.drop(['period', 'time_elapsed', 'event'], axis=1)
+            # Shit happens
+            game_df = game_df.drop_duplicates(subset=['Period', 'Event', 'Description', 'Seconds_Elapsed'])
+
+            df = game_df.drop(['period', 'time_elapsed', 'event'], axis=1)
         except Exception as e:
             print('Error for combining espn and html pbp for game {}'.format(game_id), e)
             return None
@@ -216,7 +219,7 @@ def scrape_pbp(game_id, date, roster, game_json, players, teams):
         game_df = combine_espn_html_pbp(html_df, espn_df, str(game_id), date, teams['Away'], teams['Home'])
 
         # Sometimes espn is corrupted so can't get coordinates
-        if espn_df.empty:
+        if espn_df is None or espn_df.empty:
             missing_coords.extend([[game_id, date]])
 
         # Because every game b4 2010 uses ESPN so no point in adding it in there

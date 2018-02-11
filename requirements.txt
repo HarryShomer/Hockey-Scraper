@@ -1,6 +1,6 @@
 BeautifulSoup4==4.5.3
-requests==2.12.4
+requests==2.14.2
 lxml==3.7.2
 html5lib==0.999999999
-pandas==0.19.2
+pandas==0.20.3
 sphinx==1.5.1
