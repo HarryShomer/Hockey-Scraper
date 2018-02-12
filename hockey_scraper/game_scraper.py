@@ -209,11 +209,12 @@ def scrape_pbp(game_id, date, roster, game_json, players, teams):
     else:
         if_json = False
 
+    # Scrape the html and see what it returns
     html_df = html_pbp.scrape_game(game_id, players, teams, if_json)
-    if html_df is None:  # If None we couldn't get the html pbp
+    if html_df is None:
         return None
 
-    # Check if the json is missing the plays...if it scrape ESPN for the coordinates
+    # Check if the json is missing the plays...if it is scrape ESPN for the coordinates
     if not if_json:
         espn_df = espn_pbp.scrape_game(date, teams['Home'], teams['Away'])
         game_df = combine_espn_html_pbp(html_df, espn_df, str(game_id), date, teams['Away'], teams['Home'])
@@ -248,6 +249,8 @@ def scrape_shifts(game_id, players, date):
     shifts_df = None
 
     # Control for fact that shift json is only available from 2010 onwards
+    # Note: Doesn't work for second half of 2009 season. My work around was returning None from json_shifts.scrape_game
+    # if the df was empty.
     if int(date[:4]) >= 2010:
         shifts_df = json_shifts.scrape_game(game_id)
 
@@ -255,6 +258,7 @@ def scrape_shifts(game_id, players, date):
         shifts_df = html_shifts.scrape_game(game_id, players)
 
         if shifts_df is None:
+            print("Unable scrape shifts for game", game_id)
             broken_shifts_games.extend([[game_id, date]])
             return None   # Both failed so just return nothing
 

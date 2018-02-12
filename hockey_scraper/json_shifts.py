@@ -119,7 +119,7 @@ def scrape_game(game_id):
         print('Error parsing Json shifts for game {}'.format(game_id), e)
         return None
 
-    return game_df
+    return game_df if not game_df.empty else None
 
 
 
