@@ -50,9 +50,8 @@ Scrape data on a season by season level:
     # Scrapes the 2015 & 2016 season with shifts and stores the data in a Csv file
     hockey_scraper.scrape_seasons([2015, 2016], True)
 
-    # Scrapes the 2008 season without shifts and returns a json string of the data
-    scraped_data = hockey_scraper.scrape_seasons([2008], False, data_format='Json')
-
+    # Scrapes the 2008 season without shifts and returns a dictionary containing the pbp Pandas DataFrame
+    scraped_data = hockey_scraper.scrape_seasons([2008], False, data_format='Pandas')
 
 Scrape a list of games:
 
@@ -63,8 +62,8 @@ Scrape a list of games:
     # Scrapes the first game of 2014, 2015, and 2016 seasons with shifts and stores the data in a Csv file
     hockey_scraper.scrape_games([2014020001, 2015020001, 2016020001], True)
 
-    # Scrapes the first game of 2007, 2008, and 2009 seasons with shifts and returns a Json string of the data
-    scraped_data = hockey_scraper.scrape_games([2007020001, 2008020001, 2009020001], True, data_format='Json')
+    # Scrapes the first game of 2007, 2008, and 2009 seasons with shifts and returns a Dictionary with the Pandas DataFrames
+    scraped_data = hockey_scraper.scrape_games([2007020001, 2008020001, 2009020001], True, data_format='Pandas')
 
 Scrape all games in a given date range:
 
@@ -75,8 +74,21 @@ Scrape all games in a given date range:
     # Scrapes all games between 2016-10-10 and 2016-10-20 without shifts and stores the data in a Csv file
     hockey_scraper.scrape_date_range('2016-10-10', '2016-10-20', False)
 
-    # Scrapes all games between 2015-1-1 and 2015-1-15 without shifts and returns a Json string of the data
-    scraped_data = hockey_scraper.scrape_date_range('2015-1-1', '2015-1-15', False, data_format='Json')
+    # Scrapes all games between 2015-1-1 and 2015-1-15 without shifts and returns a Dictionary with the pbp Pandas DataFrame
+    scraped_data = hockey_scraper.scrape_date_range('2015-1-1', '2015-1-15', False, data_format='Pandas')
+
+
+The dictionary returned by setting the default argument "data_format" equal to "Pandas" is structured like:
+
+::
+
+    {
+      # This is always included
+      'pbp': pbp_df,
+
+      # This is only included when the argument 'if_scrape_shifts' is set equal to True
+      'shifts': shifts_df
+    }
 
 
 The full documentation can be found `here <http://hockey-scraper.readthedocs.io/en/latest/>`_.

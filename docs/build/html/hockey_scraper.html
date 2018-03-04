@@ -69,8 +69,8 @@ So you would refer to the 2016-2017 season as 2016).</p>
 <span class="n">hockey_scraper</span><span class="o">.</span><span class="n">scrape_seasons</span><span class="p">([</span><span class="mi">2015</span><span class="p">,</span> <span class="mi">2016</span><span class="p">],</span> <span class="kc">True</span><span class="p">)</span>
 <span class="n">hockey_scraper</span><span class="o">.</span><span class="n">scrape_seasons</span><span class="p">([</span><span class="mi">2015</span><span class="p">,</span> <span class="mi">2016</span><span class="p">],</span> <span class="kc">True</span><span class="p">,</span> <span class="n">data_format</span><span class="o">=</span><span class="s1">&#39;Csv&#39;</span><span class="p">)</span>
 
-<span class="c1"># Scrapes the 2008 season without shifts and returns a json string of the data</span>
-<span class="n">scraped_data</span> <span class="o">=</span> <span class="n">hockey_scraper</span><span class="o">.</span><span class="n">scrape_seasons</span><span class="p">([</span><span class="mi">2008</span><span class="p">],</span> <span class="kc">False</span><span class="p">,</span> <span class="n">data_format</span><span class="o">=</span><span class="s1">&#39;Json&#39;</span><span class="p">)</span>
+<span class="c1"># Scrapes the 2008 season without shifts and returns a dictionary with the DataFrame</span>
+<span class="n">scraped_data</span> <span class="o">=</span> <span class="n">hockey_scraper</span><span class="o">.</span><span class="n">scrape_seasons</span><span class="p">([</span><span class="mi">2008</span><span class="p">],</span> <span class="kc">False</span><span class="p">,</span> <span class="n">data_format</span><span class="o">=</span><span class="s1">&#39;Pandas&#39;</span><span class="p">)</span>
 
 <span class="c1"># Scrapes 2014 season without shifts including preseason games</span>
 <span class="n">hockey_scraper</span><span class="o">.</span><span class="n">scrape_seasons</span><span class="p">([</span><span class="mi">2014</span><span class="p">],</span> <span class="kc">False</span><span class="p">,</span> <span class="n">preseason</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -84,8 +84,8 @@ So you would refer to the 2016-2017 season as 2016).</p>
 <span class="c1"># Scrapes the first game of 2014, 2015, and 2016 seasons with shifts and stores the data in a Csv file</span>
 <span class="n">hockey_scraper</span><span class="o">.</span><span class="n">scrape_games</span><span class="p">([</span><span class="mi">2014020001</span><span class="p">,</span> <span class="mi">2015020001</span><span class="p">,</span> <span class="mi">2016020001</span><span class="p">],</span> <span class="kc">True</span><span class="p">)</span>
 
-<span class="c1"># Scrapes the first game of 2007, 2008, and 2009 seasons with shifts and returns a Json string of the data</span>
-<span class="n">scraped_data</span> <span class="o">=</span> <span class="n">hockey_scraper</span><span class="o">.</span><span class="n">scrape_games</span><span class="p">([</span><span class="mi">2007020001</span><span class="p">,</span> <span class="mi">2008020001</span><span class="p">,</span> <span class="mi">2009020001</span><span class="p">],</span> <span class="kc">True</span><span class="p">,</span> <span class="n">data_format</span><span class="o">=</span><span class="s1">&#39;Json&#39;</span><span class="p">)</span>
+<span class="c1"># Scrapes the first game of 2007, 2008, and 2009 seasons with shifts and returns a a dictionary with the DataFrames</span>
+<span class="n">scraped_data</span> <span class="o">=</span> <span class="n">hockey_scraper</span><span class="o">.</span><span class="n">scrape_games</span><span class="p">([</span><span class="mi">2007020001</span><span class="p">,</span> <span class="mi">2008020001</span><span class="p">,</span> <span class="mi">2009020001</span><span class="p">],</span> <span class="kc">True</span><span class="p">,</span> <span class="n">data_format</span><span class="o">=</span><span class="s1">&#39;Pandas&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>3. <em>Scrape by Date Range</em>:</p>
@@ -96,8 +96,8 @@ So you would refer to the 2016-2017 season as 2016).</p>
 <span class="n">hockey_scraper</span><span class="o">.</span><span class="n">scrape_date_range</span><span class="p">(</span><span class="s1">&#39;2016-10-10&#39;</span><span class="p">,</span> <span class="s1">&#39;2016-10-20&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
 <span class="n">hockey_scraper</span><span class="o">.</span><span class="n">scrape_date_range</span><span class="p">(</span><span class="s1">&#39;2016-10-10&#39;</span><span class="p">,</span> <span class="s1">&#39;2016-10-20&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">preseason</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
-<span class="c1"># Scrapes all games between 2015-1-1 and 2015-1-15 without shifts and returns a Json string of the data</span>
-<span class="n">scraped_data</span> <span class="o">=</span> <span class="n">hockey_scraper</span><span class="o">.</span><span class="n">scrape_date_range</span><span class="p">(</span><span class="s1">&#39;2015-1-1&#39;</span><span class="p">,</span> <span class="s1">&#39;2015-1-15&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">data_format</span><span class="o">=</span><span class="s1">&#39;Json&#39;</span><span class="p">)</span>
+<span class="c1"># Scrapes all games between 2015-1-1 and 2015-1-15 without shifts and returns a a dictionary with the DataFrame</span>
+<span class="n">scraped_data</span> <span class="o">=</span> <span class="n">hockey_scraper</span><span class="o">.</span><span class="n">scrape_date_range</span><span class="p">(</span><span class="s1">&#39;2015-1-1&#39;</span><span class="p">,</span> <span class="s1">&#39;2015-1-15&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">data_format</span><span class="o">=</span><span class="s1">&#39;Pandas&#39;</span><span class="p">)</span>
 
 <span class="c1"># Scrapes all games from 2014-09-15 to 2014-11-01 with shifts including preseason games</span>
 <span class="n">hockey_scraper</span><span class="o">.</span><span class="n">scrape_date_range</span><span class="p">(</span><span class="s1">&#39;2014-09-15&#39;</span><span class="p">,</span> <span class="s1">&#39;2014-11-01&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">preseason</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -107,52 +107,15 @@ So you would refer to the 2016-2017 season as 2016).</p>
 <p>1. For all three functions you must specify if you want to also scrape shifts (TOI tables) with a boolean. The Play by
 Play is automatically scraped.</p>
 <p>2. When scraping by date range or by season, preseason games aren&#8217;t scraped unless otherwise specified.</p>
-<p>3. For all three functions the scraped data is deposited into a Csv file unless it&#8217;s specified to return it as a Json string.</p>
-<p>4. The Json string returned is structured like so:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># When scraping by game or date range</span>
-<span class="p">{</span>
-   <span class="s1">&#39;pbp&#39;</span><span class="p">:</span> <span class="p">[</span>
-      <span class="n">Plays</span>
-   <span class="p">],</span>
-   <span class="s1">&#39;shifts&#39;</span><span class="p">:</span> <span class="p">[</span>
-      <span class="n">Shifts</span>
-   <span class="p">]</span>
-<span class="p">}</span>
+<p>3. For all three functions the scraped data is deposited into a Csv file unless it&#8217;s specified to return the DataFrames</p>
+<p>4. The Dictionary with the DataFrames returned by setting data_format=&#8217;Pandas&#8217; is structured like:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="c1"># This is always included</span>
+   <span class="s1">&#39;pbp&#39;</span><span class="p">:</span> <span class="n">pbp_df</span><span class="p">,</span>
 
-<span class="c1"># When scraping by season</span>
-<span class="p">{</span>
-   <span class="s1">&#39;pbp&#39;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="s1">&#39;Seasons&#39;</span><span class="p">:</span> <span class="p">[</span>
-         <span class="n">Plays</span>
-      <span class="p">]</span>
-   <span class="p">},</span>
-   <span class="s1">&#39;shifts&#39;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="s1">&#39;Seasons&#39;</span><span class="p">:</span> <span class="p">[</span>
-         <span class="n">Plays</span>
-      <span class="p">]</span>
-   <span class="p">}</span>
-<span class="p">}</span>
-
-
-<span class="c1"># For example, if you scraped the 2008 and 2009 seasons the Json will look like this:</span>
-<span class="p">{</span>
-   <span class="s1">&#39;pbp&#39;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="s1">&#39;2008&#39;</span><span class="p">:</span> <span class="p">[</span>
-         <span class="n">Plays</span>
-      <span class="p">],</span>
-      <span class="s1">&#39;2009&#39;</span><span class="p">:</span> <span class="p">[</span>
-         <span class="n">Plays</span>
-      <span class="p">]</span>
-   <span class="p">},</span>
-   <span class="s1">&#39;shifts&#39;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="s1">&#39;2008&#39;</span><span class="p">:</span> <span class="p">[</span>
-         <span class="n">Shifts</span>
-      <span class="p">],</span>
-      <span class="s1">&#39;2009&#39;</span><span class="p">:</span> <span class="p">[</span>
-         <span class="n">Shifts</span>
-      <span class="p">]</span>
-   <span class="p">}</span>
-<span class="p">}</span>
+   <span class="c1"># This is only included specified that you want to also scrape shifts</span>
+   <span class="s1">&#39;shifts&#39;</span><span class="p">:</span> <span class="n">shifts_df</span>
+ <span class="p">}</span>
 </pre></div>
 </div>
 </div>
@@ -164,7 +127,7 @@ Play is automatically scraped.</p>
 <dl class="function">
 <dt id="hockey_scraper.scrape_functions.check_data_format">
 <code class="descclassname">hockey_scraper.scrape_functions.</code><code class="descname">check_data_format</code><span class="sig-paren">(</span><em>data_format</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.scrape_functions.check_data_format" title="Permalink to this definition">¶</a></dt>
-<dd><p>Checks if data_format specified (if it is at all) is either None, &#8216;Csv&#8217;, or &#8216;json&#8217;.
+<dd><p>Checks if data_format specified (if it is at all) is either None, &#8216;Csv&#8217;, or &#8216;pandas&#8217;.
 It exits program with error message if input isn&#8217;t good.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -211,12 +174,12 @@ It exits program with error message if input isn&#8217;t good.</p>
 <li><strong>from_date</strong> &#8211; date you want to scrape from</li>
 <li><strong>to_date</strong> &#8211; date you want to scrape to</li>
 <li><strong>if_scrape_shifts</strong> &#8211; Boolean indicating whether to also scrape shifts</li>
-<li><strong>data_format</strong> &#8211; format you want data in - csv or json (csv is default)</li>
+<li><strong>data_format</strong> &#8211; format you want data in - csv or  pandas (csv is default)</li>
 <li><strong>preseason</strong> &#8211; Boolean indicating whether include preseason games (default if False)</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Json string or None</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Dictionary with DataFrames or None</p>
 </td>
 </tr>
 </tbody>
@@ -234,12 +197,11 @@ It exits program with error message if input isn&#8217;t good.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>games</strong> &#8211; list of game_ids</li>
 <li><strong>if_scrape_shifts</strong> &#8211; Boolean indicating whether to also scrape shifts</li>
-<li><strong>data_format</strong> &#8211; format you want data in - csv or json (csv is default)</li>
-<li><strong>preseason</strong> &#8211; Boolean indicating whether include preseason games (default if False)</li>
+<li><strong>data_format</strong> &#8211; format you want data in - csv or pandas (csv is default)</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Json string or None</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Dictionary with DataFrames or None</p>
 </td>
 </tr>
 </tbody>
@@ -278,12 +240,12 @@ It exits program with error message if input isn&#8217;t good.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>seasons</strong> &#8211; list of seasons</li>
 <li><strong>if_scrape_shifts</strong> &#8211; Boolean indicating whether to also scrape shifts</li>
-<li><strong>data_format</strong> &#8211; format you want data in - csv or json (csv is default)</li>
+<li><strong>data_format</strong> &#8211; format you want data in - csv or pandas (csv is default)</li>
 <li><strong>preseason</strong> &#8211; Boolean indicating whether include preseason games (default if False)</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Json string or None</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Dictionary with DataFrames or None</p>
 </td>
 </tr>
 </tbody>
@@ -684,7 +646,7 @@ xml is also scraped for coordinates.</p>
 
 <dl class="function">
 <dt id="hockey_scraper.html_pbp.add_type">
-<code class="descclassname">hockey_scraper.html_pbp.</code><code class="descname">add_type</code><span class="sig-paren">(</span><em>event_dict</em>, <em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_pbp.add_type" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">hockey_scraper.html_pbp.</code><code class="descname">add_type</code><span class="sig-paren">(</span><em>event_dict</em>, <em>event</em>, <em>players</em>, <em>home_team</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_pbp.add_type" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add &#8220;type&#8221; for event -&gt; either a penalty or a shot type</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -693,6 +655,8 @@ xml is also scraped for coordinates.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>event_dict</strong> &#8211; dict of event info</li>
 <li><strong>event</strong> &#8211; list with parsed event info</li>
+<li><strong>players</strong> &#8211; dict of home and away players in game</li>
+<li><strong>home_team</strong> &#8211; home team for game</li>
 </ul>
 </td>
 </tr>
@@ -759,15 +723,21 @@ Ex: <a class="reference external" href="http://www.nhl.com/scores/htmlreports/20
 
 <dl class="function">
 <dt id="hockey_scraper.html_pbp.get_penalty">
-<code class="descclassname">hockey_scraper.html_pbp.</code><code class="descname">get_penalty</code><span class="sig-paren">(</span><em>play_description</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_pbp.get_penalty" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">hockey_scraper.html_pbp.</code><code class="descname">get_penalty</code><span class="sig-paren">(</span><em>play_description</em>, <em>players</em>, <em>home_team</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_pbp.get_penalty" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the penalty info</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>play_description</strong> &#8211; description of play field</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>play_description</strong> &#8211; description of play field</li>
+<li><strong>players</strong> &#8211; all players with info</li>
+<li><strong>home_team</strong> &#8211; home team for game</li>
+</ul>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">penalty info</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">penalty info</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1659,6 +1629,8 @@ Ex: <a class="reference external" href="http://www.nhl.com/scores/htmlreports/20
 </tr>
 </tbody>
 </table>
+<p>if name == &#8220;SEBASTIAN AHO&#8221; and team == &#8220;CAR&#8221;:
+name = &#8220;SEBASTIAN ANTERO AHO&#8221;</p>
 </dd></dl>
 
 <dl class="function">

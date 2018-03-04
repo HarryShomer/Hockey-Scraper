@@ -68,8 +68,8 @@
 </div>
 <div class="section" id="prerequisites">
 <h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
-<p>You are going to need to have python installed for this. Specifically, you’ll need from at least version 3.6.0
-(just to be safe, it will most likely be fine for earlier versions of 3).</p>
+<p>You are going to need to have python installed for this. This should work for both python 2.7 and 3 (I recommend having
+from at least version 3.6.0 but earlier versions should be fine).</p>
 <p>If you don’t have python installed on your machine, I’d recommend installing it through the <a class="reference external" href="https://www.continuum.io/downloads">anaconda distribution</a>. Anaconda comes with a bunch of libraries pre-installed so it’s easier to start off.</p>
 </div>
 <div class="section" id="installation">
@@ -87,8 +87,8 @@
 <span class="c1"># Scrapes the 2015 &amp; 2016 season with shifts and stores the data in a Csv file</span>
 <span class="n">hockey_scraper</span><span class="o">.</span><span class="n">scrape_seasons</span><span class="p">([</span><span class="mi">2015</span><span class="p">,</span> <span class="mi">2016</span><span class="p">],</span> <span class="kc">True</span><span class="p">)</span>
 
-<span class="c1"># Scrapes the 2008 season without shifts and returns a json string of the data</span>
-<span class="n">scraped_data</span> <span class="o">=</span> <span class="n">hockey_scraper</span><span class="o">.</span><span class="n">scrape_seasons</span><span class="p">([</span><span class="mi">2008</span><span class="p">],</span> <span class="kc">False</span><span class="p">,</span> <span class="n">data_format</span><span class="o">=</span><span class="s1">&#39;Json&#39;</span><span class="p">)</span>
+<span class="c1"># Scrapes the 2008 season without shifts and returns a dictionary containing the pbp Pandas DataFrame</span>
+<span class="n">scraped_data</span> <span class="o">=</span> <span class="n">hockey_scraper</span><span class="o">.</span><span class="n">scrape_seasons</span><span class="p">([</span><span class="mi">2008</span><span class="p">],</span> <span class="kc">False</span><span class="p">,</span> <span class="n">data_format</span><span class="o">=</span><span class="s1">&#39;Pandas&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Scrape a list of games:</p>
@@ -97,8 +97,8 @@
 <span class="c1"># Scrapes the first game of 2014, 2015, and 2016 seasons with shifts and stores the data in a Csv file</span>
 <span class="n">hockey_scraper</span><span class="o">.</span><span class="n">scrape_games</span><span class="p">([</span><span class="mi">2014020001</span><span class="p">,</span> <span class="mi">2015020001</span><span class="p">,</span> <span class="mi">2016020001</span><span class="p">],</span> <span class="kc">True</span><span class="p">)</span>
 
-<span class="c1"># Scrapes the first game of 2007, 2008, and 2009 seasons with shifts and returns a Json string of the data</span>
-<span class="n">scraped_data</span> <span class="o">=</span> <span class="n">hockey_scraper</span><span class="o">.</span><span class="n">scrape_games</span><span class="p">([</span><span class="mi">2007020001</span><span class="p">,</span> <span class="mi">2008020001</span><span class="p">,</span> <span class="mi">2009020001</span><span class="p">],</span> <span class="kc">True</span><span class="p">,</span> <span class="n">data_format</span><span class="o">=</span><span class="s1">&#39;Json&#39;</span><span class="p">)</span>
+<span class="c1"># Scrapes the first game of 2007, 2008, and 2009 seasons with shifts and returns a Dictionary with the Pandas DataFrames</span>
+<span class="n">scraped_data</span> <span class="o">=</span> <span class="n">hockey_scraper</span><span class="o">.</span><span class="n">scrape_games</span><span class="p">([</span><span class="mi">2007020001</span><span class="p">,</span> <span class="mi">2008020001</span><span class="p">,</span> <span class="mi">2009020001</span><span class="p">],</span> <span class="kc">True</span><span class="p">,</span> <span class="n">data_format</span><span class="o">=</span><span class="s1">&#39;Pandas&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Scrape all games in a given date range:</p>
@@ -107,8 +107,18 @@
 <span class="c1"># Scrapes all games between 2016-10-10 and 2016-10-20 without shifts and stores the data in a Csv file</span>
 <span class="n">hockey_scraper</span><span class="o">.</span><span class="n">scrape_date_range</span><span class="p">(</span><span class="s1">&#39;2016-10-10&#39;</span><span class="p">,</span> <span class="s1">&#39;2016-10-20&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
 
-<span class="c1"># Scrapes all games between 2015-1-1 and 2015-1-15 without shifts and returns a Json string of the data</span>
-<span class="n">scraped_data</span> <span class="o">=</span> <span class="n">hockey_scraper</span><span class="o">.</span><span class="n">scrape_date_range</span><span class="p">(</span><span class="s1">&#39;2015-1-1&#39;</span><span class="p">,</span> <span class="s1">&#39;2015-1-15&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">data_format</span><span class="o">=</span><span class="s1">&#39;Json&#39;</span><span class="p">)</span>
+<span class="c1"># Scrapes all games between 2015-1-1 and 2015-1-15 without shifts and returns a Dictionary with the pbp Pandas DataFrame</span>
+<span class="n">scraped_data</span> <span class="o">=</span> <span class="n">hockey_scraper</span><span class="o">.</span><span class="n">scrape_date_range</span><span class="p">(</span><span class="s1">&#39;2015-1-1&#39;</span><span class="p">,</span> <span class="s1">&#39;2015-1-15&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">data_format</span><span class="o">=</span><span class="s1">&#39;Pandas&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The dictionary returned by setting the default argument &#8220;data_format&#8221; equal to &#8220;Pandas&#8221; is structured like:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="c1"># This is always included</span>
+  <span class="s1">&#39;pbp&#39;</span><span class="p">:</span> <span class="n">pbp_df</span><span class="p">,</span>
+
+  <span class="c1"># This is only included when the argument &#39;if_scrape_shifts&#39; is set equal to True</span>
+  <span class="s1">&#39;shifts&#39;</span><span class="p">:</span> <span class="n">shifts_df</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>The full documentation can be found <a class="reference external" href="http://hockey-scraper.readthedocs.io/en/latest/">here</a>.</p>

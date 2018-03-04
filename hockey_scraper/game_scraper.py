@@ -200,6 +200,7 @@ def scrape_pbp(game_id, date, roster, game_json, players, teams):
     """
 
     # Coordinates are only available in json from 2010 onwards
+    # Note: This doesn't work as intended for second half of 2009 season...it still works just takes slightly longer
     if int(str(game_id)[:4]) >= 2010:
         json_df = json_pbp.parse_json(game_json, game_id)
         if json_df is None:

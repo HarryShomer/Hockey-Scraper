@@ -282,17 +282,6 @@ def get_penalty(play_description, players, home_team):
     :param home_team: home team for game
     
     :return: penalty info
-     # Get player who took the penalty
-    player_regex = re.compile(r'(.{3})\s+#(\d+)')
-    desc = player_regex.findall(play_description)
-    player = get_player_name(desc[0][1], players, desc[0][0], home_team)
-
-    # Find where in the description his name is located
-    player_index = play_description.find(player)
-    if player_index == -1:
-        return
-        
-    player_description[player_index+len(players): play_description.find(")"]
     """
     regex = re.compile(r'.{3}\s+#\d+\s+\w+\s+(.*)\)')
     penalty = regex.findall(play_description)

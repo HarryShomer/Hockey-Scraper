@@ -20,8 +20,8 @@ So you would refer to the 2016-2017 season as 2016).
     hockey_scraper.scrape_seasons([2015, 2016], True)
     hockey_scraper.scrape_seasons([2015, 2016], True, data_format='Csv')
 
-    # Scrapes the 2008 season without shifts and returns a json string of the data
-    scraped_data = hockey_scraper.scrape_seasons([2008], False, data_format='Json')
+    # Scrapes the 2008 season without shifts and returns a dictionary with the DataFrame
+    scraped_data = hockey_scraper.scrape_seasons([2008], False, data_format='Pandas')
 
     # Scrapes 2014 season without shifts including preseason games
     hockey_scraper.scrape_seasons([2014], False, preseason=True)
@@ -38,8 +38,8 @@ Scrape a list of games provided. All game ID's can be found using `this link
     # Scrapes the first game of 2014, 2015, and 2016 seasons with shifts and stores the data in a Csv file
     hockey_scraper.scrape_games([2014020001, 2015020001, 2016020001], True)
 
-    # Scrapes the first game of 2007, 2008, and 2009 seasons with shifts and returns a Json string of the data
-    scraped_data = hockey_scraper.scrape_games([2007020001, 2008020001, 2009020001], True, data_format='Json')
+    # Scrapes the first game of 2007, 2008, and 2009 seasons with shifts and returns a a dictionary with the DataFrames
+    scraped_data = hockey_scraper.scrape_games([2007020001, 2008020001, 2009020001], True, data_format='Pandas')
 
 \3. *Scrape by Date Range*:
 
@@ -52,8 +52,8 @@ Scrape all games between a specified date range. All dates must be written in a 
     hockey_scraper.scrape_date_range('2016-10-10', '2016-10-20', False)
     hockey_scraper.scrape_date_range('2016-10-10', '2016-10-20', False, preseason=False)
 
-    # Scrapes all games between 2015-1-1 and 2015-1-15 without shifts and returns a Json string of the data
-    scraped_data = hockey_scraper.scrape_date_range('2015-1-1', '2015-1-15', False, data_format='Json')
+    # Scrapes all games between 2015-1-1 and 2015-1-15 without shifts and returns a a dictionary with the DataFrame
+    scraped_data = hockey_scraper.scrape_date_range('2015-1-1', '2015-1-15', False, data_format='Pandas')
 
     # Scrapes all games from 2014-09-15 to 2014-11-01 with shifts including preseason games
     hockey_scraper.scrape_date_range('2014-09-15', '2014-11-01', True, preseason=True)
@@ -66,61 +66,18 @@ Play is automatically scraped.
 
 \2. When scraping by date range or by season, preseason games aren't scraped unless otherwise specified.
 
-\3. For all three functions the scraped data is deposited into a Csv file unless it's specified to return it as a Json string.
+\3. For all three functions the scraped data is deposited into a Csv file unless it's specified to return the DataFrames
 
-\4. The Json string returned is structured like so:
+\4. The Dictionary with the DataFrames returned by setting data_format='Pandas' is structured like:
 ::
 
-
-   # When scraping by game or date range
-   "
    {
-      'pbp': [
-         Plays
-      ],
-      'shifts': [
-         Shifts
-      ]
-   }
-   "
+      # This is always included
+      'pbp': pbp_df,
 
-   # When scraping by season
-   "
-   {
-      'pbp': {
-         'Seasons': [
-            Plays
-         ]
-      },
-      'shifts': {
-         'Seasons': [
-            Plays
-         ]
-      }
-   }
-   "
-
-   # For example, if you scraped the 2008 and 2009 seasons the Json will look like this:
-   "
-   {
-      'pbp': {
-         '2008': [
-            Plays
-         ],
-         '2009': [
-            Plays
-         ]
-      },
-      'shifts': {
-         '2008': [
-            Shifts
-         ],
-         '2009': [
-            Shifts
-         ]
-      }
-   }
-   "
+      # This is only included specified that you want to also scrape shifts
+      'shifts': shifts_df
+    }
 
 
 Functions

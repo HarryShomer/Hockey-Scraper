@@ -12,15 +12,15 @@ import json
 
 def check_data_format(data_format):
     """
-    Checks if data_format specified (if it is at all) is either None, 'Csv', or 'json'.
+    Checks if data_format specified (if it is at all) is either None, 'Csv', or 'pandas'.
     It exits program with error message if input isn't good.
     
     :param data_format: data_format provided 
     
     :return: None
     """
-    if not data_format or data_format.lower() not in ['csv', 'json']:
-        print('{} is an unspecified data format. The two options are Csv and Json (Csv is default)\n'.format(data_format))
+    if not data_format or data_format.lower() not in ['csv', 'pandas']:
+        print('{} is an unspecified data format. The two options are Csv and Pandas (Csv is default)\n'.format(data_format))
         exit()
 
 
@@ -103,33 +103,24 @@ def scrape_date_range(from_date, to_date, if_scrape_shifts, data_format='csv', p
     :param from_date: date you want to scrape from
     :param to_date: date you want to scrape to
     :param if_scrape_shifts: Boolean indicating whether to also scrape shifts 
-    :param data_format: format you want data in - csv or json (csv is default)
+    :param data_format: format you want data in - csv or  pandas (csv is default)
     :param preseason: Boolean indicating whether include preseason games (default if False)
     
-    :return: Json string or None
+    :return: Dictionary with DataFrames or None
     """
     check_data_format(data_format)
     check_valid_dates(from_date, to_date)
 
-    json_dfs = dict()  # Holds json of data if choose to return that
-
     games = json_schedule.scrape_schedule(from_date, to_date, preseason)
     pbp_df, shifts_df = scrape_list_of_games(games, if_scrape_shifts)
-
-    if data_format.lower() == 'csv':
-        to_csv(from_date+'--'+to_date, pbp_df, shifts_df)
-    else:
-        if pbp_df is not None:
-            json_dfs['pbp'] = pbp_df.to_dict('records')
-        if shifts_df is not None:
-            json_dfs['shifts'] = shifts_df.to_dict('records')
 
     # Print all errors associated with scrape call
     game_scraper.print_errors()
 
-    # If we have something in there that means json was chosen
-    if len(json_dfs.keys()) > 0:
-        return json.dumps(json_dfs)
+    if data_format.lower() == 'csv':
+        to_csv(from_date+'--'+to_date, pbp_df, shifts_df)
+    else:
+        return {"pbp": pbp_df, "shifts": shifts_df} if if_scrape_shifts else {"pbp": pbp_df}
 
 
 def scrape_seasons(seasons, if_scrape_shifts, data_format='csv', preseason=False):
@@ -138,14 +129,15 @@ def scrape_seasons(seasons, if_scrape_shifts, data_format='csv', preseason=False
     
     :param seasons: list of seasons
     :param if_scrape_shifts: Boolean indicating whether to also scrape shifts 
-    :param data_format: format you want data in - csv or json (csv is default)
+    :param data_format: format you want data in - csv or pandas (csv is default)
     :param preseason: Boolean indicating whether include preseason games (default if False)
     
-    :return: Json string or None
+    :return: Dictionary with DataFrames or None
     """
     check_data_format(data_format)
 
-    json_dfs = {'pbp': dict(), 'shifts': dict()}  # Holds json of data if choose to return that
+    # Holds all seasons scraped (if not csv)
+    master_pbps, master_shifts = [], []
 
     for season in seasons:
         from_date = '-'.join([str(season), '9', '1'])
@@ -157,17 +149,15 @@ def scrape_seasons(seasons, if_scrape_shifts, data_format='csv', preseason=False
         if data_format.lower() == 'csv':
             to_csv(str(season)+str(season+1), pbp_df, shifts_df)
         else:
-            if pbp_df is not None:
-                json_dfs['pbp'][str(season)] = pbp_df.to_dict('records')
-            if shifts_df is not None:
-                json_dfs['shifts'][str(season)] = shifts_df.to_dict('records')
+            master_pbps.append(pbp_df)
+            master_shifts.append(shifts_df)
 
-    # Print all errors associated with scrape call
-    game_scraper.print_errors()
+        # Print all errors associated with scrape call
+        game_scraper.print_errors()
 
-    # If we have something in there that means json was chosen
-    if len(json_dfs['pbp'].keys()) > 0:
-        return json.dumps(json_dfs)
+    if data_format.lower() == 'pandas':
+        return {"pbp": pd.concat(master_pbps), "shifts": pd.concat(master_shifts)} if if_scrape_shifts \
+            else {"pbp": pd.concat(master_pbps)}
 
 
 def scrape_games(games, if_scrape_shifts, data_format='csv'):
@@ -176,14 +166,11 @@ def scrape_games(games, if_scrape_shifts, data_format='csv'):
     
     :param games: list of game_ids
     :param if_scrape_shifts: Boolean indicating whether to also scrape shifts 
-    :param data_format: format you want data in - csv or json (csv is default)
-    :param preseason: Boolean indicating whether include preseason games (default if False)
+    :param data_format: format you want data in - csv or pandas (csv is default)
     
-    :return: Json string or None
+    :return: Dictionary with DataFrames or None
     """
     check_data_format(data_format)
-
-    json_dfs = dict()   # Holds json of data if choose to return that
 
     # Create List of game_id's and dates
     games_list = json_schedule.get_dates(games)
@@ -191,19 +178,16 @@ def scrape_games(games, if_scrape_shifts, data_format='csv'):
     # Scrape pbp and shifts
     pbp_df, shifts_df = scrape_list_of_games(games_list, if_scrape_shifts)
 
-    if data_format.lower() == 'csv':
-        to_csv(str(random.randint(1, 101)), pbp_df, shifts_df)
-    else:
-        if pbp_df is not None:
-            json_dfs['pbp'] = pbp_df.to_dict('records')
-        if shifts_df is not None:
-            json_dfs['shifts'] = shifts_df.to_dict('records')
-
     # Print all errors associated with scrape call
     game_scraper.print_errors()
 
-    if len(json_dfs.keys()) > 0:
-        return json.dumps(json_dfs)
+    if data_format.lower() == 'csv':
+        to_csv(str(random.randint(1, 101)), pbp_df, shifts_df)
+    else:
+        return {"pbp": pbp_df, "shifts": shifts_df} if if_scrape_shifts else {"pbp": pbp_df}
+
+
+
 
 
 
