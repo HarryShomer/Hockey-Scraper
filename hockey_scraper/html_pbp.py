@@ -20,7 +20,14 @@ def get_pbp(game_id):
     game_id = str(game_id)
     url = 'http://www.nhl.com/scores/htmlreports/{}{}/PL{}.HTM'.format(game_id[:4], int(game_id[:4]) + 1, game_id[4:])
 
-    return shared.get_url(url)
+    page_info = {
+        "url": url,
+        "name": game_id,
+        "type": "html_pbp",
+        "season": game_id[:4],
+    }
+
+    return shared.get_file(page_info)
 
 
 def get_soup(game_html):
@@ -30,18 +37,18 @@ def get_soup(game_html):
     
     :param game_html: html doc
     
-    :return: "soupified" html and player_shifts portion of html (it's a bunch of td tags)
+    :return: "soupified" html 
     """
     strainer = SoupStrainer('td', attrs={'class': re.compile(r'bborder')})
-    soup = BeautifulSoup(game_html.text, "lxml", parse_only=strainer)
+    soup = BeautifulSoup(game_html, "lxml", parse_only=strainer)
     soup = soup.select('td.+.bborder')
 
     if len(soup) == 0:
-        soup = BeautifulSoup(game_html.text, "html.parser", parse_only=strainer)
+        soup = BeautifulSoup(game_html, "html.parser", parse_only=strainer)
         soup = soup.select('td.+.bborder')
 
         if len(soup) == 0:
-            soup = BeautifulSoup(game_html.text, "html5lib")
+            soup = BeautifulSoup(game_html, "html5lib")
             soup = soup.select('td.+.bborder')
 
     return soup
@@ -111,7 +118,11 @@ def clean_html_pbp(html):
 
 def add_home_zone(event_dict, home_team):
     """
-    Determines the zone relative to the home team and add it to event
+    Determines the zone relative to the home team and add it to event.
+    
+    Keep in mind that the 'ev_zone' recorded is the zone relative to the event team. And for blocks the NHL counts
+    the ev_team as the blocking team (I like counting the shooting team for blocks). Therefore, when it's the home team
+    the zone only gets flipped when it's a block. For away teams it's the opposite. Think about it...
     
     :param event_dict: dict of event info
     :param home_team: home team
@@ -122,10 +133,13 @@ def add_home_zone(event_dict, home_team):
     ev_zone = event_dict['Ev_Zone']
     event = event_dict['Event']
 
+    # Return if we got nothing in there
+    # Also just make the home zone nothing too
     if ev_zone == '':
         event_dict['Home_Zone'] = ''
         return
 
+    # When it's either: The away team and not a block or the home team and a block
     if (ev_team != home_team and event != 'BLOCK') or (ev_team == home_team and event == 'BLOCK'):
         if ev_zone == 'Off':
             event_dict['Home_Zone'] = 'Def'
@@ -271,8 +285,6 @@ def add_score(event_dict, event, current_score, home_team):
     event_dict['score_diff'] = current_score['Home'] - current_score['Away']
 
 
-# TODO: Fix penalty name -> fucks up with names like Del Zotto
-# Note: Remember master list player name != html name!!!!!!!!
 def get_penalty(play_description, players, home_team):
     """
     Get the penalty info
@@ -283,13 +295,33 @@ def get_penalty(play_description, players, home_team):
     
     :return: penalty info
     """
-    regex = re.compile(r'.{3}\s+#\d+\s+\w+\s+(.*)\)')
-    penalty = regex.findall(play_description)
-
-    if penalty:
-        return penalty[0] + ')'
+    # First check if it's a bench
+    if "bench" in play_description or "TEAM" in play_description:
+        beg_penalty_index = play_description.find("TEAM") + 5
+        return play_description[beg_penalty_index: play_description.find(')') + 1]
     else:
-        return ''
+        # If it's not a bench penl we look for the player who took the penalty
+        # Get Number, and name for player who took the penalty
+        num_regex = re.compile(r'#(\d+)')
+        numbers = num_regex.findall(play_description)
+
+        # If they don't have any players listed, then the description if fucked up and we got nothing
+        if not numbers:
+            return ''
+        else:
+            player = get_player_name(numbers[0], players, play_description[:3], home_team)
+
+        # Check if the number and player match up
+        if play_description.find(player['last_name']) != -1:
+            # beg_penalty_index is right after the penalty taker's last name (+1 for whitespace)
+            # Then we take from after his last name to right after the parentheses
+            beg_penalty_index = play_description.find(player['last_name']) + len(player['last_name']) + 1
+            return play_description[beg_penalty_index: play_description.find(')')+1]
+        else:
+            # This uses my old method...it falls apart for players like "Del Zotto"
+            pen_regex = re.compile(r'.{3}\s+#\d+\s+\w+\s+(.*)\)')
+            penalty = pen_regex.findall(play_description)
+            return penalty[0] + ')' if penalty else ''
 
 
 def get_player_name(number, players, team, home_team):
@@ -304,29 +336,34 @@ def get_player_name(number, players, team, home_team):
     
     :return: dict with full and and id
     """
+    venue = "Home" if team == home_team else "Away"
 
-    if team == home_team:
-        player = [{'name': name, 'id': players['Home'][name]['id']} for name in players['Home'].keys() if
-                  players['Home'][name]['number'] == number]
-    else:
-        player = [{'name': name, 'id': players['Away'][name]['id']} for name in players['Away'].keys() if
-                  players['Away'][name]['number'] == number]
+    # Get the info when we get the same number for that team
+    player = [{'name': name, 'id': players[venue][name]['id'], 'last_name': players[venue][name]['last_name']}
+              for name in players[venue].keys() if players[venue][name]['number'] == number]
 
+    # Control for when the name can't be found
     if not player:
-        player = [{'name': '', 'id': ''}]  # Control for when the name can't be found
+        player = [{'name': '', 'id': '', 'last_name': ''}]
 
     return player[0]
 
 
 def if_valid_event(event):
     """
-    Checks if it's a valid event ('#' is meaningless and I don't like the other ones) to parse
+    Checks if it's a valid event ('#' is meaningless and I don't like those other one's) to parse
     
+    Don't remember what 'GOFF' is but 'EGT' is for emergency goaltender. The reason I get rid of it is because it's not
+    in the json and there's another 'EGPID' that can be found in both (not sure why 'EGT' exists then).
+    
+    Events 'PGSTR', 'PGEND', and 'ANTHEM' have been included at the start of each game for the 2017 season...I have no
+    idea why. 
+     
     :param event: list of stuff in pbp
     
     :return: boolean 
     """
-    if event[4] != 'GOFF' and event[0] != '#' and event[4] != 'CHL':
+    if event[0] != '#' and event[4] not in ['GOFF', 'EGT', 'PGSTR', 'PGEND', 'ANTHEM']:
         return True
     else:
         return False
@@ -367,6 +404,204 @@ def shot_type(play_description):
     return ''
 
 
+def parse_fac(description, players, ev_team, home_team):
+    """
+    Parse the description field for a face-off
+    MTL won Neu. Zone - MTL #11 GOMEZ vs TOR #37 BRENT
+    
+    :param description: Play Description 
+    :param players: players in game
+    :param ev_team: Event Team
+    :param home_team: Home Team for game
+    
+    :return: Dict with info
+    """
+    event_info = {}
+
+    regex = re.compile(r'(.{3})\s+#(\d+)')
+    desc = regex.findall(description)  # [[Team, num], [Team, num]]
+
+    if ev_team == desc[0][0]:
+        p1 = get_player_name(desc[0][1], players, desc[0][0], home_team)
+        p2 = get_player_name(desc[1][1], players, desc[1][0], home_team)
+    else:
+        p1 = get_player_name(desc[1][1], players, desc[1][0], home_team)
+        p2 = get_player_name(desc[0][1], players, desc[0][0], home_team)
+
+    event_info['p1_name'] = p1['name']
+    event_info['p1_ID'] = p1['id']
+    event_info['p2_name'] = p2['name']
+    event_info['p2_ID'] = p2['id']
+
+    return event_info
+
+
+def parse_shot_miss_take_give(description, players, ev_team, home_team):
+    """
+    Parse the description field for a: SHOT, MISS, TAKE, GIVE
+    
+    MTL ONGOAL - #81 ELLER, Wrist, Off. Zone, 11 ft.
+    ANA #23 BEAUCHEMIN, Slap, Wide of Net, Off. Zone, 42 ft.
+    TOR GIVEAWAY - #35 GIGUERE, Def. Zone
+    TOR TAKEAWAY - #9 ARMSTRONG, Off. Zone
+    
+    :param description: Play Description 
+    :param players: players in game
+    :param ev_team: Event Team
+    :param home_team: Home Team for game
+    
+    :return: Dict with info
+    """
+    event_info = {}
+
+    regex = re.compile(r'(\d+)')
+    desc = regex.search(description).groups()  # num
+
+    p = get_player_name(desc[0], players, ev_team, home_team)
+    event_info['p1_name'] = p['name']
+    event_info['p1_ID'] = p['id']
+
+    return event_info
+
+
+def parse_hit(description, players, home_team):
+    """
+    Parse the description field for a HIT
+
+    MTL #20 O'BYRNE HIT TOR #18 BROWN, Def. Zone
+
+    :param description: Play Description 
+    :param players: players in game
+    :param home_team: Home Team for game
+
+    :return: Dict with info
+    """
+    event_info = {}
+
+    regex = re.compile(r'(.{3})\s+#(\d+)')
+    desc = regex.findall(description)  # [[Team, num], [Team, num]]
+
+    p1 = get_player_name(desc[0][1], players, desc[0][0], home_team)
+    event_info['p1_name'] = p1['name']
+    event_info['p1_ID'] = p1['id']
+
+    if len(desc) > 1:
+        p2 = get_player_name(desc[1][1], players, desc[1][0], home_team)
+        event_info['p2_name'] = p2['name']
+        event_info['p2_ID'] = p2['id']
+
+    return event_info
+
+
+def parse_block(description, players, home_team):
+    """
+    Parse the description field for a BLOCK
+    
+    MTL #76 SUBBAN BLOCKED BY TOR #2 SCHENN, Wrist, Def. Zone
+
+    :param description: Play Description 
+    :param players: players in game
+    :param home_team: Home Team for game
+
+    :return: Dict with info
+    """
+    event_info = {}
+
+    regex = re.compile(r'(.{3})\s+#(\d+)')
+    desc = regex.findall(description)  # [[Team, num], [Team, num]]
+
+    p1 = get_player_name(desc[len(desc) - 1][1], players, desc[len(desc) - 1][0], home_team)
+    event_info['p1_name'] = p1['name']
+    event_info['p1_ID'] = p1['id']
+
+    if len(desc) > 1:
+        p2 = get_player_name(desc[0][1], players, desc[0][0], home_team)
+        event_info['p2_name'] = p2['name']
+        event_info['p2_ID'] = p2['id']
+
+    return event_info
+
+
+def parse_goal(description, players, ev_team, home_team):
+    """
+    Parse the description field for a GOAL
+    
+    TOR #81 KESSEL(1), Wrist, Off. Zone, 14 ft. Assists: #42 BOZAK(1); #8 KOMISAREK(1)
+    
+    :param description: Play Description 
+    :param players: players in game
+    :param ev_team: Event Team
+    :param home_team: Home Team for game
+
+    :return: Dict with info
+    """
+    event_info = {}
+
+    regex = re.compile(r'#(\d+)\s+')
+    desc = regex.findall(description)  # [num, ?, ?] -> ranging from 1 to 3 indices
+
+    p1 = get_player_name(desc[0], players, ev_team, home_team)
+    event_info['p1_name'] = p1['name']
+    event_info['p1_ID'] = p1['id']
+
+    if len(desc) >= 2:
+        p2 = get_player_name(desc[1], players, ev_team, home_team)
+        event_info['p2_name'] = p2['name']
+        event_info['p2_ID'] = p2['id']
+
+        if len(desc) == 3:
+            p3 = get_player_name(desc[2], players, ev_team, home_team)
+            event_info['p3_name'] = p3['name']
+            event_info['p3_ID'] = p3['id']
+
+    return event_info
+
+
+def parse_penalty(description, players, home_team):
+    """
+    Parse the description field for a Penalty
+
+    MTL #81 ELLER Hooking(2 min), Def. Zone Drawn By: TOR #11 SJOSTROM
+
+    :param description: Play Description 
+    :param players: players in game
+    :param home_team: Home Team for game
+
+    :return: Dict with info
+    """
+    event_info = {}
+
+    # Check if it's a Bench/Team Penalties
+    if "bench" in description or "TEAM" in description:
+        event_info['p1_name'] = 'Team'
+    else:
+        # Standard Penalty
+        regex = re.compile(r'(.{3})\s+#(\d+)')
+        desc = regex.findall(description)  # [[team, num], ?[team, num]] -> Either one to three indices
+
+        if desc:
+            p1 = get_player_name(desc[0][1], players, desc[0][0], home_team)
+            event_info['p1_name'] = p1['name']
+            event_info['p1_ID'] = p1['id']
+
+            # When there are three the penalty was served by someone else
+            # The Person who served the penalty is placed as the 3rd event player
+            if len(desc) == 3:
+                p3 = get_player_name(desc[1][1], players, desc[0][0], home_team)
+                event_info['p3_name'] = p3['name']
+                event_info['p3_ID'] = p3['id']
+
+                p2 = get_player_name(desc[2][1], players, desc[2][0], home_team)
+                event_info['p2_name'] = p2['name']
+                event_info['p2_ID'] = p2['id']
+            elif len(desc) == 2:
+                p2 = get_player_name(desc[1][1], players, desc[1][0], home_team)
+                event_info['p2_name'] = p2['name']
+                event_info['p2_ID'] = p2['id']
+
+    return event_info
+
+
 def add_event_players(event_dict, event, players, home_team):
     """
     Add players involved in the event to event_dict
@@ -380,108 +615,29 @@ def add_event_players(event_dict, event, players, home_team):
     """
     description = event[5].strip()
     ev_team = description.split()[0]
+    event_info = {}
 
     if event[4] == 'FAC':
-        # MTL won Neu. Zone - MTL #11 GOMEZ vs TOR #37 BRENT
-        regex = re.compile(r'(.{3})\s+#(\d+)')
-        desc = regex.findall(description)  # [[Team, num], [Team, num]]
-
-        if ev_team == desc[0][0]:
-            p1 = get_player_name(desc[0][1], players, desc[0][0], home_team)
-            p2 = get_player_name(desc[1][1], players, desc[1][0], home_team)
-        else:
-            p1 = get_player_name(desc[1][1], players, desc[1][0], home_team)
-            p2 = get_player_name(desc[0][1], players, desc[0][0], home_team)
-
-        event_dict['p1_name'] = p1['name']
-        event_dict['p1_ID'] = p1['id']
-        event_dict['p2_name'] = p2['name']
-        event_dict['p2_ID'] = p2['id']
-
+        event_info = parse_fac(description, players, ev_team, home_team)
     elif event[4] in ['SHOT', 'MISS', 'GIVE', 'TAKE']:
-        # MTL ONGOAL - #81 ELLER, Wrist, Off. Zone, 11 ft.
-        # ANA #23 BEAUCHEMIN, Slap, Wide of Net, Off. Zone, 42 ft.
-        # TOR GIVEAWAY - #35 GIGUERE, Def. Zone
-        # TOR TAKEAWAY - #9 ARMSTRONG, Off. Zone
-        regex = re.compile(r'(\d+)')
-        desc = regex.search(description).groups()  # num
-
-        p = get_player_name(desc[0], players, ev_team, home_team)
-        event_dict['p1_name'] = p['name']
-        event_dict['p1_ID'] = p['id']
-
+        event_info = parse_shot_miss_take_give(description, players, ev_team, home_team)
     elif event[4] == 'HIT':
-        # MTL #20 O'BYRNE HIT TOR #18 BROWN, Def. Zone
-        regex = re.compile(r'(.{3})\s+#(\d+)')
-        desc = regex.findall(description)  # [[Team, num], [Team, num]]
-
-        p1 = get_player_name(desc[0][1], players, desc[0][0], home_team)
-        event_dict['p1_name'] = p1['name']
-        event_dict['p1_ID'] = p1['id']
-
-        if len(desc) > 1:
-            p2 = get_player_name(desc[1][1], players, desc[1][0], home_team)
-            event_dict['p2_name'] = p2['name']
-            event_dict['p2_ID'] = p2['id']
-
+        event_info = parse_hit(description, players, home_team)
     elif event[4] == 'BLOCK':
-        # MTL #76 SUBBAN BLOCKED BY TOR #2 SCHENN, Wrist, Def. Zone
-        regex = re.compile(r'(.{3})\s+#(\d+)')
-        desc = regex.findall(description)  # [[Team, num], [Team, num]]
-
-        p1 = get_player_name(desc[len(desc)-1][1], players, desc[len(desc)-1][0], home_team)
-        event_dict['p1_name'] = p1['name']
-        event_dict['p1_ID'] = p1['id']
-
-        if len(desc) > 1:
-            p2 = get_player_name(desc[0][1], players, desc[0][0], home_team)
-            event_dict['p2_name'] = p2['name']
-            event_dict['p2_ID'] = p2['id']
-
+        event_info = parse_block(description, players, home_team)
     elif event[4] == 'GOAL':
-        # TOR #81 KESSEL(1), Wrist, Off. Zone, 14 ft. Assists: #42 BOZAK(1); #8 KOMISAREK(1)
-        regex = re.compile(r'#(\d+)\s+')
-        desc = regex.findall(description)  # [num, ?, ?] -> ranging from 1 to 3 indices
-
-        p1 = get_player_name(desc[0], players, ev_team, home_team)
-        event_dict['p1_name'] = p1['name']
-        event_dict['p1_ID'] = p1['id']
-
-        if len(desc) >= 2:
-            p2 = get_player_name(desc[1], players, ev_team, home_team)
-            event_dict['p2_name'] = p2['name']
-            event_dict['p2_ID'] = p2['id']
-
-            if len(desc) == 3:
-                p3 = get_player_name(desc[2], players, ev_team, home_team)
-                event_dict['p3_name'] = p3['name']
-                event_dict['p3_ID'] = p3['id']
-
+        event_info = parse_goal(description, players, ev_team, home_team)
     elif event[4] == 'PENL':
-        # MTL #81 ELLER Hooking(2 min), Def. Zone Drawn By: TOR #11 SJOSTROM
+        event_info = parse_penalty(description, players, home_team)
 
-        # Check if it's a team penalty
-        if 'Served' in description or 'TEAM' in description:
-            event_dict['p1_name'] = 'Team'
-        else:
-            regex = re.compile(r'(.{3})\s+#(\d+)')
-            desc = regex.findall(description)  # [[team, num], ?[team, num]] -> Either one or two indices
-
-            if desc:
-                p1 = get_player_name(desc[0][1], players, desc[0][0], home_team)
-                event_dict['p1_name'] = p1['name']
-                event_dict['p1_ID'] = p1['id']
-
-            if len(desc) == 2:
-                p2 = get_player_name(desc[1][1], players, desc[1][0], home_team)
-                event_dict['p2_name'] = p2['name']
-                event_dict['p2_ID'] = p2['id']
+    # Transfer info over
+    for key in event_info.keys():
+        event_dict[key] = event_info[key]
 
 
 def populate_players(event_dict, players, away_players, home_players):
     """
     Populate away and home player info (and num skaters on each side)
-    NOTE: Could probably do this in a much neater way...
     
     :param event_dict: dict with event info
     :param players: all players in game and info
@@ -490,26 +646,23 @@ def populate_players(event_dict, players, away_players, home_players):
     
     :return: None
     """
-    for j in range(6):
-        try:
-            name = shared.fix_name(away_players[j][0].upper())
-            event_dict['awayPlayer{}'.format(j + 1)] = name
-            event_dict['awayPlayer{}_id'.format(j + 1)] = players['Away'][name]['id']
-        except KeyError:
-            event_dict['awayPlayer{}_id'.format(j + 1)] = 'NA'
-        except IndexError:
-            event_dict['awayPlayer{}'.format(j + 1)] = ''
-            event_dict['awayPlayer{}_id'.format(j + 1)] = ''
+    for venue in ['home', 'away']:
+        for j in range(6):
+            try:
+                if venue == "home":
+                    name = shared.fix_name(home_players[j][0].upper())
+                    foo = 'Home'
+                else:
+                    name = shared.fix_name(away_players[j][0].upper())
+                    foo = 'Away'
 
-        try:
-            name = shared.fix_name(home_players[j][0].upper())
-            event_dict['homePlayer{}'.format(j + 1)] = name
-            event_dict['homePlayer{}_id'.format(j + 1)] = players['Home'][name]['id']
-        except KeyError:
-            event_dict['homePlayer{}_id'.format(j + 1)] = 'NA'
-        except IndexError:
-            event_dict['homePlayer{}'.format(j + 1)] = ''
-            event_dict['homePlayer{}_id'.format(j + 1)] = ''
+                event_dict['{}Player{}'.format(venue, j + 1)] = name
+                event_dict['{}Player{}_id'.format(venue, j + 1)] = players[foo][name]['id']
+            except KeyError:
+                event_dict['{}Player{}_id'.format(venue, j + 1)] = 'NA'
+            except IndexError:
+                event_dict['{}Player{}'.format(venue, j + 1)] = ''
+                event_dict['{}Player{}_id'.format(venue, j + 1)] = ''
 
     # Did this because above method assumes the goalie is at end of player list
     for x in away_players:
@@ -538,14 +691,13 @@ def populate_players(event_dict, players, away_players, home_players):
     event_dict['Home_Players'] = len(home_players)
 
 
-def parse_event(event, players, home_team, if_plays_in_json, current_score):
+def parse_event(event, players, home_team, current_score):
     """
     Receives an event and parses it
     
     :param event: event type
     :param players: players in game
     :param home_team: home team
-    :param if_plays_in_json: If the pbp json contains the plays
     :param current_score: current score for both teams
     
     :return: dict with info
@@ -568,50 +720,39 @@ def parse_event(event, players, home_team, if_plays_in_json, current_score):
     add_zone(event_dict, event[5])
     add_home_zone(event_dict, home_team)
 
-    # I like getting the event players from the json
-    if not if_plays_in_json:
-        if event_dict['Event'] in ['GOAL', 'SHOT', 'MISS', 'BLOCK', 'PENL', 'FAC', 'HIT', 'TAKE', 'GIVE']:
-            add_event_players(event_dict, event, players, home_team)
+    # Sometimes it's empty...(they seem to sometimes/always have a whitespace char)
+    if len(event_dict['Description']) > 1:
+        add_event_players(event_dict, event, players, home_team)
 
     return event_dict
 
 
-def parse_html(html, players, teams, if_plays_in_json):
+def parse_html(html, players, teams):
     """
     Parse html game pbp
     
     :param html: raw html
     :param players: players in the game (from json pbp)
     :param teams: dict with home and away teams
-    :param if_plays_in_json: If the pbp json contains the plays
     
     :return: DataFrame with info
     """
-    if if_plays_in_json:
-        columns = ['Period', 'Event', 'Description', 'Time_Elapsed', 'Seconds_Elapsed', 'Strength', 'Ev_Zone', 'Type',
-                   'Ev_Team', 'Home_Zone', 'Away_Team', 'Home_Team', 'awayPlayer1', 'awayPlayer1_id', 'awayPlayer2',
-                   'awayPlayer2_id', 'awayPlayer3', 'awayPlayer3_id', 'awayPlayer4', 'awayPlayer4_id', 'awayPlayer5',
-                   'awayPlayer5_id', 'awayPlayer6', 'awayPlayer6_id', 'homePlayer1', 'homePlayer1_id', 'homePlayer2',
-                   'homePlayer2_id', 'homePlayer3', 'homePlayer3_id', 'homePlayer4', 'homePlayer4_id', 'homePlayer5',
-                   'homePlayer5_id', 'homePlayer6', 'homePlayer6_id', 'Away_Goalie', 'Away_Goalie_Id', 'Home_Goalie',
-                   'Home_Goalie_Id', 'Away_Players', 'Home_Players', 'Away_Score', 'Home_Score']
-    else:
-        columns = ['Period', 'Event', 'Description', 'Time_Elapsed', 'Seconds_Elapsed', 'Strength', 'Ev_Zone', 'Type',
-                   'Ev_Team', 'Home_Zone', 'Away_Team', 'Home_Team', 'p1_name', 'p1_ID', 'p2_name', 'p2_ID', 'p3_name',
-                   'p3_ID', 'awayPlayer1', 'awayPlayer1_id', 'awayPlayer2', 'awayPlayer2_id', 'awayPlayer3', 'awayPlayer3_id',
-                   'awayPlayer4', 'awayPlayer4_id', 'awayPlayer5', 'awayPlayer5_id', 'awayPlayer6', 'awayPlayer6_id',
-                   'homePlayer1', 'homePlayer1_id', 'homePlayer2', 'homePlayer2_id', 'homePlayer3', 'homePlayer3_id',
-                   'homePlayer4', 'homePlayer4_id', 'homePlayer5', 'homePlayer5_id', 'homePlayer6', 'homePlayer6_id',
-                   'Away_Goalie', 'Away_Goalie_Id', 'Home_Goalie', 'Home_Goalie_Id', 'Away_Players', 'Home_Players',
-                   'Away_Score', 'Home_Score']
+    columns = ['Period', 'Event', 'Description', 'Time_Elapsed', 'Seconds_Elapsed', 'Strength', 'Ev_Zone', 'Type',
+               'Ev_Team', 'Home_Zone', 'Away_Team', 'Home_Team', 'p1_name', 'p1_ID', 'p2_name', 'p2_ID', 'p3_name',
+               'p3_ID', 'awayPlayer1', 'awayPlayer1_id', 'awayPlayer2', 'awayPlayer2_id', 'awayPlayer3', 'awayPlayer3_id',
+               'awayPlayer4', 'awayPlayer4_id', 'awayPlayer5', 'awayPlayer5_id', 'awayPlayer6', 'awayPlayer6_id',
+               'homePlayer1', 'homePlayer1_id', 'homePlayer2', 'homePlayer2_id', 'homePlayer3', 'homePlayer3_id',
+               'homePlayer4', 'homePlayer4_id', 'homePlayer5', 'homePlayer5_id', 'homePlayer6', 'homePlayer6_id',
+               'Away_Goalie', 'Away_Goalie_Id', 'Home_Goalie', 'Home_Goalie_Id', 'Away_Players', 'Home_Players',
+               'Away_Score', 'Home_Score']
 
     current_score = {'Home': 0, 'Away': 0}
-    events = [parse_event(event, players, teams['Home'], if_plays_in_json, current_score)
-              for event in html if if_valid_event(event)]
+    events = [parse_event(event, players, teams['Home'], current_score) for event in html if if_valid_event(event)]
 
     df = pd.DataFrame(list(events), columns=columns)
 
-    df.drop(df[df.Time_Elapsed == '-16:0-'].index, inplace=True)       # This is seen sometimes...it's a duplicate row
+    # This is seen sometimes...it's a duplicate row
+    df.drop(df[df.Time_Elapsed == '-16:0-'].index, inplace=True)
 
     df['Away_Team'] = teams['Away']
     df['Home_Team'] = teams['Home']
@@ -619,14 +760,13 @@ def parse_html(html, players, teams, if_plays_in_json):
     return df
 
 
-def scrape_game(game_id, players, teams, if_plays_in_json):
+def scrape_game(game_id, players, teams):
     """ 
     Scrape the data for the game
     
     :param game_id: game to scrape
     :param players: dict with player info
     :param teams: dict with home and away teams
-    :param if_plays_in_json: boolean, if the plays are in the json
     
     :return: DataFrame of game info or None if it fails
     """
@@ -643,7 +783,7 @@ def scrape_game(game_id, players, teams, if_plays_in_json):
         return None
 
     try:
-        game_df = parse_html(cleaned_html, players, teams, if_plays_in_json)
+        game_df = parse_html(cleaned_html, players, teams)
     except Exception as e:
         print('Error parsing Html pbp for game {}'.format(game_id), e)
         return None

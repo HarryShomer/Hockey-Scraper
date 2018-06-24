@@ -59,25 +59,59 @@ Scrape all games between a specified date range. All dates must be written in a 
     hockey_scraper.scrape_date_range('2014-09-15', '2014-11-01', True, preseason=True)
 
 
-**Notes**:
+**Saving Files**
+
+The option also exists to save the scraped files in another directory. This would speed up re-scraping any games since
+we already have the docs needed for it. It would also be useful if you want to grab any extra information from them
+as some of them contain a lot more information. In order to do this one must specify a directory using the keyword
+argument 'docs_dir'. If this is a valid directory, when scraping each page it would first check if it was already scraped
+(therefore saving us the time of scraping it). If it hasn't been scraped yet, it will then grab it from the source and
+save it in the given directory.
+
+Sometimes you may have already scraped and saved a file but you want to re-scrape it from the source and save it again
+(this may seem strange but the NHL frequently fixes mistakes so you may want to update what you have). This can be done
+by setting the keyword argument rescrape equal to True.
+
+::
+
+    import hockey_scraper
+
+    # Path to the given directory
+    USER_PATH = /....
+
+    # Scrapes the 2015 & 2016 season with shifts and stores the data in a Csv file
+    # Also includes a path for an existing directory for the scraped files to be placed in or retrieved from.
+    hockey_scraper.scrape_seasons([2015, 2016], True, docs_dir=USER_PATH)
+
+    # Once could chose to re-scrape previously saved files by making the keyword argument rescrape=True
+    hockey_scraper.scrape_seasons([2015, 2016], True, docs_dir=USER_PATH, rescrape=True)
+
+
+**Additional Notes**:
 
 \1. For all three functions you must specify if you want to also scrape shifts (TOI tables) with a boolean. The Play by
 Play is automatically scraped.
 
-\2. When scraping by date range or by season, preseason games aren't scraped unless otherwise specified.
+\2. When scraping by date range or by season, preseason games aren't scraped unless otherwise specified. Also preseason
+games are scraped at your own risk. There is no guarantee it will work or that the files are even there!!!
 
 \3. For all three functions the scraped data is deposited into a Csv file unless it's specified to return the DataFrames
 
-\4. The Dictionary with the DataFrames returned by setting data_format='Pandas' is structured like:
+\4. The Dictionary with the DataFrames (and scraping errors) returned by setting data_format='Pandas' is structured like:
 ::
 
    {
-      # This is always included
+      # Both of these are always included
       'pbp': pbp_df,
+      'errors': scraping_errors,
 
-      # This is only included specified that you want to also scrape shifts
+      # This is only included when the argument 'if_scrape_shifts' is set equal to True
       'shifts': shifts_df
     }
+
+\5. When including a directory, it must be a valid directory. It will not create it for you. You'll get an error message
+but otherwise it will scrape as if no directory was provided.
+
 
 
 Functions
@@ -127,6 +161,11 @@ Schedule
 Playing Roster
 ~~~~~~~~~~~~~~
 .. automodule:: hockey_scraper.playing_roster
+   :members:
+
+Save Pages
+~~~~~~~~~~
+.. automodule:: hockey_scraper.save_pages
    :members:
 
 Shared Functions

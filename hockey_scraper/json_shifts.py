@@ -4,7 +4,6 @@ This module contains functions to scrape the Json toi/shifts for any given game
 
 import pandas as pd
 import json
-import time
 import hockey_scraper.shared as shared
 
 
@@ -17,15 +16,20 @@ def get_shifts(game_id):
     
     :return: json or None
     """
-    url = 'http://www.nhl.com/stats/rest/shiftcharts?cayenneExp=gameId={}'.format(game_id)
-    response = shared.get_url(url)
-    time.sleep(1)
+    page_info = {
+        "url": 'http://www.nhl.com/stats/rest/shiftcharts?cayenneExp=gameId={}'.format(game_id),
+        "name": str(game_id),
+        "type": "json_shifts",
+        "season": str(game_id)[:4],
+    }
 
-    # Return None if can't get page
+    response = shared.get_file(page_info)
+
+    # Return empty dict if can't get page
     if not response:
-        return None
-
-    return json.loads(response.text)
+        return {}
+    else:
+        return json.loads(response)
 
 
 def fix_team_tricode(tricode):
@@ -88,8 +92,8 @@ def parse_json(shift_json, game_id):
     """
     columns = ['Game_Id', 'Period', 'Team', 'Player', 'Player_Id', 'Start', 'End', 'Duration']
 
-    shifts = [parse_shift(shift) for shift in shift_json['data']]     # Go through the shifts
-    shifts = [shift for shift in shifts if shift != {}]               # Get rid of null shifts (which happen at end)
+    shifts = [parse_shift(shift) for shift in shift_json['data']]        # Go through the shifts
+    shifts = [shift for shift in shifts if shift != {}]                  # Get rid of null shifts (which happen at end)
 
     df = pd.DataFrame(shifts, columns=columns)
     df['Game_Id'] = str(game_id)[5:]

@@ -113,12 +113,29 @@ from at least version 3.6.0 but earlier versions should be fine).</p>
 </div>
 <p>The dictionary returned by setting the default argument &#8220;data_format&#8221; equal to &#8220;Pandas&#8221; is structured like:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span>
-  <span class="c1"># This is always included</span>
+  <span class="c1"># Both of these are always included</span>
   <span class="s1">&#39;pbp&#39;</span><span class="p">:</span> <span class="n">pbp_df</span><span class="p">,</span>
+  <span class="s1">&#39;errors&#39;</span><span class="p">:</span> <span class="n">scraping_errors</span><span class="p">,</span>
 
   <span class="c1"># This is only included when the argument &#39;if_scrape_shifts&#39; is set equal to True</span>
   <span class="s1">&#39;shifts&#39;</span><span class="p">:</span> <span class="n">shifts_df</span>
 <span class="p">}</span>
+</pre></div>
+</div>
+<p>Scraped files can also be saved in a separate directory if wanted. This allows one to re-scrape games quicker as we
+don&#8217;t need to retrieve them. This is done by specifying the keyword argument &#8216;docs_dir&#8217; with the directory you want the
+files deposited in (it must exist beforehand).</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">hockey_scraper</span>
+
+<span class="c1"># Path to the given directory</span>
+<span class="n">USER_PATH</span> <span class="o">=</span> <span class="o">/....</span>
+
+<span class="c1"># Scrapes the 2015 &amp; 2016 season with shifts and stores the data in a Csv file</span>
+<span class="c1"># Also includes a path for an existing directory for the scraped files to be placed in or retrieved from.</span>
+<span class="n">hockey_scraper</span><span class="o">.</span><span class="n">scrape_seasons</span><span class="p">([</span><span class="mi">2015</span><span class="p">,</span> <span class="mi">2016</span><span class="p">],</span> <span class="kc">True</span><span class="p">,</span> <span class="n">docs_dir</span><span class="o">=</span><span class="n">USER_PATH</span><span class="p">)</span>
+
+<span class="c1"># Once could chose to re-scrape previously saved files by making the keyword argument rescrape=True</span>
+<span class="n">hockey_scraper</span><span class="o">.</span><span class="n">scrape_seasons</span><span class="p">([</span><span class="mi">2015</span><span class="p">,</span> <span class="mi">2016</span><span class="p">],</span> <span class="kc">True</span><span class="p">,</span> <span class="n">docs_dir</span><span class="o">=</span><span class="n">USER_PATH</span><span class="p">,</span> <span class="n">rescrape</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The full documentation can be found <a class="reference external" href="http://hockey-scraper.readthedocs.io/en/latest/">here</a>.</p>

@@ -4,29 +4,37 @@ This module contains functions to scrape the Html Toi Tables (or shifts) for any
 
 import pandas as pd
 from bs4 import BeautifulSoup
-import time
 import re
 import hockey_scraper.shared as shared
 
 
 def get_shifts(game_id):
     """
-    Given a game_id it returns a DataFrame with the shifts for both teams
+    Given a game_id it returns a the shifts for both teams
     Ex: http://www.nhl.com/scores/htmlreports/20162017/TV020971.HTM
     
     :param game_id: the game
     
-    :return: DataFrame with all shifts or None
+    :return: Shifts or None
     """
     game_id = str(game_id)
     home_url = 'http://www.nhl.com/scores/htmlreports/{}{}/TH{}.HTM'.format(game_id[:4], int(game_id[:4])+1, game_id[4:])
     away_url = 'http://www.nhl.com/scores/htmlreports/{}{}/TV{}.HTM'.format(game_id[:4], int(game_id[:4])+1, game_id[4:])
 
-    home = shared.get_url(home_url)
-    time.sleep(1)
+    page_info = {
+        "url": home_url,
+        "name": game_id,
+        "type": "html_shifts_home",
+        "season": game_id[:4],
+    }
 
-    away = shared.get_url(away_url)
-    time.sleep(1)
+    # Get info for home shifts
+    home = shared.get_file(page_info)
+
+    # Change info for scraping away page and scrape it
+    page_info["type"] = "html_shifts_away"
+    page_info["url"] = away_url
+    away = shared.get_file(page_info)
 
     return home, away
 
@@ -40,15 +48,15 @@ def get_soup(shifts_html):
     
     :return: "soupified" html and player_shifts portion of html (it's a bunch of td tags)
     """
-    soup = BeautifulSoup(shifts_html.content, "lxml")
+    soup = BeautifulSoup(shifts_html, "lxml")
     td = soup.findAll(True, {'class': ['playerHeading + border', 'lborder + bborder']})
 
     if len(td) == 0:
-        soup = BeautifulSoup(shifts_html.content, "html.parser")
+        soup = BeautifulSoup(shifts_html, "html.parser")
         td = soup.findAll(True, {'class': ['playerHeading + border', 'lborder + bborder']})
 
         if len(td) == 0:
-            soup = BeautifulSoup(shifts_html.content, "html5lib")
+            soup = BeautifulSoup(shifts_html, "html5lib")
             td = soup.findAll(True, {'class': ['playerHeading + border', 'lborder + bborder']})
 
     return td, get_teams(soup)
@@ -93,7 +101,6 @@ def analyze_shifts(shift, name, team, home_team, player_ids):
     shifts['Player'] = name.upper()
     shifts['Period'] = '4' if shift[1] == 'OT' else shift[1]
     shifts['Team'] = shared.TEAMS[team.strip(' ')]
-    shifts['Home_Team'] = shared.TEAMS[home_team.strip(' ')]
     shifts['Start'] = shared.convert_to_seconds(shift[2].split('/')[0])
     shifts['Duration'] = shared.convert_to_seconds(shift[4].split('/')[0])
 
@@ -117,6 +124,8 @@ def analyze_shifts(shift, name, team, home_team, player_ids):
 def parse_html(html, player_ids, game_id):
     """
     Parse the html
+    
+    Note: Don't fuck with this!!! I'm not exactly sure how or why but it works. 
     
     :param html: cleaned up html
     :param player_ids: dict of home and away players
@@ -154,6 +163,7 @@ def parse_html(html, player_ids, game_id):
         # Create a list of lists (each length 5)...corresponds to 5 columns in html shifts
         players[key]['Shifts'] = [players[key]['Shifts'][i:i + 5] for i in range(0, len(players[key]['Shifts']), 5)]
 
+        # Parse each shift
         shifts = [analyze_shifts(shift, key, team, home_team, player_ids) for shift in players[key]['Shifts']]
         df = df.append(shifts, ignore_index=True)
 
@@ -185,6 +195,7 @@ def scrape_game(game_id, players):
         print('Error parsing Html shifts for game {}'.format(game_id), e)
         return None
 
+    # Combine the two
     game_df = pd.concat([away_df, home_df], ignore_index=True)
     game_df = pd.DataFrame(game_df, columns=columns)
 

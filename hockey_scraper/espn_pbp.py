@@ -2,9 +2,7 @@
 This module contains code to scrape coordinates for games off of espn for any given game
 """
 
-
 import pandas as pd
-import time
 from bs4 import BeautifulSoup
 import xml.etree.ElementTree as etree
 import re
@@ -34,7 +32,7 @@ def get_game_ids(response):
     
     :return: list of game_ids
     """
-    soup = BeautifulSoup(response.text, 'lxml')
+    soup = BeautifulSoup(response, 'lxml')
 
     divs = soup.findAll('div', {'class': "game-header"})
     regex = re.compile(r'id="(\d+)')
@@ -51,7 +49,7 @@ def get_teams(response):
     
     :return: list of teams    
     """
-    soup = BeautifulSoup(response.text, 'lxml')
+    soup = BeautifulSoup(response, 'lxml')
 
     td = soup.findAll('td', {'class': "team"})
     teams = [shared.TEAMS[t.get_text().upper()] for t in td if t.get_text() != '']
@@ -60,6 +58,29 @@ def get_teams(response):
     games = [teams[i:i + 2] for i in range(0, len(teams), 2)]
 
     return games
+
+
+def get_espn_date(date):
+    """
+    Get the page that contains all the games for that day
+    
+    :param date: YYYY-MM-DD
+    
+    :return: response 
+    """
+    page_info = {
+        "url": 'http://www.espn.com/nhl/scoreboard?date={}'.format(date.replace('-', '')),
+        "name": date,
+        "type": "espn_scoreboard",
+        "season": shared.get_season(date),
+    }
+    response = shared.get_file(page_info)
+
+    # If can't get or not there throw an exception
+    if not response:
+        raise Exception
+    else:
+        return response
 
 
 def get_espn_game_id(date, home_team, away_team):
@@ -71,24 +92,19 @@ def get_espn_game_id(date, home_team, away_team):
     :param home_team: home team
     :param away_team: away team
     
-    :return: 9 digit game id
+    :return: 9 digit game id as a string
     """
-    url = 'http://www.espn.com/nhl/scoreboard?date={}'.format(date.replace('-', ''))
-    response = shared.get_url(url)
-
-    # If can't get or not there return None
-    if not response:
-        raise Exception
-
+    response = get_espn_date(date)
     game_ids = get_game_ids(response)
     games = get_teams(response)
 
+    # Get the game id with the right team for it
     for i in range(len(games)):
         if home_team in games[i] or away_team in games[i]:
             return game_ids[i]
 
 
-def get_espn(date, home_team, away_team):
+def get_espn_game(date, home_team, away_team):
     """
     Gets the ESPN pbp feed 
     Ex: http://www.espn.com/nhl/gamecast/data/masterFeed?lang=en&isAll=true&gameId=400885300
@@ -101,13 +117,17 @@ def get_espn(date, home_team, away_team):
     """
     game_id = get_espn_game_id(date, home_team.upper(), away_team.upper())
 
-    url = 'http://www.espn.com/nhl/gamecast/data/masterFeed?lang=en&isAll=true&gameId={}'.format(game_id)
-    response = shared.get_url(url)
+    file_info = {
+        "url": 'http://www.espn.com/nhl/gamecast/data/masterFeed?lang=en&isAll=true&gameId={}'.format(game_id),
+        "name": game_id,
+        "type": "espn_pbp",
+        "season": shared.get_season(date),
+    }
+    response = shared.get_file(file_info)
 
     if response is None:
         raise Exception
 
-    time.sleep(1)
     return response
 
 
@@ -145,14 +165,13 @@ def parse_espn(espn_xml):
     :return: DataFrame with info
     """
     columns = ['period', 'time_elapsed', 'event', 'xC', 'yC']
-    
-    text = espn_xml.text
+
     # Occasionally we get malformed XML because of the presence of \x13 characters
     # Let's just replace them with dashes
-    text = text.replace(u'\x13', '-')
+    espn_xml = espn_xml.replace(u'\x13', '-')
 
     try:
-        tree = etree.fromstring(text)
+        tree = etree.fromstring(espn_xml)
     except etree.ParseError:
         print("Espn pbp isn't valid xml, therefore coordinates can't be obtained for this game")
         return pd.DataFrame([], columns=columns)
@@ -176,7 +195,7 @@ def scrape_game(date, home_team, away_team):
     """
     try:
         print('Using espn for pbp')
-        espn_xml = get_espn(date, home_team, away_team)
+        espn_xml = get_espn_game(date, home_team, away_team)
     except Exception as e:
         print("Espn pbp for game {a} {b} {c} is either not there or can't be obtained".format(a=date, b=home_team,
                                                                                               c=away_team), e)

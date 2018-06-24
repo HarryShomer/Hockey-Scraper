@@ -4,22 +4,31 @@
 This file is a bunch of the shared functions or just general stuff used by the different scrapers in the package.
 """
 
+import os
 import time
 import requests
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
+import hockey_scraper.save_pages as sp
 
+# Directory where to save pages
+docs_dir = None
 
-TEAMS = {'ANAHEIM DUCKS': 'ANA', 'ARIZONA COYOTES': 'ARI', 'ATLANTA THRASHERS': 'ATL', 'BOSTON BRUINS': 'BOS',
-         'BUFFALO SABRES': 'BUF', 'CAROLINA HURRICANES': 'CAR', 'COLUMBUS BLUE JACKETS': 'CBJ', 'CALGARY FLAMES': 'CGY',
-         'CHICAGO BLACKHAWKS': 'CHI', 'COLORADO AVALANCHE': 'COL', 'DALLAS STARS': 'DAL', 'DETROIT RED WINGS': 'DET',
-         'EDMONTON OILERS': 'EDM', 'FLORIDA PANTHERS': 'FLA', 'LOS ANGELES KINGS': 'L.A', 'MINNESOTA WILD': 'MIN',
-         'MONTREAL CANADIENS': 'MTL', u'MONTRÉAL CANADIENS': 'MTL', 'CANADIENS MONTREAL': 'MTL', 'NEW JERSEY DEVILS': 'N.J',
-         'NASHVILLE PREDATORS': 'NSH', 'NEW YORK ISLANDERS': 'NYI', 'NEW YORK RANGERS': 'NYR', 'OTTAWA SENATORS': 'OTT',
-         'PHILADELPHIA FLYERS': 'PHI', 'PHOENIX COYOTES': 'PHX', 'PITTSBURGH PENGUINS': 'PIT', 'SAN JOSE SHARKS': 'S.J',
-         'ST. LOUIS BLUES': 'STL', 'TAMPA BAY LIGHTNING': 'T.B', 'TORONTO MAPLE LEAFS': 'TOR', 'VANCOUVER CANUCKS': 'VAN',
-         'VEGAS GOLDEN KNIGHTS': 'VGK', 'WINNIPEG JETS': 'WPG', 'WASHINGTON CAPITALS': 'WSH'
-         }
+# Boolean that tells us whether or not we should re-scrape a given page if it's already saved
+re_scrape = False
+
+# All the corresponding tri-codes for team names
+TEAMS = {
+    'ANAHEIM DUCKS': 'ANA', 'ARIZONA COYOTES': 'ARI', 'ATLANTA THRASHERS': 'ATL', 'BOSTON BRUINS': 'BOS',
+    'BUFFALO SABRES': 'BUF', 'CAROLINA HURRICANES': 'CAR', 'COLUMBUS BLUE JACKETS': 'CBJ', 'CALGARY FLAMES': 'CGY',
+    'CHICAGO BLACKHAWKS': 'CHI', 'COLORADO AVALANCHE': 'COL', 'DALLAS STARS': 'DAL', 'DETROIT RED WINGS': 'DET',
+    'EDMONTON OILERS': 'EDM', 'FLORIDA PANTHERS': 'FLA', 'LOS ANGELES KINGS': 'L.A', 'MINNESOTA WILD': 'MIN',
+    'MONTREAL CANADIENS': 'MTL', u'MONTRÉAL CANADIENS': 'MTL', 'CANADIENS MONTREAL': 'MTL', 'NEW JERSEY DEVILS': 'N.J',
+    'NASHVILLE PREDATORS': 'NSH', 'NEW YORK ISLANDERS': 'NYI', 'NEW YORK RANGERS': 'NYR', 'OTTAWA SENATORS': 'OTT',
+    'PHILADELPHIA FLYERS': 'PHI', 'PHOENIX COYOTES': 'PHX', 'PITTSBURGH PENGUINS': 'PIT', 'SAN JOSE SHARKS': 'S.J',
+    'ST. LOUIS BLUES': 'STL', 'TAMPA BAY LIGHTNING': 'T.B', 'TORONTO MAPLE LEAFS': 'TOR', 'VANCOUVER CANUCKS': 'VAN',
+    'VEGAS GOLDEN KNIGHTS': 'VGK', 'WINNIPEG JETS': 'WPG', 'WASHINGTON CAPITALS': 'WSH'
+}
 
 
 # Fixes some of the mistakes made with player names
@@ -113,7 +122,8 @@ Names = {'n/a': 'n/a', 'ALEXANDER OVECHKIN': 'Alex Ovechkin', 'TOBY ENSTROM': 'T
          'OLAF KOLZIG': 'OLIE KOLZIG', 'J-SEBASTIEN AUBIN': 'JEAN-SEBASTIEN AUBIN', 'ALEXANDER AULD': 'ALEX AULD',
          'JAMES HOWARD': 'JIMMY HOWARD', 'JEFF DROUIN-DESLAURIERS': 'JEFF DESLAURIERS', 'SIMEON VARLAMOV': 'SEMYON VARLAMOV',
          'ALEXANDER PECHURSKI': 'Alexander Pechurskiy', 'JEFFREY PENNER': 'JEFF PENNER', 'EMMANUEL FERNANDEZ': 'Manny FERNANDEZ',
-         'ALEXANDER PETROVIC': 'ALEX PETROVIC', 'ZACHARY ASTON-REESE': 'ZACH ASTON-REESE', 'J-F BERUBE': 'JEAN-FRANCOIS BERUBE'
+         'ALEXANDER PETROVIC': 'ALEX PETROVIC', 'ZACHARY ASTON-REESE': 'ZACH ASTON-REESE', 'J-F BERUBE': 'JEAN-FRANCOIS BERUBE',
+         "DANNY O'REGAN": "DANIEL O'REGAN",
          }
 
 
@@ -124,18 +134,38 @@ def fix_name(name):
     :param name: name in pbp
     
     :return: Either the given parameter or the fixed name
-    
-    if name == "SEBASTIAN AHO" and team == "CAR":
-    name = "SEBASTIAN ANTERO AHO"
     """
     return Names.get(name, name).upper()
 
 
+def get_season(date):
+    """
+    Get Season based on from_date
+
+    :param date: date
+
+    :return: season -> ex: 2016 for 2016-2017 season
+    """
+    year = date[:4]
+    date = time.strptime(date, "%Y-%m-%d")
+
+    if date > time.strptime('-'.join([year, '01-01']), "%Y-%m-%d"):
+        if date < time.strptime('-'.join([year, '09-01']), "%Y-%m-%d"):
+            return int(year) - 1
+        else:
+            return int(year)
+    else:
+        if date > time.strptime('-'.join([year, '07-01']), "%Y-%m-%d"):
+            return int(year)
+        else:
+            return int(year) - 1
+
+
 def convert_to_seconds(minutes):
     """
-    Return minutes remaining in time format to seconds elapsed
+    Return minutes elapsed in time format to seconds elapsed
     
-    :param minutes: time remaining
+    :param minutes: time elapsed
     
     :return: time elapsed in seconds
     """
@@ -148,13 +178,13 @@ def convert_to_seconds(minutes):
     return datetime.timedelta(hours=x.tm_hour, minutes=x.tm_min, seconds=x.tm_sec).total_seconds()
 
 
-def get_url(url):
+def scrape_page(url):
     """
-    Get the url
+    Scrape a given url
     
-    :param url: given url
+    :param url: url for page
     
-    :return: page
+    :return: response object
     """
     response = requests.Session()
     retries = Retry(total=10, backoff_factor=.1)
@@ -163,13 +193,89 @@ def get_url(url):
     try:
         response = response.get(url, timeout=5)
         response.raise_for_status()
+        page = response.text
     except (requests.exceptions.HTTPError, requests.exceptions.ConnectionError):
-        return None
+        page = None
 
-    return response
+    time.sleep(1)
+
+    return page
 
 
+def if_rescrape(user_rescrape):
+    """
+    If you want to re_scrape. If someone is a dumbass and feeds it a non-boolean it terminates the program
+
+    Note: Only matters when you have a directory specified
+
+    :param user_rescrape: Boolean 
+
+    :return: None
+    """
+    global re_scrape
+
+    if isinstance(user_rescrape, bool):
+        re_scrape = user_rescrape
+    else:
+        print("Error: 'if_rescrape' must be a boolean. Not a {}".format(type(user_rescrape)))
+        exit()
 
 
+def add_dir(user_dir):
+    """
+    Add directory to store scraped docs if valid. 
+    
+    NOTE: After this functions docs_dir is either None or a valid directory
+
+    :param user_dir: User provided directory on their machine
+
+    :return: None
+    """
+    global docs_dir
+
+    # Nothing was provided...don't give a shit
+    if user_dir is None:
+        return
+
+    if os.path.isdir(user_dir):
+        docs_dir = user_dir
+    else:
+        docs_dir = None
+        print("The directory specified for the saving of scraped docs doesn't exist. Therefore:"
+              "\n1. All specified games will be scraped from their appropriate sources (NHL or ESPN)."
+              "\n2. All scraped files will NOT be saved at all. Please either create the directory you want them to be "
+              "deposited in or recheck the directory you typed in and start again.\n")
+
+
+def get_file(file_info):
+    """
+    Get the specified file. 
+    
+    If a docs_dir is provided we check if it exists. If it does we see if it contains that page (and saves if it 
+    doesn't). If the docs_dir doesn't exist we just scrape from the source and not save. 
+    
+    :param file_info: Dictionary containing the info for the file. 
+                      Contains the url, name, type, and season 
+    
+    :return: page
+    """
+    original_path = os.getcwd()
+    file_info['dir'] = docs_dir
+
+    # If something is provided...we try to change the cwd
+    if file_info['dir'] is not None:
+        os.chdir(file_info['dir'])
+
+    # If everything checks out we'll retrieve it, otherwise we scrape it
+    if docs_dir is not None and sp.check_file_exists(file_info) and re_scrape is False:
+        page = sp.get_page(file_info)
+    else:
+        page = scrape_page(file_info['url'])
+        sp.save_page(page, file_info, docs_dir)
+
+    # Change back to current cwd to avoid any potential issues
+    os.chdir(original_path)
+
+    return page
 
 

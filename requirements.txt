@@ -4,3 +4,4 @@ lxml==3.7.2
 html5lib==0.999999999
 pandas==0.20.3
 sphinx==1.5.1
+pytest==3.0.5

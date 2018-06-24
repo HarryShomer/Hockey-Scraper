@@ -83,12 +83,32 @@ The dictionary returned by setting the default argument "data_format" equal to "
 ::
 
     {
-      # This is always included
+      # Both of these are always included
       'pbp': pbp_df,
+      'errors': scraping_errors,
 
       # This is only included when the argument 'if_scrape_shifts' is set equal to True
       'shifts': shifts_df
     }
+
+
+Scraped files can also be saved in a separate directory if wanted. This allows one to re-scrape games quicker as we
+don't need to retrieve them. This is done by specifying the keyword argument 'docs_dir' with the directory you want the
+files deposited in (it must exist beforehand).
+
+::
+
+    import hockey_scraper
+
+    # Path to the given directory
+    USER_PATH = /....
+
+    # Scrapes the 2015 & 2016 season with shifts and stores the data in a Csv file
+    # Also includes a path for an existing directory for the scraped files to be placed in or retrieved from.
+    hockey_scraper.scrape_seasons([2015, 2016], True, docs_dir=USER_PATH)
+
+    # Once could chose to re-scrape previously saved files by making the keyword argument rescrape=True
+    hockey_scraper.scrape_seasons([2015, 2016], True, docs_dir=USER_PATH, rescrape=True)
 
 
 The full documentation can be found `here <http://hockey-scraper.readthedocs.io/en/latest/>`_.

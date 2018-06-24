@@ -4,7 +4,7 @@ This module contains functions to scrape the Json Play by Play for any given gam
 
 import pandas as pd
 import json
-import time
+from operator import itemgetter
 import hockey_scraper.shared as shared
 
 
@@ -17,29 +17,42 @@ def get_pbp(game_id):
     
     :return: raw json of game or None if couldn't get game
     """
-    url = 'http://statsapi.web.nhl.com/api/v1/game/{}/feed/live'.format(game_id)
+    page_info = {
+        "url": 'http://statsapi.web.nhl.com/api/v1/game/{}/feed/live'.format(game_id),
+        "name": game_id,
+        "type": "json_pbp",
+        "season": game_id[:4],
+    }
+    response = shared.get_file(page_info)
 
-    response = shared.get_url(url)
-    time.sleep(1)
-
-    # Return None if can't get page
     if not response:
         print("Json pbp for game {} is either not there or can't be obtained".format(game_id))
-        return None
+        return {}
+    else:
+        return json.loads(response)
 
-    return json.loads(response.text)
+
+def get_teams(pbp_json):
+    """
+    Get teams 
+
+    :param pbp_json: raw play by play json
+
+    :return: dict with home and away
+    """
+    return {'Home': shared.TEAMS[pbp_json['gameData']['teams']['home']['name'].upper()],
+            'Away': shared.TEAMS[pbp_json['gameData']['teams']['away']['name'].upper()]}
 
 
 def change_event_name(event):
     """
-    Change event names from json style to html
-    ex: BLOCKED_SHOT to BLOCK
+    Change event names from json style to html (ex: BLOCKED_SHOT to BLOCK). 
     
     :param event: event type
     
     :return: fixed event type
     """
-    event_types ={
+    event_types = {
         'PERIOD_START': 'PSTR',
         'FACEOFF': 'FAC',
         'BLOCKED_SHOT': 'BLOCK',
@@ -53,27 +66,14 @@ def change_event_name(event):
         'STOP': 'STOP',
         'TAKEAWAY': 'TAKE',
         'PENALTY': 'PENL',
-        'Early Intermission Start': 'EISTR',
-        'Early Intermission End': 'EIEND',
-        'Shootout Completed': 'SOC',
+        'EARLY_INT_START': 'EISTR',
+        'EARLY_INT_END': 'EIEND',
+        'SHOOTOUT_COMPLETE': 'SOC',
+        'CHALLENGE': 'CHL',
+        'EMERGENCY_GOALTENDER': 'EGPID'
     }
 
-    try:
-        return event_types[event]
-    except KeyError:
-        return event
-
-
-def get_teams(pbp_json):
-    """
-    Get teams 
-    
-    :param json: pbp json
-    
-    :return: dict with home and away
-    """
-    return {'Home': shared.TEAMS[pbp_json['gameData']['teams']['home']['name'].upper()],
-            'Away': shared.TEAMS[pbp_json['gameData']['teams']['away']['name'].upper()]}
+    return event_types.get(event, event)
 
 
 def parse_event(event):
@@ -86,6 +86,7 @@ def parse_event(event):
     """
     play = dict()
 
+    play['event_id'] = event['about']['eventIdx']
     play['period'] = event['about']['period']
     play['event'] = str(change_event_name(event['result']['eventTypeId']))
     play['seconds_elapsed'] = shared.convert_to_seconds(event['about']['periodTime'])
@@ -123,16 +124,20 @@ def parse_json(game_json, game_id):
     columns = ['period', 'event', 'seconds_elapsed', 'p1_name', 'p1_ID', 'p2_name', 'p2_ID', 'p3_name', 'p3_ID', 'xC', 'yC']
 
     # 'PERIOD READY' & 'PERIOD OFFICIAL'..etc aren't found in html...so get rid of them
-    events_to_ignore = ['PERIOD_READY', 'PERIOD_OFFICIAL', 'GAME_READY', 'GAME_OFFICIAL']
+    events_to_ignore = ['PERIOD_READY', 'PERIOD_OFFICIAL', 'GAME_READY', 'GAME_OFFICIAL', 'GAME_SCHEDULED']
 
     try:
-        plays = game_json['liveData']['plays']['allPlays'][2:]  # All the plays/events in a game
+        plays = game_json['liveData']['plays']['allPlays']
         events = [parse_event(play) for play in plays if play['result']['eventTypeId'] not in events_to_ignore]
     except Exception as e:
         print('Error parsing Json pbp for game {}'.format(game_id), e)
         return None
 
-    return pd.DataFrame(events, columns=columns)
+    # Sort by event id.
+    # Sometimes it's not in order of the assigned id in the json. Like, 156...155 (not sure how this happens).
+    sorted_events = sorted(events, key=itemgetter('event_id'))
+
+    return pd.DataFrame(sorted_events, columns=columns)
 
 
 def scrape_game(game_id):

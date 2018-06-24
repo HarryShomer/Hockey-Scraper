@@ -16,9 +16,15 @@ def get_roster(game_id):
     :return: raw html of game
     """
     game_id = str(game_id)
-    url = 'http://www.nhl.com/scores/htmlreports/{}{}/RO{}.HTM'.format(game_id[:4], int(game_id[:4]) + 1, game_id[4:])
 
-    return shared.get_url(url)
+    page_info = {
+        "url": 'http://www.nhl.com/scores/htmlreports/{}{}/RO{}.HTM'.format(game_id[:4], int(game_id[:4]) + 1, game_id[4:]),
+        "name": game_id,
+        "type": "html_roster",
+        "season": game_id[:4],
+    }
+
+    return shared.get_file(page_info)
 
 
 def get_content(roster):
@@ -30,7 +36,7 @@ def get_content(roster):
     
     :return: players and coaches
     """
-    soup = BeautifulSoup(roster.text, "lxml")
+    soup = BeautifulSoup(roster, "lxml")
     players = get_players(soup)
     head_coaches = get_coaches(soup)
 

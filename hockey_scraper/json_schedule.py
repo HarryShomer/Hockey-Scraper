@@ -18,12 +18,14 @@ def get_schedule(date_from, date_to):
     
     :return: raw json of schedule of date range
     """
-    url = 'https://statsapi.web.nhl.com/api/v1/schedule?startDate={a}&endDate={b}'.format(a=date_from, b=date_to)
+    page_info = {
+        "url": 'https://statsapi.web.nhl.com/api/v1/schedule?startDate={a}&endDate={b}'.format(a=date_from, b=date_to),
+        "name": date_from + "_" + date_to,
+        "type": "json_schedule",
+        "season": shared.get_season(date_from),
+    }
 
-    response = shared.get_url(url)
-    time.sleep(1)
-
-    return json.loads(response.text)
+    return json.loads(shared.get_file(page_info))
 
 
 def get_current_season():
@@ -68,7 +70,7 @@ def get_dates(games):
     else:
         date_to = '-'.join([str(int(year_to) + 1), '7', '1'])  # Newest game in sample
 
-    schedule = scrape_schedule(date_from, date_to)
+    schedule = scrape_schedule(date_from, date_to, preseason=True)
     games_list = []
 
     for game in schedule:
