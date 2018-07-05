@@ -8,4 +8,4 @@ v1.2.6
     using 'docs_dir' will make us check if a file was already scraped and saved before getting it from the source. It will
     also provide a location for us to save it if we don't have it yet. 'rescrape' only applies when a valid directory
     is provided with 'docs_dir'. Setting 'rescrape' equal to True will have us scrape the file from the source even if
-    it's saved and save this new one. 
+    it's saved and save this new one.

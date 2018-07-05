@@ -73,10 +73,8 @@ def check_data_format(data_format):
     :return: Boolean - True if good
     """
     if not data_format or data_format.lower() not in ['csv', 'pandas']:
-        print('{} is an unspecified data format. The two options are Csv and Pandas (Csv is default)\n'.format(data_format))
-        return False
-    else:
-        return True
+        raise shared.HaltException('{} is an unspecified data format. The two options are Csv and Pandas (Csv is defaul'
+                                   't)\n'.format(data_format))
 
 
 def check_valid_dates(from_date, to_date):
@@ -86,17 +84,14 @@ def check_valid_dates(from_date, to_date):
     :param from_date: date should scrape from
     :param to_date: date should scrape to
     
-    :return: Boolean - True if good
+    :return: None
     """
     try:
         if time.strptime(to_date, "%Y-%m-%d") < time.strptime(from_date, "%Y-%m-%d"):
-            print("Error: The second date input is earlier than the first one")
-            return False
+            raise shared.HaltException("Error: The second date input is earlier than the first one")
     except ValueError:
-        print("Error: Incorrect format given for dates. They must be given like 'yyyy-mm-dd' (ex: '2016-10-01').")
-        return False
-
-    return True
+        raise shared.HaltException("Error: Incorrect format given for dates. They must be given like 'yyyy-mm-dd' "
+                                   "(ex: '2016-10-01').")
 
 
 def to_csv(file_name, pbp_df, shifts_df):
@@ -172,8 +167,9 @@ def scrape_date_range(from_date, to_date, if_scrape_shifts, data_format='csv', p
     
     :return: Dictionary with DataFrames and errors or None
     """
-    if not (check_data_format(data_format) and check_valid_dates(from_date, to_date)):
-        exit()
+    # First check if the inputs are good
+    check_data_format(data_format)
+    check_valid_dates(from_date, to_date)
 
     # Check on the docs_dir and re_scrape
     shared.add_dir(docs_dir)
@@ -204,8 +200,8 @@ def scrape_seasons(seasons, if_scrape_shifts, data_format='csv', preseason=False
     
     :return: Dictionary with DataFrames and errors or None
     """
-    if not check_data_format(data_format):
-        exit()
+    # First check if the inputs are good
+    check_data_format(data_format)
 
     # Check on the docs_dir and re_scrape
     shared.add_dir(docs_dir)
@@ -247,8 +243,8 @@ def scrape_games(games, if_scrape_shifts, data_format='csv', rescrape=False, doc
     
     :return: Dictionary with DataFrames and errors or None
     """
-    if not check_data_format(data_format):
-        exit()
+    # First check if the inputs are good
+    check_data_format(data_format)
 
     # Check on the docs_dir and re_scrape
     shared.add_dir(docs_dir)

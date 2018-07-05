@@ -11,6 +11,10 @@ from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 import hockey_scraper.save_pages as sp
 
+
+# When we want to kill the current process
+class HaltException(Exception): pass
+
 # Directory where to save pages
 docs_dir = None
 
@@ -196,6 +200,14 @@ def scrape_page(url):
         page = response.text
     except (requests.exceptions.HTTPError, requests.exceptions.ConnectionError):
         page = None
+    except requests.exceptions.ReadTimeout:
+        # If it times out and it's the schedule print an error message...otherwise just make the page = None
+        if "schedule" in url:
+            raise HaltException("Timeout Error: The NHL API took too long to respond to our request. "
+                                "\nPlease Try Again (you may need to try a few times before it works). ")
+        else:
+            print("Timeout Error: The server took too long to respond to our request.")
+            page = None
 
     time.sleep(1)
 
@@ -217,8 +229,7 @@ def if_rescrape(user_rescrape):
     if isinstance(user_rescrape, bool):
         re_scrape = user_rescrape
     else:
-        print("Error: 'if_rescrape' must be a boolean. Not a {}".format(type(user_rescrape)))
-        exit()
+        raise HaltException("Error: 'if_rescrape' must be a boolean. Not a {}".format(type(user_rescrape)))
 
 
 def add_dir(user_dir):
