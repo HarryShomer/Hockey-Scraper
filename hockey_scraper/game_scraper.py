@@ -301,7 +301,7 @@ def scrape_game(game_id, date, if_scrape_shifts):
     This scrapes the info for the game.
     The pbp is automatically scraped, and the whether or not to scrape the shifts is left up to the user.
     
-    :param game_id: game to scrap
+    :param game_id: game to scrape
     :param date: ex: 2016-10-24
     :param if_scrape_shifts: Boolean indicating whether to also scrape shifts 
     

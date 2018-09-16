@@ -1,5 +1,7 @@
+.DS_Store
 .idea/
 .csv/
+.vscode/
 tests.py
 
 # Byte-compiled / optimized / DLL files
