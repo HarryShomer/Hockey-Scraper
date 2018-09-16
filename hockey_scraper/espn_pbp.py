@@ -32,9 +32,9 @@ def get_game_ids(response):
     
     :return: list of game_ids
     """
-    soup = BeautifulSoup(response, 'lxml')
+    soup = BeautifulSoup(response, 'xml')
 
-    divs = soup.findAll('div', {'class': "game-header"})
+    divs = soup.findAll('div', {'class': "game-header "})
     regex = re.compile(r'id="(\d+)')
     game_ids = [regex.findall(str(div))[0] for div in divs]
 
@@ -49,7 +49,7 @@ def get_teams(response):
     
     :return: list of teams    
     """
-    soup = BeautifulSoup(response, 'lxml')
+    soup = BeautifulSoup(response, 'xml')
 
     td = soup.findAll('td', {'class': "team"})
     teams = [shared.TEAMS[t.get_text().upper()] for t in td if t.get_text() != '']
