@@ -127,16 +127,16 @@ Names = {'n/a': 'n/a', 'ALEXANDER OVECHKIN': 'Alex Ovechkin', 'TOBY ENSTROM': 'T
          'JAMES HOWARD': 'JIMMY HOWARD', 'JEFF DROUIN-DESLAURIERS': 'JEFF DESLAURIERS', 'SIMEON VARLAMOV': 'SEMYON VARLAMOV',
          'ALEXANDER PECHURSKI': 'Alexander Pechurskiy', 'JEFFREY PENNER': 'JEFF PENNER', 'EMMANUEL FERNANDEZ': 'Manny FERNANDEZ',
          'ALEXANDER PETROVIC': 'ALEX PETROVIC', 'ZACHARY ASTON-REESE': 'ZACH ASTON-REESE', 'J-F BERUBE': 'JEAN-FRANCOIS BERUBE',
-         "DANNY O'REGAN": "DANIEL O'REGAN",
+         "DANNY O'REGAN": "DANIEL O'REGAN", "PATRICK MAROON": "PAT MAROON"
          }
 
 
 def fix_name(name):
     """
     Check if a name falls under those that need fixing. If it does...fix it.
-    
+
     :param name: name in pbp
-    
+
     :return: Either the given parameter or the fixed name
     """
     return Names.get(name, name).upper()
@@ -168,9 +168,9 @@ def get_season(date):
 def convert_to_seconds(minutes):
     """
     Return minutes elapsed in time format to seconds elapsed
-    
+
     :param minutes: time elapsed
-    
+
     :return: time elapsed in seconds
     """
     if minutes == '-16:0-':
@@ -185,9 +185,9 @@ def convert_to_seconds(minutes):
 def scrape_page(url):
     """
     Scrape a given url
-    
+
     :param url: url for page
-    
+
     :return: response object
     """
     response = requests.Session()
@@ -220,7 +220,7 @@ def if_rescrape(user_rescrape):
 
     Note: Only matters when you have a directory specified
 
-    :param user_rescrape: Boolean 
+    :param user_rescrape: Boolean
 
     :return: None
     """
@@ -234,8 +234,8 @@ def if_rescrape(user_rescrape):
 
 def add_dir(user_dir):
     """
-    Add directory to store scraped docs if valid. 
-    
+    Add directory to store scraped docs if valid.
+
     NOTE: After this functions docs_dir is either None or a valid directory
 
     :param user_dir: User provided directory on their machine
@@ -260,14 +260,14 @@ def add_dir(user_dir):
 
 def get_file(file_info):
     """
-    Get the specified file. 
-    
-    If a docs_dir is provided we check if it exists. If it does we see if it contains that page (and saves if it 
-    doesn't). If the docs_dir doesn't exist we just scrape from the source and not save. 
-    
-    :param file_info: Dictionary containing the info for the file. 
-                      Contains the url, name, type, and season 
-    
+    Get the specified file.
+
+    If a docs_dir is provided we check if it exists. If it does we see if it contains that page (and saves if it
+    doesn't). If the docs_dir doesn't exist we just scrape from the source and not save.
+
+    :param file_info: Dictionary containing the info for the file.
+                      Contains the url, name, type, and season
+
     :return: page
     """
     original_path = os.getcwd()
