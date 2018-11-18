@@ -6,7 +6,8 @@ Contents
 .. toctree::
    :maxdepth: 1
 
-   hockey_scraper
+   scrape_functions
+   live_scrape
    license_link
 
 

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>hockey_scraper &#8212; hockey_scraper 1.1 documentation</title>
+    <title>Scraping Functions &#8212; hockey_scraper 1.2.7 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '1.1',
+        VERSION:     '1.2.7',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="License" href="license_link.html" />
+    <link rel="next" title="Live Scraping" href="live_scrape.html" />
     <link rel="prev" title="Hockey-Scraper" href="index.html" /> 
   </head>
   <body role="document">
@@ -40,12 +40,12 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="license_link.html" title="License"
+          <a href="live_scrape.html" title="Live Scraping"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="index.html" title="Hockey-Scraper"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">hockey_scraper 1.1 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">hockey_scraper 1.2.7 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -54,9 +54,8 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="hockey-scraper">
-<h1>hockey_scraper<a class="headerlink" href="#hockey-scraper" title="Permalink to this headline">¶</a></h1>
-<p>The hockey_scraper module contains all of the functions used for scraping.</p>
+  <div class="section" id="scraping-functions">
+<h1>Scraping Functions<a class="headerlink" href="#scraping-functions" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="scraping">
 <h2>Scraping<a class="headerlink" href="#scraping" title="Permalink to this headline">¶</a></h2>
 <p>There are three ways to scrape games:</p>
@@ -65,15 +64,15 @@
 So you would refer to the 2016-2017 season as 2016).</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">hockey_scraper</span>
 
-<span class="c1"># Scrapes the 2015 &amp; 2016 season with shifts and stores the data in a Csv file (both are equivalent!!!)</span>
-<span class="n">hockey_scraper</span><span class="o">.</span><span class="n">scrape_seasons</span><span class="p">([</span><span class="mi">2015</span><span class="p">,</span> <span class="mi">2016</span><span class="p">],</span> <span class="kc">True</span><span class="p">)</span>
-<span class="n">hockey_scraper</span><span class="o">.</span><span class="n">scrape_seasons</span><span class="p">([</span><span class="mi">2015</span><span class="p">,</span> <span class="mi">2016</span><span class="p">],</span> <span class="kc">True</span><span class="p">,</span> <span class="n">data_format</span><span class="o">=</span><span class="s1">&#39;Csv&#39;</span><span class="p">)</span>
+ <span class="c1"># Scrapes the 2015 &amp; 2016 season with shifts and stores the data in a Csv file (both are equivalent!!!)</span>
+ <span class="n">hockey_scraper</span><span class="o">.</span><span class="n">scrape_seasons</span><span class="p">([</span><span class="mi">2015</span><span class="p">,</span> <span class="mi">2016</span><span class="p">],</span> <span class="kc">True</span><span class="p">)</span>
+ <span class="n">hockey_scraper</span><span class="o">.</span><span class="n">scrape_seasons</span><span class="p">([</span><span class="mi">2015</span><span class="p">,</span> <span class="mi">2016</span><span class="p">],</span> <span class="kc">True</span><span class="p">,</span> <span class="n">data_format</span><span class="o">=</span><span class="s1">&#39;Csv&#39;</span><span class="p">)</span>
 
-<span class="c1"># Scrapes the 2008 season without shifts and returns a dictionary with the DataFrame</span>
-<span class="n">scraped_data</span> <span class="o">=</span> <span class="n">hockey_scraper</span><span class="o">.</span><span class="n">scrape_seasons</span><span class="p">([</span><span class="mi">2008</span><span class="p">],</span> <span class="kc">False</span><span class="p">,</span> <span class="n">data_format</span><span class="o">=</span><span class="s1">&#39;Pandas&#39;</span><span class="p">)</span>
+ <span class="c1"># Scrapes the 2008 season without shifts and returns a dictionary with the DataFrame</span>
+ <span class="n">scraped_data</span> <span class="o">=</span> <span class="n">hockey_scraper</span><span class="o">.</span><span class="n">scrape_seasons</span><span class="p">([</span><span class="mi">2008</span><span class="p">],</span> <span class="kc">False</span><span class="p">,</span> <span class="n">data_format</span><span class="o">=</span><span class="s1">&#39;Pandas&#39;</span><span class="p">)</span>
 
-<span class="c1"># Scrapes 2014 season without shifts including preseason games</span>
-<span class="n">hockey_scraper</span><span class="o">.</span><span class="n">scrape_seasons</span><span class="p">([</span><span class="mi">2014</span><span class="p">],</span> <span class="kc">False</span><span class="p">,</span> <span class="n">preseason</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+ <span class="c1"># Scrapes 2014 season without shifts including preseason games</span>
+ <span class="n">hockey_scraper</span><span class="o">.</span><span class="n">scrape_seasons</span><span class="p">([</span><span class="mi">2014</span><span class="p">],</span> <span class="kc">False</span><span class="p">,</span> <span class="n">preseason</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>2. <em>Scrape by Game</em>:</p>
@@ -116,7 +115,7 @@ by setting the keyword argument rescrape equal to True.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">hockey_scraper</span>
 
 <span class="c1"># Path to the given directory</span>
-<span class="n">USER_PATH</span> <span class="o">=</span> <span class="o">/....</span>
+<span class="n">USER_PATH</span> <span class="o">=</span> <span class="s2">&quot;/....&quot;</span>
 
 <span class="c1"># Scrapes the 2015 &amp; 2016 season with shifts and stores the data in a Csv file</span>
 <span class="c1"># Also includes a path for an existing directory for the scraped files to be placed in or retrieved from.</span>
@@ -145,11 +144,8 @@ games are scraped at your own risk. There is no guarantee it will work or that t
 </div>
 <p>5. When including a directory, it must be a valid directory. It will not create it for you. You&#8217;ll get an error message
 but otherwise it will scrape as if no directory was provided.</p>
-</div>
-<div class="section" id="functions">
-<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="module-hockey_scraper.scrape_functions">
-<span id="scrape-functions"></span><span id="id1"></span><h3>Scrape Functions<a class="headerlink" href="#module-hockey_scraper.scrape_functions" title="Permalink to this headline">¶</a></h3>
+<span id="scrape-functions"></span><h3>Scrape Functions<a class="headerlink" href="#module-hockey_scraper.scrape_functions" title="Permalink to this headline">¶</a></h3>
 <p>Functions to scrape by season, games, and date range</p>
 <dl class="function">
 <dt id="hockey_scraper.scrape_functions.check_data_format">
@@ -182,7 +178,7 @@ It exits program with error message if input isn&#8217;t good.</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Boolean - True if good</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
 </td>
 </tr>
 </tbody>
@@ -502,7 +498,7 @@ The pbp is automatically scraped, and the whether or not to scrape the shifts is
 
 <dl class="function">
 <dt id="hockey_scraper.game_scraper.scrape_pbp">
-<code class="descclassname">hockey_scraper.game_scraper.</code><code class="descname">scrape_pbp</code><span class="sig-paren">(</span><em>game_id</em>, <em>date</em>, <em>roster</em>, <em>game_json</em>, <em>players</em>, <em>teams</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.game_scraper.scrape_pbp" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">hockey_scraper.game_scraper.</code><code class="descname">scrape_pbp</code><span class="sig-paren">(</span><em>game_id</em>, <em>date</em>, <em>roster</em>, <em>game_json</em>, <em>players</em>, <em>teams</em>, <em>espn_id=None</em>, <em>html_df=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.game_scraper.scrape_pbp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Automatically scrapes the json and html, if the json is empty the html picks up some of the slack and the espn
 xml is also scraped for coordinates.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -516,10 +512,38 @@ xml is also scraped for coordinates.</p>
 <li><strong>game_json</strong> &#8211; json pbp for game</li>
 <li><strong>players</strong> &#8211; dict of players</li>
 <li><strong>teams</strong> &#8211; dict of teams</li>
+<li><strong>espn_id</strong> &#8211; Game Id for the espn game. Only provided when live scraping</li>
+<li><strong>html_df</strong> &#8211; Can provide DataFrame for html. Only done for live-scraping</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">DataFrame with info or None if it fails</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hockey_scraper.game_scraper.scrape_pbp_live">
+<code class="descclassname">hockey_scraper.game_scraper.</code><code class="descname">scrape_pbp_live</code><span class="sig-paren">(</span><em>game_id</em>, <em>date</em>, <em>roster</em>, <em>game_json</em>, <em>players</em>, <em>teams</em>, <em>espn_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.game_scraper.scrape_pbp_live" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scrape the live pbp</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>game_id</strong> &#8211; json game id</li>
+<li><strong>date</strong> &#8211; date of game</li>
+<li><strong>roster</strong> &#8211; list of players in pre game roster</li>
+<li><strong>game_json</strong> &#8211; json pbp for game</li>
+<li><strong>players</strong> &#8211; dict of players</li>
+<li><strong>teams</strong> &#8211; dict of teams</li>
+<li><strong>espn_id</strong> &#8211; Game Id for the espn game. Only provided when live scraping</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Tuple - pbp &amp; status</p>
 </td>
 </tr>
 </tbody>
@@ -762,6 +786,22 @@ the zone only gets flipped when it&#8217;s a block. For away teams it&#8217;s th
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>html</strong> &#8211; the requested url</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a list with all the info</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hockey_scraper.html_pbp.cur_game_status">
+<code class="descclassname">hockey_scraper.html_pbp.</code><code class="descname">cur_game_status</code><span class="sig-paren">(</span><em>doc</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_pbp.cur_game_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the game status</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>doc</strong> &#8211; Html text</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">String -&gt; one of [&#8216;Final&#8217;, &#8216;Intermission&#8217;, &#8216;Progress&#8217;]</td>
 </tr>
 </tbody>
 </table>
@@ -1099,12 +1139,57 @@ Some also have a hyphen in their last name so can&#8217;t just split by &#8216;-
 <dl class="function">
 <dt id="hockey_scraper.html_pbp.scrape_game">
 <code class="descclassname">hockey_scraper.html_pbp.</code><code class="descname">scrape_game</code><span class="sig-paren">(</span><em>game_id</em>, <em>players</em>, <em>teams</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_pbp.scrape_game" title="Permalink to this definition">¶</a></dt>
-<dd><p>Scrape the data for the game</p>
+<dd><p>Scrape the data for the game when not live</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>game_id</strong> &#8211; game to scrape</li>
+<li><strong>players</strong> &#8211; dict with player info</li>
+<li><strong>teams</strong> &#8211; dict with home and away teams</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">DataFrame of game info or None if it fails</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hockey_scraper.html_pbp.scrape_game_live">
+<code class="descclassname">hockey_scraper.html_pbp.</code><code class="descname">scrape_game_live</code><span class="sig-paren">(</span><em>game_id</em>, <em>players</em>, <em>teams</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_pbp.scrape_game_live" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scrape the data for the game when it&#8217;s live</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>game_id</strong> &#8211; game to scrape</li>
+<li><strong>players</strong> &#8211; dict with player info</li>
+<li><strong>teams</strong> &#8211; dict with home and away teams</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Tuple - get_pbp(), cur_game_status()</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hockey_scraper.html_pbp.scrape_pbp">
+<code class="descclassname">hockey_scraper.html_pbp.</code><code class="descname">scrape_pbp</code><span class="sig-paren">(</span><em>game_html</em>, <em>game_id</em>, <em>players</em>, <em>teams</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_pbp.scrape_pbp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scrape the data for the pbp</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>game_html</strong> &#8211; Html doc for the game</li>
 <li><strong>game_id</strong> &#8211; game to scrape</li>
 <li><strong>players</strong> &#8211; dict with player info</li>
 <li><strong>teams</strong> &#8211; dict with home and away teams</li>
@@ -1179,7 +1264,7 @@ Ex: <a class="reference external" href="http://statsapi.web.nhl.com/api/v1/game/
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>game_id</strong> &#8211; the game</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>game_id</strong> &#8211; string - the game</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">raw json of game or None if couldn&#8217;t get game</td>
 </tr>
@@ -1294,7 +1379,7 @@ Ex: <a class="reference external" href="http://statsapi.web.nhl.com/api/v1/game/
 
 <dl class="function">
 <dt id="hockey_scraper.espn_pbp.get_espn_game">
-<code class="descclassname">hockey_scraper.espn_pbp.</code><code class="descname">get_espn_game</code><span class="sig-paren">(</span><em>date</em>, <em>home_team</em>, <em>away_team</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.espn_pbp.get_espn_game" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">hockey_scraper.espn_pbp.</code><code class="descname">get_espn_game</code><span class="sig-paren">(</span><em>date</em>, <em>home_team</em>, <em>away_team</em>, <em>game_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.espn_pbp.get_espn_game" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the ESPN pbp feed 
 Ex: <a class="reference external" href="http://www.espn.com/nhl/gamecast/data/masterFeed?lang=en&amp;isAll=true&amp;gameId=400885300">http://www.espn.com/nhl/gamecast/data/masterFeed?lang=en&amp;isAll=true&amp;gameId=400885300</a></p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1305,6 +1390,7 @@ Ex: <a class="reference external" href="http://www.espn.com/nhl/gamecast/data/ma
 <li><strong>date</strong> &#8211; date of the game</li>
 <li><strong>home_team</strong> &#8211; home team</li>
 <li><strong>away_team</strong> &#8211; away team</li>
+<li><strong>game_id</strong> &#8211; Game id of we already have it - for live scraping. None if not there</li>
 </ul>
 </td>
 </tr>
@@ -1405,7 +1491,7 @@ Relevant for here: The first two are the x and y coordinates. And the 4th and 5t
 
 <dl class="function">
 <dt id="hockey_scraper.espn_pbp.scrape_game">
-<code class="descclassname">hockey_scraper.espn_pbp.</code><code class="descname">scrape_game</code><span class="sig-paren">(</span><em>date</em>, <em>home_team</em>, <em>away_team</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.espn_pbp.scrape_game" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">hockey_scraper.espn_pbp.</code><code class="descname">scrape_game</code><span class="sig-paren">(</span><em>date</em>, <em>home_team</em>, <em>away_team</em>, <em>game_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.espn_pbp.scrape_game" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape the game</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1415,6 +1501,7 @@ Relevant for here: The first two are the x and y coordinates. And the 4th and 5t
 <li><strong>date</strong> &#8211; ex: 2016-20-24</li>
 <li><strong>home_team</strong> &#8211; tricode</li>
 <li><strong>away_team</strong> &#8211; tricode</li>
+<li><strong>game_id</strong> &#8211; Only provided for live games.</li>
 </ul>
 </td>
 </tr>
@@ -1696,8 +1783,8 @@ Ex: <a class="reference external" href="https://statsapi.web.nhl.com/api/v1/sche
 
 <dl class="function">
 <dt id="hockey_scraper.json_schedule.scrape_schedule">
-<code class="descclassname">hockey_scraper.json_schedule.</code><code class="descname">scrape_schedule</code><span class="sig-paren">(</span><em>date_from</em>, <em>date_to</em>, <em>preseason=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.json_schedule.scrape_schedule" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calls getSchedule and scrapes the raw schedule JSON</p>
+<code class="descclassname">hockey_scraper.json_schedule.</code><code class="descname">scrape_schedule</code><span class="sig-paren">(</span><em>date_from</em>, <em>date_to</em>, <em>preseason=False</em>, <em>live=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.json_schedule.scrape_schedule" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calls getSchedule and scrapes the raw schedule Json</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1706,6 +1793,8 @@ Ex: <a class="reference external" href="https://statsapi.web.nhl.com/api/v1/sche
 <li><strong>date_from</strong> &#8211; scrape from this date</li>
 <li><strong>date_to</strong> &#8211; scrape until this date</li>
 <li><strong>preseason</strong> &#8211; Boolean indicating whether include preseason games (default if False)</li>
+<li><strong>live</strong> &#8211; Boolean indicating whether we are scraping live games. Means we relax the requirement of checking if 
+the game is over.</li>
 </ul>
 </td>
 </tr>
@@ -1974,13 +2063,13 @@ we want to deposit any data in.</li>
 <dt id="hockey_scraper.shared.get_file">
 <code class="descclassname">hockey_scraper.shared.</code><code class="descname">get_file</code><span class="sig-paren">(</span><em>file_info</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.shared.get_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the specified file.</p>
-<p>If a docs_dir is provided we check if it exists. If it does we see if it contains that page (and saves if it 
+<p>If a docs_dir is provided we check if it exists. If it does we see if it contains that page (and saves if it
 doesn&#8217;t). If the docs_dir doesn&#8217;t exist we just scrape from the source and not save.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file_info</strong> &#8211; Dictionary containing the info for the file. 
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file_info</strong> &#8211; Dictionary containing the info for the file.
 Contains the url, name, type, and season</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">page</td>
@@ -2006,6 +2095,12 @@ Contains the url, name, type, and season</td>
 </dd></dl>
 
 <dl class="function">
+<dt id="hockey_scraper.shared.get_team">
+<code class="descclassname">hockey_scraper.shared.</code><code class="descname">get_team</code><span class="sig-paren">(</span><em>team</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.shared.get_team" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the fucking team</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="hockey_scraper.shared.if_rescrape">
 <code class="descclassname">hockey_scraper.shared.</code><code class="descname">if_rescrape</code><span class="sig-paren">(</span><em>user_rescrape</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.shared.if_rescrape" title="Permalink to this definition">¶</a></dt>
 <dd><p>If you want to re_scrape. If someone is a dumbass and feeds it a non-boolean it terminates the program</p>
@@ -2020,6 +2115,12 @@ Contains the url, name, type, and season</td>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hockey_scraper.shared.print_warning">
+<code class="descclassname">hockey_scraper.shared.</code><code class="descname">print_warning</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.shared.print_warning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print the Warning</p>
 </dd></dl>
 
 <dl class="function">
@@ -2050,9 +2151,8 @@ Contains the url, name, type, and season</td>
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">hockey_scraper</a><ul>
-<li><a class="reference internal" href="#scraping">Scraping</a></li>
-<li><a class="reference internal" href="#functions">Functions</a><ul>
+<li><a class="reference internal" href="#">Scraping Functions</a><ul>
+<li><a class="reference internal" href="#scraping">Scraping</a><ul>
 <li><a class="reference internal" href="#module-hockey_scraper.scrape_functions">Scrape Functions</a></li>
 <li><a class="reference internal" href="#module-hockey_scraper.game_scraper">Game Scraper</a></li>
 <li><a class="reference internal" href="#module-hockey_scraper.html_pbp">Html PBP</a></li>
@@ -2074,12 +2174,12 @@ Contains the url, name, type, and season</td>
   <p class="topless"><a href="index.html"
                         title="previous chapter">Hockey-Scraper</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="license_link.html"
-                        title="next chapter">License</a></p>
+  <p class="topless"><a href="live_scrape.html"
+                        title="next chapter">Live Scraping</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/hockey_scraper.rst.txt"
+      <li><a href="_sources/scrape_functions.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -2107,16 +2207,16 @@ Contains the url, name, type, and season</td>
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="license_link.html" title="License"
+          <a href="live_scrape.html" title="Live Scraping"
              >next</a> |</li>
         <li class="right" >
           <a href="index.html" title="Hockey-Scraper"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">hockey_scraper 1.1 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">hockey_scraper 1.2.7 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2017, Harry Shomer.
+        &#169; Copyright 2018, Harry Shomer.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
     </div>
   </body>

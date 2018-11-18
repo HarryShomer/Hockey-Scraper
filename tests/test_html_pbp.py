@@ -151,9 +151,3 @@ def test_strip_html_pbp():
 def test_clean_html_pbp():
     """ Get rid of html and format the data """
     pass
-
-
-
-
-
-

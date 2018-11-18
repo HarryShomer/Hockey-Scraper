@@ -8,6 +8,30 @@ import re
 import hockey_scraper.shared as shared
 
 
+def cur_game_status(doc):
+    """
+    Return the game status
+    
+    :param doc: Html text
+    
+    :return: String -> one of ['Final', 'Intermission', 'Progress']
+    """
+    soup = BeautifulSoup(doc, "lxml")
+    tables = soup.find_all('table', {'id': "GameInfo"})
+    tds = tables[0].find_all('td')
+    status = tds[-1].text
+
+    # 'End' - in there means an Intermission
+    # 'Final' - Game is over
+    # Otherwise - It's either in progress or b4 the game started
+    if 'end' in status.lower():
+        return 'Intermission'
+    elif 'final' in status.lower():
+        return 'Final'
+    else:
+        return 'Live'
+
+
 def get_pbp(game_id):
     """
     Given a game_id it returns the raw html
@@ -760,9 +784,52 @@ def parse_html(html, players, teams):
     return df
 
 
+def scrape_pbp(game_html, game_id, players, teams):
+    """
+    Scrape the data for the pbp
+
+    :param game_html: Html doc for the game
+    :param game_id: game to scrape
+    :param players: dict with player info
+    :param teams: dict with home and away teams
+
+    :return: DataFrame of game info or None if it fails
+    """
+    if not game_html:
+        shared.print_warning("Html pbp for game {} is either not there or can't be obtained".format(game_id))
+        return None
+
+    cleaned_html = clean_html_pbp(game_html)
+    if len(cleaned_html) == 0:
+        shared.print_warning("Html pbp contains no plays, this game can't be scraped")
+        return None
+
+    try:
+        game_df = parse_html(cleaned_html, players, teams)
+    except Exception as e:
+        shared.print_warning('Error parsing Html pbp for game {} {}'.format(game_id, e))
+        return None
+
+    return game_df
+
+
+def scrape_game_live(game_id, players, teams):
+    """
+    Scrape the data for the game when it's live
+    
+    :param game_id: game to scrape
+    :param players: dict with player info
+    :param teams: dict with home and away teams
+    
+    :return: Tuple - get_pbp(), cur_game_status()
+    """
+    game_html = get_pbp(game_id)
+    return scrape_pbp(game_html, game_id, players, teams), cur_game_status(game_html)
+
+
 def scrape_game(game_id, players, teams):
     """ 
-    Scrape the data for the game
+    Scrape the data for the game when not live
     
     :param game_id: game to scrape
     :param players: dict with player info
@@ -771,23 +838,8 @@ def scrape_game(game_id, players, teams):
     :return: DataFrame of game info or None if it fails
     """
     game_html = get_pbp(game_id)
+    return scrape_pbp(game_html, game_id, players, teams)
 
-    if not game_html:
-        print("Html pbp for game {} is either not there or can't be obtained".format(game_id))
-        return None
 
-    cleaned_html = clean_html_pbp(game_html)
-
-    if len(cleaned_html) == 0:
-        print("Html pbp contains no plays, this game can't be scraped")
-        return None
-
-    try:
-        game_df = parse_html(cleaned_html, players, teams)
-    except Exception as e:
-        print('Error parsing Html pbp for game {}'.format(game_id), e)
-        return None
-
-    return game_df
 
 

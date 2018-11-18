@@ -100,7 +100,7 @@ def analyze_shifts(shift, name, team, home_team, player_ids):
 
     shifts['Player'] = name.upper()
     shifts['Period'] = '4' if shift[1] == 'OT' else shift[1]
-    shifts['Team'] = shared.TEAMS[team.strip(' ')]
+    shifts['Team'] = shared.get_team(team.strip(' '))
     shifts['Start'] = shared.convert_to_seconds(shift[2].split('/')[0])
     shifts['Duration'] = shared.convert_to_seconds(shift[4].split('/')[0])
 
@@ -185,14 +185,14 @@ def scrape_game(game_id, players):
     home_html, away_html = get_shifts(game_id)
 
     if home_html is None or away_html is None:
-        print("Html shifts for game {} is either not there or can't be obtained".format(game_id))
+        shared.print_warning("Html shifts for game {} is either not there or can't be obtained".format(game_id))
         return None
 
     try:
         away_df = parse_html(away_html, players, game_id)
         home_df = parse_html(home_html, players, game_id)
     except Exception as e:
-        print('Error parsing Html shifts for game {}'.format(game_id), e)
+        shared.print_warning('Error parsing Html shifts for game {} {}'.format(game_id, e))
         return None
 
     # Combine the two
@@ -203,6 +203,3 @@ def scrape_game(game_id, players):
     game_df = game_df.reset_index(drop=True)
 
     return game_df
-
-
-

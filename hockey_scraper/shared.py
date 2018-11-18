@@ -6,6 +6,7 @@ This file is a bunch of the shared functions or just general stuff used by the d
 
 import os
 import time
+import warnings
 import requests
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
@@ -14,6 +15,10 @@ import hockey_scraper.save_pages as sp
 
 # When we want to kill the current process
 class HaltException(Exception): pass
+
+# Own warning...gets rid of junk when printing
+def custom_formatwarning(msg, *args, **kwargs): return "Warning: " + str(msg) + '\n'
+warnings.formatwarning = custom_formatwarning
 
 # Directory where to save pages
 docs_dir = None
@@ -31,7 +36,8 @@ TEAMS = {
     'NASHVILLE PREDATORS': 'NSH', 'NEW YORK ISLANDERS': 'NYI', 'NEW YORK RANGERS': 'NYR', 'OTTAWA SENATORS': 'OTT',
     'PHILADELPHIA FLYERS': 'PHI', 'PHOENIX COYOTES': 'PHX', 'PITTSBURGH PENGUINS': 'PIT', 'SAN JOSE SHARKS': 'S.J',
     'ST. LOUIS BLUES': 'STL', 'TAMPA BAY LIGHTNING': 'T.B', 'TORONTO MAPLE LEAFS': 'TOR', 'VANCOUVER CANUCKS': 'VAN',
-    'VEGAS GOLDEN KNIGHTS': 'VGK', 'WINNIPEG JETS': 'WPG', 'WASHINGTON CAPITALS': 'WSH'
+    'VEGAS GOLDEN KNIGHTS': 'VGK', 'WINNIPEG JETS': 'WPG', 'WASHINGTON CAPITALS': 'WSH', 'BERN SC BERN': 'BSB',
+    'KOLN HAIE': "KHI"
 }
 
 
@@ -142,6 +148,13 @@ def fix_name(name):
     return Names.get(name, name).upper()
 
 
+def get_team(team):
+    """
+    Get the fucking team
+    """
+    return TEAMS.get(team, team).upper()
+
+
 def get_season(date):
     """
     Get Season based on from_date
@@ -206,12 +219,17 @@ def scrape_page(url):
             raise HaltException("Timeout Error: The NHL API took too long to respond to our request. "
                                 "\nPlease Try Again (you may need to try a few times before it works). ")
         else:
-            print("Timeout Error: The server took too long to respond to our request.")
+            print_warning("Timeout Error: The server took too long to respond to our request.")
             page = None
 
     time.sleep(1)
 
     return page
+
+
+def print_warning(msg):
+    """Print the Warning"""
+    warnings.warn(msg)
 
 
 def if_rescrape(user_rescrape):
@@ -252,7 +270,7 @@ def add_dir(user_dir):
         docs_dir = user_dir
     else:
         docs_dir = None
-        print("The directory specified for the saving of scraped docs doesn't exist. Therefore:"
+        print_warning("The directory specified for the saving of scraped docs doesn't exist. Therefore:"
               "\n1. All specified games will be scraped from their appropriate sources (NHL or ESPN)."
               "\n2. All scraped files will NOT be saved at all. Please either create the directory you want them to be "
               "deposited in or recheck the directory you typed in and start again.\n")
@@ -288,5 +306,3 @@ def get_file(file_info):
     os.chdir(original_path)
 
     return page
-
-

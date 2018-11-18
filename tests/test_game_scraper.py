@@ -107,4 +107,3 @@ def test_combine_players_lists(players):
     roster = playing_roster.scrape_roster(game_id)['players']
 
     assert players == game_scraper.combine_players_lists(json_players, roster, game_id)
-

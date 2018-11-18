@@ -1,7 +1,5 @@
-hockey_scraper
-==============
-
-The hockey_scraper module contains all of the functions used for scraping.
+Scraping Functions
+==================
 
 Scraping
 --------
@@ -14,7 +12,7 @@ Scrape games on a season by season level (Note: A given season is referred to by
 So you would refer to the 2016-2017 season as 2016).
 ::
 
-    import hockey_scraper
+   import hockey_scraper
 
     # Scrapes the 2015 & 2016 season with shifts and stores the data in a Csv file (both are equivalent!!!)
     hockey_scraper.scrape_seasons([2015, 2016], True)
@@ -77,7 +75,7 @@ by setting the keyword argument rescrape equal to True.
     import hockey_scraper
 
     # Path to the given directory
-    USER_PATH = /....
+    USER_PATH = "/...."
 
     # Scrapes the 2015 & 2016 season with shifts and stores the data in a Csv file
     # Also includes a path for an existing directory for the scraped files to be placed in or retrieved from.
@@ -113,10 +111,6 @@ games are scraped at your own risk. There is no guarantee it will work or that t
 but otherwise it will scrape as if no directory was provided.
 
 
-
-Functions
----------
-.. _Functions:
 
 Scrape Functions
 ~~~~~~~~~~~~~~~~

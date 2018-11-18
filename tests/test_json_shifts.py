@@ -39,6 +39,3 @@ def test_parse_shift():
                     'End': 252.0, 'Duration': 46.0}
 
     assert json_shifts.parse_shift(shift) == parsed_shift
-
-
-

@@ -70,23 +70,26 @@ def get_dates(games):
     else:
         date_to = '-'.join([str(int(year_to) + 1), '7', '1'])  # Newest game in sample
 
-    schedule = scrape_schedule(date_from, date_to, preseason=True)
+    # TODO: Assume true is live here -> Workaround
+    schedule = scrape_schedule(date_from, date_to, preseason=True, live=True)
     games_list = []
 
     for game in schedule:
-        if game[0] in games:
+        if game['game_id'] in games:
             games_list.extend([game])
 
     return games_list
 
 
-def scrape_schedule(date_from, date_to, preseason=False):
+def scrape_schedule(date_from, date_to, preseason=False, live=False):
     """
-    Calls getSchedule and scrapes the raw schedule JSON
+    Calls getSchedule and scrapes the raw schedule Json
     
     :param date_from: scrape from this date
     :param date_to: scrape until this date
     :param preseason: Boolean indicating whether include preseason games (default if False)
+    :param live: Boolean indicating whether we are scraping live games. Means we relax the requirement of checking if 
+                 the game is over. 
     
     :return: list with all the game id's
     """
@@ -95,9 +98,14 @@ def scrape_schedule(date_from, date_to, preseason=False):
 
     for day in schedule_json['dates']:
         for game in day['games']:
-            if game['status']['detailedState'] == 'Final':
-                if int(str(game['gamePk'])[5:]) >= 20000 or preseason:
-                    schedule.append([game['gamePk'], day['date']])
+            if game['status']['detailedState'] == 'Final' or live:
+                game_id = int(str(game['gamePk'])[5:])
+                if (game_id >= 20000 or preseason) and game_id < 40000:
+                    game_time = datetime.datetime.strptime(game['gameDate'][:-1], "%Y-%m-%dT%H:%M:%S")
+                    schedule.append({"game_id": game['gamePk'], "date": day['date'], "start_time": game_time,
+                                     "home_team": shared.get_team(game['teams']['home']['team']['name'].upper()),
+                                     "away_team": shared.get_team(game['teams']['away']['team']['name'].upper()),
+                                     "status": game["status"]["abstractGameState"]
+                                     })
 
     return schedule
-

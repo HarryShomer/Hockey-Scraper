@@ -1,0 +1,642 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Live Scraping &#8212; hockey_scraper 1.2.7 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.2.7',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="License" href="license_link.html" />
+    <link rel="prev" title="Scraping Functions" href="scrape_functions.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="license_link.html" title="License"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="scrape_functions.html" title="Scraping Functions"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">hockey_scraper 1.2.7 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="live-scraping">
+<h1>Live Scraping<a class="headerlink" href="#live-scraping" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="standard-usage">
+<h2>Standard Usage<a class="headerlink" href="#standard-usage" title="Permalink to this headline">¶</a></h2>
+<p>To get all the info for every game on a specific day we create a ScrapeLiveGames object.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">hockey_scraper</span> <span class="k">as</span> <span class="nn">hs</span>
+
+<span class="n">todays_games</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">ScrapeLiveGames</span><span class="p">(</span><span class="s2">&quot;2018-11-15&quot;</span><span class="p">,</span> <span class="n">if_scrape_shifts</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">pause</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Once created this object will contain an attribute called &#8216;live_games&#8217; that holds a list of LiveGame objects for that
+day. LiveGame objects hold all the pertinent game information for each game. This includes the most recent
+pbp and shift data for that game. Here are all the attributes for the LiveGame class:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">LiveGame</span><span class="p">:</span>
+ <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd"> This is a class holds all the information for a given game</span>
+
+<span class="sd"> :param int game_id: The NHL game id (ex: 2018020001)</span>
+<span class="sd"> :param datetime start_time: The UTC time of when the game begins</span>
+<span class="sd"> :param str home_team: Tricode for the home team (ex: NYR)</span>
+<span class="sd"> :param str away_team: Tricode for the home team (ex: MTL)</span>
+<span class="sd"> :param int espn_id: The ESPN game id for their feed</span>
+<span class="sd"> :param str date: Date of the game (ex: 2018-10-30)</span>
+<span class="sd"> :param bool if_scrape_shifts: Whether or not you want to scrape shifts</span>
+<span class="sd"> :param str api_game_status: Current Status of the game - [&quot;Final&quot;, &quot;Live&quot;, &quot;Intermission]</span>
+<span class="sd"> :param str html_game_status: Current Status of the game - [&quot;Final&quot;, &quot;Live&quot;, &quot;Intermission&quot;]</span>
+<span class="sd"> :param int intermission_time_remaining: Time remaining in the intermission. 0 if not in intermission</span>
+<span class="sd"> :param dict players: Player info for both teams</span>
+<span class="sd"> :param dict head_coaches: Head coaches for both teams</span>
+<span class="sd"> :param DataFrame pbp_df: Holds most recent pbp data</span>
+<span class="sd"> :param DataFrame shifts_df: Holds most recent shift data</span>
+<span class="sd"> :param DataFrame prev_pbp_df: Holds the previous pbp data (for just in case)</span>
+<span class="sd"> :param DataFrame prev_shifts_df: Holds the previous shift data (for just in case)</span>
+<span class="sd"> &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Here&#8217;s a simple example of scraping the games continuously for a single date. This will run until every game is finished:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">hockey_scraper</span> <span class="k">as</span> <span class="nn">hs</span>
+
+
+<span class="k">def</span> <span class="nf">to_csv</span><span class="p">(</span><span class="n">game</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Store each game DataFrame in a file</span>
+
+<span class="sd">    :param game: LiveGame object</span>
+
+<span class="sd">    :return: None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># If the game:</span>
+    <span class="c1"># 1. Started - We recorded at least one event</span>
+    <span class="c1"># 2. Not in Intermission</span>
+    <span class="c1"># 3. Not Over</span>
+    <span class="k">if</span> <span class="n">game</span><span class="o">.</span><span class="n">is_ongoing</span><span class="p">():</span>
+        <span class="c1"># Get both DataFrames</span>
+        <span class="n">pbp_df</span> <span class="o">=</span> <span class="n">game</span><span class="o">.</span><span class="n">get_pbp</span><span class="p">()</span>
+        <span class="n">shifts_df</span> <span class="o">=</span> <span class="n">game</span><span class="o">.</span><span class="n">get_shifts</span><span class="p">()</span>
+
+        <span class="c1"># Print the description of the last event</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">game</span><span class="o">.</span><span class="n">game_id</span><span class="p">,</span> <span class="s2">&quot;-&gt;&quot;</span><span class="p">,</span> <span class="n">pbp_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;Description&#39;</span><span class="p">])</span>
+
+        <span class="c1"># Store in CSV files</span>
+        <span class="n">pbp_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;../hockey_scraper_data/</span><span class="si">{game.game_id}</span><span class="s2">_pbp.csv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+        <span class="n">shifts_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;../hockey_scraper_data/</span><span class="si">{game.game_id}</span><span class="s2">_shifts.csv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c1"># B4 we start set the directory to store the files</span>
+    <span class="n">hs</span><span class="o">.</span><span class="n">live_scrape</span><span class="o">.</span><span class="n">set_docs_dir</span><span class="p">(</span><span class="s2">&quot;../hockey_scraper_data&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Scrape the info for all the games on 2018-11-15</span>
+    <span class="n">games</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">ScrapeLiveGames</span><span class="p">(</span><span class="s2">&quot;2018-11-15&quot;</span><span class="p">,</span> <span class="n">if_scrape_shifts</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">pause</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+
+    <span class="c1"># While all the games aren&#39;t finished</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">games</span><span class="o">.</span><span class="n">finished</span><span class="p">():</span>
+        <span class="c1"># Update for all the games currently being played</span>
+        <span class="n">games</span><span class="o">.</span><span class="n">update_live_games</span><span class="p">(</span><span class="n">sleep_next</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># Go through every LiveGame object and apply some function</span>
+        <span class="c1"># You can of course do whatever you want here.</span>
+        <span class="k">for</span> <span class="n">game</span> <span class="ow">in</span> <span class="n">games</span><span class="o">.</span><span class="n">live_games</span><span class="p">:</span>
+            <span class="n">to_csv</span><span class="p">(</span><span class="n">game</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In the above example, we set a directory to store the most recent version of every scraped file. We then grab the
+initial game info for each game for that day. We decide we want to include shifts and to pause 15 seconds after updating
+all the games. We then enter a loop that will be terminated once every game is finished. Once in the loop we first
+scrape the new info for every game and then pause for the specified time (default is 15).</p>
+<p>Once we process the new data we then, presumably, want to do something with it. Here, I decided to merely print the last
+event in the game and store the newer data in files. We do this by iterating through each LiveGame object in the &#8216;live_games&#8217;
+attribute and calling the function &#8216;to_csv&#8217;. In &#8216;to_csv&#8217;, before doing anything we check if the game is &#8216;ongoing&#8217;.
+This checks whether the game is either over or in intermission. If it is there isn&#8217;t a whole lot to update. If it&#8217;s
+neither we print the last event and then store the data for both the pbp &amp; shifts.</p>
+<p>Another option we have is for the program to sleep until the first game starts. Unless you want to start this yourself
+everyday, you&#8217;ll probably be scheduling it to start at some time every day. This means from when you start the program
+to when the first game starts may be a significant amount of time (fwiw, it will just loop and not scrape anything). But
+you can set it to sleep until the first game is scheduled to start. This can be done by setting the keyword &#8216;sleep_next&#8217;
+to True. This check to see if the only games left are scheduled games yet to start. If so it sleeps until the next
+earliest game starts.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Causes the program to sleep until the first game starts</span>
+<span class="n">games</span><span class="o">.</span><span class="n">update_live_games</span><span class="p">(</span><span class="n">sleep_next</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can also specify which games you want to scrape for that day (maybe you only care about one game), by setting the
+keyword &#8216;game_ids&#8217; equal to a list of NHL Game ID&#8217;s of the games you want when instantiating a ScrapeLiveGame object. You
+can of course to choose to filter it however you want as the list of LiveGame objects is a attribute of the object. Either
+way I strongly suggest creating a ScrapeLiveGames object and then either extracting the game you want or filtering it
+rather than instantiating a LiveGame object (you will be on the hook for a lot of information)</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Only want those those two games.</span>
+<span class="n">games</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">ScrapeLiveGames</span><span class="p">(</span><span class="s2">&quot;2018-11-15&quot;</span><span class="p">,</span> <span class="n">if_scrape_shifts</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">pause</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">game_ids</span><span class="o">=</span><span class="p">[</span><span class="mi">2018020280</span><span class="p">,</span> <span class="mi">2018020281</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="further-usage">
+<h2>Further Usage<a class="headerlink" href="#further-usage" title="Permalink to this headline">¶</a></h2>
+<p>If you would like more control over what you are doing then you should be dealing directly with LiveGame objects. As
+mentioned previously, still use ScrapeLiveGames to get the game info but you can then just extract the list of games
+and do as you please.</p>
+<p>Using the previous example here we are scraping each game individually:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Scrape the info for all the games on 2018-11-15</span>
+<span class="n">games</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">ScrapeLiveGames</span><span class="p">(</span><span class="s2">&quot;2018-11-15&quot;</span><span class="p">,</span> <span class="n">if_scrape_shifts</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">pause</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+
+<span class="k">while</span> <span class="ow">not</span> <span class="n">games</span><span class="o">.</span><span class="n">finished</span><span class="p">():</span>
+    <span class="c1"># Go through every LiveGame object</span>
+    <span class="k">for</span> <span class="n">game</span> <span class="ow">in</span> <span class="n">games</span><span class="o">.</span><span class="n">live_games</span><span class="p">:</span>
+        <span class="c1"># Scrape each game individually</span>
+        <span class="n">game</span><span class="o">.</span><span class="n">scrape</span><span class="p">()</span>
+
+        <span class="c1"># Apply some function to every game</span>
+        <span class="n">to_csv</span><span class="p">(</span><span class="n">game</span><span class="p">)</span>
+
+    <span class="c1"># Pause after each scraping chunk</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you don&#8217;t trust when I choose to not scrape (when the game is over or in intermission), you can make the keyword
+&#8216;force&#8217; equal to True. This will re-scrape it as long as the game already started.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">game</span><span class="o">.</span><span class="n">scrape</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This will override everything and will attempt to scrape the game no matter what. This means you are have to be on top
+of when to stop scraping the game. You are also on the hook for any potential errors.</p>
+<p>You may also want to handle things like the start time of games yourself. As mentioned using ScrapeLiveGames we can
+set &#8216;sleep_next&#8217; equal to True to sleep until the next game starts if no game is going on. You can also use the keyword
+&#8216;start_time&#8217; for a LiveGame object that will give you a datetime object with the scheduled starting time for a given
+game in UTC time. Lastly, you can also use the function &#8216;time_until_game()&#8217; that will return how many seconds until the
+game starts.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">games</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">ScrapeLiveGames</span><span class="p">(</span><span class="s2">&quot;2018-11-09&quot;</span><span class="p">,</span> <span class="n">if_scrape_shifts</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">pause</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">games</span><span class="o">.</span><span class="n">live_games</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">start_time</span>
+<span class="go">datetime.datetime(2018, 11, 10, 0, 0)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">games</span><span class="o">.</span><span class="n">live_games</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">time_until_game</span><span class="p">()</span>
+<span class="go">64599</span>
+</pre></div>
+</div>
+<p>You can use this how you please. For example, you may want to create a separate thread for each game and have it sleep
+until the game starts. Or maybe you want to use it another way. Either way it&#8217;s there.</p>
+<p>There are also a few methods that return the give information about the current status of the game. The first two return
+whether the game is in intermission or whether it&#8217;s over.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">is_game_over</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prev</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check if the game is over for both the html and json pbp</span>
+
+<span class="sd">    :param prev: Check the game status for the previous event</span>
+
+<span class="sd">    :return: Boolean - True if over</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">prev</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">html_game_status</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">api_game_status</span> <span class="o">==</span> <span class="s2">&quot;Final&quot;</span> <span class="k">else</span> <span class="kc">False</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">prev_html_game_status</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">prev_api_game_status</span> <span class="o">==</span> <span class="s2">&quot;Final&quot;</span> <span class="k">else</span> <span class="kc">False</span>
+
+<span class="k">def</span> <span class="nf">is_intermission</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prev</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check if in intermission for both the html and json pbp</span>
+
+<span class="sd">    :param prev: Check the game status for the previous event</span>
+
+<span class="sd">    :return: Boolean - True if yes</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">prev</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">html_game_status</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">api_game_status</span> <span class="o">==</span> <span class="s2">&quot;Intermission&quot;</span> <span class="k">else</span> <span class="kc">False</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">prev_html_game_status</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">prev_api_game_status</span> <span class="o">==</span> <span class="s2">&quot;Intermission&quot;</span> <span class="k">else</span> <span class="kc">False</span>
+</pre></div>
+</div>
+<p>Two things probably stand out is the option to check the status for the previous event (why do we care what it was earlier?)
+and the fact that two statuses exist.</p>
+<p>First let&#8217;s talk about the two status. There are currently two pages that always need to be scraped for for data for
+the Play-By-Play. One is an html file and one is the json api. The issue is that the api updates faster than the html.
+So the api may say the game is over but the html version is still missing a few events. For this reason we need to check
+that both are aligned.</p>
+<p>The &#8216;prev&#8217; keyword for both comes into play when we consider the last method &#8216;is_ongoing&#8217;. This checks whether the game
+is currently being played. Which means the game: Started, is not in intermission, and is not over. Here&#8217;s the method:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">is_ongoing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+ <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd"> Check if the game is currently being played.</span>
+
+<span class="sd"> The logic here is that we run into an issue with intermission and the end of game. If the game is just changed</span>
+<span class="sd"> to Final or Intermission the end user will assume the game isn&#39;t ongoing and will not update with the most</span>
+<span class="sd"> recent events. They&#39;ll be delayed for intermission and won&#39;t place it at all for Final games. So we use the</span>
+<span class="sd"> previous event as a guide. If it&#39;s currently in intermission or Final - we check the previous status. If it&#39;s</span>
+<span class="sd"> the same the user already has the data. Otherwise we &#39;lie&#39; and say the game is still ongoing.</span>
+
+<span class="sd"> :return: Boolean</span>
+<span class="sd"> &quot;&quot;&quot;</span>
+ <span class="c1"># The game is currently being played</span>
+ <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_until_game</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_game_over</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_intermission</span><span class="p">()</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">pbp_df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+     <span class="k">return</span> <span class="kc">True</span>
+ <span class="c1"># If it&#39;s not being played check if game is over and if it was over for the previous event</span>
+ <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_game_over</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_game_over</span><span class="p">(</span><span class="n">prev</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+     <span class="k">return</span> <span class="kc">True</span>
+ <span class="c1"># Check if it&#39;s in intermission and the if it was for the previous event</span>
+ <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_intermission</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_intermission</span><span class="p">(</span><span class="n">prev</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+     <span class="k">return</span> <span class="kc">True</span>
+ <span class="k">else</span><span class="p">:</span>
+     <span class="k">return</span> <span class="kc">False</span>
+</pre></div>
+</div>
+<p>I recommend looking at the function definition written above. Basically checking the previous event makes sure we got
+the most recent event if the game is over or in intermission. So if the last status was intermission and this one is
+too we know we don&#8217;t need to scrape. But if the last status wasn&#8217;t the means we are missing some information (presumably
+something happened between the last event and the end of the period).</p>
+<div class="section" id="module-hockey_scraper.live_scrape">
+<span id="live-scrape"></span><h3>Live Scrape<a class="headerlink" href="#module-hockey_scraper.live_scrape" title="Permalink to this headline">¶</a></h3>
+<p>Module to scrape live game info</p>
+<dl class="class">
+<dt id="hockey_scraper.live_scrape.LiveGame">
+<em class="property">class </em><code class="descclassname">hockey_scraper.live_scrape.</code><code class="descname">LiveGame</code><span class="sig-paren">(</span><em>game_id</em>, <em>start_time</em>, <em>home_team</em>, <em>away_team</em>, <em>status</em>, <em>espn_id</em>, <em>date</em>, <em>if_scrape_shifts</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.live_scrape.LiveGame" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a class holds all the information for a given game</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>game_id</strong> (<em>int</em>) &#8211; The NHL game id (ex: 2018020001)</li>
+<li><strong>start_time</strong> (<em>datetime</em>) &#8211; The UTC time of when the game begins</li>
+<li><strong>home_team</strong> (<em>str</em>) &#8211; Tricode for the home team (ex: NYR)</li>
+<li><strong>away_team</strong> (<em>str</em>) &#8211; Tricode for the home team (ex: MTL)</li>
+<li><strong>espn_id</strong> (<em>int</em>) &#8211; The ESPN game id for their feed</li>
+<li><strong>date</strong> (<em>str</em>) &#8211; Date of the game (ex: 2018-10-30)</li>
+<li><strong>if_scrape_shifts</strong> (<em>bool</em>) &#8211; Whether or not you want to scrape shifts</li>
+<li><strong>api_game_status</strong> (<em>str</em>) &#8211; Current Status of the game - [&#8220;Final&#8221;, &#8220;Live&#8221;, &#8220;Intermission]</li>
+<li><strong>html_game_status</strong> (<em>str</em>) &#8211; Current Status of the game - [&#8220;Final&#8221;, &#8220;Live&#8221;, &#8220;Intermission&#8221;]</li>
+<li><strong>intermission_time_remaining</strong> (<em>int</em>) &#8211; Time remaining in the intermission. 0 if not in intermission</li>
+<li><strong>players</strong> (<em>dict</em>) &#8211; Player info for both teams</li>
+<li><strong>head_coaches</strong> (<em>dict</em>) &#8211; Head coaches for both teams</li>
+<li><strong>pbp_df</strong> (<em>DataFrame</em>) &#8211; Holds most recent pbp data</li>
+<li><strong>shifts_df</strong> (<em>DataFrame</em>) &#8211; Holds most recent shift data</li>
+<li><strong>prev_pbp_df</strong> (<em>DataFrame</em>) &#8211; Holds the previous pbp data (for just in case)</li>
+<li><strong>prev_shifts_df</strong> (<em>DataFrame</em>) &#8211; Holds the previous shift data (for just in case)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="hockey_scraper.live_scrape.LiveGame.get_pbp">
+<code class="descname">get_pbp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.live_scrape.LiveGame.get_pbp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the pbp ensure it&#8217;s not None</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">DataFrame</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hockey_scraper.live_scrape.LiveGame.get_shifts">
+<code class="descname">get_shifts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.live_scrape.LiveGame.get_shifts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the shifts ensure it&#8217;s not None</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">DataFrame</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hockey_scraper.live_scrape.LiveGame.is_game_over">
+<code class="descname">is_game_over</code><span class="sig-paren">(</span><em>prev=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.live_scrape.LiveGame.is_game_over" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the game is over for both the html and json pbp. If prev=True check for the previous event</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>prev</strong> &#8211; Check the game status for the previous event</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Boolean - True if over</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hockey_scraper.live_scrape.LiveGame.is_intermission">
+<code class="descname">is_intermission</code><span class="sig-paren">(</span><em>prev=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.live_scrape.LiveGame.is_intermission" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if in intermission for both the html and json pbp. If prev=True check for the previous event</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>prev</strong> &#8211; Check the game status for the previous event</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Boolean - True if yes</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hockey_scraper.live_scrape.LiveGame.is_ongoing">
+<code class="descname">is_ongoing</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.live_scrape.LiveGame.is_ongoing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the game is currently being played.</p>
+<p>The logic here is that we run into an issue with intermission and the end of game. If the game is just changed 
+to Final or Intermission the end user will assume the game isn&#8217;t ongoing and will not update with the most
+recent events. They&#8217;ll be delayed for intermission and won&#8217;t place it at all for Final games. So we use the 
+previous event as a guide. If it&#8217;s currently in intermission or Final - we check the previous status. If it&#8217;s 
+the same the user already has the data. Otherwise we &#8216;lie&#8217; and say the game is still ongoing.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hockey_scraper.live_scrape.LiveGame.scrape">
+<code class="descname">scrape</code><span class="sig-paren">(</span><em>force=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.live_scrape.LiveGame.scrape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scrape the given game. Check if currently ongoing or started</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>force</strong> (<em>bool</em>) &#8211; Whether or not to force it to scrape even if it&#8217;s over</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hockey_scraper.live_scrape.LiveGame.scrape_live_game">
+<code class="descname">scrape_live_game</code><span class="sig-paren">(</span><em>force=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.live_scrape.LiveGame.scrape_live_game" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scrape the live info for a given game</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>force</strong> &#8211; Whether to scrape no matter what (used for intermission here)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hockey_scraper.live_scrape.LiveGame.time_until_game">
+<code class="descname">time_until_game</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.live_scrape.LiveGame.time_until_game" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the seconds until the game starts</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">seconds until game</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="hockey_scraper.live_scrape.ScrapeLiveGames">
+<em class="property">class </em><code class="descclassname">hockey_scraper.live_scrape.</code><code class="descname">ScrapeLiveGames</code><span class="sig-paren">(</span><em>date</em>, <em>preseason=False</em>, <em>if_scrape_shifts=False</em>, <em>pause=15</em>, <em>game_ids=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.live_scrape.ScrapeLiveGames" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class than contains the info for all the games on a specific day</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>date</strong> (<em>str</em>) &#8211; Date of games (ex: 2018-10-30)</li>
+<li><strong>preseason</strong> (<em>bool</em>) &#8211; If you want to scrape preseason games</li>
+<li><strong>if_scrape_shifts</strong> (<em>bool</em>) &#8211; Whether or not you want to scrape shifts</li>
+<li><strong>live_games</strong> (<em>list</em>) &#8211; List of LiveGame objects for</li>
+<li><strong>pause</strong> (<em>int</em>) &#8211; Amount to pause after each scraping call</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="hockey_scraper.live_scrape.ScrapeLiveGames.finished">
+<code class="descname">finished</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.live_scrape.ScrapeLiveGames.finished" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if done with all games</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hockey_scraper.live_scrape.ScrapeLiveGames.get_espn_ids">
+<code class="descname">get_espn_ids</code><span class="sig-paren">(</span><em>games</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.live_scrape.ScrapeLiveGames.get_espn_ids" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get espn game ids for all games that day</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>games</strong> (<em>list</em>) &#8211; games today</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Games with corresponding espn game ids</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hockey_scraper.live_scrape.ScrapeLiveGames.get_games">
+<code class="descname">get_games</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.live_scrape.ScrapeLiveGames.get_games" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get initial game info -&gt; Called with object creation. Includes: players, espn_ids, standard game info</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Dict - LiveGame objects for all games today</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hockey_scraper.live_scrape.ScrapeLiveGames.sleep_next_game">
+<code class="descname">sleep_next_game</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.live_scrape.ScrapeLiveGames.sleep_next_game" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sleep until the next game starts. Otherwise just looping and doing nothing</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hockey_scraper.live_scrape.ScrapeLiveGames.update_live_games">
+<code class="descname">update_live_games</code><span class="sig-paren">(</span><em>force=False</em>, <em>sleep_next=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.live_scrape.ScrapeLiveGames.update_live_games" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scrape the pbp &amp; shifts of ongoing games</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>force</strong> (<em>bool</em>) &#8211; Whether or not to force it to scrape even if it&#8217;s in intermission</li>
+<li><strong>sleep_next</strong> (<em>bool</em>) &#8211; Sleep until the next game starts</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="hockey_scraper.live_scrape.check_date_format">
+<code class="descclassname">hockey_scraper.live_scrape.</code><code class="descname">check_date_format</code><span class="sig-paren">(</span><em>date</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.live_scrape.check_date_format" title="Permalink to this definition">¶</a></dt>
+<dd><p>Verify the date format. If wrong raises a HaltException</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>date</strong> &#8211; User supplied date</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hockey_scraper.live_scrape.set_docs_dir">
+<code class="descclassname">hockey_scraper.live_scrape.</code><code class="descname">set_docs_dir</code><span class="sig-paren">(</span><em>user_dir</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.live_scrape.set_docs_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the docs directory</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>user_dir</strong> &#8211; User specified directory for storing saves scraped files</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Live Scraping</a><ul>
+<li><a class="reference internal" href="#standard-usage">Standard Usage</a></li>
+<li><a class="reference internal" href="#further-usage">Further Usage</a><ul>
+<li><a class="reference internal" href="#module-hockey_scraper.live_scrape">Live Scrape</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="scrape_functions.html"
+                        title="previous chapter">Scraping Functions</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="license_link.html"
+                        title="next chapter">License</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/live_scrape.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="license_link.html" title="License"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="scrape_functions.html" title="Scraping Functions"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">hockey_scraper 1.2.7 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Harry Shomer.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
+    </div>
+  </body>
+</html>

@@ -164,15 +164,13 @@ def scrape_roster(game_id):
     roster = get_roster(game_id)
 
     if not roster:
-        print("Roster for game {} is either not there or can't be obtained".format(game_id))
+        shared.print_warning("Roster for game {} is either not there or can't be obtained".format(game_id))
         return None
 
     try:
         players, head_coaches = get_content(roster)
     except Exception as e:
-        print('Error parsing Roster for game {}'.format(game_id), e)
+        shared.print_warning('Error parsing Roster for game {} {}'.format(game_id, e))
         return None
 
     return {'players': players, 'head_coaches': head_coaches}
-
-

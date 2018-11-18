@@ -82,9 +82,3 @@ def test_parse_espn(game_response):
     assert isinstance(scraped_game, pd.DataFrame)
     assert scraped_game.shape[0] == 379
     assert list(scraped_game.columns) == espn_columns
-
-
-
-
-
-

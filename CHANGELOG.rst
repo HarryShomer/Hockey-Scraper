@@ -9,3 +9,9 @@ v1.2.6
     also provide a location for us to save it if we don't have it yet. 'rescrape' only applies when a valid directory
     is provided with 'docs_dir'. Setting 'rescrape' equal to True will have us scrape the file from the source even if
     it's saved and save this new one.
+
+v1.2.7
+------
+
+  * Added functionality to easier scrape live games
+  * Fixed user warnings

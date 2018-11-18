@@ -114,16 +114,13 @@ def scrape_game(game_id):
     shifts_json = get_shifts(game_id)
 
     if not shifts_json:
-        print("Json shifts for game {} is either not there or can't be obtained".format(game_id))
+        shared.print_warning("Json shifts for game {} is either not there or can't be obtained".format(game_id))
         return None
 
     try:
         game_df = parse_json(shifts_json, game_id)
     except Exception as e:
-        print('Error parsing Json shifts for game {}'.format(game_id), e)
+        shared.print_warning('Error parsing Json shifts for game {} {}'.format(game_id, e))
         return None
 
     return game_df if not game_df.empty else None
-
-
-

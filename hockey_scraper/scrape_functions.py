@@ -73,8 +73,8 @@ def check_data_format(data_format):
     :return: Boolean - True if good
     """
     if not data_format or data_format.lower() not in ['csv', 'pandas']:
-        raise shared.HaltException('{} is an unspecified data format. The two options are Csv and Pandas (Csv is defaul'
-                                   't)\n'.format(data_format))
+        raise shared.HaltException('{} is an unspecified data format. The two options are Csv and Pandas '
+                                   '(Csv is default)\n'.format(data_format))
 
 
 def check_valid_dates(from_date, to_date):
@@ -125,7 +125,7 @@ def scrape_list_of_games(games, if_scrape_shifts):
     shifts_dfs = []
 
     for game in games:
-        pbp_df, shifts_df = game_scraper.scrape_game(str(game[0]), game[1], if_scrape_shifts)
+        pbp_df, shifts_df = game_scraper.scrape_game(str(game["game_id"]), game["date"], if_scrape_shifts)
         if pbp_df is not None:
             pbp_dfs.extend([pbp_df])
         if shifts_df is not None:
@@ -261,19 +261,3 @@ def scrape_games(games, if_scrape_shifts, data_format='csv', rescrape=False, doc
     else:
         return {"pbp": pbp_df, "shifts": shifts_df, "errors": errors} if if_scrape_shifts else {"pbp": pbp_df,
                                                                                                 "errors": errors}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -72,6 +72,3 @@ def test_get_file(file_info):
     os.chdir(os.path.dirname(os.path.realpath(__file__)))
     shutil.rmtree("docs")
     os.chdir(original_path)
-
-
-

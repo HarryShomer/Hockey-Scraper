@@ -13,7 +13,7 @@ def get_pbp(game_id):
     Given a game_id it returns the raw json
     Ex: http://statsapi.web.nhl.com/api/v1/game/2016020475/feed/live
     
-    :param game_id: the game
+    :param game_id: string - the game
     
     :return: raw json of game or None if couldn't get game
     """
@@ -40,8 +40,8 @@ def get_teams(pbp_json):
 
     :return: dict with home and away
     """
-    return {'Home': shared.TEAMS[pbp_json['gameData']['teams']['home']['name'].upper()],
-            'Away': shared.TEAMS[pbp_json['gameData']['teams']['away']['name'].upper()]}
+    return {'Home': shared.get_team(pbp_json['gameData']['teams']['home']['name'].upper()),
+            'Away': shared.get_team(pbp_json['gameData']['teams']['away']['name'].upper())}
 
 
 def change_event_name(event):
@@ -130,7 +130,7 @@ def parse_json(game_json, game_id):
         plays = game_json['liveData']['plays']['allPlays']
         events = [parse_event(play) for play in plays if play['result']['eventTypeId'] not in events_to_ignore]
     except Exception as e:
-        print('Error parsing Json pbp for game {}'.format(game_id), e)
+        shared.print_warning('Error parsing Json pbp for game {} {}'.format(game_id, e))
         return None
 
     # Sort by event id.
@@ -151,14 +151,13 @@ def scrape_game(game_id):
     game_json = get_pbp(game_id)
 
     if not game_json:
-        print("Json pbp for game {} is not either not there or can't be obtained".format(game_id))
+        shared.print_warning("Json pbp for game {} is not either not there or can't be obtained".format(game_id))
         return None
 
     try:
         game_df = parse_json(game_json, game_id)
     except Exception as e:
-        print('Error parsing Json pbp for game {}'.format(game_id), e)
+        shared.print_warning('Error parsing Json pbp for game {} {}'.format(game_id, e))
         return None
 
     return game_df
-

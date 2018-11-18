@@ -100,12 +100,3 @@ def save_page(page, file_info, docs_dir):
     if docs_dir is not None and page is not None and page != '':
         with open(create_file_path(file_info), 'w') as file:
             file.write(page)
-
-
-
-
-
-
-
-
-

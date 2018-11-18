@@ -41,6 +41,9 @@ To install all you need to do is open up your terminal and type in:
 Usage
 -----
 
+Standard Scrape Functions
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Scrape data on a season by season level:
 
 ::
@@ -101,7 +104,7 @@ files deposited in (it must exist beforehand).
     import hockey_scraper
 
     # Path to the given directory
-    USER_PATH = /....
+    USER_PATH = "/...."
 
     # Scrapes the 2015 & 2016 season with shifts and stores the data in a Csv file
     # Also includes a path for an existing directory for the scraped files to be placed in or retrieved from.
@@ -109,6 +112,61 @@ files deposited in (it must exist beforehand).
 
     # Once could chose to re-scrape previously saved files by making the keyword argument rescrape=True
     hockey_scraper.scrape_seasons([2015, 2016], True, docs_dir=USER_PATH, rescrape=True)
+
+
+Live Scraping
+~~~~~~~~~~~~~
+
+Here is a simple example of a way to setup live scraping. I strongly suggest checking out
+`this section <https://hockey-scraper.readthedocs.io/en/latest/live_scrape.html>`_ of the docs if you plan on using this.
+::
+
+   import hockey_scraper as hs
+
+
+   def to_csv(game):
+       """
+       Store each game DataFrame in a file
+
+       :param game: LiveGame object
+
+       :return: None
+       """
+
+       # If the game:
+       # 1. Started - We recorded at least one event
+       # 2. Not in Intermission
+       # 3. Not Over
+       if game.is_ongoing():
+           # Get both DataFrames
+           pbp_df = game.get_pbp()
+           shifts_df = game.get_shifts()
+
+           # Print the description of the last event
+           print(game.game_id, "->", pbp_df.iloc[-1]['Description'])
+
+           # Store in CSV files
+           pbp_df.to_csv(f"../hockey_scraper_data/{game.game_id}_pbp.csv", sep=',')
+           shifts_df.to_csv(f"../hockey_scraper_data/{game.game_id}_shifts.csv", sep=',')
+
+   if __name__ == "__main__":
+       # B4 we start set the directory to store the files
+       # You don't have to do this but I recommend it
+       hs.live_scrape.set_docs_dir("../hockey_scraper_data")
+
+       # Scrape the info for all the games on 2018-11-15
+       games = hs.ScrapeLiveGames("2018-11-15", if_scrape_shifts=True, pause=20)
+
+       # While all the games aren't finished
+       while not games.finished():
+           # Update for all the games currently being played
+           games.update_live_games(sleep_next=True)
+
+           # Go through every LiveGame object and apply some function
+           # You can of course do whatever you want here.
+           for game in games.live_games:
+               to_csv(game)
+
 
 
 The full documentation can be found `here <http://hockey-scraper.readthedocs.io/en/latest/>`_.

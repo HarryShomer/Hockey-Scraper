@@ -52,7 +52,7 @@ def get_teams(response):
     soup = BeautifulSoup(response, 'lxml')
 
     td = soup.findAll('td', {'class': "team"})
-    teams = [shared.TEAMS[t.get_text().upper()] for t in td if t.get_text() != '']
+    teams = [shared.get_team(t.get_text().upper()) for t in td if t.get_text() != '']
 
     # Make a list of both teams for each game
     games = [teams[i:i + 2] for i in range(0, len(teams), 2)]
@@ -104,7 +104,7 @@ def get_espn_game_id(date, home_team, away_team):
             return game_ids[i]
 
 
-def get_espn_game(date, home_team, away_team):
+def get_espn_game(date, home_team, away_team, game_id=None):
     """
     Gets the ESPN pbp feed 
     Ex: http://www.espn.com/nhl/gamecast/data/masterFeed?lang=en&isAll=true&gameId=400885300
@@ -112,10 +112,13 @@ def get_espn_game(date, home_team, away_team):
     :param date: date of the game
     :param home_team: home team
     :param away_team: away team
+    :param game_id: Game id of we already have it - for live scraping. None if not there
     
     :return: raw xml
     """
-    game_id = get_espn_game_id(date, home_team.upper(), away_team.upper())
+    # Get if not provided
+    if not game_id:
+        game_id = get_espn_game_id(date, home_team.upper(), away_team.upper())
 
     file_info = {
         "url": 'http://www.espn.com/nhl/gamecast/data/masterFeed?lang=en&isAll=true&gameId={}'.format(game_id),
@@ -173,7 +176,7 @@ def parse_espn(espn_xml):
     try:
         tree = etree.fromstring(espn_xml)
     except etree.ParseError:
-        print("Espn pbp isn't valid xml, therefore coordinates can't be obtained for this game")
+        shared.print_warning("Espn pbp isn't valid xml, therefore coordinates can't be obtained for this game")
         return pd.DataFrame([], columns=columns)
 
     events = tree[1]
@@ -183,30 +186,30 @@ def parse_espn(espn_xml):
     return pd.DataFrame(plays, columns=columns)
 
 
-def scrape_game(date, home_team, away_team):
+def scrape_game(date, home_team, away_team, game_id=None):
     """
     Scrape the game
     
     :param date: ex: 2016-20-24
     :param home_team: tricode
     :param away_team: tricode
+    :param game_id: Only provided for live games.
     
     :return: DataFrame with info 
     """
     try:
-        print('Using espn for pbp')
-        espn_xml = get_espn_game(date, home_team, away_team)
+        shared.print_warning('Using espn for pbp')
+        espn_xml = get_espn_game(date, home_team, away_team, game_id)
     except Exception as e:
-        print("Espn pbp for game {a} {b} {c} is either not there or can't be obtained".format(a=date, b=home_team,
-                                                                                              c=away_team), e)
+        shared.print_warning("Espn pbp for game {a} {b} {c} is either not there or can't be obtained {d}".format(a=date,
+                                                                                                    b=home_team,
+                                                                                                    c=away_team, d=e))
         return None
 
     try:
         espn_df = parse_espn(espn_xml)
     except Exception as e:
-        print("Error parsing Espn pbp for game {a} {b} {c}".format(a=date, b=home_team, c=away_team), e)
+        shared.print_warning("Error parsing Espn pbp for game {a} {b} {c} {d}".format(a=date, b=home_team, c=away_team, d=e))
         return None
 
     return espn_df
-
-
