@@ -95,8 +95,8 @@ class LiveGame:
         self.prev_shifts_df = pd.DataFrame()
 
         # Object creation message
-        print(f"The LiveGame object for game {game_id} has been created. "
-              f"Game starts in {self.time_until_game()} seconds.")
+        print("The LiveGame object for game {game_id} has been created. ".format(game_id=game_id))
+        print("Game starts in {time} seconds.".format(time=self.time_until_game()))
 
     def scrape(self, force=False):
         """
@@ -374,7 +374,7 @@ class ScrapeLiveGames:
             min_game = min(scheduled_games, key=lambda x: x.time_until_game())
 
             if min_game.time_until_game() > 0:
-                print(f"\nSleeping for {min_game.time_until_game()} seconds until the next earliest game starts.")
+                print("\nSleeping for {} seconds until the next earliest game starts.".format(min_game.time_until_game()))
                 time.sleep(min_game.time_until_game())
 
     def finished(self):

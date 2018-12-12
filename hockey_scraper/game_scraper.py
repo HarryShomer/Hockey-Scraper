@@ -313,7 +313,7 @@ def scrape_shifts(game_id, players, date):
         shifts_df = html_shifts.scrape_game(game_id, players)
 
         if shifts_df is None:
-            shared.print_warning(f"Unable to scrape shifts for game {game_id}.")
+            shared.print_warning("Unable to scrape shifts for game" + game_id)
             broken_shifts_games.extend([[game_id, date]])
             return None   # Both failed so just return nothing
 
