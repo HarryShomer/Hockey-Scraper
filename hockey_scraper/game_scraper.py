@@ -74,7 +74,7 @@ def get_players_json(players_json):
         try:
             players[name]['id'] = players_json[key]['id']
         except KeyError:
-            shared.print_warning(f'{name} is missing an ID number in the pbp json')
+            shared.print_warning('{name} is missing an ID number in the pbp json'.format(name=name))
             players[name]['id'] = 'NA'
 
     return players
