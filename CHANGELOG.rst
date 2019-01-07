@@ -15,3 +15,9 @@ v1.2.7
 
   * Added functionality to easier scrape live games
   * Fixed user warnings
+
+
+v1.3
+----
+
+  * Added functionality to scrape NWHL data

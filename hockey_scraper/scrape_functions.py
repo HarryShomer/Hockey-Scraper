@@ -6,7 +6,6 @@ import hockey_scraper.json_schedule as json_schedule
 import hockey_scraper.game_scraper as game_scraper
 import hockey_scraper.shared as shared
 import pandas as pd
-import time
 import random
 
 
@@ -61,55 +60,6 @@ def print_errors():
     game_scraper.broken_pbp_games = []
     game_scraper.players_missing_ids = []
     game_scraper.missing_coords = []
-
-
-def check_data_format(data_format):
-    """
-    Checks if data_format specified (if it is at all) is either None, 'Csv', or 'pandas'.
-    It exits program with error message if input isn't good.
-    
-    :param data_format: data_format provided 
-    
-    :return: Boolean - True if good
-    """
-    if not data_format or data_format.lower() not in ['csv', 'pandas']:
-        raise shared.HaltException('{} is an unspecified data format. The two options are Csv and Pandas '
-                                   '(Csv is default)\n'.format(data_format))
-
-
-def check_valid_dates(from_date, to_date):
-    """
-    Check if it's a valid date range
-    
-    :param from_date: date should scrape from
-    :param to_date: date should scrape to
-    
-    :return: None
-    """
-    try:
-        if time.strptime(to_date, "%Y-%m-%d") < time.strptime(from_date, "%Y-%m-%d"):
-            raise shared.HaltException("Error: The second date input is earlier than the first one")
-    except ValueError:
-        raise shared.HaltException("Error: Incorrect format given for dates. They must be given like 'yyyy-mm-dd' "
-                                   "(ex: '2016-10-01').")
-
-
-def to_csv(file_name, pbp_df, shifts_df):
-    """
-    Write DataFrame(s) to csv file(s)
-    
-    :param file_name: name of file
-    :param pbp_df: pbp DataFrame
-    :param shifts_df: shifts DataFrame
-    
-    :return: None
-    """
-    if pbp_df is not None:
-        print("\nPbp data deposited in file - " + 'nhl_pbp{}.csv'.format(file_name))
-        pbp_df.to_csv('nhl_pbp{}.csv'.format(file_name), sep=',', encoding='utf-8')
-    if shifts_df is not None:
-        print("Shift data deposited in file - " + 'nhl_shifts{}.csv'.format(file_name))
-        shifts_df.to_csv('nhl_shifts{}.csv'.format(file_name), sep=',', encoding='utf-8')
 
 
 def scrape_list_of_games(games, if_scrape_shifts):
@@ -168,8 +118,8 @@ def scrape_date_range(from_date, to_date, if_scrape_shifts, data_format='csv', p
     :return: Dictionary with DataFrames and errors or None
     """
     # First check if the inputs are good
-    check_data_format(data_format)
-    check_valid_dates(from_date, to_date)
+    shared.check_data_format(data_format)
+    shared.check_valid_dates(from_date, to_date)
 
     # Check on the docs_dir and re_scrape
     shared.add_dir(docs_dir)
@@ -179,7 +129,7 @@ def scrape_date_range(from_date, to_date, if_scrape_shifts, data_format='csv', p
     pbp_df, shifts_df = scrape_list_of_games(games, if_scrape_shifts)
 
     if data_format.lower() == 'csv':
-        to_csv(from_date+'--'+to_date, pbp_df, shifts_df)
+        shared.to_csv(from_date+'--'+to_date, pbp_df, shifts_df, "nhl")
     else:
         return {"pbp": pbp_df, "shifts": shifts_df, "errors": errors} if if_scrape_shifts else {"pbp": pbp_df,
                                                                                                 "errors": errors}
@@ -201,7 +151,7 @@ def scrape_seasons(seasons, if_scrape_shifts, data_format='csv', preseason=False
     :return: Dictionary with DataFrames and errors or None
     """
     # First check if the inputs are good
-    check_data_format(data_format)
+    shared.check_data_format(data_format)
 
     # Check on the docs_dir and re_scrape
     shared.add_dir(docs_dir)
@@ -218,7 +168,7 @@ def scrape_seasons(seasons, if_scrape_shifts, data_format='csv', preseason=False
         pbp_df, shifts_df = scrape_list_of_games(games, if_scrape_shifts)
 
         if data_format.lower() == 'csv':
-            to_csv(str(season)+str(season+1), pbp_df, shifts_df)
+            shared.to_csv(str(season)+str(season+1), pbp_df, shifts_df, "nhl")
         else:
             master_pbps.append(pbp_df)
             master_shifts.append(shifts_df)
@@ -244,7 +194,7 @@ def scrape_games(games, if_scrape_shifts, data_format='csv', rescrape=False, doc
     :return: Dictionary with DataFrames and errors or None
     """
     # First check if the inputs are good
-    check_data_format(data_format)
+    shared.check_data_format(data_format)
 
     # Check on the docs_dir and re_scrape
     shared.add_dir(docs_dir)
@@ -257,7 +207,7 @@ def scrape_games(games, if_scrape_shifts, data_format='csv', rescrape=False, doc
     pbp_df, shifts_df = scrape_list_of_games(games_list, if_scrape_shifts)
 
     if data_format.lower() == 'csv':
-        to_csv(str(random.randint(1, 101)), pbp_df, shifts_df)
+        shared.to_csv(str(random.randint(1, 101)), pbp_df, shifts_df, "nhl")
     else:
         return {"pbp": pbp_df, "shifts": shifts_df, "errors": errors} if if_scrape_shifts else {"pbp": pbp_df,
                                                                                                 "errors": errors}

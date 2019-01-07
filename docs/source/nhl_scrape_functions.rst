@@ -1,5 +1,5 @@
-Scraping Functions
-==================
+NHL Scraping Functions
+======================
 
 Scraping
 --------

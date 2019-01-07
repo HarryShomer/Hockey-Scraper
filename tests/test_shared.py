@@ -16,6 +16,25 @@ def file_info():
     }
 
 
+def test_check_data_format():
+    """ Test if it recognized the correct formats allowed"""
+    # These both are fine
+    shared.check_data_format("Csv")
+    shared.check_data_format("pandaS")
+
+    # Should raise an exception
+    with pytest.raises(shared.HaltException):
+        shared.check_data_format("txt")
+
+
+def test_check_valid_dates():
+    """ Test if given valid date range"""
+    shared.check_valid_dates("2017-10-01", "2018-01-05")
+
+    with pytest.raises(shared.HaltException):
+        shared.check_valid_dates("2017-12-01", "2017-11-30")
+
+
 def test_convert_to_seconds():
     """ Tests if it correctly converts minutes remaining to seconds elapsed"""
     assert shared.convert_to_seconds("8:33") == 513

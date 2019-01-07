@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Scraping Functions &#8212; hockey_scraper 1.2.8 documentation</title>
+    <title>NHL Scraping Functions &#8212; hockey_scraper 1.2.8 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Live Scraping" href="live_scrape.html" />
+    <link rel="next" title="NWHL Scraping Functions" href="nwhl_scrape_functions.html" />
     <link rel="prev" title="Hockey-Scraper" href="index.html" /> 
   </head>
   <body role="document">
@@ -40,7 +40,7 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="live_scrape.html" title="Live Scraping"
+          <a href="nwhl_scrape_functions.html" title="NWHL Scraping Functions"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="index.html" title="Hockey-Scraper"
@@ -54,8 +54,8 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="scraping-functions">
-<h1>Scraping Functions<a class="headerlink" href="#scraping-functions" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="nhl-scraping-functions">
+<h1>NHL Scraping Functions<a class="headerlink" href="#nhl-scraping-functions" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="scraping">
 <h2>Scraping<a class="headerlink" href="#scraping" title="Permalink to this headline">¶</a></h2>
 <p>There are three ways to scrape games:</p>
@@ -147,44 +147,6 @@ but otherwise it will scrape as if no directory was provided.</p>
 <div class="section" id="module-hockey_scraper.scrape_functions">
 <span id="scrape-functions"></span><h3>Scrape Functions<a class="headerlink" href="#module-hockey_scraper.scrape_functions" title="Permalink to this headline">¶</a></h3>
 <p>Functions to scrape by season, games, and date range</p>
-<dl class="function">
-<dt id="hockey_scraper.scrape_functions.check_data_format">
-<code class="descclassname">hockey_scraper.scrape_functions.</code><code class="descname">check_data_format</code><span class="sig-paren">(</span><em>data_format</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.scrape_functions.check_data_format" title="Permalink to this definition">¶</a></dt>
-<dd><p>Checks if data_format specified (if it is at all) is either None, &#8216;Csv&#8217;, or &#8216;pandas&#8217;.
-It exits program with error message if input isn&#8217;t good.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data_format</strong> &#8211; data_format provided</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Boolean - True if good</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="hockey_scraper.scrape_functions.check_valid_dates">
-<code class="descclassname">hockey_scraper.scrape_functions.</code><code class="descname">check_valid_dates</code><span class="sig-paren">(</span><em>from_date</em>, <em>to_date</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.scrape_functions.check_valid_dates" title="Permalink to this definition">¶</a></dt>
-<dd><p>Check if it&#8217;s a valid date range</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>from_date</strong> &#8211; date should scrape from</li>
-<li><strong>to_date</strong> &#8211; date should scrape to</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
 <dl class="function">
 <dt id="hockey_scraper.scrape_functions.print_errors">
 <code class="descclassname">hockey_scraper.scrape_functions.</code><code class="descname">print_errors</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.scrape_functions.print_errors" title="Permalink to this definition">¶</a></dt>
@@ -296,28 +258,6 @@ in after scraping</li>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Dictionary with DataFrames and errors or None</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="hockey_scraper.scrape_functions.to_csv">
-<code class="descclassname">hockey_scraper.scrape_functions.</code><code class="descname">to_csv</code><span class="sig-paren">(</span><em>file_name</em>, <em>pbp_df</em>, <em>shifts_df</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.scrape_functions.to_csv" title="Permalink to this definition">¶</a></dt>
-<dd><p>Write DataFrame(s) to csv file(s)</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>file_name</strong> &#8211; name of file</li>
-<li><strong>pbp_df</strong> &#8211; pbp DataFrame</li>
-<li><strong>shifts_df</strong> &#8211; shifts DataFrame</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
 </td>
 </tr>
 </tbody>
@@ -2028,6 +1968,44 @@ we want to deposit any data in.</li>
 </dd></dl>
 
 <dl class="function">
+<dt id="hockey_scraper.shared.check_data_format">
+<code class="descclassname">hockey_scraper.shared.</code><code class="descname">check_data_format</code><span class="sig-paren">(</span><em>data_format</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.shared.check_data_format" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if data_format specified (if it is at all) is either None, &#8216;Csv&#8217;, or &#8216;pandas&#8217;.
+It exits program with error message if input isn&#8217;t good.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data_format</strong> &#8211; data_format provided</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Boolean - True if good</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hockey_scraper.shared.check_valid_dates">
+<code class="descclassname">hockey_scraper.shared.</code><code class="descname">check_valid_dates</code><span class="sig-paren">(</span><em>from_date</em>, <em>to_date</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.shared.check_valid_dates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if it&#8217;s a valid date range</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>from_date</strong> &#8211; date should scrape from</li>
+<li><strong>to_date</strong> &#8211; date should scrape to</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
 <dt id="hockey_scraper.shared.convert_to_seconds">
 <code class="descclassname">hockey_scraper.shared.</code><code class="descname">convert_to_seconds</code><span class="sig-paren">(</span><em>minutes</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.shared.convert_to_seconds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return minutes elapsed in time format to seconds elapsed</p>
@@ -2139,6 +2117,29 @@ Contains the url, name, type, and season</td>
 </table>
 </dd></dl>
 
+<dl class="function">
+<dt id="hockey_scraper.shared.to_csv">
+<code class="descclassname">hockey_scraper.shared.</code><code class="descname">to_csv</code><span class="sig-paren">(</span><em>file_name</em>, <em>pbp_df</em>, <em>shifts_df</em>, <em>league</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.shared.to_csv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write DataFrame(s) to csv file(s)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>file_name</strong> &#8211; name of file</li>
+<li><strong>pbp_df</strong> &#8211; pbp DataFrame</li>
+<li><strong>shifts_df</strong> &#8211; shifts DataFrame</li>
+<li><strong>league</strong> &#8211; nhl or nwhl</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 </div>
 </div>
@@ -2151,7 +2152,7 @@ Contains the url, name, type, and season</td>
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Scraping Functions</a><ul>
+<li><a class="reference internal" href="#">NHL Scraping Functions</a><ul>
 <li><a class="reference internal" href="#scraping">Scraping</a><ul>
 <li><a class="reference internal" href="#module-hockey_scraper.scrape_functions">Scrape Functions</a></li>
 <li><a class="reference internal" href="#module-hockey_scraper.game_scraper">Game Scraper</a></li>
@@ -2174,12 +2175,12 @@ Contains the url, name, type, and season</td>
   <p class="topless"><a href="index.html"
                         title="previous chapter">Hockey-Scraper</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="live_scrape.html"
-                        title="next chapter">Live Scraping</a></p>
+  <p class="topless"><a href="nwhl_scrape_functions.html"
+                        title="next chapter">NWHL Scraping Functions</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/scrape_functions.rst.txt"
+      <li><a href="_sources/nhl_scrape_functions.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -2207,7 +2208,7 @@ Contains the url, name, type, and season</td>
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="live_scrape.html" title="Live Scraping"
+          <a href="nwhl_scrape_functions.html" title="NWHL Scraping Functions"
              >next</a> |</li>
         <li class="right" >
           <a href="index.html" title="Hockey-Scraper"

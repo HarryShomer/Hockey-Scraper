@@ -134,7 +134,7 @@ Names = {'n/a': 'n/a', 'ALEXANDER OVECHKIN': 'Alex Ovechkin', 'TOBY ENSTROM': 'T
          'ALEXANDER PECHURSKI': 'Alexander Pechurskiy', 'JEFFREY PENNER': 'JEFF PENNER', 'EMMANUEL FERNANDEZ': 'Manny FERNANDEZ',
          'ALEXANDER PETROVIC': 'ALEX PETROVIC', 'ZACHARY ASTON-REESE': 'ZACH ASTON-REESE', 'J-F BERUBE': 'JEAN-FRANCOIS BERUBE',
          "DANNY O'REGAN": "DANIEL O'REGAN", "PATRICK MAROON": "PAT MAROON", "LEE  STEMPNIAK": "LEE STEMPNIAK",
-         "JAMES REIMER ,": "JAMES REIMER"
+         "JAMES REIMER ,": "JAMES REIMER", "CALVIN PETERSEN ,": "CALVIN PETERSEN", "CAL PETERSEN": "CALVIN PETERSEN"
          }
 
 
@@ -223,6 +223,7 @@ def scrape_page(url):
             print_warning("Timeout Error: The server took too long to respond to our request.")
             page = None
 
+    # Pause for 1 second - make it more if you want
     time.sleep(1)
 
     return page
@@ -307,3 +308,53 @@ def get_file(file_info):
     os.chdir(original_path)
 
     return page
+
+
+def check_data_format(data_format):
+    """
+    Checks if data_format specified (if it is at all) is either None, 'Csv', or 'pandas'.
+    It exits program with error message if input isn't good.
+
+    :param data_format: data_format provided 
+
+    :return: Boolean - True if good
+    """
+    if not data_format or data_format.lower() not in ['csv', 'pandas']:
+        raise HaltException('{} is an unspecified data format. The two options are Csv and Pandas '
+                            '(Csv is default)\n'.format(data_format))
+
+
+def check_valid_dates(from_date, to_date):
+    """
+    Check if it's a valid date range
+
+    :param from_date: date should scrape from
+    :param to_date: date should scrape to
+
+    :return: None
+    """
+    try:
+        if time.strptime(to_date, "%Y-%m-%d") < time.strptime(from_date, "%Y-%m-%d"):
+            raise HaltException("Error: The second date input is earlier than the first one")
+    except ValueError:
+        raise HaltException("Error: Incorrect format given for dates. They must be given like 'yyyy-mm-dd' "
+                            "(ex: '2016-10-01').")
+
+
+def to_csv(file_name, pbp_df, shifts_df, league):
+    """
+    Write DataFrame(s) to csv file(s)
+
+    :param file_name: name of file
+    :param pbp_df: pbp DataFrame
+    :param shifts_df: shifts DataFrame
+    :param league: nhl or nwhl
+
+    :return: None
+    """
+    if pbp_df is not None:
+        print("\nPbp data deposited in file - " + '{}_pbp{}.csv'.format(league, file_name))
+        pbp_df.to_csv('{}_pbp{}.csv'.format(league, file_name), sep=',', encoding='utf-8')
+    if shifts_df is not None:
+        print("Shift data deposited in file - " + '{}_shifts{}.csv'.format(league, file_name))
+        shifts_df.to_csv('{}_shifts{}.csv'.format(league, file_name), sep=',', encoding='utf-8')

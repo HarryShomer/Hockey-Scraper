@@ -14,8 +14,10 @@ Hockey-Scraper
 Purpose
 -------
 
-This package is designed to allow people to scrape the Play by Play and Shift data off of the National Hockey League
-(NHL) API and website for all preseason, regular season, and playoff games since the 2007-2008 season.
+This package is designed to allow people to scrape both NHL and NWHL data. For the NHL, one can scrape the Play by Play
+and Shift data off of the National Hockey League (NHL) API and website for all preseason, regular season, and playoff
+games since the 2007-2008 season. For the NWHL, one is able to scrape the Play by Play data off of their API and website
+for all preseason, regular season, and playoff games since the 2015-2016 season.
 
 Prerequisites
 -------------
@@ -38,8 +40,8 @@ To install all you need to do is open up your terminal and type in:
 
 
 
-Usage
------
+NHL Usage
+---------
 
 Standard Scrape Functions
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -167,6 +169,40 @@ Here is a simple example of a way to setup live scraping. I strongly suggest che
            for game in games.live_games:
                to_csv(game)
 
+
+NWHL Usage
+----------
+
+Scrape data on a season by season level:
+
+::
+
+    import hockey_scraper
+
+    # Scrapes the 2015 & 2016 season and stores the data in a Csv file
+    hockey_scraper.nwhl.scrape_seasons([2015, 2016])
+
+    # Scrapes the 2008 season and returns a Pandas DataFrame containing the pbp
+    scraped_data = hockey_scraper.nwhl.scrape_seasons([2017], data_format='Pandas')
+
+Scrape a list of games:
+
+::
+
+    import hockey_scraper
+
+    # Scrape some games and store the results in a Csv file
+    # Also saves the scraped pages
+    hockey_scraper.nwhl.scrape_games([14694271, 14814946, 14689491], docs_dir="...Path you specified")
+
+Scrape all games in a given date range:
+
+::
+
+    import hockey_scraper
+
+    # Scrapes all games between 2016-10-10 and 2017-01-01 and returns a Pandas DataFrame containing the pbp
+    hockey_scraper.nwhl.scrape_date_range('2016-10-10', '2017-01-01', data_format='pandas')
 
 
 The full documentation can be found `here <http://hockey-scraper.readthedocs.io/en/latest/>`_.

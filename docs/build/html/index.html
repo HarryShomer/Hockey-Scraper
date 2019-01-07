@@ -26,7 +26,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Scraping Functions" href="scrape_functions.html" /> 
+    <link rel="next" title="NHL Scraping Functions" href="nhl_scrape_functions.html" /> 
   </head>
   <body role="document">
     <div class="related" role="navigation" aria-label="related navigation">
@@ -39,7 +39,7 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="scrape_functions.html" title="Scraping Functions"
+          <a href="nhl_scrape_functions.html" title="NHL Scraping Functions"
              accesskey="N">next</a> |</li>
         <li class="nav-item nav-item-0"><a href="#">hockey_scraper 1.2.8 documentation</a> &#187;</li> 
       </ul>
@@ -56,7 +56,8 @@
 <h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="scrape_functions.html">Scraping Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nhl_scrape_functions.html">NHL Scraping Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nwhl_scrape_functions.html">NWHL Scraping Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="live_scrape.html">Live Scraping</a></li>
 <li class="toctree-l1"><a class="reference internal" href="license_link.html">License</a></li>
 </ul>
@@ -64,8 +65,10 @@
 </div>
 <div class="section" id="purpose">
 <h2>Purpose<a class="headerlink" href="#purpose" title="Permalink to this headline">¶</a></h2>
-<p>This package is designed to allow people to scrape the Play by Play and Shift data off of the National Hockey League
-(NHL) API and website for all preseason, regular season, and playoff games since the 2007-2008 season.</p>
+<p>This package is designed to allow people to scrape both NHL and NWHL data. For the NHL, one can scrape the Play by Play
+and Shift data off of the National Hockey League (NHL) API and website for all preseason, regular season, and playoff
+games since the 2007-2008 season. For the NWHL, one is able to scrape the Play by Play data off of their API and website
+for all preseason, regular season, and playoff games since the 2015-2016 season.</p>
 </div>
 <div class="section" id="prerequisites">
 <h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
@@ -80,8 +83,8 @@ from at least version 3.6.0 but earlier versions should be fine).</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="usage">
-<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="nhl-usage">
+<h2>NHL Usage<a class="headerlink" href="#nhl-usage" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="standard-scrape-functions">
 <h3>Standard Scrape Functions<a class="headerlink" href="#standard-scrape-functions" title="Permalink to this headline">¶</a></h3>
 <p>Scrape data on a season by season level:</p>
@@ -193,8 +196,36 @@ files deposited in (it must exist beforehand).</p>
             <span class="n">to_csv</span><span class="p">(</span><span class="n">game</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>The full documentation can be found <a class="reference external" href="http://hockey-scraper.readthedocs.io/en/latest/">here</a>.</p>
 </div>
+</div>
+<div class="section" id="nwhl-usage">
+<h2>NWHL Usage<a class="headerlink" href="#nwhl-usage" title="Permalink to this headline">¶</a></h2>
+<p>Scrape data on a season by season level:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">hockey_scraper</span>
+
+<span class="c1"># Scrapes the 2015 &amp; 2016 season and stores the data in a Csv file</span>
+<span class="n">hockey_scraper</span><span class="o">.</span><span class="n">nwhl</span><span class="o">.</span><span class="n">scrape_seasons</span><span class="p">([</span><span class="mi">2015</span><span class="p">,</span> <span class="mi">2016</span><span class="p">])</span>
+
+<span class="c1"># Scrapes the 2008 season and returns a Pandas DataFrame containing the pbp</span>
+<span class="n">scraped_data</span> <span class="o">=</span> <span class="n">hockey_scraper</span><span class="o">.</span><span class="n">nwhl</span><span class="o">.</span><span class="n">scrape_seasons</span><span class="p">([</span><span class="mi">2017</span><span class="p">],</span> <span class="n">data_format</span><span class="o">=</span><span class="s1">&#39;Pandas&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Scrape a list of games:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">hockey_scraper</span>
+
+<span class="c1"># Scrape some games and store the results in a Csv file</span>
+<span class="c1"># Also saves the scraped pages</span>
+<span class="n">hockey_scraper</span><span class="o">.</span><span class="n">nwhl</span><span class="o">.</span><span class="n">scrape_games</span><span class="p">([</span><span class="mi">14694271</span><span class="p">,</span> <span class="mi">14814946</span><span class="p">,</span> <span class="mi">14689491</span><span class="p">],</span> <span class="n">docs_dir</span><span class="o">=</span><span class="s2">&quot;...Path you specified&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Scrape all games in a given date range:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">hockey_scraper</span>
+
+<span class="c1"># Scrapes all games between 2016-10-10 and 2017-01-01 and returns a Pandas DataFrame containing the pbp</span>
+<span class="n">hockey_scraper</span><span class="o">.</span><span class="n">nwhl</span><span class="o">.</span><span class="n">scrape_date_range</span><span class="p">(</span><span class="s1">&#39;2016-10-10&#39;</span><span class="p">,</span> <span class="s1">&#39;2017-01-01&#39;</span><span class="p">,</span> <span class="n">data_format</span><span class="o">=</span><span class="s1">&#39;pandas&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The full documentation can be found <a class="reference external" href="http://hockey-scraper.readthedocs.io/en/latest/">here</a>.</p>
 </div>
 <div class="section" id="contact">
 <h2>Contact<a class="headerlink" href="#contact" title="Permalink to this headline">¶</a></h2>
@@ -224,11 +255,12 @@ Otherwise you can email me at <a class="reference external" href="mailto:Harrysh
 <li><a class="reference internal" href="#purpose">Purpose</a></li>
 <li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
 <li><a class="reference internal" href="#installation">Installation</a></li>
-<li><a class="reference internal" href="#usage">Usage</a><ul>
+<li><a class="reference internal" href="#nhl-usage">NHL Usage</a><ul>
 <li><a class="reference internal" href="#standard-scrape-functions">Standard Scrape Functions</a></li>
 <li><a class="reference internal" href="#live-scraping">Live Scraping</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#nwhl-usage">NWHL Usage</a></li>
 <li><a class="reference internal" href="#contact">Contact</a></li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
@@ -236,8 +268,8 @@ Otherwise you can email me at <a class="reference external" href="mailto:Harrysh
 </ul>
 
   <h4>Next topic</h4>
-  <p class="topless"><a href="scrape_functions.html"
-                        title="next chapter">Scraping Functions</a></p>
+  <p class="topless"><a href="nhl_scrape_functions.html"
+                        title="next chapter">NHL Scraping Functions</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -269,7 +301,7 @@ Otherwise you can email me at <a class="reference external" href="mailto:Harrysh
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="scrape_functions.html" title="Scraping Functions"
+          <a href="nhl_scrape_functions.html" title="NHL Scraping Functions"
              >next</a> |</li>
         <li class="nav-item nav-item-0"><a href="#">hockey_scraper 1.2.8 documentation</a> &#187;</li> 
       </ul>

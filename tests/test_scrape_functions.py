@@ -6,25 +6,6 @@ from hockey_scraper import scrape_functions
 import hockey_scraper.shared as shared
 
 
-def test_check_data_format():
-    """ Test if it recognized the correct formats allowed"""
-    # These both are fine
-    scrape_functions.check_data_format("Csv")
-    scrape_functions.check_data_format("pandaS")
-
-    # Should raise an exception
-    with pytest.raises(shared.HaltException):
-        scrape_functions.check_data_format("txt")
-
-
-def test_check_valid_dates():
-    """ Test if given valid date range"""
-    scrape_functions.check_valid_dates("2017-10-01", "2018-01-05")
-
-    with pytest.raises(shared.HaltException):
-        scrape_functions.check_valid_dates("2017-12-01", "2017-11-30")
-
-
 def test_scrape_list_of_games():
     """ Tests that it correctly scraped a given list of [game_id, date]"""
     games = [
