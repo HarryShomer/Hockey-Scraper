@@ -111,11 +111,15 @@ def scrape_date_range(from_date, to_date, data_format='csv', rescrape=False, doc
 
     # Get dates and convert to just a list of game ids
     games = html_schedule.scrape_dates(from_date, to_date)
-    games = [game['game_id'] for game in games]
+    game_ids = [game['game_id'] for game in games]
 
-    pbp_df = scrape_list_of_games(games)
+    # Scrape all PBP
+    pbp_df = scrape_list_of_games(game_ids)
+
+    # Merge in subtype
+    pbp_df = pd.merge(pbp_df, pd.DataFrame(games, columns=['game_id', 'sub_type']), on="game_id", how="left")
+
     print_errors()
-
     if data_format.lower() == 'csv':
         shared.to_csv(from_date + '--' + to_date, pbp_df, None, "nwhl")
     else:
@@ -150,8 +154,13 @@ def scrape_seasons(seasons, data_format='csv', rescrape=False, docs_dir=None):
 
         # Get dates and convert to just a list of game ids
         games = html_schedule.scrape_dates(from_date, to_date)
-        games = [game['game_id'] for game in games]
-        pbp_df = scrape_list_of_games(games)
+        game_ids = [game['game_id'] for game in games]
+
+        # Scrape all PBP
+        pbp_df = scrape_list_of_games(game_ids)
+
+        # Merge in subtype
+        pbp_df = pd.merge(pbp_df, pd.DataFrame(games, columns=['game_id', 'sub_type']), on="game_id", how="left")
 
         if data_format.lower() == 'csv':
             shared.to_csv(str(season) + str(season + 1), pbp_df, None, "nwhl")
@@ -159,7 +168,6 @@ def scrape_seasons(seasons, data_format='csv', rescrape=False, docs_dir=None):
             master_pbps.append(pbp_df)
 
     print_errors()
-
     if data_format.lower() == 'pandas':
         return pd.concat(master_pbps, sort=True)
 
