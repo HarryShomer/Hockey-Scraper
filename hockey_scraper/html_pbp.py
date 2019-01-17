@@ -65,7 +65,7 @@ def get_soup(game_html):
     """
     strainer = SoupStrainer('td', attrs={'class': re.compile(r'bborder')})
     soup = BeautifulSoup(game_html, "lxml", parse_only=strainer)
-    soup = soup.select('td.+.bborder')
+    soup = soup.find_all("td", {"class": re.compile('.*bborder.*')})
 
     if len(soup) == 0:
         soup = BeautifulSoup(game_html, "html.parser", parse_only=strainer)
