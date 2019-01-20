@@ -296,6 +296,9 @@ def add_score(event_dict, event, current_score, home_team):
     
     :return: None
     """
+    event_dict['Home_Score'] = current_score['Home']
+    event_dict['Away_Score'] = current_score['Away']
+    event_dict['score_diff'] = current_score['Home'] - current_score['Away']
 
     # If it's a goal change the score
     if event[4] == 'GOAL':
@@ -303,10 +306,6 @@ def add_score(event_dict, event, current_score, home_team):
             current_score['Home'] += 1
         else:
             current_score['Away'] += 1
-
-    event_dict['Home_Score'] = current_score['Home']
-    event_dict['Away_Score'] = current_score['Away']
-    event_dict['score_diff'] = current_score['Home'] - current_score['Away']
 
 
 def get_penalty(play_description, players, home_team):
