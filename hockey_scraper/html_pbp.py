@@ -386,10 +386,7 @@ def if_valid_event(event):
     
     :return: boolean 
     """
-    if event[0] != '#' and event[4] not in ['GOFF', 'EGT', 'PGSTR', 'PGEND', 'ANTHEM']:
-        return True
-    else:
-        return False
+    return event[0] != '#' and event[4] not in ['GOFF', 'EGT', 'PGSTR', 'PGEND', 'ANTHEM']
 
 
 def return_name_html(info):

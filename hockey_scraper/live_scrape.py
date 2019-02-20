@@ -168,13 +168,12 @@ class LiveGame:
         # Don't bother with scraper warnings
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
-            # Scrape pbp - pay attention to each argument
+            # pay attention to each argument
             self.pbp_df, self.html_game_status = game_scraper.scrape_pbp_live(self.game_id, self.date,
                                                                               {"head_coaches": self.head_coaches},
                                                                               game_json, self.players,
                                                                               {"Home": self.home_team, "Away": self.away_team},
                                                                               espn_id=self.espn_id)
-            # Get shifts if asked for
             if self.if_scrape_shifts:
                 self.shifts_df = game_scraper.scrape_shifts(self.game_id, self.players, self.date)
 
@@ -223,9 +222,9 @@ class LiveGame:
         :return: Boolean - True if over
         """
         if not prev:
-            return True if self.html_game_status == self.api_game_status == "Final" else False
+            return self.html_game_status == self.api_game_status == "Final"
         else:
-            return True if self.prev_html_game_status == self.prev_api_game_status == "Final" else False
+            return self.prev_html_game_status == self.prev_api_game_status == "Final"
 
     def is_intermission(self, prev=False):
         """
@@ -236,9 +235,9 @@ class LiveGame:
         :return: Boolean - True if yes
         """
         if not prev:
-            return True if self.html_game_status == self.api_game_status == "Intermission" else False
+            return self.html_game_status == self.api_game_status == "Intermission"
         else:
-            return True if self.prev_html_game_status == self.prev_api_game_status == "Intermission" else False
+            return self.prev_html_game_status == self.prev_api_game_status == "Intermission"
 
     def get_pbp(self):
         """
@@ -390,5 +389,5 @@ class ScrapeLiveGames:
                 finished_games += 1
 
         # If the # of finished games == # of total games
-        return True if len(self.live_games) == finished_games else False
+        return len(self.live_games) == finished_games
 
