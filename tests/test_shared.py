@@ -66,7 +66,7 @@ def test_add_dir():
     # Checks when it doesn't exist
     user_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "hopefully_this_path_doesnt_exist")
     shared.add_dir(user_dir)
-    assert shared.docs_dir is None
+    assert shared.docs_dir is False
 
 
 def test_get_file(file_info):

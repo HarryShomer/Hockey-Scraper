@@ -101,7 +101,8 @@ def scrape_list_of_games(games, if_scrape_shifts):
     return pbp_df, shifts_df
 
 
-def scrape_date_range(from_date, to_date, if_scrape_shifts, data_format='csv', preseason=False, rescrape=False, docs_dir=None):
+def scrape_date_range(from_date, to_date, if_scrape_shifts, data_format='csv', preseason=False, rescrape=False,
+                      docs_dir=False):
     """
     Scrape games in given date range
     
@@ -113,7 +114,9 @@ def scrape_date_range(from_date, to_date, if_scrape_shifts, data_format='csv', p
                       This is may or may not work!!! I don't give a shit.
     :param rescrape: If you want to rescrape pages already scraped. Only applies if you supply a docs dir. (def. = None)
     :param docs_dir: Directory that either contains previously scraped docs or one that you want them to be deposited 
-                     in after scraping. (default is None)
+                     in after scraping. When True it'll refer to (or if needed create) such a repository in the home
+                     directory. When provided a string it'll try to use that. Here it must be a valid directory otheriwse
+                     it won't work (I won't make it for you). When False the files won't be saved.
     
     :return: Dictionary with DataFrames and errors or None
     """
@@ -135,7 +138,7 @@ def scrape_date_range(from_date, to_date, if_scrape_shifts, data_format='csv', p
                                                                                                 "errors": errors}
 
 
-def scrape_seasons(seasons, if_scrape_shifts, data_format='csv', preseason=False, rescrape=False, docs_dir=None):
+def scrape_seasons(seasons, if_scrape_shifts, data_format='csv', preseason=False, rescrape=False, docs_dir=False):
     """
     Given list of seasons it scrapes all the seasons 
     
@@ -146,7 +149,9 @@ def scrape_seasons(seasons, if_scrape_shifts, data_format='csv', preseason=False
                       This is may or may not work!!! I don't give a shit.
     :param rescrape: If you want to rescrape pages already scraped. Only applies if you supply a docs dir.
     :param docs_dir: Directory that either contains previously scraped docs or one that you want them to be deposited 
-                     in after scraping
+                     in after scraping. When True it'll refer to (or if needed create) such a repository in the home
+                     directory. When provided a string it'll try to use that. Here it must be a valid directory otheriwse
+                     it won't work (I won't make it for you). When False the files won't be saved.
     
     :return: Dictionary with DataFrames and errors or None
     """
@@ -180,7 +185,7 @@ def scrape_seasons(seasons, if_scrape_shifts, data_format='csv', preseason=False
             return {"pbp": pd.concat(master_pbps), "errors": errors}
 
 
-def scrape_games(games, if_scrape_shifts, data_format='csv', rescrape=False, docs_dir=None):
+def scrape_games(games, if_scrape_shifts, data_format='csv', rescrape=False, docs_dir=False):
     """
     Scrape a list of games
     
@@ -189,7 +194,9 @@ def scrape_games(games, if_scrape_shifts, data_format='csv', rescrape=False, doc
     :param data_format: format you want data in - csv or pandas (csv is default)
     :param rescrape: If you want to rescrape pages already scraped. Only applies if you supply a docs dir.
     :param docs_dir: Directory that either contains previously scraped docs or one that you want them to be deposited 
-                     in after scraping
+                     in after scraping. When True it'll refer to (or if needed create) such a repository in the home
+                     directory. When provided a string it'll try to use that. Here it must be a valid directory otheriwse
+                     it won't work (I won't make it for you). When False the files won't be saved. 
     
     :return: Dictionary with DataFrames and errors or None
     """

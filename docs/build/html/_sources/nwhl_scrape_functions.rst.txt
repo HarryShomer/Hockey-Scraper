@@ -48,15 +48,15 @@ Scrape all games between a specified date range. All dates must be written in a 
 
 Scrape Functions
 ~~~~~~~~~~~~~~~~
-.. automodule:: hockey_scraper.nwhl.scrape_functions
+.. automodule:: hockey_scraper.scrape_functions_nwhl
    :members:
 
 Html Schedule
 ~~~~~~~~~~~~~
-.. automodule:: hockey_scraper.nwhl.html_schedule
+.. automodule:: hockey_scraper.html_schedule_nwhl
    :members:
 
 Json PBP
 ~~~~~~~~
-.. automodule:: hockey_scraper.nwhl.json_pbp
+.. automodule:: hockey_scraper.json_pbp_nwhl
    :members:

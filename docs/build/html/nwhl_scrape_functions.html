@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>NWHL Scraping Functions &#8212; hockey_scraper 1.2.8 documentation</title>
+    <title>NWHL Scraping Functions &#8212; hockey_scraper 1.3.1 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '1.2.8',
+        VERSION:     '1.3.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -45,7 +45,7 @@
         <li class="right" >
           <a href="nhl_scrape_functions.html" title="NHL Scraping Functions"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">hockey_scraper 1.2.8 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">hockey_scraper 1.3.1 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -91,12 +91,12 @@ So you would refer to the 2016-2017 season as 2016).</p>
 <span class="n">hockey_scraper</span><span class="o">.</span><span class="n">nwhl</span><span class="o">.</span><span class="n">scrape_date_range</span><span class="p">(</span><span class="s1">&#39;2016-10-10&#39;</span><span class="p">,</span> <span class="s1">&#39;2017-01-01&#39;</span><span class="p">,</span> <span class="n">data_format</span><span class="o">=</span><span class="s1">&#39;pandas&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="section" id="module-hockey_scraper.nwhl.scrape_functions">
-<span id="scrape-functions"></span><h3>Scrape Functions<a class="headerlink" href="#module-hockey_scraper.nwhl.scrape_functions" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="module-hockey_scraper.scrape_functions_nwhl">
+<span id="scrape-functions"></span><h3>Scrape Functions<a class="headerlink" href="#module-hockey_scraper.scrape_functions_nwhl" title="Permalink to this headline">¶</a></h3>
 <p>Functions to scrape by season, games, and date range</p>
 <dl class="function">
-<dt id="hockey_scraper.nwhl.scrape_functions.print_errors">
-<code class="descclassname">hockey_scraper.nwhl.scrape_functions.</code><code class="descname">print_errors</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nwhl.scrape_functions.print_errors" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.scrape_functions_nwhl.print_errors">
+<code class="descclassname">hockey_scraper.scrape_functions_nwhl.</code><code class="descname">print_errors</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.scrape_functions_nwhl.print_errors" title="Permalink to this definition">¶</a></dt>
 <dd><p>Print any scraping errors.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -109,8 +109,8 @@ So you would refer to the 2016-2017 season as 2016).</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.nwhl.scrape_functions.scrape_date_range">
-<code class="descclassname">hockey_scraper.nwhl.scrape_functions.</code><code class="descname">scrape_date_range</code><span class="sig-paren">(</span><em>from_date</em>, <em>to_date</em>, <em>data_format='csv'</em>, <em>rescrape=False</em>, <em>docs_dir=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nwhl.scrape_functions.scrape_date_range" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.scrape_functions_nwhl.scrape_date_range">
+<code class="descclassname">hockey_scraper.scrape_functions_nwhl.</code><code class="descname">scrape_date_range</code><span class="sig-paren">(</span><em>from_date</em>, <em>to_date</em>, <em>data_format='csv'</em>, <em>rescrape=False</em>, <em>docs_dir=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.scrape_functions_nwhl.scrape_date_range" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape games in given date range</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -134,8 +134,8 @@ in after scraping. (default is None)</li>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.nwhl.scrape_functions.scrape_games">
-<code class="descclassname">hockey_scraper.nwhl.scrape_functions.</code><code class="descname">scrape_games</code><span class="sig-paren">(</span><em>games</em>, <em>data_format='csv'</em>, <em>rescrape=False</em>, <em>docs_dir=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nwhl.scrape_functions.scrape_games" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.scrape_functions_nwhl.scrape_games">
+<code class="descclassname">hockey_scraper.scrape_functions_nwhl.</code><code class="descname">scrape_games</code><span class="sig-paren">(</span><em>games</em>, <em>data_format='csv'</em>, <em>rescrape=False</em>, <em>docs_dir=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.scrape_functions_nwhl.scrape_games" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape a list of games</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -158,8 +158,8 @@ in after scraping</li>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.nwhl.scrape_functions.scrape_list_of_games">
-<code class="descclassname">hockey_scraper.nwhl.scrape_functions.</code><code class="descname">scrape_list_of_games</code><span class="sig-paren">(</span><em>games</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nwhl.scrape_functions.scrape_list_of_games" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.scrape_functions_nwhl.scrape_list_of_games">
+<code class="descclassname">hockey_scraper.scrape_functions_nwhl.</code><code class="descname">scrape_list_of_games</code><span class="sig-paren">(</span><em>games</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.scrape_functions_nwhl.scrape_list_of_games" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape an arbitrary list of games given the game id&#8217;s</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -174,8 +174,8 @@ in after scraping</li>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.nwhl.scrape_functions.scrape_seasons">
-<code class="descclassname">hockey_scraper.nwhl.scrape_functions.</code><code class="descname">scrape_seasons</code><span class="sig-paren">(</span><em>seasons</em>, <em>data_format='csv'</em>, <em>rescrape=False</em>, <em>docs_dir=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nwhl.scrape_functions.scrape_seasons" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.scrape_functions_nwhl.scrape_seasons">
+<code class="descclassname">hockey_scraper.scrape_functions_nwhl.</code><code class="descname">scrape_seasons</code><span class="sig-paren">(</span><em>seasons</em>, <em>data_format='csv'</em>, <em>rescrape=False</em>, <em>docs_dir=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.scrape_functions_nwhl.scrape_seasons" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given list of seasons it scrapes all the seasons</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -198,12 +198,12 @@ in after scraping</li>
 </dd></dl>
 
 </div>
-<div class="section" id="module-hockey_scraper.nwhl.html_schedule">
-<span id="html-schedule"></span><h3>Html Schedule<a class="headerlink" href="#module-hockey_scraper.nwhl.html_schedule" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="module-hockey_scraper.html_schedule_nwhl">
+<span id="html-schedule"></span><h3>Html Schedule<a class="headerlink" href="#module-hockey_scraper.html_schedule_nwhl" title="Permalink to this headline">¶</a></h3>
 <p>Scrape the schedule info for nwhl games</p>
 <dl class="function">
-<dt id="hockey_scraper.nwhl.html_schedule.date_obj">
-<code class="descclassname">hockey_scraper.nwhl.html_schedule.</code><code class="descname">date_obj</code><span class="sig-paren">(</span><em>date</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nwhl.html_schedule.date_obj" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.html_schedule_nwhl.date_obj">
+<code class="descclassname">hockey_scraper.html_schedule_nwhl.</code><code class="descname">date_obj</code><span class="sig-paren">(</span><em>date</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_schedule_nwhl.date_obj" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert date string to a datetime object</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -218,8 +218,8 @@ in after scraping</li>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.nwhl.html_schedule.get_date_games">
-<code class="descclassname">hockey_scraper.nwhl.html_schedule.</code><code class="descname">get_date_games</code><span class="sig-paren">(</span><em>date_info</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nwhl.html_schedule.get_date_games" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.html_schedule_nwhl.get_date_games">
+<code class="descclassname">hockey_scraper.html_schedule_nwhl.</code><code class="descname">get_date_games</code><span class="sig-paren">(</span><em>date_info</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_schedule_nwhl.get_date_games" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get all the games corresponding to a certain date</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -234,8 +234,8 @@ in after scraping</li>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.nwhl.html_schedule.get_dates">
-<code class="descclassname">hockey_scraper.nwhl.html_schedule.</code><code class="descname">get_dates</code><span class="sig-paren">(</span><em>from_date</em>, <em>to_date</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nwhl.html_schedule.get_dates" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.html_schedule_nwhl.get_dates">
+<code class="descclassname">hockey_scraper.html_schedule_nwhl.</code><code class="descname">get_dates</code><span class="sig-paren">(</span><em>from_date</em>, <em>to_date</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_schedule_nwhl.get_dates" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get all the date pages that a game occurs in the range</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -255,8 +255,8 @@ in after scraping</li>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.nwhl.html_schedule.get_schedule">
-<code class="descclassname">hockey_scraper.nwhl.html_schedule.</code><code class="descname">get_schedule</code><span class="sig-paren">(</span><em>url</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nwhl.html_schedule.get_schedule" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.html_schedule_nwhl.get_schedule">
+<code class="descclassname">hockey_scraper.html_schedule_nwhl.</code><code class="descname">get_schedule</code><span class="sig-paren">(</span><em>url</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_schedule_nwhl.get_schedule" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a date it returns the raw html</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -276,8 +276,8 @@ in after scraping</li>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.nwhl.html_schedule.get_sub_dates">
-<code class="descclassname">hockey_scraper.nwhl.html_schedule.</code><code class="descname">get_sub_dates</code><span class="sig-paren">(</span><em>url</em>, <em>season</em>, <em>sub_type</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nwhl.html_schedule.get_sub_dates" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.html_schedule_nwhl.get_sub_dates">
+<code class="descclassname">hockey_scraper.html_schedule_nwhl.</code><code class="descname">get_sub_dates</code><span class="sig-paren">(</span><em>url</em>, <em>season</em>, <em>sub_type</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_schedule_nwhl.get_sub_dates" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get dates of games off of sub-season page</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -298,8 +298,8 @@ in after scraping</li>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.nwhl.html_schedule.scrape_dates">
-<code class="descclassname">hockey_scraper.nwhl.html_schedule.</code><code class="descname">scrape_dates</code><span class="sig-paren">(</span><em>from_date</em>, <em>to_date</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nwhl.html_schedule.scrape_dates" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.html_schedule_nwhl.scrape_dates">
+<code class="descclassname">hockey_scraper.html_schedule_nwhl.</code><code class="descname">scrape_dates</code><span class="sig-paren">(</span><em>from_date</em>, <em>to_date</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_schedule_nwhl.scrape_dates" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get all the games between two dates</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -319,12 +319,12 @@ in after scraping</li>
 </dd></dl>
 
 </div>
-<div class="section" id="module-hockey_scraper.nwhl.json_pbp">
-<span id="json-pbp"></span><h3>Json PBP<a class="headerlink" href="#module-hockey_scraper.nwhl.json_pbp" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="module-hockey_scraper.json_pbp_nwhl">
+<span id="json-pbp"></span><h3>Json PBP<a class="headerlink" href="#module-hockey_scraper.json_pbp_nwhl" title="Permalink to this headline">¶</a></h3>
 <p>Scrape the PBP info for a given game</p>
 <dl class="function">
-<dt id="hockey_scraper.nwhl.json_pbp.get_goal_players">
-<code class="descclassname">hockey_scraper.nwhl.json_pbp.</code><code class="descname">get_goal_players</code><span class="sig-paren">(</span><em>play</em>, <em>event</em>, <em>players</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nwhl.json_pbp.get_goal_players" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.json_pbp_nwhl.get_goal_players">
+<code class="descclassname">hockey_scraper.json_pbp_nwhl.</code><code class="descname">get_goal_players</code><span class="sig-paren">(</span><em>play</em>, <em>event</em>, <em>players</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.json_pbp_nwhl.get_goal_players" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get all the players on ice for a goal (modify play object)</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -345,8 +345,8 @@ in after scraping</li>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.nwhl.json_pbp.get_pbp">
-<code class="descclassname">hockey_scraper.nwhl.json_pbp.</code><code class="descname">get_pbp</code><span class="sig-paren">(</span><em>game_id</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nwhl.json_pbp.get_pbp" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.json_pbp_nwhl.get_pbp">
+<code class="descclassname">hockey_scraper.json_pbp_nwhl.</code><code class="descname">get_pbp</code><span class="sig-paren">(</span><em>game_id</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.json_pbp_nwhl.get_pbp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the response for a game (e.g. <a class="reference external" href="https://www.nwhl.zone/game/get_play_by_plays?id=18507472">https://www.nwhl.zone/game/get_play_by_plays?id=18507472</a>)</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -361,8 +361,8 @@ in after scraping</li>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.nwhl.json_pbp.get_roster">
-<code class="descclassname">hockey_scraper.nwhl.json_pbp.</code><code class="descname">get_roster</code><span class="sig-paren">(</span><em>game_json</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nwhl.json_pbp.get_roster" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.json_pbp_nwhl.get_roster">
+<code class="descclassname">hockey_scraper.json_pbp_nwhl.</code><code class="descname">get_roster</code><span class="sig-paren">(</span><em>game_json</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.json_pbp_nwhl.get_roster" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse the roster info in the game json</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -377,8 +377,8 @@ in after scraping</li>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.nwhl.json_pbp.parse_event">
-<code class="descclassname">hockey_scraper.nwhl.json_pbp.</code><code class="descname">parse_event</code><span class="sig-paren">(</span><em>event</em>, <em>score</em>, <em>teams</em>, <em>date</em>, <em>game_id</em>, <em>players</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nwhl.json_pbp.parse_event" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.json_pbp_nwhl.parse_event">
+<code class="descclassname">hockey_scraper.json_pbp_nwhl.</code><code class="descname">parse_event</code><span class="sig-paren">(</span><em>event</em>, <em>score</em>, <em>teams</em>, <em>date</em>, <em>game_id</em>, <em>players</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.json_pbp_nwhl.parse_event" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parses a single event when the info is in a json format</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -402,8 +402,8 @@ in after scraping</li>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.nwhl.json_pbp.parse_json">
-<code class="descclassname">hockey_scraper.nwhl.json_pbp.</code><code class="descname">parse_json</code><span class="sig-paren">(</span><em>game_json</em>, <em>game_id</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nwhl.json_pbp.parse_json" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.json_pbp_nwhl.parse_json">
+<code class="descclassname">hockey_scraper.json_pbp_nwhl.</code><code class="descname">parse_json</code><span class="sig-paren">(</span><em>game_json</em>, <em>game_id</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.json_pbp_nwhl.parse_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape the json for a game</p>
 <p>plus, minus players</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -424,8 +424,8 @@ in after scraping</li>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.nwhl.json_pbp.scrape_pbp">
-<code class="descclassname">hockey_scraper.nwhl.json_pbp.</code><code class="descname">scrape_pbp</code><span class="sig-paren">(</span><em>game_id</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nwhl.json_pbp.scrape_pbp" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.json_pbp_nwhl.scrape_pbp">
+<code class="descclassname">hockey_scraper.json_pbp_nwhl.</code><code class="descname">scrape_pbp</code><span class="sig-paren">(</span><em>game_id</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.json_pbp_nwhl.scrape_pbp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape the pbp data for a given game</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -453,9 +453,9 @@ in after scraping</li>
   <ul>
 <li><a class="reference internal" href="#">NWHL Scraping Functions</a><ul>
 <li><a class="reference internal" href="#scraping">Scraping</a><ul>
-<li><a class="reference internal" href="#module-hockey_scraper.nwhl.scrape_functions">Scrape Functions</a></li>
-<li><a class="reference internal" href="#module-hockey_scraper.nwhl.html_schedule">Html Schedule</a></li>
-<li><a class="reference internal" href="#module-hockey_scraper.nwhl.json_pbp">Json PBP</a></li>
+<li><a class="reference internal" href="#module-hockey_scraper.scrape_functions_nwhl">Scrape Functions</a></li>
+<li><a class="reference internal" href="#module-hockey_scraper.html_schedule_nwhl">Html Schedule</a></li>
+<li><a class="reference internal" href="#module-hockey_scraper.json_pbp_nwhl">Json PBP</a></li>
 </ul>
 </li>
 </ul>
@@ -504,7 +504,7 @@ in after scraping</li>
         <li class="right" >
           <a href="nhl_scrape_functions.html" title="NHL Scraping Functions"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">hockey_scraper 1.2.8 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">hockey_scraper 1.3.1 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

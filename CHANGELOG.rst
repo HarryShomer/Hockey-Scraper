@@ -21,3 +21,9 @@ v1.3
 ----
 
   * Added functionality to scrape NWHL data
+
+v1.31
+-----
+
+  * Added functionality to automatically create docs_dir
+  * Added folder to store csv files

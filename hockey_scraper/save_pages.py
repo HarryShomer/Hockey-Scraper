@@ -1,7 +1,5 @@
 """Saves the scraped docs so you don't have to re-scrape them every time you want to parse the docs. 
 
-This only works if you specified a valid directory in hockey_scraper.shared.docs_dir. If not nothing will be saved or
-be retrieved (if it exists but you didn't set it)
 
 \**** Don't mess with this unless you know what you're doing \****
 """
@@ -67,6 +65,7 @@ def check_file_exists(file_info):
     # Create the docs subdir if it doesn't exist
     if not os.path.isdir(os.path.join(file_info['dir'], 'docs')):
         os.mkdir("docs")
+        os.mkdir("csvs")
 
     # Check if the folder for the season for the given game was created yet...if not create it
     if not os.path.isdir(os.path.join(file_info['dir'], '/'.join(['docs', str(file_info['season'])]))):
@@ -102,6 +101,6 @@ def save_page(page, file_info, docs_dir):
 
     :return: None
     """
-    if docs_dir is not None and page is not None and page != '':
+    if docs_dir and page is not None and page != '':
         with open(create_file_path(file_info), 'w') as file:
             file.write(page)

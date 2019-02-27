@@ -21,7 +21,7 @@ def custom_formatwarning(msg, *args, **kwargs): return "Warning: " + str(msg) + 
 warnings.formatwarning = custom_formatwarning
 
 # Directory where to save pages
-docs_dir = None
+docs_dir = False
 
 # Boolean that tells us whether or not we should re-scrape a given page if it's already saved
 re_scrape = False
@@ -254,24 +254,38 @@ def if_rescrape(user_rescrape):
 
 def add_dir(user_dir):
     """
-    Add directory to store scraped docs if valid.
+    Add directory to store scraped docs if valid. Or create in the home dir
 
     NOTE: After this functions docs_dir is either None or a valid directory
 
-    :param user_dir: User provided directory on their machine
+    :param user_dir: If bool=True create in the home dire or if user provided directory on their machine
 
     :return: None
     """
     global docs_dir
 
-    # Nothing was provided...don't give a shit
-    if user_dir is None:
+    # False so they don't want it
+    if not user_dir:
+        docs_dir = False
         return
 
-    if os.path.isdir(user_dir):
+    # Something was given
+    # Either True or stirng to directory
+    # We tell by the type
+    # If boolean refer to the home directory
+    if isinstance(user_dir, bool):
+        docs_dir = os.path.join(os.path.expanduser('~'), "hockey_scraper_data")
+        # Create if needed
+        if not os.path.isdir(docs_dir):
+            print_warning("Creating the hockey_scraper_data directory in the home directory")
+            os.mkdir(docs_dir)
+    elif isinstance(user_dir, str) and os.path.isdir(user_dir):
         docs_dir = user_dir
+    elif not (isinstance(user_dir, str) and isinstance(user_dir, bool)):
+        docs_dir = False
+        print_warning("The docs_dir argument provided is invalid")
     else:
-        docs_dir = None
+        docs_dir = False
         print_warning("The directory specified for the saving of scraped docs doesn't exist. Therefore:"
               "\n1. All specified games will be scraped from their appropriate sources (NHL or ESPN)."
               "\n2. All scraped files will NOT be saved at all. Please either create the directory you want them to be "
@@ -294,11 +308,11 @@ def get_file(file_info):
     file_info['dir'] = docs_dir
 
     # If something is provided...we try to change the cwd
-    if file_info['dir'] is not None:
+    if file_info['dir']:
         os.chdir(file_info['dir'])
 
     # If everything checks out we'll retrieve it, otherwise we scrape it
-    if docs_dir is not None and sp.check_file_exists(file_info) and re_scrape is False:
+    if docs_dir and sp.check_file_exists(file_info) and re_scrape is False:
         page = sp.get_page(file_info)
     else:
         page = scrape_page(file_info['url'])
@@ -341,20 +355,36 @@ def check_valid_dates(from_date, to_date):
                             "(ex: '2016-10-01').")
 
 
-def to_csv(file_name, pbp_df, shifts_df, league):
+def to_csv(base_file_name, pbp_df, shifts_df, league):
     """
     Write DataFrame(s) to csv file(s)
 
-    :param file_name: name of file
+    :param base_file_name: name of file
     :param pbp_df: pbp DataFrame
     :param shifts_df: shifts DataFrame
     :param league: nhl or nwhl
 
     :return: None
     """
+    pbp_file = shifts_file = base_file_name
+
+    # This was a late addition so we add support here
+    if isinstance(docs_dir, str) and not os.path.isdir(os.path.join(docs_dir, "csvs")):
+        os.mkdir(os.path.join(docs_dir, "csvs"))
+
     if pbp_df is not None:
-        print("\nPbp data deposited in file - " + '{}_pbp{}.csv'.format(league, file_name))
-        pbp_df.to_csv('{}_pbp{}.csv'.format(league, file_name), sep=',', encoding='utf-8')
+        if isinstance(docs_dir, str):
+            pbp_file = os.path.join(docs_dir, "csvs", '{}_pbp{}.csv'.format(league, base_file_name))
+        else:
+            pbp_file = '{}_pbp{}.csv'.format(league, pbp_file)
+
+        print("\nPbp data deposited in file - " + pbp_file)
+        pbp_df.to_csv(pbp_file, sep=',', encoding='utf-8')
     if shifts_df is not None:
-        print("Shift data deposited in file - " + '{}_shifts{}.csv'.format(league, file_name))
-        shifts_df.to_csv('{}_shifts{}.csv'.format(league, file_name), sep=',', encoding='utf-8')
+        if isinstance(docs_dir, str):
+            shifts_file = os.path.join(docs_dir, "csvs", '{}_shifts{}.csv'.format(league, base_file_name))
+        else:
+            shifts_file = '{}_shifts{}.csv'.format(league, shifts_file)
+
+        print("Shift data deposited in file - " + shifts_file)
+        shifts_df.to_csv(shifts_file, sep=',', encoding='utf-8')
