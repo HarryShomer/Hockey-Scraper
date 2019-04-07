@@ -1,8 +1,10 @@
 """ Tests for 'game_scraper.py' """
 
-import pytest
 import pandas as pd
-from hockey_scraper import game_scraper, json_pbp, playing_roster
+import pytest
+
+from hockey_scraper.nhl import game_scraper, playing_roster
+from hockey_scraper.nhl.pbp import json_pbp
 
 
 @pytest.fixture

@@ -2,10 +2,12 @@
 This module contains functions to scrape the Json Play by Play for any given game
 """
 
-import pandas as pd
 import json
 from operator import itemgetter
-import hockey_scraper.shared as shared
+
+import pandas as pd
+
+import hockey_scraper.utils.shared as shared
 
 
 def get_pbp(game_id):

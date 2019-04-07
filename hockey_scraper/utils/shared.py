@@ -7,10 +7,12 @@ This file is a bunch of the shared functions or just general stuff used by the d
 import os
 import time
 import warnings
+
 import requests
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
-import hockey_scraper.save_pages as sp
+
+from . import save_pages as sp
 
 
 # When we want to kill the current process

@@ -1,8 +1,9 @@
 """ Tests for 'html_pbp.py' """
 
-import pytest
 import pandas as pd
-from hockey_scraper import html_pbp
+import pytest
+
+from hockey_scraper.nhl.pbp import html_pbp
 
 
 # TODO: Fill out the rest of the test here and in the file (the important ones there)

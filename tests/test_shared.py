@@ -2,8 +2,10 @@
 
 import os
 import shutil
+
 import pytest
-from hockey_scraper import shared
+
+from hockey_scraper.utils import shared
 
 
 @pytest.fixture

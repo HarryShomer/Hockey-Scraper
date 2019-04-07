@@ -1,10 +1,10 @@
 """
 Scrape the schedule info for nwhl games
 """
-import re
 import datetime
+import re
 from bs4 import BeautifulSoup
-import hockey_scraper.shared as shared
+import hockey_scraper.utils.shared as shared
 
 
 def get_schedule(url, name):

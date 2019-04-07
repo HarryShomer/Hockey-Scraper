@@ -1,11 +1,12 @@
 """
 Functions to scrape by season, games, and date range
 """
-import hockey_scraper.shared as shared
-import hockey_scraper.json_pbp_nwhl as json_pbp
-import hockey_scraper.html_schedule_nwhl as html_schedule
-import pandas as pd
 import random
+
+import pandas as pd
+
+from . import html_schedule, json_pbp
+import hockey_scraper.utils.shared as shared
 
 # All columns for the pbp
 cols = ['game_id', 'date', 'season', 'period', 'seconds_elapsed', 'event', 'ev_team', 'home_team', 'away_team',

@@ -1,9 +1,10 @@
 """ Tests for 'html_shifts.py' """
 
+import bs4
 import pandas as pd
 import pytest
-import bs4
-from hockey_scraper import html_shifts
+
+from hockey_scraper.nhl.shifts import html_shifts
 
 
 @pytest.fixture

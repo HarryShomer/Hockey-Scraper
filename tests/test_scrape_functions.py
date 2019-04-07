@@ -1,9 +1,8 @@
 """ Tests for 'scrape_functions.py' """
 
-import pytest
 import pandas as pd
-from hockey_scraper import scrape_functions
-import hockey_scraper.shared as shared
+
+from hockey_scraper.nhl import scrape_functions
 
 
 def test_scrape_list_of_games():

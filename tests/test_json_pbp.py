@@ -1,7 +1,8 @@
 """Tests for 'json_pbp.py'"""
 
 import pandas as pd
-from hockey_scraper import json_pbp
+
+from hockey_scraper.nhl.pbp import json_pbp
 
 
 def test_get_pbp():

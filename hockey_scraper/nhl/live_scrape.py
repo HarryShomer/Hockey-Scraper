@@ -1,17 +1,18 @@
 """
 Module to scrape live game info
 """
-import pandas as pd
 import datetime
-import warnings
 import time
+import warnings
 
-import hockey_scraper.json_schedule as json_schedule
-import hockey_scraper.espn_pbp as espn_pbp
-import hockey_scraper.playing_roster as playing_roster
-import hockey_scraper.game_scraper as game_scraper
-import hockey_scraper.json_pbp as json_pbp
-import hockey_scraper.shared as shared
+import pandas as pd
+
+import hockey_scraper.nhl.game_scraper as game_scraper
+import hockey_scraper.nhl.json_schedule as json_schedule
+import hockey_scraper.nhl.pbp.espn_pbp as espn_pbp
+import hockey_scraper.nhl.pbp.json_pbp as json_pbp
+import hockey_scraper.nhl.playing_roster as playing_roster
+import hockey_scraper.utils.shared as shared
 
 
 def set_docs_dir(user_dir):

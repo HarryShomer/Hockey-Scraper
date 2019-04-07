@@ -2,14 +2,15 @@
 This module contains code to scrape data for a single game
 """
 
-import hockey_scraper.json_pbp as json_pbp
-import hockey_scraper.html_pbp as html_pbp
-import hockey_scraper.espn_pbp as espn_pbp
-import hockey_scraper.json_shifts as json_shifts
-import hockey_scraper.html_shifts as html_shifts
-import hockey_scraper.playing_roster as playing_roster
-import hockey_scraper.shared as shared
 import pandas as pd
+
+import hockey_scraper.nhl.pbp.espn_pbp as espn_pbp
+import hockey_scraper.nhl.pbp.html_pbp as html_pbp
+import hockey_scraper.nhl.pbp.json_pbp as json_pbp
+import hockey_scraper.nhl.playing_roster as playing_roster
+import hockey_scraper.nhl.shifts.html_shifts as html_shifts
+import hockey_scraper.nhl.shifts.json_shifts as json_shifts
+import hockey_scraper.utils.shared as shared
 
 broken_shifts_games = []
 broken_pbp_games = []

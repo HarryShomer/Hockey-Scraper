@@ -2,9 +2,11 @@
 This module contains functions to scrape the Json toi/shifts for any given game
 """
 
-import pandas as pd
 import json
-import hockey_scraper.shared as shared
+
+import pandas as pd
+
+import hockey_scraper.utils.shared as shared
 
 
 def get_shifts(game_id):

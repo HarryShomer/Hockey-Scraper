@@ -1,7 +1,8 @@
 """Tests for 'json_shifts.py'"""
 
 import pandas as pd
-from hockey_scraper import json_shifts
+
+from hockey_scraper.nhl.shifts import json_shifts
 
 
 def test_get_shifts():

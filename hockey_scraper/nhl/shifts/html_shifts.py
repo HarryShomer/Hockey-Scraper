@@ -2,10 +2,12 @@
 This module contains functions to scrape the Html Toi Tables (or shifts) for any given game
 """
 
+import re
+
 import pandas as pd
 from bs4 import BeautifulSoup
-import re
-import hockey_scraper.shared as shared
+
+import hockey_scraper.utils.shared as shared
 
 
 def get_shifts(game_id):

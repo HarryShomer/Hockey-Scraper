@@ -1,10 +1,10 @@
 """
 Scrape the PBP info for a given game
 """
-import pandas as pd
-import json
 import datetime
-import hockey_scraper.shared as shared
+import json
+import pandas as pd
+import hockey_scraper.utils.shared as shared
 
 
 def get_pbp(game_id):

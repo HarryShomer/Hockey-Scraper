@@ -2,10 +2,12 @@
 This module contains functions to scrape the Html Play by Play for any given game
 """
 
+import re
+
 import pandas as pd
 from bs4 import BeautifulSoup, SoupStrainer
-import re
-import hockey_scraper.shared as shared
+
+import hockey_scraper.utils.shared as shared
 
 
 def cur_game_status(doc):

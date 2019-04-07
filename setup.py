@@ -9,10 +9,7 @@ setup(
     name='hockey_scraper',
     version='1.31',
     description="""This package is designed to allow one to scrape the raw data for both the National Hockey League
-                   (NHL) and the National Women's Hockey League (NWHL) off of their respective API and websites. For the 
-                   NHL it allows one to scrape the Play by Play and Shift data since the 2007-2008 season. For the 
-                   NWHL is allows one to scrape the Play by Play data since the 2015-2016 season. This package supports 
-                   the scraping of all preseason, regular season, and playoff games for both leagues.""",
+                   (NHL) and the National Women's Hockey League (NWHL) off of their respective API and websites.""",
     long_description=read(),
     classifiers=[
         "Development Status :: 5 - Production/Stable",

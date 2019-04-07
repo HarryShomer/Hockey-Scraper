@@ -1,6 +1,7 @@
 """Tests for 'json_schedule.py'"""
-from hockey_scraper import json_schedule
 import datetime
+
+from hockey_scraper.nhl import json_schedule
 
 
 def test_get_schedule():

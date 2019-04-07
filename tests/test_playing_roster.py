@@ -1,7 +1,8 @@
 """Test for 'playing_roster.py'"""
 
 import pytest
-from hockey_scraper import playing_roster
+
+from hockey_scraper.nhl import playing_roster
 
 
 @pytest.fixture

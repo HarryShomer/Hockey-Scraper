@@ -1,8 +1,9 @@
 """ Tests for 'espn_pbp.py' """
 
-import pytest
 import pandas as pd
-from hockey_scraper import espn_pbp
+import pytest
+
+from hockey_scraper.nhl.pbp import espn_pbp
 
 
 @pytest.fixture

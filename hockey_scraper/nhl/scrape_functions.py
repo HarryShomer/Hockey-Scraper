@@ -2,12 +2,13 @@
 Functions to scrape by season, games, and date range
 """
 
-import hockey_scraper.json_schedule as json_schedule
-import hockey_scraper.game_scraper as game_scraper
-import hockey_scraper.shared as shared
-import pandas as pd
 import random
 
+import pandas as pd
+
+import hockey_scraper.nhl.game_scraper as game_scraper
+import hockey_scraper.nhl.json_schedule as json_schedule
+import hockey_scraper.utils.shared as shared
 
 # This hold the scraping errors in a string format.
 # This may seem pointless but I have a personal reason for it (I think...)
@@ -132,7 +133,7 @@ def scrape_date_range(from_date, to_date, if_scrape_shifts, data_format='csv', p
     pbp_df, shifts_df = scrape_list_of_games(games, if_scrape_shifts)
 
     if data_format.lower() == 'csv':
-        shared.to_csv(from_date+'--'+to_date, pbp_df, shifts_df, "nhl")
+        shared.to_csv(from_date + '--' + to_date, pbp_df, shifts_df, "nhl")
     else:
         return {"pbp": pbp_df, "shifts": shifts_df, "errors": errors} if if_scrape_shifts else {"pbp": pbp_df,
                                                                                                 "errors": errors}
@@ -173,7 +174,7 @@ def scrape_seasons(seasons, if_scrape_shifts, data_format='csv', preseason=False
         pbp_df, shifts_df = scrape_list_of_games(games, if_scrape_shifts)
 
         if data_format.lower() == 'csv':
-            shared.to_csv(str(season)+str(season+1), pbp_df, shifts_df, "nhl")
+            shared.to_csv(str(season) + str(season + 1), pbp_df, shifts_df, "nhl")
         else:
             master_pbps.append(pbp_df)
             master_shifts.append(shifts_df)
