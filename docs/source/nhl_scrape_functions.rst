@@ -116,55 +116,55 @@ but otherwise it will scrape as if no directory was provided.
 
 Scrape Functions
 ~~~~~~~~~~~~~~~~
-.. automodule:: hockey_scraper.scrape_functions
+.. automodule:: hockey_scraper.nhl.scrape_functions
    :members:
 
 Game Scraper
 ~~~~~~~~~~~~
-.. automodule:: hockey_scraper.game_scraper
+.. automodule:: hockey_scraper.nhl.game_scraper
    :members:
 
 Html PBP
 ~~~~~~~~
-.. automodule:: hockey_scraper.html_pbp
+.. automodule:: hockey_scraper.nhl.pbp.html_pbp
    :members:
 
 Json PBP
 ~~~~~~~~
-.. automodule:: hockey_scraper.json_pbp
+.. automodule:: hockey_scraper.nhl.pbp.json_pbp
    :members:
 
 Espn PBP
 ~~~~~~~~
-.. automodule:: hockey_scraper.espn_pbp
+.. automodule:: hockey_scraper.nhl.pbp.espn_pbp
    :members:
 
 Json Shifts
 ~~~~~~~~~~~
-.. automodule:: hockey_scraper.json_shifts
+.. automodule:: hockey_scraper.nhl.shifts.json_shifts
    :members:
 
 Html Shifts
 ~~~~~~~~~~~
-.. automodule:: hockey_scraper.html_shifts
+.. automodule:: hockey_scraper.nhl.shifts.html_shifts
    :members:
 
 Schedule
 ~~~~~~~~
-.. automodule:: hockey_scraper.json_schedule
+.. automodule:: hockey_scraper.nhl.json_schedule
    :members:
 
 Playing Roster
 ~~~~~~~~~~~~~~
-.. automodule:: hockey_scraper.playing_roster
+.. automodule:: hockey_scraper.nhl.playing_roster
    :members:
 
 Save Pages
 ~~~~~~~~~~
-.. automodule:: hockey_scraper.save_pages
+.. automodule:: hockey_scraper.utils.save_pages
    :members:
 
 Shared Functions
 ~~~~~~~~~~~~~~~~
-.. automodule:: hockey_scraper.shared
+.. automodule:: hockey_scraper.utils.shared
    :members:

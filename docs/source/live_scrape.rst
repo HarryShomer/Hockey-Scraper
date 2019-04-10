@@ -246,5 +246,5 @@ something happened between the last event and the end of the period).
 
 Live Scrape
 ~~~~~~~~~~~
-.. automodule:: hockey_scraper.live_scrape
+.. automodule:: hockey_scraper.nhl.live_scrape
    :members:

@@ -275,12 +275,12 @@ is currently being played. Which means the game: Started, is not in intermission
 the most recent event if the game is over or in intermission. So if the last status was intermission and this one is
 too we know we don&#8217;t need to scrape. But if the last status wasn&#8217;t the means we are missing some information (presumably
 something happened between the last event and the end of the period).</p>
-<div class="section" id="module-hockey_scraper.live_scrape">
-<span id="live-scrape"></span><h3>Live Scrape<a class="headerlink" href="#module-hockey_scraper.live_scrape" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="module-hockey_scraper.nhl.live_scrape">
+<span id="live-scrape"></span><h3>Live Scrape<a class="headerlink" href="#module-hockey_scraper.nhl.live_scrape" title="Permalink to this headline">¶</a></h3>
 <p>Module to scrape live game info</p>
 <dl class="class">
-<dt id="hockey_scraper.live_scrape.LiveGame">
-<em class="property">class </em><code class="descclassname">hockey_scraper.live_scrape.</code><code class="descname">LiveGame</code><span class="sig-paren">(</span><em>game_id</em>, <em>start_time</em>, <em>home_team</em>, <em>away_team</em>, <em>status</em>, <em>espn_id</em>, <em>date</em>, <em>if_scrape_shifts</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.live_scrape.LiveGame" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.live_scrape.LiveGame">
+<em class="property">class </em><code class="descclassname">hockey_scraper.nhl.live_scrape.</code><code class="descname">LiveGame</code><span class="sig-paren">(</span><em>game_id</em>, <em>start_time</em>, <em>home_team</em>, <em>away_team</em>, <em>status</em>, <em>espn_id</em>, <em>date</em>, <em>if_scrape_shifts</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.live_scrape.LiveGame" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is a class holds all the information for a given game</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -309,8 +309,8 @@ something happened between the last event and the end of the period).</p>
 </tbody>
 </table>
 <dl class="method">
-<dt id="hockey_scraper.live_scrape.LiveGame.get_pbp">
-<code class="descname">get_pbp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.live_scrape.LiveGame.get_pbp" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.live_scrape.LiveGame.get_pbp">
+<code class="descname">get_pbp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.live_scrape.LiveGame.get_pbp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the pbp ensure it&#8217;s not None</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -323,8 +323,8 @@ something happened between the last event and the end of the period).</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="hockey_scraper.live_scrape.LiveGame.get_shifts">
-<code class="descname">get_shifts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.live_scrape.LiveGame.get_shifts" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.live_scrape.LiveGame.get_shifts">
+<code class="descname">get_shifts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.live_scrape.LiveGame.get_shifts" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the shifts ensure it&#8217;s not None</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -337,8 +337,8 @@ something happened between the last event and the end of the period).</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="hockey_scraper.live_scrape.LiveGame.is_game_over">
-<code class="descname">is_game_over</code><span class="sig-paren">(</span><em>prev=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.live_scrape.LiveGame.is_game_over" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.live_scrape.LiveGame.is_game_over">
+<code class="descname">is_game_over</code><span class="sig-paren">(</span><em>prev=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.live_scrape.LiveGame.is_game_over" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if the game is over for both the html and json pbp. If prev=True check for the previous event</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -353,8 +353,8 @@ something happened between the last event and the end of the period).</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="hockey_scraper.live_scrape.LiveGame.is_intermission">
-<code class="descname">is_intermission</code><span class="sig-paren">(</span><em>prev=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.live_scrape.LiveGame.is_intermission" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.live_scrape.LiveGame.is_intermission">
+<code class="descname">is_intermission</code><span class="sig-paren">(</span><em>prev=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.live_scrape.LiveGame.is_intermission" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if in intermission for both the html and json pbp. If prev=True check for the previous event</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -369,8 +369,8 @@ something happened between the last event and the end of the period).</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="hockey_scraper.live_scrape.LiveGame.is_ongoing">
-<code class="descname">is_ongoing</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.live_scrape.LiveGame.is_ongoing" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.live_scrape.LiveGame.is_ongoing">
+<code class="descname">is_ongoing</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.live_scrape.LiveGame.is_ongoing" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if the game is currently being played.</p>
 <p>The logic here is that we run into an issue with intermission and the end of game. If the game is just changed 
 to Final or Intermission the end user will assume the game isn&#8217;t ongoing and will not update with the most
@@ -388,8 +388,8 @@ the same the user already has the data. Otherwise we &#8216;lie&#8217; and say t
 </dd></dl>
 
 <dl class="method">
-<dt id="hockey_scraper.live_scrape.LiveGame.scrape">
-<code class="descname">scrape</code><span class="sig-paren">(</span><em>force=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.live_scrape.LiveGame.scrape" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.live_scrape.LiveGame.scrape">
+<code class="descname">scrape</code><span class="sig-paren">(</span><em>force=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.live_scrape.LiveGame.scrape" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape the given game. Check if currently ongoing or started</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -404,8 +404,8 @@ the same the user already has the data. Otherwise we &#8216;lie&#8217; and say t
 </dd></dl>
 
 <dl class="method">
-<dt id="hockey_scraper.live_scrape.LiveGame.scrape_live_game">
-<code class="descname">scrape_live_game</code><span class="sig-paren">(</span><em>force=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.live_scrape.LiveGame.scrape_live_game" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.live_scrape.LiveGame.scrape_live_game">
+<code class="descname">scrape_live_game</code><span class="sig-paren">(</span><em>force=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.live_scrape.LiveGame.scrape_live_game" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape the live info for a given game</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -420,8 +420,8 @@ the same the user already has the data. Otherwise we &#8216;lie&#8217; and say t
 </dd></dl>
 
 <dl class="method">
-<dt id="hockey_scraper.live_scrape.LiveGame.time_until_game">
-<code class="descname">time_until_game</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.live_scrape.LiveGame.time_until_game" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.live_scrape.LiveGame.time_until_game">
+<code class="descname">time_until_game</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.live_scrape.LiveGame.time_until_game" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the seconds until the game starts</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -436,8 +436,8 @@ the same the user already has the data. Otherwise we &#8216;lie&#8217; and say t
 </dd></dl>
 
 <dl class="class">
-<dt id="hockey_scraper.live_scrape.ScrapeLiveGames">
-<em class="property">class </em><code class="descclassname">hockey_scraper.live_scrape.</code><code class="descname">ScrapeLiveGames</code><span class="sig-paren">(</span><em>date</em>, <em>preseason=False</em>, <em>if_scrape_shifts=False</em>, <em>pause=15</em>, <em>game_ids=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.live_scrape.ScrapeLiveGames" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.live_scrape.ScrapeLiveGames">
+<em class="property">class </em><code class="descclassname">hockey_scraper.nhl.live_scrape.</code><code class="descname">ScrapeLiveGames</code><span class="sig-paren">(</span><em>date</em>, <em>preseason=False</em>, <em>if_scrape_shifts=False</em>, <em>pause=15</em>, <em>game_ids=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.live_scrape.ScrapeLiveGames" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class than contains the info for all the games on a specific day</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -455,8 +455,8 @@ the same the user already has the data. Otherwise we &#8216;lie&#8217; and say t
 </tbody>
 </table>
 <dl class="method">
-<dt id="hockey_scraper.live_scrape.ScrapeLiveGames.finished">
-<code class="descname">finished</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.live_scrape.ScrapeLiveGames.finished" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.live_scrape.ScrapeLiveGames.finished">
+<code class="descname">finished</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.live_scrape.ScrapeLiveGames.finished" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if done with all games</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -469,8 +469,8 @@ the same the user already has the data. Otherwise we &#8216;lie&#8217; and say t
 </dd></dl>
 
 <dl class="method">
-<dt id="hockey_scraper.live_scrape.ScrapeLiveGames.get_espn_ids">
-<code class="descname">get_espn_ids</code><span class="sig-paren">(</span><em>games</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.live_scrape.ScrapeLiveGames.get_espn_ids" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.live_scrape.ScrapeLiveGames.get_espn_ids">
+<code class="descname">get_espn_ids</code><span class="sig-paren">(</span><em>games</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.live_scrape.ScrapeLiveGames.get_espn_ids" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get espn game ids for all games that day</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -485,8 +485,8 @@ the same the user already has the data. Otherwise we &#8216;lie&#8217; and say t
 </dd></dl>
 
 <dl class="method">
-<dt id="hockey_scraper.live_scrape.ScrapeLiveGames.get_games">
-<code class="descname">get_games</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.live_scrape.ScrapeLiveGames.get_games" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.live_scrape.ScrapeLiveGames.get_games">
+<code class="descname">get_games</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.live_scrape.ScrapeLiveGames.get_games" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get initial game info -&gt; Called with object creation. Includes: players, espn_ids, standard game info</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -499,8 +499,8 @@ the same the user already has the data. Otherwise we &#8216;lie&#8217; and say t
 </dd></dl>
 
 <dl class="method">
-<dt id="hockey_scraper.live_scrape.ScrapeLiveGames.sleep_next_game">
-<code class="descname">sleep_next_game</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.live_scrape.ScrapeLiveGames.sleep_next_game" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.live_scrape.ScrapeLiveGames.sleep_next_game">
+<code class="descname">sleep_next_game</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.live_scrape.ScrapeLiveGames.sleep_next_game" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sleep until the next game starts. Otherwise just looping and doing nothing</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -513,8 +513,8 @@ the same the user already has the data. Otherwise we &#8216;lie&#8217; and say t
 </dd></dl>
 
 <dl class="method">
-<dt id="hockey_scraper.live_scrape.ScrapeLiveGames.update_live_games">
-<code class="descname">update_live_games</code><span class="sig-paren">(</span><em>force=False</em>, <em>sleep_next=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.live_scrape.ScrapeLiveGames.update_live_games" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.live_scrape.ScrapeLiveGames.update_live_games">
+<code class="descname">update_live_games</code><span class="sig-paren">(</span><em>force=False</em>, <em>sleep_next=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.live_scrape.ScrapeLiveGames.update_live_games" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape the pbp &amp; shifts of ongoing games</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -536,8 +536,8 @@ the same the user already has the data. Otherwise we &#8216;lie&#8217; and say t
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.live_scrape.check_date_format">
-<code class="descclassname">hockey_scraper.live_scrape.</code><code class="descname">check_date_format</code><span class="sig-paren">(</span><em>date</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.live_scrape.check_date_format" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.live_scrape.check_date_format">
+<code class="descclassname">hockey_scraper.nhl.live_scrape.</code><code class="descname">check_date_format</code><span class="sig-paren">(</span><em>date</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.live_scrape.check_date_format" title="Permalink to this definition">¶</a></dt>
 <dd><p>Verify the date format. If wrong raises a HaltException</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -552,8 +552,8 @@ the same the user already has the data. Otherwise we &#8216;lie&#8217; and say t
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.live_scrape.set_docs_dir">
-<code class="descclassname">hockey_scraper.live_scrape.</code><code class="descname">set_docs_dir</code><span class="sig-paren">(</span><em>user_dir</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.live_scrape.set_docs_dir" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.live_scrape.set_docs_dir">
+<code class="descclassname">hockey_scraper.nhl.live_scrape.</code><code class="descname">set_docs_dir</code><span class="sig-paren">(</span><em>user_dir</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.live_scrape.set_docs_dir" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the docs directory</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -582,7 +582,7 @@ the same the user already has the data. Otherwise we &#8216;lie&#8217; and say t
 <li><a class="reference internal" href="#">Live Scraping</a><ul>
 <li><a class="reference internal" href="#standard-usage">Standard Usage</a></li>
 <li><a class="reference internal" href="#further-usage">Further Usage</a><ul>
-<li><a class="reference internal" href="#module-hockey_scraper.live_scrape">Live Scrape</a></li>
+<li><a class="reference internal" href="#module-hockey_scraper.nhl.live_scrape">Live Scrape</a></li>
 </ul>
 </li>
 </ul>

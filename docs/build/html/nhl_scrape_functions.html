@@ -146,12 +146,12 @@ games are scraped at your own risk. There is no guarantee it will work or that t
 </div>
 <p>5. When including a directory, it must be a valid directory. It will not create it for you. You&#8217;ll get an error message
 but otherwise it will scrape as if no directory was provided.</p>
-<div class="section" id="module-hockey_scraper.scrape_functions">
-<span id="scrape-functions"></span><h3>Scrape Functions<a class="headerlink" href="#module-hockey_scraper.scrape_functions" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="module-hockey_scraper.nhl.scrape_functions">
+<span id="scrape-functions"></span><h3>Scrape Functions<a class="headerlink" href="#module-hockey_scraper.nhl.scrape_functions" title="Permalink to this headline">¶</a></h3>
 <p>Functions to scrape by season, games, and date range</p>
 <dl class="function">
-<dt id="hockey_scraper.scrape_functions.print_errors">
-<code class="descclassname">hockey_scraper.scrape_functions.</code><code class="descname">print_errors</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.scrape_functions.print_errors" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.scrape_functions.print_errors">
+<code class="descclassname">hockey_scraper.nhl.scrape_functions.</code><code class="descname">print_errors</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.scrape_functions.print_errors" title="Permalink to this definition">¶</a></dt>
 <dd><p>Print errors with scraping.</p>
 <p>Also puts errors in the &#8220;error&#8221; string (would just print the string but it would look like shit on one line. I
 could store it as I &#8220;should&#8221; print it but that isn&#8217;t how I want it).</p>
@@ -166,8 +166,8 @@ could store it as I &#8220;should&#8221; print it but that isn&#8217;t how I wan
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.scrape_functions.scrape_date_range">
-<code class="descclassname">hockey_scraper.scrape_functions.</code><code class="descname">scrape_date_range</code><span class="sig-paren">(</span><em>from_date</em>, <em>to_date</em>, <em>if_scrape_shifts</em>, <em>data_format='csv'</em>, <em>preseason=False</em>, <em>rescrape=False</em>, <em>docs_dir=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.scrape_functions.scrape_date_range" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.scrape_functions.scrape_date_range">
+<code class="descclassname">hockey_scraper.nhl.scrape_functions.</code><code class="descname">scrape_date_range</code><span class="sig-paren">(</span><em>from_date</em>, <em>to_date</em>, <em>if_scrape_shifts</em>, <em>data_format='csv'</em>, <em>preseason=False</em>, <em>rescrape=False</em>, <em>docs_dir=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.scrape_functions.scrape_date_range" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape games in given date range</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -196,8 +196,8 @@ it won&#8217;t work (I won&#8217;t make it for you). When False the files won&#8
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.scrape_functions.scrape_games">
-<code class="descclassname">hockey_scraper.scrape_functions.</code><code class="descname">scrape_games</code><span class="sig-paren">(</span><em>games</em>, <em>if_scrape_shifts</em>, <em>data_format='csv'</em>, <em>rescrape=False</em>, <em>docs_dir=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.scrape_functions.scrape_games" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.scrape_functions.scrape_games">
+<code class="descclassname">hockey_scraper.nhl.scrape_functions.</code><code class="descname">scrape_games</code><span class="sig-paren">(</span><em>games</em>, <em>if_scrape_shifts</em>, <em>data_format='csv'</em>, <em>rescrape=False</em>, <em>docs_dir=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.scrape_functions.scrape_games" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape a list of games</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -223,8 +223,8 @@ it won&#8217;t work (I won&#8217;t make it for you). When False the files won&#8
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.scrape_functions.scrape_list_of_games">
-<code class="descclassname">hockey_scraper.scrape_functions.</code><code class="descname">scrape_list_of_games</code><span class="sig-paren">(</span><em>games</em>, <em>if_scrape_shifts</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.scrape_functions.scrape_list_of_games" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.scrape_functions.scrape_list_of_games">
+<code class="descclassname">hockey_scraper.nhl.scrape_functions.</code><code class="descname">scrape_list_of_games</code><span class="sig-paren">(</span><em>games</em>, <em>if_scrape_shifts</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.scrape_functions.scrape_list_of_games" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a list of game_id&#8217;s (and a date for each game) it scrapes them</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -244,8 +244,8 @@ it won&#8217;t work (I won&#8217;t make it for you). When False the files won&#8
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.scrape_functions.scrape_seasons">
-<code class="descclassname">hockey_scraper.scrape_functions.</code><code class="descname">scrape_seasons</code><span class="sig-paren">(</span><em>seasons</em>, <em>if_scrape_shifts</em>, <em>data_format='csv'</em>, <em>preseason=False</em>, <em>rescrape=False</em>, <em>docs_dir=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.scrape_functions.scrape_seasons" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.scrape_functions.scrape_seasons">
+<code class="descclassname">hockey_scraper.nhl.scrape_functions.</code><code class="descname">scrape_seasons</code><span class="sig-paren">(</span><em>seasons</em>, <em>if_scrape_shifts</em>, <em>data_format='csv'</em>, <em>preseason=False</em>, <em>rescrape=False</em>, <em>docs_dir=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.scrape_functions.scrape_seasons" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given list of seasons it scrapes all the seasons</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -273,12 +273,12 @@ it won&#8217;t work (I won&#8217;t make it for you). When False the files won&#8
 </dd></dl>
 
 </div>
-<div class="section" id="module-hockey_scraper.game_scraper">
-<span id="game-scraper"></span><h3>Game Scraper<a class="headerlink" href="#module-hockey_scraper.game_scraper" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="module-hockey_scraper.nhl.game_scraper">
+<span id="game-scraper"></span><h3>Game Scraper<a class="headerlink" href="#module-hockey_scraper.nhl.game_scraper" title="Permalink to this headline">¶</a></h3>
 <p>This module contains code to scrape data for a single game</p>
 <dl class="function">
-<dt id="hockey_scraper.game_scraper.check_goalie">
-<code class="descclassname">hockey_scraper.game_scraper.</code><code class="descname">check_goalie</code><span class="sig-paren">(</span><em>row</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.game_scraper.check_goalie" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.game_scraper.check_goalie">
+<code class="descclassname">hockey_scraper.nhl.game_scraper.</code><code class="descname">check_goalie</code><span class="sig-paren">(</span><em>row</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.game_scraper.check_goalie" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks for bad goalie names (you can tell by them having no player id)</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -293,8 +293,8 @@ it won&#8217;t work (I won&#8217;t make it for you). When False the files won&#8
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.game_scraper.combine_espn_html_pbp">
-<code class="descclassname">hockey_scraper.game_scraper.</code><code class="descname">combine_espn_html_pbp</code><span class="sig-paren">(</span><em>html_df</em>, <em>espn_df</em>, <em>game_id</em>, <em>date</em>, <em>away_team</em>, <em>home_team</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.game_scraper.combine_espn_html_pbp" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.game_scraper.combine_espn_html_pbp">
+<code class="descclassname">hockey_scraper.nhl.game_scraper.</code><code class="descname">combine_espn_html_pbp</code><span class="sig-paren">(</span><em>html_df</em>, <em>espn_df</em>, <em>game_id</em>, <em>date</em>, <em>away_team</em>, <em>home_team</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.game_scraper.combine_espn_html_pbp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Merge the coordinate from the espn feed into the html DataFrame</p>
 <p>Can&#8217;t join here on event_id because the plays are often out of order and pre-2009 are often missing events.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -319,8 +319,8 @@ it won&#8217;t work (I won&#8217;t make it for you). When False the files won&#8
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.game_scraper.combine_html_json_pbp">
-<code class="descclassname">hockey_scraper.game_scraper.</code><code class="descname">combine_html_json_pbp</code><span class="sig-paren">(</span><em>json_df</em>, <em>html_df</em>, <em>game_id</em>, <em>date</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.game_scraper.combine_html_json_pbp" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.game_scraper.combine_html_json_pbp">
+<code class="descclassname">hockey_scraper.nhl.game_scraper.</code><code class="descname">combine_html_json_pbp</code><span class="sig-paren">(</span><em>json_df</em>, <em>html_df</em>, <em>game_id</em>, <em>date</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.game_scraper.combine_html_json_pbp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Join both data sources. First try merging on event id (which is the DataFrame index) if both DataFrames have the
 same number of rows. If they don&#8217;t have the same number of rows, merge on: Period&#8217;, Event, Seconds_Elapsed, p1_ID.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -343,8 +343,8 @@ same number of rows. If they don&#8217;t have the same number of rows, merge on:
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.game_scraper.combine_players_lists">
-<code class="descclassname">hockey_scraper.game_scraper.</code><code class="descname">combine_players_lists</code><span class="sig-paren">(</span><em>json_players</em>, <em>roster_players</em>, <em>game_id</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.game_scraper.combine_players_lists" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.game_scraper.combine_players_lists">
+<code class="descclassname">hockey_scraper.nhl.game_scraper.</code><code class="descname">combine_players_lists</code><span class="sig-paren">(</span><em>json_players</em>, <em>roster_players</em>, <em>game_id</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.game_scraper.combine_players_lists" title="Permalink to this definition">¶</a></dt>
 <dd><p>Combine the json list of players (which contains id&#8217;s) with the list in the roster html</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -365,8 +365,8 @@ same number of rows. If they don&#8217;t have the same number of rows, merge on:
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.game_scraper.get_players_json">
-<code class="descclassname">hockey_scraper.game_scraper.</code><code class="descname">get_players_json</code><span class="sig-paren">(</span><em>players_json</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.game_scraper.get_players_json" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.game_scraper.get_players_json">
+<code class="descclassname">hockey_scraper.nhl.game_scraper.</code><code class="descname">get_players_json</code><span class="sig-paren">(</span><em>players_json</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.game_scraper.get_players_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return dict of players for that game</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -381,8 +381,8 @@ same number of rows. If they don&#8217;t have the same number of rows, merge on:
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.game_scraper.get_sebastian_aho">
-<code class="descclassname">hockey_scraper.game_scraper.</code><code class="descname">get_sebastian_aho</code><span class="sig-paren">(</span><em>player</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.game_scraper.get_sebastian_aho" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.game_scraper.get_sebastian_aho">
+<code class="descclassname">hockey_scraper.nhl.game_scraper.</code><code class="descname">get_sebastian_aho</code><span class="sig-paren">(</span><em>player</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.game_scraper.get_sebastian_aho" title="Permalink to this definition">¶</a></dt>
 <dd><p>This checks which Sebastian Aho it is based on the position. I have the player id&#8217;s hardcoded here.</p>
 <p>This function is needed because &#8220;get_players_json&#8221; doesn&#8217;t control for when there are two Sebastian Aho&#8217;s (it just 
 writes over the first one).</p>
@@ -399,8 +399,8 @@ writes over the first one).</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.game_scraper.get_teams_and_players">
-<code class="descclassname">hockey_scraper.game_scraper.</code><code class="descname">get_teams_and_players</code><span class="sig-paren">(</span><em>game_json</em>, <em>roster</em>, <em>game_id</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.game_scraper.get_teams_and_players" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.game_scraper.get_teams_and_players">
+<code class="descclassname">hockey_scraper.nhl.game_scraper.</code><code class="descname">get_teams_and_players</code><span class="sig-paren">(</span><em>game_json</em>, <em>roster</em>, <em>game_id</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.game_scraper.get_teams_and_players" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get list of players and teams for game</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -421,8 +421,8 @@ writes over the first one).</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.game_scraper.scrape_game">
-<code class="descclassname">hockey_scraper.game_scraper.</code><code class="descname">scrape_game</code><span class="sig-paren">(</span><em>game_id</em>, <em>date</em>, <em>if_scrape_shifts</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.game_scraper.scrape_game" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.game_scraper.scrape_game">
+<code class="descclassname">hockey_scraper.nhl.game_scraper.</code><code class="descname">scrape_game</code><span class="sig-paren">(</span><em>game_id</em>, <em>date</em>, <em>if_scrape_shifts</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.game_scraper.scrape_game" title="Permalink to this definition">¶</a></dt>
 <dd><p>This scrapes the info for the game.
 The pbp is automatically scraped, and the whether or not to scrape the shifts is left up to the user.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -445,8 +445,8 @@ The pbp is automatically scraped, and the whether or not to scrape the shifts is
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.game_scraper.scrape_pbp">
-<code class="descclassname">hockey_scraper.game_scraper.</code><code class="descname">scrape_pbp</code><span class="sig-paren">(</span><em>game_id</em>, <em>date</em>, <em>roster</em>, <em>game_json</em>, <em>players</em>, <em>teams</em>, <em>espn_id=None</em>, <em>html_df=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.game_scraper.scrape_pbp" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.game_scraper.scrape_pbp">
+<code class="descclassname">hockey_scraper.nhl.game_scraper.</code><code class="descname">scrape_pbp</code><span class="sig-paren">(</span><em>game_id</em>, <em>date</em>, <em>roster</em>, <em>game_json</em>, <em>players</em>, <em>teams</em>, <em>espn_id=None</em>, <em>html_df=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.game_scraper.scrape_pbp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Automatically scrapes the json and html, if the json is empty the html picks up some of the slack and the espn
 xml is also scraped for coordinates.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -473,8 +473,8 @@ xml is also scraped for coordinates.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.game_scraper.scrape_pbp_live">
-<code class="descclassname">hockey_scraper.game_scraper.</code><code class="descname">scrape_pbp_live</code><span class="sig-paren">(</span><em>game_id</em>, <em>date</em>, <em>roster</em>, <em>game_json</em>, <em>players</em>, <em>teams</em>, <em>espn_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.game_scraper.scrape_pbp_live" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.game_scraper.scrape_pbp_live">
+<code class="descclassname">hockey_scraper.nhl.game_scraper.</code><code class="descname">scrape_pbp_live</code><span class="sig-paren">(</span><em>game_id</em>, <em>date</em>, <em>roster</em>, <em>game_json</em>, <em>players</em>, <em>teams</em>, <em>espn_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.game_scraper.scrape_pbp_live" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape the live pbp</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -499,8 +499,8 @@ xml is also scraped for coordinates.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.game_scraper.scrape_shifts">
-<code class="descclassname">hockey_scraper.game_scraper.</code><code class="descname">scrape_shifts</code><span class="sig-paren">(</span><em>game_id</em>, <em>players</em>, <em>date</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.game_scraper.scrape_shifts" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.game_scraper.scrape_shifts">
+<code class="descclassname">hockey_scraper.nhl.game_scraper.</code><code class="descname">scrape_shifts</code><span class="sig-paren">(</span><em>game_id</em>, <em>players</em>, <em>date</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.game_scraper.scrape_shifts" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape the Shift charts (or TOI tables)</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -521,12 +521,12 @@ xml is also scraped for coordinates.</p>
 </dd></dl>
 
 </div>
-<div class="section" id="module-hockey_scraper.html_pbp">
-<span id="html-pbp"></span><h3>Html PBP<a class="headerlink" href="#module-hockey_scraper.html_pbp" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="module-hockey_scraper.nhl.pbp.html_pbp">
+<span id="html-pbp"></span><h3>Html PBP<a class="headerlink" href="#module-hockey_scraper.nhl.pbp.html_pbp" title="Permalink to this headline">¶</a></h3>
 <p>This module contains functions to scrape the Html Play by Play for any given game</p>
 <dl class="function">
-<dt id="hockey_scraper.html_pbp.add_event_players">
-<code class="descclassname">hockey_scraper.html_pbp.</code><code class="descname">add_event_players</code><span class="sig-paren">(</span><em>event_dict</em>, <em>event</em>, <em>players</em>, <em>home_team</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_pbp.add_event_players" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.html_pbp.add_event_players">
+<code class="descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="descname">add_event_players</code><span class="sig-paren">(</span><em>event_dict</em>, <em>event</em>, <em>players</em>, <em>home_team</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.add_event_players" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add players involved in the event to event_dict</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -548,8 +548,8 @@ xml is also scraped for coordinates.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.html_pbp.add_event_team">
-<code class="descclassname">hockey_scraper.html_pbp.</code><code class="descname">add_event_team</code><span class="sig-paren">(</span><em>event_dict</em>, <em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_pbp.add_event_team" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.html_pbp.add_event_team">
+<code class="descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="descname">add_event_team</code><span class="sig-paren">(</span><em>event_dict</em>, <em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.add_event_team" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add event team for event</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -569,8 +569,8 @@ xml is also scraped for coordinates.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.html_pbp.add_home_zone">
-<code class="descclassname">hockey_scraper.html_pbp.</code><code class="descname">add_home_zone</code><span class="sig-paren">(</span><em>event_dict</em>, <em>home_team</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_pbp.add_home_zone" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.html_pbp.add_home_zone">
+<code class="descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="descname">add_home_zone</code><span class="sig-paren">(</span><em>event_dict</em>, <em>home_team</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.add_home_zone" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determines the zone relative to the home team and add it to event.</p>
 <p>Keep in mind that the &#8216;ev_zone&#8217; recorded is the zone relative to the event team. And for blocks the NHL counts
 the ev_team as the blocking team (I like counting the shooting team for blocks). Therefore, when it&#8217;s the home team
@@ -593,8 +593,8 @@ the zone only gets flipped when it&#8217;s a block. For away teams it&#8217;s th
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.html_pbp.add_period">
-<code class="descclassname">hockey_scraper.html_pbp.</code><code class="descname">add_period</code><span class="sig-paren">(</span><em>event_dict</em>, <em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_pbp.add_period" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.html_pbp.add_period">
+<code class="descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="descname">add_period</code><span class="sig-paren">(</span><em>event_dict</em>, <em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.add_period" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add period for event</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -614,8 +614,8 @@ the zone only gets flipped when it&#8217;s a block. For away teams it&#8217;s th
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.html_pbp.add_score">
-<code class="descclassname">hockey_scraper.html_pbp.</code><code class="descname">add_score</code><span class="sig-paren">(</span><em>event_dict</em>, <em>event</em>, <em>current_score</em>, <em>home_team</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_pbp.add_score" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.html_pbp.add_score">
+<code class="descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="descname">add_score</code><span class="sig-paren">(</span><em>event_dict</em>, <em>event</em>, <em>current_score</em>, <em>home_team</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.add_score" title="Permalink to this definition">¶</a></dt>
 <dd><p>Change if someone scored...also change current score</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -637,8 +637,8 @@ the zone only gets flipped when it&#8217;s a block. For away teams it&#8217;s th
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.html_pbp.add_strength">
-<code class="descclassname">hockey_scraper.html_pbp.</code><code class="descname">add_strength</code><span class="sig-paren">(</span><em>event_dict</em>, <em>home_players</em>, <em>away_players</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_pbp.add_strength" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.html_pbp.add_strength">
+<code class="descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="descname">add_strength</code><span class="sig-paren">(</span><em>event_dict</em>, <em>home_players</em>, <em>away_players</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.add_strength" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get strength for event -&gt; It&#8217;s home then away</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -659,8 +659,8 @@ the zone only gets flipped when it&#8217;s a block. For away teams it&#8217;s th
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.html_pbp.add_time">
-<code class="descclassname">hockey_scraper.html_pbp.</code><code class="descname">add_time</code><span class="sig-paren">(</span><em>event_dict</em>, <em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_pbp.add_time" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.html_pbp.add_time">
+<code class="descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="descname">add_time</code><span class="sig-paren">(</span><em>event_dict</em>, <em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.add_time" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fill in time and seconds elapsed</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -680,8 +680,8 @@ the zone only gets flipped when it&#8217;s a block. For away teams it&#8217;s th
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.html_pbp.add_type">
-<code class="descclassname">hockey_scraper.html_pbp.</code><code class="descname">add_type</code><span class="sig-paren">(</span><em>event_dict</em>, <em>event</em>, <em>players</em>, <em>home_team</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_pbp.add_type" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.html_pbp.add_type">
+<code class="descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="descname">add_type</code><span class="sig-paren">(</span><em>event_dict</em>, <em>event</em>, <em>players</em>, <em>home_team</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.add_type" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add &#8220;type&#8221; for event -&gt; either a penalty or a shot type</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -703,8 +703,8 @@ the zone only gets flipped when it&#8217;s a block. For away teams it&#8217;s th
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.html_pbp.add_zone">
-<code class="descclassname">hockey_scraper.html_pbp.</code><code class="descname">add_zone</code><span class="sig-paren">(</span><em>event_dict</em>, <em>play_description</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_pbp.add_zone" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.html_pbp.add_zone">
+<code class="descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="descname">add_zone</code><span class="sig-paren">(</span><em>event_dict</em>, <em>play_description</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.add_zone" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determine which zone the play occurred in (unless one isn&#8217;t listed) and add it to dict</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -724,8 +724,8 @@ the zone only gets flipped when it&#8217;s a block. For away teams it&#8217;s th
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.html_pbp.clean_html_pbp">
-<code class="descclassname">hockey_scraper.html_pbp.</code><code class="descname">clean_html_pbp</code><span class="sig-paren">(</span><em>html</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_pbp.clean_html_pbp" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.html_pbp.clean_html_pbp">
+<code class="descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="descname">clean_html_pbp</code><span class="sig-paren">(</span><em>html</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.clean_html_pbp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get rid of html and format the data</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -740,8 +740,8 @@ the zone only gets flipped when it&#8217;s a block. For away teams it&#8217;s th
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.html_pbp.cur_game_status">
-<code class="descclassname">hockey_scraper.html_pbp.</code><code class="descname">cur_game_status</code><span class="sig-paren">(</span><em>doc</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_pbp.cur_game_status" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.html_pbp.cur_game_status">
+<code class="descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="descname">cur_game_status</code><span class="sig-paren">(</span><em>doc</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.cur_game_status" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the game status</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -756,8 +756,8 @@ the zone only gets flipped when it&#8217;s a block. For away teams it&#8217;s th
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.html_pbp.get_pbp">
-<code class="descclassname">hockey_scraper.html_pbp.</code><code class="descname">get_pbp</code><span class="sig-paren">(</span><em>game_id</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_pbp.get_pbp" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.html_pbp.get_pbp">
+<code class="descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="descname">get_pbp</code><span class="sig-paren">(</span><em>game_id</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.get_pbp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a game_id it returns the raw html
 Ex: <a class="reference external" href="http://www.nhl.com/scores/htmlreports/20162017/PL020475.HTM">http://www.nhl.com/scores/htmlreports/20162017/PL020475.HTM</a></p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -773,8 +773,8 @@ Ex: <a class="reference external" href="http://www.nhl.com/scores/htmlreports/20
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.html_pbp.get_penalty">
-<code class="descclassname">hockey_scraper.html_pbp.</code><code class="descname">get_penalty</code><span class="sig-paren">(</span><em>play_description</em>, <em>players</em>, <em>home_team</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_pbp.get_penalty" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.html_pbp.get_penalty">
+<code class="descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="descname">get_penalty</code><span class="sig-paren">(</span><em>play_description</em>, <em>players</em>, <em>home_team</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.get_penalty" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the penalty info</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -795,8 +795,8 @@ Ex: <a class="reference external" href="http://www.nhl.com/scores/htmlreports/20
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.html_pbp.get_player_name">
-<code class="descclassname">hockey_scraper.html_pbp.</code><code class="descname">get_player_name</code><span class="sig-paren">(</span><em>number</em>, <em>players</em>, <em>team</em>, <em>home_team</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_pbp.get_player_name" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.html_pbp.get_player_name">
+<code class="descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="descname">get_player_name</code><span class="sig-paren">(</span><em>number</em>, <em>players</em>, <em>team</em>, <em>home_team</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.get_player_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function is used for the description field in the html. Given a last name and a number it return the player&#8217;s 
 full name and id.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -819,8 +819,8 @@ full name and id.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.html_pbp.get_soup">
-<code class="descclassname">hockey_scraper.html_pbp.</code><code class="descname">get_soup</code><span class="sig-paren">(</span><em>game_html</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_pbp.get_soup" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.html_pbp.get_soup">
+<code class="descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="descname">get_soup</code><span class="sig-paren">(</span><em>game_html</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.get_soup" title="Permalink to this definition">¶</a></dt>
 <dd><p>Uses Beautiful soup to parses the html document.
 Some parsers work for some pages but don&#8217;t work for others....I&#8217;m not sure why so I just try them all here in order</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -836,8 +836,8 @@ Some parsers work for some pages but don&#8217;t work for others....I&#8217;m no
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.html_pbp.if_valid_event">
-<code class="descclassname">hockey_scraper.html_pbp.</code><code class="descname">if_valid_event</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_pbp.if_valid_event" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.html_pbp.if_valid_event">
+<code class="descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="descname">if_valid_event</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.if_valid_event" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks if it&#8217;s a valid event (&#8216;#&#8217; is meaningless and I don&#8217;t like those other one&#8217;s) to parse</p>
 <p>Don&#8217;t remember what &#8216;GOFF&#8217; is but &#8216;EGT&#8217; is for emergency goaltender. The reason I get rid of it is because it&#8217;s not
 in the json and there&#8217;s another &#8216;EGPID&#8217; that can be found in both (not sure why &#8216;EGT&#8217; exists then).</p>
@@ -856,8 +856,8 @@ idea why.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.html_pbp.parse_block">
-<code class="descclassname">hockey_scraper.html_pbp.</code><code class="descname">parse_block</code><span class="sig-paren">(</span><em>description</em>, <em>players</em>, <em>home_team</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_pbp.parse_block" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.html_pbp.parse_block">
+<code class="descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="descname">parse_block</code><span class="sig-paren">(</span><em>description</em>, <em>players</em>, <em>home_team</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.parse_block" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse the description field for a BLOCK</p>
 <p>MTL #76 SUBBAN BLOCKED BY TOR #2 SCHENN, Wrist, Def. Zone</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -879,8 +879,8 @@ idea why.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.html_pbp.parse_event">
-<code class="descclassname">hockey_scraper.html_pbp.</code><code class="descname">parse_event</code><span class="sig-paren">(</span><em>event</em>, <em>players</em>, <em>home_team</em>, <em>current_score</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_pbp.parse_event" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.html_pbp.parse_event">
+<code class="descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="descname">parse_event</code><span class="sig-paren">(</span><em>event</em>, <em>players</em>, <em>home_team</em>, <em>current_score</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.parse_event" title="Permalink to this definition">¶</a></dt>
 <dd><p>Receives an event and parses it</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -902,8 +902,8 @@ idea why.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.html_pbp.parse_fac">
-<code class="descclassname">hockey_scraper.html_pbp.</code><code class="descname">parse_fac</code><span class="sig-paren">(</span><em>description</em>, <em>players</em>, <em>ev_team</em>, <em>home_team</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_pbp.parse_fac" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.html_pbp.parse_fac">
+<code class="descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="descname">parse_fac</code><span class="sig-paren">(</span><em>description</em>, <em>players</em>, <em>ev_team</em>, <em>home_team</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.parse_fac" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse the description field for a face-off
 MTL won Neu. Zone - MTL #11 GOMEZ vs TOR #37 BRENT</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -926,8 +926,8 @@ MTL won Neu. Zone - MTL #11 GOMEZ vs TOR #37 BRENT</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.html_pbp.parse_goal">
-<code class="descclassname">hockey_scraper.html_pbp.</code><code class="descname">parse_goal</code><span class="sig-paren">(</span><em>description</em>, <em>players</em>, <em>ev_team</em>, <em>home_team</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_pbp.parse_goal" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.html_pbp.parse_goal">
+<code class="descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="descname">parse_goal</code><span class="sig-paren">(</span><em>description</em>, <em>players</em>, <em>ev_team</em>, <em>home_team</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.parse_goal" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse the description field for a GOAL</p>
 <p>TOR #81 KESSEL(1), Wrist, Off. Zone, 14 ft. Assists: #42 BOZAK(1); #8 KOMISAREK(1)</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -950,8 +950,8 @@ MTL won Neu. Zone - MTL #11 GOMEZ vs TOR #37 BRENT</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.html_pbp.parse_hit">
-<code class="descclassname">hockey_scraper.html_pbp.</code><code class="descname">parse_hit</code><span class="sig-paren">(</span><em>description</em>, <em>players</em>, <em>home_team</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_pbp.parse_hit" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.html_pbp.parse_hit">
+<code class="descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="descname">parse_hit</code><span class="sig-paren">(</span><em>description</em>, <em>players</em>, <em>home_team</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.parse_hit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse the description field for a HIT</p>
 <p>MTL #20 O&#8217;BYRNE HIT TOR #18 BROWN, Def. Zone</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -973,8 +973,8 @@ MTL won Neu. Zone - MTL #11 GOMEZ vs TOR #37 BRENT</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.html_pbp.parse_html">
-<code class="descclassname">hockey_scraper.html_pbp.</code><code class="descname">parse_html</code><span class="sig-paren">(</span><em>html</em>, <em>players</em>, <em>teams</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_pbp.parse_html" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.html_pbp.parse_html">
+<code class="descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="descname">parse_html</code><span class="sig-paren">(</span><em>html</em>, <em>players</em>, <em>teams</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.parse_html" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse html game pbp</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -995,8 +995,8 @@ MTL won Neu. Zone - MTL #11 GOMEZ vs TOR #37 BRENT</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.html_pbp.parse_penalty">
-<code class="descclassname">hockey_scraper.html_pbp.</code><code class="descname">parse_penalty</code><span class="sig-paren">(</span><em>description</em>, <em>players</em>, <em>home_team</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_pbp.parse_penalty" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.html_pbp.parse_penalty">
+<code class="descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="descname">parse_penalty</code><span class="sig-paren">(</span><em>description</em>, <em>players</em>, <em>home_team</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.parse_penalty" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse the description field for a Penalty</p>
 <p>MTL #81 ELLER Hooking(2 min), Def. Zone Drawn By: TOR #11 SJOSTROM</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1018,8 +1018,8 @@ MTL won Neu. Zone - MTL #11 GOMEZ vs TOR #37 BRENT</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.html_pbp.parse_shot_miss_take_give">
-<code class="descclassname">hockey_scraper.html_pbp.</code><code class="descname">parse_shot_miss_take_give</code><span class="sig-paren">(</span><em>description</em>, <em>players</em>, <em>ev_team</em>, <em>home_team</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_pbp.parse_shot_miss_take_give" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.html_pbp.parse_shot_miss_take_give">
+<code class="descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="descname">parse_shot_miss_take_give</code><span class="sig-paren">(</span><em>description</em>, <em>players</em>, <em>ev_team</em>, <em>home_team</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.parse_shot_miss_take_give" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse the description field for a: SHOT, MISS, TAKE, GIVE</p>
 <p>MTL ONGOAL - #81 ELLER, Wrist, Off. Zone, 11 ft.
 ANA #23 BEAUCHEMIN, Slap, Wide of Net, Off. Zone, 42 ft.
@@ -1045,8 +1045,8 @@ TOR TAKEAWAY - #9 ARMSTRONG, Off. Zone</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.html_pbp.populate_players">
-<code class="descclassname">hockey_scraper.html_pbp.</code><code class="descname">populate_players</code><span class="sig-paren">(</span><em>event_dict</em>, <em>players</em>, <em>away_players</em>, <em>home_players</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_pbp.populate_players" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.html_pbp.populate_players">
+<code class="descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="descname">populate_players</code><span class="sig-paren">(</span><em>event_dict</em>, <em>players</em>, <em>away_players</em>, <em>home_players</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.populate_players" title="Permalink to this definition">¶</a></dt>
 <dd><p>Populate away and home player info (and num skaters on each side)</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1068,8 +1068,8 @@ TOR TAKEAWAY - #9 ARMSTRONG, Off. Zone</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.html_pbp.return_name_html">
-<code class="descclassname">hockey_scraper.html_pbp.</code><code class="descname">return_name_html</code><span class="sig-paren">(</span><em>info</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_pbp.return_name_html" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.html_pbp.return_name_html">
+<code class="descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="descname">return_name_html</code><span class="sig-paren">(</span><em>info</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.return_name_html" title="Permalink to this definition">¶</a></dt>
 <dd><p>In the PBP html the name is in a format like: &#8216;Center - MIKE RICHARDS&#8217;
 Some also have a hyphen in their last name so can&#8217;t just split by &#8216;-&#8216;</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1085,8 +1085,8 @@ Some also have a hyphen in their last name so can&#8217;t just split by &#8216;-
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.html_pbp.scrape_game">
-<code class="descclassname">hockey_scraper.html_pbp.</code><code class="descname">scrape_game</code><span class="sig-paren">(</span><em>game_id</em>, <em>players</em>, <em>teams</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_pbp.scrape_game" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.html_pbp.scrape_game">
+<code class="descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="descname">scrape_game</code><span class="sig-paren">(</span><em>game_id</em>, <em>players</em>, <em>teams</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.scrape_game" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape the data for the game when not live</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1107,8 +1107,8 @@ Some also have a hyphen in their last name so can&#8217;t just split by &#8216;-
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.html_pbp.scrape_game_live">
-<code class="descclassname">hockey_scraper.html_pbp.</code><code class="descname">scrape_game_live</code><span class="sig-paren">(</span><em>game_id</em>, <em>players</em>, <em>teams</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_pbp.scrape_game_live" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.html_pbp.scrape_game_live">
+<code class="descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="descname">scrape_game_live</code><span class="sig-paren">(</span><em>game_id</em>, <em>players</em>, <em>teams</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.scrape_game_live" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape the data for the game when it&#8217;s live</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1129,8 +1129,8 @@ Some also have a hyphen in their last name so can&#8217;t just split by &#8216;-
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.html_pbp.scrape_pbp">
-<code class="descclassname">hockey_scraper.html_pbp.</code><code class="descname">scrape_pbp</code><span class="sig-paren">(</span><em>game_html</em>, <em>game_id</em>, <em>players</em>, <em>teams</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_pbp.scrape_pbp" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.html_pbp.scrape_pbp">
+<code class="descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="descname">scrape_pbp</code><span class="sig-paren">(</span><em>game_html</em>, <em>game_id</em>, <em>players</em>, <em>teams</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.scrape_pbp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape the data for the pbp</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1152,8 +1152,8 @@ Some also have a hyphen in their last name so can&#8217;t just split by &#8216;-
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.html_pbp.shot_type">
-<code class="descclassname">hockey_scraper.html_pbp.</code><code class="descname">shot_type</code><span class="sig-paren">(</span><em>play_description</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_pbp.shot_type" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.html_pbp.shot_type">
+<code class="descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="descname">shot_type</code><span class="sig-paren">(</span><em>play_description</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.shot_type" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determine which zone the play occurred in (unless one isn&#8217;t listed)</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1168,8 +1168,8 @@ Some also have a hyphen in their last name so can&#8217;t just split by &#8216;-
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.html_pbp.strip_html_pbp">
-<code class="descclassname">hockey_scraper.html_pbp.</code><code class="descname">strip_html_pbp</code><span class="sig-paren">(</span><em>td</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_pbp.strip_html_pbp" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.html_pbp.strip_html_pbp">
+<code class="descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="descname">strip_html_pbp</code><span class="sig-paren">(</span><em>td</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.strip_html_pbp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Strip html tags and such</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1184,12 +1184,12 @@ Some also have a hyphen in their last name so can&#8217;t just split by &#8216;-
 </dd></dl>
 
 </div>
-<div class="section" id="module-hockey_scraper.json_pbp">
-<span id="json-pbp"></span><h3>Json PBP<a class="headerlink" href="#module-hockey_scraper.json_pbp" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="module-hockey_scraper.nhl.pbp.json_pbp">
+<span id="json-pbp"></span><h3>Json PBP<a class="headerlink" href="#module-hockey_scraper.nhl.pbp.json_pbp" title="Permalink to this headline">¶</a></h3>
 <p>This module contains functions to scrape the Json Play by Play for any given game</p>
 <dl class="function">
-<dt id="hockey_scraper.json_pbp.change_event_name">
-<code class="descclassname">hockey_scraper.json_pbp.</code><code class="descname">change_event_name</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.json_pbp.change_event_name" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.json_pbp.change_event_name">
+<code class="descclassname">hockey_scraper.nhl.pbp.json_pbp.</code><code class="descname">change_event_name</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.json_pbp.change_event_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Change event names from json style to html (ex: BLOCKED_SHOT to BLOCK).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1204,8 +1204,8 @@ Some also have a hyphen in their last name so can&#8217;t just split by &#8216;-
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.json_pbp.get_pbp">
-<code class="descclassname">hockey_scraper.json_pbp.</code><code class="descname">get_pbp</code><span class="sig-paren">(</span><em>game_id</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.json_pbp.get_pbp" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.json_pbp.get_pbp">
+<code class="descclassname">hockey_scraper.nhl.pbp.json_pbp.</code><code class="descname">get_pbp</code><span class="sig-paren">(</span><em>game_id</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.json_pbp.get_pbp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a game_id it returns the raw json
 Ex: <a class="reference external" href="http://statsapi.web.nhl.com/api/v1/game/2016020475/feed/live">http://statsapi.web.nhl.com/api/v1/game/2016020475/feed/live</a></p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1221,8 +1221,8 @@ Ex: <a class="reference external" href="http://statsapi.web.nhl.com/api/v1/game/
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.json_pbp.get_teams">
-<code class="descclassname">hockey_scraper.json_pbp.</code><code class="descname">get_teams</code><span class="sig-paren">(</span><em>pbp_json</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.json_pbp.get_teams" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.json_pbp.get_teams">
+<code class="descclassname">hockey_scraper.nhl.pbp.json_pbp.</code><code class="descname">get_teams</code><span class="sig-paren">(</span><em>pbp_json</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.json_pbp.get_teams" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get teams</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1237,8 +1237,8 @@ Ex: <a class="reference external" href="http://statsapi.web.nhl.com/api/v1/game/
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.json_pbp.parse_event">
-<code class="descclassname">hockey_scraper.json_pbp.</code><code class="descname">parse_event</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.json_pbp.parse_event" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.json_pbp.parse_event">
+<code class="descclassname">hockey_scraper.nhl.pbp.json_pbp.</code><code class="descname">parse_event</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.json_pbp.parse_event" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parses a single event when the info is in a json format</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1253,8 +1253,8 @@ Ex: <a class="reference external" href="http://statsapi.web.nhl.com/api/v1/game/
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.json_pbp.parse_json">
-<code class="descclassname">hockey_scraper.json_pbp.</code><code class="descname">parse_json</code><span class="sig-paren">(</span><em>game_json</em>, <em>game_id</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.json_pbp.parse_json" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.json_pbp.parse_json">
+<code class="descclassname">hockey_scraper.nhl.pbp.json_pbp.</code><code class="descname">parse_json</code><span class="sig-paren">(</span><em>game_json</em>, <em>game_id</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.json_pbp.parse_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape the json for a game</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1274,8 +1274,8 @@ Ex: <a class="reference external" href="http://statsapi.web.nhl.com/api/v1/game/
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.json_pbp.scrape_game">
-<code class="descclassname">hockey_scraper.json_pbp.</code><code class="descname">scrape_game</code><span class="sig-paren">(</span><em>game_id</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.json_pbp.scrape_game" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.json_pbp.scrape_game">
+<code class="descclassname">hockey_scraper.nhl.pbp.json_pbp.</code><code class="descname">scrape_game</code><span class="sig-paren">(</span><em>game_id</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.json_pbp.scrape_game" title="Permalink to this definition">¶</a></dt>
 <dd><p>Used for debugging. HTML depends on json so can&#8217;t follow this structure</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1290,12 +1290,12 @@ Ex: <a class="reference external" href="http://statsapi.web.nhl.com/api/v1/game/
 </dd></dl>
 
 </div>
-<div class="section" id="module-hockey_scraper.espn_pbp">
-<span id="espn-pbp"></span><h3>Espn PBP<a class="headerlink" href="#module-hockey_scraper.espn_pbp" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="module-hockey_scraper.nhl.pbp.espn_pbp">
+<span id="espn-pbp"></span><h3>Espn PBP<a class="headerlink" href="#module-hockey_scraper.nhl.pbp.espn_pbp" title="Permalink to this headline">¶</a></h3>
 <p>This module contains code to scrape coordinates for games off of espn for any given game</p>
 <dl class="function">
-<dt id="hockey_scraper.espn_pbp.event_type">
-<code class="descclassname">hockey_scraper.espn_pbp.</code><code class="descname">event_type</code><span class="sig-paren">(</span><em>play_description</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.espn_pbp.event_type" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.espn_pbp.event_type">
+<code class="descclassname">hockey_scraper.nhl.pbp.espn_pbp.</code><code class="descname">event_type</code><span class="sig-paren">(</span><em>play_description</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.espn_pbp.event_type" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the event type (ex: a SHOT or a GOAL...etc) given the event description</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1310,8 +1310,8 @@ Ex: <a class="reference external" href="http://statsapi.web.nhl.com/api/v1/game/
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.espn_pbp.get_espn_date">
-<code class="descclassname">hockey_scraper.espn_pbp.</code><code class="descname">get_espn_date</code><span class="sig-paren">(</span><em>date</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.espn_pbp.get_espn_date" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.espn_pbp.get_espn_date">
+<code class="descclassname">hockey_scraper.nhl.pbp.espn_pbp.</code><code class="descname">get_espn_date</code><span class="sig-paren">(</span><em>date</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.espn_pbp.get_espn_date" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the page that contains all the games for that day</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1326,8 +1326,8 @@ Ex: <a class="reference external" href="http://statsapi.web.nhl.com/api/v1/game/
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.espn_pbp.get_espn_game">
-<code class="descclassname">hockey_scraper.espn_pbp.</code><code class="descname">get_espn_game</code><span class="sig-paren">(</span><em>date</em>, <em>home_team</em>, <em>away_team</em>, <em>game_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.espn_pbp.get_espn_game" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.espn_pbp.get_espn_game">
+<code class="descclassname">hockey_scraper.nhl.pbp.espn_pbp.</code><code class="descname">get_espn_game</code><span class="sig-paren">(</span><em>date</em>, <em>home_team</em>, <em>away_team</em>, <em>game_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.espn_pbp.get_espn_game" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the ESPN pbp feed 
 Ex: <a class="reference external" href="http://www.espn.com/nhl/gamecast/data/masterFeed?lang=en&amp;isAll=true&amp;gameId=400885300">http://www.espn.com/nhl/gamecast/data/masterFeed?lang=en&amp;isAll=true&amp;gameId=400885300</a></p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1350,8 +1350,8 @@ Ex: <a class="reference external" href="http://www.espn.com/nhl/gamecast/data/ma
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.espn_pbp.get_espn_game_id">
-<code class="descclassname">hockey_scraper.espn_pbp.</code><code class="descname">get_espn_game_id</code><span class="sig-paren">(</span><em>date</em>, <em>home_team</em>, <em>away_team</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.espn_pbp.get_espn_game_id" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.espn_pbp.get_espn_game_id">
+<code class="descclassname">hockey_scraper.nhl.pbp.espn_pbp.</code><code class="descname">get_espn_game_id</code><span class="sig-paren">(</span><em>date</em>, <em>home_team</em>, <em>away_team</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.espn_pbp.get_espn_game_id" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrapes the day&#8217;s schedule and gets the id for the given game
 Ex: <a class="reference external" href="http://www.espn.com/nhl/scoreboard?date=20161024">http://www.espn.com/nhl/scoreboard?date=20161024</a></p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1373,8 +1373,8 @@ Ex: <a class="reference external" href="http://www.espn.com/nhl/scoreboard?date=
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.espn_pbp.get_game_ids">
-<code class="descclassname">hockey_scraper.espn_pbp.</code><code class="descname">get_game_ids</code><span class="sig-paren">(</span><em>response</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.espn_pbp.get_game_ids" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.espn_pbp.get_game_ids">
+<code class="descclassname">hockey_scraper.nhl.pbp.espn_pbp.</code><code class="descname">get_game_ids</code><span class="sig-paren">(</span><em>response</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.espn_pbp.get_game_ids" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get game_ids for date from doc</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1389,8 +1389,8 @@ Ex: <a class="reference external" href="http://www.espn.com/nhl/scoreboard?date=
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.espn_pbp.get_teams">
-<code class="descclassname">hockey_scraper.espn_pbp.</code><code class="descname">get_teams</code><span class="sig-paren">(</span><em>response</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.espn_pbp.get_teams" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.espn_pbp.get_teams">
+<code class="descclassname">hockey_scraper.nhl.pbp.espn_pbp.</code><code class="descname">get_teams</code><span class="sig-paren">(</span><em>response</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.espn_pbp.get_teams" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extract Teams for date from doc</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1405,8 +1405,8 @@ Ex: <a class="reference external" href="http://www.espn.com/nhl/scoreboard?date=
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.espn_pbp.parse_espn">
-<code class="descclassname">hockey_scraper.espn_pbp.</code><code class="descname">parse_espn</code><span class="sig-paren">(</span><em>espn_xml</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.espn_pbp.parse_espn" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.espn_pbp.parse_espn">
+<code class="descclassname">hockey_scraper.nhl.pbp.espn_pbp.</code><code class="descname">parse_espn</code><span class="sig-paren">(</span><em>espn_xml</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.espn_pbp.parse_espn" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse feed</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1421,8 +1421,8 @@ Ex: <a class="reference external" href="http://www.espn.com/nhl/scoreboard?date=
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.espn_pbp.parse_event">
-<code class="descclassname">hockey_scraper.espn_pbp.</code><code class="descname">parse_event</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.espn_pbp.parse_event" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.espn_pbp.parse_event">
+<code class="descclassname">hockey_scraper.nhl.pbp.espn_pbp.</code><code class="descname">parse_event</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.espn_pbp.parse_event" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse each event. In the string each field is separated by a &#8216;~&#8217;. 
 Relevant for here: The first two are the x and y coordinates. And the 4th and 5th are the time elapsed and period.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1438,8 +1438,8 @@ Relevant for here: The first two are the x and y coordinates. And the 4th and 5t
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.espn_pbp.scrape_game">
-<code class="descclassname">hockey_scraper.espn_pbp.</code><code class="descname">scrape_game</code><span class="sig-paren">(</span><em>date</em>, <em>home_team</em>, <em>away_team</em>, <em>game_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.espn_pbp.scrape_game" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.pbp.espn_pbp.scrape_game">
+<code class="descclassname">hockey_scraper.nhl.pbp.espn_pbp.</code><code class="descname">scrape_game</code><span class="sig-paren">(</span><em>date</em>, <em>home_team</em>, <em>away_team</em>, <em>game_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.espn_pbp.scrape_game" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape the game</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1461,12 +1461,12 @@ Relevant for here: The first two are the x and y coordinates. And the 4th and 5t
 </dd></dl>
 
 </div>
-<div class="section" id="module-hockey_scraper.json_shifts">
-<span id="json-shifts"></span><h3>Json Shifts<a class="headerlink" href="#module-hockey_scraper.json_shifts" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="module-hockey_scraper.nhl.shifts.json_shifts">
+<span id="json-shifts"></span><h3>Json Shifts<a class="headerlink" href="#module-hockey_scraper.nhl.shifts.json_shifts" title="Permalink to this headline">¶</a></h3>
 <p>This module contains functions to scrape the Json toi/shifts for any given game</p>
 <dl class="function">
-<dt id="hockey_scraper.json_shifts.fix_team_tricode">
-<code class="descclassname">hockey_scraper.json_shifts.</code><code class="descname">fix_team_tricode</code><span class="sig-paren">(</span><em>tricode</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.json_shifts.fix_team_tricode" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.shifts.json_shifts.fix_team_tricode">
+<code class="descclassname">hockey_scraper.nhl.shifts.json_shifts.</code><code class="descname">fix_team_tricode</code><span class="sig-paren">(</span><em>tricode</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.shifts.json_shifts.fix_team_tricode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Some of the tricodes are different than how I want them</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1481,8 +1481,8 @@ Relevant for here: The first two are the x and y coordinates. And the 4th and 5t
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.json_shifts.get_shifts">
-<code class="descclassname">hockey_scraper.json_shifts.</code><code class="descname">get_shifts</code><span class="sig-paren">(</span><em>game_id</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.json_shifts.get_shifts" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.shifts.json_shifts.get_shifts">
+<code class="descclassname">hockey_scraper.nhl.shifts.json_shifts.</code><code class="descname">get_shifts</code><span class="sig-paren">(</span><em>game_id</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.shifts.json_shifts.get_shifts" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a game_id it returns the raw json
 Ex: <a class="reference external" href="http://www.nhl.com/stats/rest/shiftcharts?cayenneExp=gameId=2010020001">http://www.nhl.com/stats/rest/shiftcharts?cayenneExp=gameId=2010020001</a></p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1498,8 +1498,8 @@ Ex: <a class="reference external" href="http://www.nhl.com/stats/rest/shiftchart
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.json_shifts.parse_json">
-<code class="descclassname">hockey_scraper.json_shifts.</code><code class="descname">parse_json</code><span class="sig-paren">(</span><em>shift_json</em>, <em>game_id</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.json_shifts.parse_json" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.shifts.json_shifts.parse_json">
+<code class="descclassname">hockey_scraper.nhl.shifts.json_shifts.</code><code class="descname">parse_json</code><span class="sig-paren">(</span><em>shift_json</em>, <em>game_id</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.shifts.json_shifts.parse_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse the json</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1519,8 +1519,8 @@ Ex: <a class="reference external" href="http://www.nhl.com/stats/rest/shiftchart
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.json_shifts.parse_shift">
-<code class="descclassname">hockey_scraper.json_shifts.</code><code class="descname">parse_shift</code><span class="sig-paren">(</span><em>shift</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.json_shifts.parse_shift" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.shifts.json_shifts.parse_shift">
+<code class="descclassname">hockey_scraper.nhl.shifts.json_shifts.</code><code class="descname">parse_shift</code><span class="sig-paren">(</span><em>shift</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.shifts.json_shifts.parse_shift" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse shift for json</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1535,8 +1535,8 @@ Ex: <a class="reference external" href="http://www.nhl.com/stats/rest/shiftchart
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.json_shifts.scrape_game">
-<code class="descclassname">hockey_scraper.json_shifts.</code><code class="descname">scrape_game</code><span class="sig-paren">(</span><em>game_id</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.json_shifts.scrape_game" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.shifts.json_shifts.scrape_game">
+<code class="descclassname">hockey_scraper.nhl.shifts.json_shifts.</code><code class="descname">scrape_game</code><span class="sig-paren">(</span><em>game_id</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.shifts.json_shifts.scrape_game" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape the game.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1551,12 +1551,12 @@ Ex: <a class="reference external" href="http://www.nhl.com/stats/rest/shiftchart
 </dd></dl>
 
 </div>
-<div class="section" id="module-hockey_scraper.html_shifts">
-<span id="html-shifts"></span><h3>Html Shifts<a class="headerlink" href="#module-hockey_scraper.html_shifts" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="module-hockey_scraper.nhl.shifts.html_shifts">
+<span id="html-shifts"></span><h3>Html Shifts<a class="headerlink" href="#module-hockey_scraper.nhl.shifts.html_shifts" title="Permalink to this headline">¶</a></h3>
 <p>This module contains functions to scrape the Html Toi Tables (or shifts) for any given game</p>
 <dl class="function">
-<dt id="hockey_scraper.html_shifts.analyze_shifts">
-<code class="descclassname">hockey_scraper.html_shifts.</code><code class="descname">analyze_shifts</code><span class="sig-paren">(</span><em>shift</em>, <em>name</em>, <em>team</em>, <em>home_team</em>, <em>player_ids</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_shifts.analyze_shifts" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.shifts.html_shifts.analyze_shifts">
+<code class="descclassname">hockey_scraper.nhl.shifts.html_shifts.</code><code class="descname">analyze_shifts</code><span class="sig-paren">(</span><em>shift</em>, <em>name</em>, <em>team</em>, <em>home_team</em>, <em>player_ids</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.shifts.html_shifts.analyze_shifts" title="Permalink to this definition">¶</a></dt>
 <dd><p>Analyze shifts for each player when using.
 Prior to this each player (in a dictionary) has a list with each entry being a shift.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1580,8 +1580,8 @@ Prior to this each player (in a dictionary) has a list with each entry being a s
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.html_shifts.get_shifts">
-<code class="descclassname">hockey_scraper.html_shifts.</code><code class="descname">get_shifts</code><span class="sig-paren">(</span><em>game_id</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_shifts.get_shifts" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.shifts.html_shifts.get_shifts">
+<code class="descclassname">hockey_scraper.nhl.shifts.html_shifts.</code><code class="descname">get_shifts</code><span class="sig-paren">(</span><em>game_id</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.shifts.html_shifts.get_shifts" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a game_id it returns a the shifts for both teams
 Ex: <a class="reference external" href="http://www.nhl.com/scores/htmlreports/20162017/TV020971.HTM">http://www.nhl.com/scores/htmlreports/20162017/TV020971.HTM</a></p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1597,8 +1597,8 @@ Ex: <a class="reference external" href="http://www.nhl.com/scores/htmlreports/20
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.html_shifts.get_soup">
-<code class="descclassname">hockey_scraper.html_shifts.</code><code class="descname">get_soup</code><span class="sig-paren">(</span><em>shifts_html</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_shifts.get_soup" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.shifts.html_shifts.get_soup">
+<code class="descclassname">hockey_scraper.nhl.shifts.html_shifts.</code><code class="descname">get_soup</code><span class="sig-paren">(</span><em>shifts_html</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.shifts.html_shifts.get_soup" title="Permalink to this definition">¶</a></dt>
 <dd><p>Uses Beautiful soup to parses the html document.
 Some parsers work for some pages but don&#8217;t work for others....I&#8217;m not sure why so I just try them all here in order</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1614,8 +1614,8 @@ Some parsers work for some pages but don&#8217;t work for others....I&#8217;m no
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.html_shifts.get_teams">
-<code class="descclassname">hockey_scraper.html_shifts.</code><code class="descname">get_teams</code><span class="sig-paren">(</span><em>soup</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_shifts.get_teams" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.shifts.html_shifts.get_teams">
+<code class="descclassname">hockey_scraper.nhl.shifts.html_shifts.</code><code class="descname">get_teams</code><span class="sig-paren">(</span><em>soup</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.shifts.html_shifts.get_teams" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the team for the TOI tables and the home team</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1630,8 +1630,8 @@ Some parsers work for some pages but don&#8217;t work for others....I&#8217;m no
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.html_shifts.parse_html">
-<code class="descclassname">hockey_scraper.html_shifts.</code><code class="descname">parse_html</code><span class="sig-paren">(</span><em>html</em>, <em>player_ids</em>, <em>game_id</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_shifts.parse_html" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.shifts.html_shifts.parse_html">
+<code class="descclassname">hockey_scraper.nhl.shifts.html_shifts.</code><code class="descname">parse_html</code><span class="sig-paren">(</span><em>html</em>, <em>player_ids</em>, <em>game_id</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.shifts.html_shifts.parse_html" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse the html</p>
 <p>Note: Don&#8217;t fuck with this!!! I&#8217;m not exactly sure how or why but it works.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1653,8 +1653,8 @@ Some parsers work for some pages but don&#8217;t work for others....I&#8217;m no
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.html_shifts.scrape_game">
-<code class="descclassname">hockey_scraper.html_shifts.</code><code class="descname">scrape_game</code><span class="sig-paren">(</span><em>game_id</em>, <em>players</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.html_shifts.scrape_game" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.shifts.html_shifts.scrape_game">
+<code class="descclassname">hockey_scraper.nhl.shifts.html_shifts.</code><code class="descname">scrape_game</code><span class="sig-paren">(</span><em>game_id</em>, <em>players</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.shifts.html_shifts.scrape_game" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape the game.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1674,12 +1674,12 @@ Some parsers work for some pages but don&#8217;t work for others....I&#8217;m no
 </dd></dl>
 
 </div>
-<div class="section" id="module-hockey_scraper.json_schedule">
-<span id="schedule"></span><h3>Schedule<a class="headerlink" href="#module-hockey_scraper.json_schedule" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="module-hockey_scraper.nhl.json_schedule">
+<span id="schedule"></span><h3>Schedule<a class="headerlink" href="#module-hockey_scraper.nhl.json_schedule" title="Permalink to this headline">¶</a></h3>
 <p>This module contains functions to scrape the json schedule for any games or date range</p>
 <dl class="function">
-<dt id="hockey_scraper.json_schedule.get_current_season">
-<code class="descclassname">hockey_scraper.json_schedule.</code><code class="descname">get_current_season</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.json_schedule.get_current_season" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.json_schedule.get_current_season">
+<code class="descclassname">hockey_scraper.nhl.json_schedule.</code><code class="descname">get_current_season</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.json_schedule.get_current_season" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get Season based on today&#8217;s date</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1692,8 +1692,8 @@ Some parsers work for some pages but don&#8217;t work for others....I&#8217;m no
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.json_schedule.get_dates">
-<code class="descclassname">hockey_scraper.json_schedule.</code><code class="descname">get_dates</code><span class="sig-paren">(</span><em>games</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.json_schedule.get_dates" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.json_schedule.get_dates">
+<code class="descclassname">hockey_scraper.nhl.json_schedule.</code><code class="descname">get_dates</code><span class="sig-paren">(</span><em>games</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.json_schedule.get_dates" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a list game_ids it returns the dates for each game</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1708,8 +1708,8 @@ Some parsers work for some pages but don&#8217;t work for others....I&#8217;m no
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.json_schedule.get_schedule">
-<code class="descclassname">hockey_scraper.json_schedule.</code><code class="descname">get_schedule</code><span class="sig-paren">(</span><em>date_from</em>, <em>date_to</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.json_schedule.get_schedule" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.json_schedule.get_schedule">
+<code class="descclassname">hockey_scraper.nhl.json_schedule.</code><code class="descname">get_schedule</code><span class="sig-paren">(</span><em>date_from</em>, <em>date_to</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.json_schedule.get_schedule" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrapes games in date range
 Ex: <a class="reference external" href="https://statsapi.web.nhl.com/api/v1/schedule?startDate=2010-10-03&amp;endDate=2011-06-20">https://statsapi.web.nhl.com/api/v1/schedule?startDate=2010-10-03&amp;endDate=2011-06-20</a></p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1730,8 +1730,8 @@ Ex: <a class="reference external" href="https://statsapi.web.nhl.com/api/v1/sche
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.json_schedule.scrape_schedule">
-<code class="descclassname">hockey_scraper.json_schedule.</code><code class="descname">scrape_schedule</code><span class="sig-paren">(</span><em>date_from</em>, <em>date_to</em>, <em>preseason=False</em>, <em>live=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.json_schedule.scrape_schedule" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.json_schedule.scrape_schedule">
+<code class="descclassname">hockey_scraper.nhl.json_schedule.</code><code class="descname">scrape_schedule</code><span class="sig-paren">(</span><em>date_from</em>, <em>date_to</em>, <em>preseason=False</em>, <em>live=False</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.json_schedule.scrape_schedule" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calls getSchedule and scrapes the raw schedule Json</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1754,12 +1754,12 @@ the game is over.</li>
 </dd></dl>
 
 </div>
-<div class="section" id="module-hockey_scraper.playing_roster">
-<span id="playing-roster"></span><h3>Playing Roster<a class="headerlink" href="#module-hockey_scraper.playing_roster" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="module-hockey_scraper.nhl.playing_roster">
+<span id="playing-roster"></span><h3>Playing Roster<a class="headerlink" href="#module-hockey_scraper.nhl.playing_roster" title="Permalink to this headline">¶</a></h3>
 <p>This module contains functions to scrape the Html game roster for any given game</p>
 <dl class="function">
-<dt id="hockey_scraper.playing_roster.fix_name">
-<code class="descclassname">hockey_scraper.playing_roster.</code><code class="descname">fix_name</code><span class="sig-paren">(</span><em>player</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.playing_roster.fix_name" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.playing_roster.fix_name">
+<code class="descclassname">hockey_scraper.nhl.playing_roster.</code><code class="descname">fix_name</code><span class="sig-paren">(</span><em>player</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.playing_roster.fix_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get rid of (A) or (C) when a player has it attached to their name</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1774,8 +1774,8 @@ the game is over.</li>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.playing_roster.get_coaches">
-<code class="descclassname">hockey_scraper.playing_roster.</code><code class="descname">get_coaches</code><span class="sig-paren">(</span><em>soup</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.playing_roster.get_coaches" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.playing_roster.get_coaches">
+<code class="descclassname">hockey_scraper.nhl.playing_roster.</code><code class="descname">get_coaches</code><span class="sig-paren">(</span><em>soup</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.playing_roster.get_coaches" title="Permalink to this definition">¶</a></dt>
 <dd><p>scrape head coaches</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1790,8 +1790,8 @@ the game is over.</li>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.playing_roster.get_content">
-<code class="descclassname">hockey_scraper.playing_roster.</code><code class="descname">get_content</code><span class="sig-paren">(</span><em>roster</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.playing_roster.get_content" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.playing_roster.get_content">
+<code class="descclassname">hockey_scraper.nhl.playing_roster.</code><code class="descname">get_content</code><span class="sig-paren">(</span><em>roster</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.playing_roster.get_content" title="Permalink to this definition">¶</a></dt>
 <dd><p>Uses Beautiful soup to parses the html document.
 Some parsers work for some pages but don&#8217;t work for others....I&#8217;m not sure why so I just try them all here in order</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1807,8 +1807,8 @@ Some parsers work for some pages but don&#8217;t work for others....I&#8217;m no
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.playing_roster.get_players">
-<code class="descclassname">hockey_scraper.playing_roster.</code><code class="descname">get_players</code><span class="sig-paren">(</span><em>soup</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.playing_roster.get_players" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.playing_roster.get_players">
+<code class="descclassname">hockey_scraper.nhl.playing_roster.</code><code class="descname">get_players</code><span class="sig-paren">(</span><em>soup</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.playing_roster.get_players" title="Permalink to this definition">¶</a></dt>
 <dd><p>scrape roster for players</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1823,8 +1823,8 @@ Some parsers work for some pages but don&#8217;t work for others....I&#8217;m no
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.playing_roster.get_roster">
-<code class="descclassname">hockey_scraper.playing_roster.</code><code class="descname">get_roster</code><span class="sig-paren">(</span><em>game_id</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.playing_roster.get_roster" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.playing_roster.get_roster">
+<code class="descclassname">hockey_scraper.nhl.playing_roster.</code><code class="descname">get_roster</code><span class="sig-paren">(</span><em>game_id</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.playing_roster.get_roster" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a game_id it returns the raw html
 Ex: <a class="reference external" href="http://www.nhl.com/scores/htmlreports/20162017/RO020475.HTM">http://www.nhl.com/scores/htmlreports/20162017/RO020475.HTM</a></p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1840,8 +1840,8 @@ Ex: <a class="reference external" href="http://www.nhl.com/scores/htmlreports/20
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.playing_roster.scrape_roster">
-<code class="descclassname">hockey_scraper.playing_roster.</code><code class="descname">scrape_roster</code><span class="sig-paren">(</span><em>game_id</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.playing_roster.scrape_roster" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.nhl.playing_roster.scrape_roster">
+<code class="descclassname">hockey_scraper.nhl.playing_roster.</code><code class="descname">scrape_roster</code><span class="sig-paren">(</span><em>game_id</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.playing_roster.scrape_roster" title="Permalink to this definition">¶</a></dt>
 <dd><p>For a given game scrapes the roster</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1856,13 +1856,13 @@ Ex: <a class="reference external" href="http://www.nhl.com/scores/htmlreports/20
 </dd></dl>
 
 </div>
-<div class="section" id="module-hockey_scraper.save_pages">
-<span id="save-pages"></span><h3>Save Pages<a class="headerlink" href="#module-hockey_scraper.save_pages" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="module-hockey_scraper.utils.save_pages">
+<span id="save-pages"></span><h3>Save Pages<a class="headerlink" href="#module-hockey_scraper.utils.save_pages" title="Permalink to this headline">¶</a></h3>
 <p>Saves the scraped docs so you don&#8217;t have to re-scrape them every time you want to parse the docs.</p>
 <p>**** Don&#8217;t mess with this unless you know what you&#8217;re doing ****</p>
 <dl class="function">
-<dt id="hockey_scraper.save_pages.check_file_exists">
-<code class="descclassname">hockey_scraper.save_pages.</code><code class="descname">check_file_exists</code><span class="sig-paren">(</span><em>file_info</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.save_pages.check_file_exists" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.utils.save_pages.check_file_exists">
+<code class="descclassname">hockey_scraper.utils.save_pages.</code><code class="descname">check_file_exists</code><span class="sig-paren">(</span><em>file_info</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.save_pages.check_file_exists" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks if the file exists. Also check if structure for holding scraped file exists to. If not, it creates it.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1878,8 +1878,8 @@ we want to deposit any data in.</td>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.save_pages.create_file_path">
-<code class="descclassname">hockey_scraper.save_pages.</code><code class="descname">create_file_path</code><span class="sig-paren">(</span><em>file_info</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.save_pages.create_file_path" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.utils.save_pages.create_file_path">
+<code class="descclassname">hockey_scraper.utils.save_pages.</code><code class="descname">create_file_path</code><span class="sig-paren">(</span><em>file_info</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.save_pages.create_file_path" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates the file path for a given file</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1895,8 +1895,8 @@ we want to deposit any data in.</td>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.save_pages.create_season_dirs">
-<code class="descclassname">hockey_scraper.save_pages.</code><code class="descname">create_season_dirs</code><span class="sig-paren">(</span><em>season</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.save_pages.create_season_dirs" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.utils.save_pages.create_season_dirs">
+<code class="descclassname">hockey_scraper.utils.save_pages.</code><code class="descname">create_season_dirs</code><span class="sig-paren">(</span><em>season</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.save_pages.create_season_dirs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates the infrastructure to hold all the scraped docs for a season</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1911,8 +1911,8 @@ we want to deposit any data in.</td>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.save_pages.get_page">
-<code class="descclassname">hockey_scraper.save_pages.</code><code class="descname">get_page</code><span class="sig-paren">(</span><em>file_info</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.save_pages.get_page" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.utils.save_pages.get_page">
+<code class="descclassname">hockey_scraper.utils.save_pages.</code><code class="descname">get_page</code><span class="sig-paren">(</span><em>file_info</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.save_pages.get_page" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the file so we don&#8217;t need to re-scrape</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1928,8 +1928,8 @@ we want to deposit any data in.</td>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.save_pages.save_page">
-<code class="descclassname">hockey_scraper.save_pages.</code><code class="descname">save_page</code><span class="sig-paren">(</span><em>page</em>, <em>file_info</em>, <em>docs_dir</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.save_pages.save_page" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.utils.save_pages.save_page">
+<code class="descclassname">hockey_scraper.utils.save_pages.</code><code class="descname">save_page</code><span class="sig-paren">(</span><em>page</em>, <em>file_info</em>, <em>docs_dir</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.save_pages.save_page" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save the page we just scraped.</p>
 <p>Note: It&#8217;ll only get saved if the directory already exists!!!!!!. I&#8217;m not dealing with any fuck ups. That would 
 involve checking if it&#8217;s even a valid path and creating it. Make sure you get it right.</p>
@@ -1953,12 +1953,12 @@ we want to deposit any data in.</li>
 </dd></dl>
 
 </div>
-<div class="section" id="module-hockey_scraper.shared">
-<span id="shared-functions"></span><h3>Shared Functions<a class="headerlink" href="#module-hockey_scraper.shared" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="module-hockey_scraper.utils.shared">
+<span id="shared-functions"></span><h3>Shared Functions<a class="headerlink" href="#module-hockey_scraper.utils.shared" title="Permalink to this headline">¶</a></h3>
 <p>This file is a bunch of the shared functions or just general stuff used by the different scrapers in the package.</p>
 <dl class="function">
-<dt id="hockey_scraper.shared.add_dir">
-<code class="descclassname">hockey_scraper.shared.</code><code class="descname">add_dir</code><span class="sig-paren">(</span><em>user_dir</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.shared.add_dir" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.utils.shared.add_dir">
+<code class="descclassname">hockey_scraper.utils.shared.</code><code class="descname">add_dir</code><span class="sig-paren">(</span><em>user_dir</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.add_dir" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add directory to store scraped docs if valid. Or create in the home dir</p>
 <p>NOTE: After this functions docs_dir is either None or a valid directory</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1974,8 +1974,8 @@ we want to deposit any data in.</li>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.shared.check_data_format">
-<code class="descclassname">hockey_scraper.shared.</code><code class="descname">check_data_format</code><span class="sig-paren">(</span><em>data_format</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.shared.check_data_format" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.utils.shared.check_data_format">
+<code class="descclassname">hockey_scraper.utils.shared.</code><code class="descname">check_data_format</code><span class="sig-paren">(</span><em>data_format</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.check_data_format" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks if data_format specified (if it is at all) is either None, &#8216;Csv&#8217;, or &#8216;pandas&#8217;.
 It exits program with error message if input isn&#8217;t good.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1991,8 +1991,8 @@ It exits program with error message if input isn&#8217;t good.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.shared.check_valid_dates">
-<code class="descclassname">hockey_scraper.shared.</code><code class="descname">check_valid_dates</code><span class="sig-paren">(</span><em>from_date</em>, <em>to_date</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.shared.check_valid_dates" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.utils.shared.check_valid_dates">
+<code class="descclassname">hockey_scraper.utils.shared.</code><code class="descname">check_valid_dates</code><span class="sig-paren">(</span><em>from_date</em>, <em>to_date</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.check_valid_dates" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if it&#8217;s a valid date range</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -2012,8 +2012,8 @@ It exits program with error message if input isn&#8217;t good.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.shared.convert_to_seconds">
-<code class="descclassname">hockey_scraper.shared.</code><code class="descname">convert_to_seconds</code><span class="sig-paren">(</span><em>minutes</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.shared.convert_to_seconds" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.utils.shared.convert_to_seconds">
+<code class="descclassname">hockey_scraper.utils.shared.</code><code class="descname">convert_to_seconds</code><span class="sig-paren">(</span><em>minutes</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.convert_to_seconds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return minutes elapsed in time format to seconds elapsed</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -2028,8 +2028,8 @@ It exits program with error message if input isn&#8217;t good.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.shared.fix_name">
-<code class="descclassname">hockey_scraper.shared.</code><code class="descname">fix_name</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.shared.fix_name" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.utils.shared.fix_name">
+<code class="descclassname">hockey_scraper.utils.shared.</code><code class="descname">fix_name</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.fix_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if a name falls under those that need fixing. If it does...fix it.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -2044,8 +2044,8 @@ It exits program with error message if input isn&#8217;t good.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.shared.get_file">
-<code class="descclassname">hockey_scraper.shared.</code><code class="descname">get_file</code><span class="sig-paren">(</span><em>file_info</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.shared.get_file" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.utils.shared.get_file">
+<code class="descclassname">hockey_scraper.utils.shared.</code><code class="descname">get_file</code><span class="sig-paren">(</span><em>file_info</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.get_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the specified file.</p>
 <p>If a docs_dir is provided we check if it exists. If it does we see if it contains that page (and saves if it
 doesn&#8217;t). If the docs_dir doesn&#8217;t exist we just scrape from the source and not save.</p>
@@ -2063,8 +2063,8 @@ Contains the url, name, type, and season</td>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.shared.get_season">
-<code class="descclassname">hockey_scraper.shared.</code><code class="descname">get_season</code><span class="sig-paren">(</span><em>date</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.shared.get_season" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.utils.shared.get_season">
+<code class="descclassname">hockey_scraper.utils.shared.</code><code class="descname">get_season</code><span class="sig-paren">(</span><em>date</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.get_season" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get Season based on from_date</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -2079,14 +2079,14 @@ Contains the url, name, type, and season</td>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.shared.get_team">
-<code class="descclassname">hockey_scraper.shared.</code><code class="descname">get_team</code><span class="sig-paren">(</span><em>team</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.shared.get_team" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.utils.shared.get_team">
+<code class="descclassname">hockey_scraper.utils.shared.</code><code class="descname">get_team</code><span class="sig-paren">(</span><em>team</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.get_team" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the fucking team</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.shared.if_rescrape">
-<code class="descclassname">hockey_scraper.shared.</code><code class="descname">if_rescrape</code><span class="sig-paren">(</span><em>user_rescrape</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.shared.if_rescrape" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.utils.shared.if_rescrape">
+<code class="descclassname">hockey_scraper.utils.shared.</code><code class="descname">if_rescrape</code><span class="sig-paren">(</span><em>user_rescrape</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.if_rescrape" title="Permalink to this definition">¶</a></dt>
 <dd><p>If you want to re_scrape. If someone is a dumbass and feeds it a non-boolean it terminates the program</p>
 <p>Note: Only matters when you have a directory specified</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -2102,14 +2102,14 @@ Contains the url, name, type, and season</td>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.shared.print_warning">
-<code class="descclassname">hockey_scraper.shared.</code><code class="descname">print_warning</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.shared.print_warning" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.utils.shared.print_warning">
+<code class="descclassname">hockey_scraper.utils.shared.</code><code class="descname">print_warning</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.print_warning" title="Permalink to this definition">¶</a></dt>
 <dd><p>Print the Warning</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.shared.scrape_page">
-<code class="descclassname">hockey_scraper.shared.</code><code class="descname">scrape_page</code><span class="sig-paren">(</span><em>url</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.shared.scrape_page" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.utils.shared.scrape_page">
+<code class="descclassname">hockey_scraper.utils.shared.</code><code class="descname">scrape_page</code><span class="sig-paren">(</span><em>url</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.scrape_page" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape a given url</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -2124,8 +2124,8 @@ Contains the url, name, type, and season</td>
 </dd></dl>
 
 <dl class="function">
-<dt id="hockey_scraper.shared.to_csv">
-<code class="descclassname">hockey_scraper.shared.</code><code class="descname">to_csv</code><span class="sig-paren">(</span><em>base_file_name</em>, <em>pbp_df</em>, <em>shifts_df</em>, <em>league</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.shared.to_csv" title="Permalink to this definition">¶</a></dt>
+<dt id="hockey_scraper.utils.shared.to_csv">
+<code class="descclassname">hockey_scraper.utils.shared.</code><code class="descname">to_csv</code><span class="sig-paren">(</span><em>base_file_name</em>, <em>pbp_df</em>, <em>shifts_df</em>, <em>league</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.to_csv" title="Permalink to this definition">¶</a></dt>
 <dd><p>Write DataFrame(s) to csv file(s)</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -2160,17 +2160,17 @@ Contains the url, name, type, and season</td>
   <ul>
 <li><a class="reference internal" href="#">NHL Scraping Functions</a><ul>
 <li><a class="reference internal" href="#scraping">Scraping</a><ul>
-<li><a class="reference internal" href="#module-hockey_scraper.scrape_functions">Scrape Functions</a></li>
-<li><a class="reference internal" href="#module-hockey_scraper.game_scraper">Game Scraper</a></li>
-<li><a class="reference internal" href="#module-hockey_scraper.html_pbp">Html PBP</a></li>
-<li><a class="reference internal" href="#module-hockey_scraper.json_pbp">Json PBP</a></li>
-<li><a class="reference internal" href="#module-hockey_scraper.espn_pbp">Espn PBP</a></li>
-<li><a class="reference internal" href="#module-hockey_scraper.json_shifts">Json Shifts</a></li>
-<li><a class="reference internal" href="#module-hockey_scraper.html_shifts">Html Shifts</a></li>
-<li><a class="reference internal" href="#module-hockey_scraper.json_schedule">Schedule</a></li>
-<li><a class="reference internal" href="#module-hockey_scraper.playing_roster">Playing Roster</a></li>
-<li><a class="reference internal" href="#module-hockey_scraper.save_pages">Save Pages</a></li>
-<li><a class="reference internal" href="#module-hockey_scraper.shared">Shared Functions</a></li>
+<li><a class="reference internal" href="#module-hockey_scraper.nhl.scrape_functions">Scrape Functions</a></li>
+<li><a class="reference internal" href="#module-hockey_scraper.nhl.game_scraper">Game Scraper</a></li>
+<li><a class="reference internal" href="#module-hockey_scraper.nhl.pbp.html_pbp">Html PBP</a></li>
+<li><a class="reference internal" href="#module-hockey_scraper.nhl.pbp.json_pbp">Json PBP</a></li>
+<li><a class="reference internal" href="#module-hockey_scraper.nhl.pbp.espn_pbp">Espn PBP</a></li>
+<li><a class="reference internal" href="#module-hockey_scraper.nhl.shifts.json_shifts">Json Shifts</a></li>
+<li><a class="reference internal" href="#module-hockey_scraper.nhl.shifts.html_shifts">Html Shifts</a></li>
+<li><a class="reference internal" href="#module-hockey_scraper.nhl.json_schedule">Schedule</a></li>
+<li><a class="reference internal" href="#module-hockey_scraper.nhl.playing_roster">Playing Roster</a></li>
+<li><a class="reference internal" href="#module-hockey_scraper.utils.save_pages">Save Pages</a></li>
+<li><a class="reference internal" href="#module-hockey_scraper.utils.shared">Shared Functions</a></li>
 </ul>
 </li>
 </ul>
