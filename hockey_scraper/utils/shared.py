@@ -7,16 +7,11 @@ This file is a bunch of the shared functions or just general stuff used by the d
 import os
 import time
 import warnings
-
 import requests
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
-
 from . import save_pages as sp
 
-
-# When we want to kill the current process
-class HaltException(Exception): pass
 
 # Own warning...gets rid of junk when printing
 def custom_formatwarning(msg, *args, **kwargs): return "Warning: " + str(msg) + '\n'
@@ -219,7 +214,7 @@ def scrape_page(url):
     except requests.exceptions.ReadTimeout:
         # If it times out and it's the schedule print an error message...otherwise just make the page = None
         if "schedule" in url:
-            raise HaltException("Timeout Error: The NHL API took too long to respond to our request. "
+            raise Exception("Timeout Error: The NHL API took too long to respond to our request. "
                                 "\nPlease Try Again (you may need to try a few times before it works). ")
         else:
             print_warning("Timeout Error: The server took too long to respond to our request.")
@@ -251,7 +246,7 @@ def if_rescrape(user_rescrape):
     if isinstance(user_rescrape, bool):
         re_scrape = user_rescrape
     else:
-        raise HaltException("Error: 'if_rescrape' must be a boolean. Not a {}".format(type(user_rescrape)))
+        raise ValueError("Error: 'if_rescrape' must be a boolean. Not a {}".format(type(user_rescrape)))
 
 
 def add_dir(user_dir):
@@ -336,7 +331,7 @@ def check_data_format(data_format):
     :return: Boolean - True if good
     """
     if not data_format or data_format.lower() not in ['csv', 'pandas']:
-        raise HaltException('{} is an unspecified data format. The two options are Csv and Pandas '
+        raise ValueError('{} is an unspecified data format. The two options are Csv and Pandas '
                             '(Csv is default)\n'.format(data_format))
 
 
@@ -351,9 +346,9 @@ def check_valid_dates(from_date, to_date):
     """
     try:
         if time.strptime(to_date, "%Y-%m-%d") < time.strptime(from_date, "%Y-%m-%d"):
-            raise HaltException("Error: The second date input is earlier than the first one")
+            raise ValueError("Error: The second date input is earlier than the first one")
     except ValueError:
-        raise HaltException("Error: Incorrect format given for dates. They must be given like 'yyyy-mm-dd' "
+        raise ValueError("Error: Incorrect format given for dates. They must be given like 'yyyy-mm-dd' "
                             "(ex: '2016-10-01').")
 
 

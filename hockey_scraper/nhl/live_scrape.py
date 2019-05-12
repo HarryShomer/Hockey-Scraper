@@ -31,7 +31,7 @@ def set_docs_dir(user_dir):
 
 def check_date_format(date):
     """
-    Verify the date format. If wrong raises a HaltException
+    Verify the date format. If wrong raises a ValueError
 
     :param date: User supplied date
 
@@ -40,8 +40,8 @@ def check_date_format(date):
     try:
         time.strptime(date, "%Y-%m-%d")
     except ValueError:
-        raise shared.HaltException("Error: Incorrect format given for dates. They must be given like 'yyyy-mm-dd' "
-                                   "(ex: '2016-10-01').")
+        raise ValueError("Error: Incorrect format given for dates. They must be given like 'yyyy-mm-dd' "
+                         "(ex: '2016-10-01').")
 
 
 class LiveGame:

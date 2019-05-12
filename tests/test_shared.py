@@ -25,7 +25,7 @@ def test_check_data_format():
     shared.check_data_format("pandaS")
 
     # Should raise an exception
-    with pytest.raises(shared.HaltException):
+    with pytest.raises(ValueError):
         shared.check_data_format("txt")
 
 
@@ -33,7 +33,7 @@ def test_check_valid_dates():
     """ Test if given valid date range"""
     shared.check_valid_dates("2017-10-01", "2018-01-05")
 
-    with pytest.raises(shared.HaltException):
+    with pytest.raises(ValueError):
         shared.check_valid_dates("2017-12-01", "2017-11-30")
 
 
