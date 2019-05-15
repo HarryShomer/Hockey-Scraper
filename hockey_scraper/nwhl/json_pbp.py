@@ -214,7 +214,7 @@ def scrape_pbp(game_id):
 
     if not game_json:
         shared.print_warning("Json pbp for game {} is not either not there or can't be obtained".format(game_id))
-        return None
+        return pd.DataFrame()
 
     try:
         game_df = parse_json(game_json, game_id)

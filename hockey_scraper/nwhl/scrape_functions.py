@@ -52,7 +52,6 @@ def scrape_list_of_games(games):
         if not pbp_df.empty:
             pbp_dfs.append(pbp_df)
         else:
-            # Add to broken games...
             broken_games.append(game)
 
     # If not empty...
