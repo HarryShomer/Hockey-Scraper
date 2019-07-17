@@ -32,18 +32,16 @@ def test_get_teams(date_response):
     """ Check to make sure we get a list of both teams for every game that day"""
 
     # Games for that date
-    date_games = [
-        ['ANA', 'MIN'], ['TOR', 'MTL'], ['NYR', 'PHI'], ['PIT', 'NSH'], ['T.B', 'CHI'], ['DET', 'VAN'],
-        ['N.J', 'BUF'], ['ARI', 'OTT'], ['NYI', 'STL'], ['FLA', 'DAL'], ['CBJ', 'COL'], ['CAR', 'S.J']
-    ]
+    date_games = [['ANA', 'MIN'], ['N.J', 'BUF'], ['TOR', 'MTL'], ['PHX', 'OTT'], ['NYR', 'PHI'], ['NYI', 'STL'],
+                  ['PIT', 'NSH'], ['FLA', 'DAL'], ['T.B', 'CHI'], ['CBJ', 'COL'], ['DET', 'VAN'], ['CAR', 'S.J']]
 
     assert espn_pbp.get_teams(date_response) == date_games
 
 
 def test_get_game_ids(date_response):
     """ Check to see that all the espn game id's for that day are correct"""
-    game_ids = ['400814970', '400814972', '400814974', '400814976', '400814978', '400814980', '400814971', '400814973',
-                '400814975', '400814977', '400814979', '400814981']
+    game_ids = ['400814970', '400814971', '400814972', '400814973', '400814974', '400814975', '400814976',
+                '400814977', '400814978', '400814979', '400814980', '400814981']
 
     assert espn_pbp.get_game_ids(date_response) == game_ids
 

@@ -92,4 +92,5 @@ def test_get_file(file_info):
     # Some cleanup....remove stuff created from the file directory and move back
     os.chdir(os.path.dirname(os.path.realpath(__file__)))
     shutil.rmtree("docs")
+    shutil.rmtree("csvs")
     os.chdir(original_path)

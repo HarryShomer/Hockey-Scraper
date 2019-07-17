@@ -44,7 +44,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'hockey_scraper'
-copyright = '2018, Harry Shomer'
+copyright = '2019, Harry Shomer'
 author = 'Harry Shomer'
 
 # The version info for the project you're documenting, acts as replacement for

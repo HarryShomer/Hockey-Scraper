@@ -62,10 +62,11 @@ def check_file_exists(file_info):
 
     :return: Boolean - True if it exists
     """
-    # Create the docs subdir if it doesn't exist
+    # Create the docs and csvs subdir if it doesn't exist
     if not os.path.isdir(os.path.join(file_info['dir'], 'docs')):
-        os.mkdir("docs")
-        os.mkdir("csvs")
+        os.mkdir(os.path.join(file_info['dir'], 'docs'))
+    if not os.path.isdir(os.path.join(file_info['dir'], 'csvs')): 
+        os.mkdir(os.path.join(file_info['dir'], 'csvs'))
 
     # Check if the folder for the season for the given game was created yet...if not create it
     if not os.path.isdir(os.path.join(file_info['dir'], '/'.join(['docs', str(file_info['season'])]))):

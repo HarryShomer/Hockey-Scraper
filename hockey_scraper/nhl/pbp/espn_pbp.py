@@ -36,9 +36,8 @@ def get_game_ids(response):
     """
     soup = BeautifulSoup(response, 'lxml')
 
-    divs = soup.findAll('div', {'class': "game-header"})
-    regex = re.compile(r'id="(\d+)')
-    game_ids = [regex.findall(str(div))[0] for div in divs]
+    sections = soup.findAll("section", {"class": "Scoreboard bg-clr-white flex flex-auto justify-between"})
+    game_ids = [section['id'] for section in sections]
 
     return game_ids
 
@@ -46,18 +45,40 @@ def get_game_ids(response):
 def get_teams(response):
     """
     Extract Teams for date from doc
+
+    ul-> class = ScoreCell__Competitors
+
+    div -> class = ScoreCell__TeamName ScoreCell__TeamName--shortDisplayName truncate db
     
     :param response: doc
     
     :return: list of teams    
     """
+    teams = []
     soup = BeautifulSoup(response, 'lxml')
 
-    td = soup.findAll('td', {'class': "team"})
-    teams = [shared.get_team(t.get_text().upper()) for t in td if t.get_text() != '']
+    uls = soup.findAll('div', {'class': "ScoreCell__Team"})
 
+    for ul in uls:
+        actual_tm = None
+        tm = ul.find('div', {'class': "ScoreCell__TeamName ScoreCell__TeamName--shortDisplayName truncate db"}).text
+        
+        # ESPN stores the name and not the city
+        for real_tm in list(shared.TEAMS.keys()):
+            if tm.upper() in real_tm:
+                actual_tm = shared.TEAMS[real_tm]
+
+        # If not found we'll let the user know...this may happens
+        if actual_tm is None:
+            shared.print_warning("The team {} in the espn pbp is unknown. We use the supplied team name".format(tm))
+            actual_tm = tm
+
+        teams.append(actual_tm)
+        
     # Make a list of both teams for each game
     games = [teams[i:i + 2] for i in range(0, len(teams), 2)]
+
+    print(games)
 
     return games
 
