@@ -11,6 +11,9 @@ Hockey-Scraper
 .. inclusion-marker-for-sphinx
 
 
+**Note: Due to changes in the NHL API and ESPN's website, coordinates are only scraped when using version 1.33 and higher.**
+
+
 Purpose
 -------
 
@@ -37,7 +40,6 @@ To install all you need to do is open up your terminal and type in:
 ::
 
     pip install hockey_scraper
-
 
 
 NHL Usage
