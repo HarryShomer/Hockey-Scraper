@@ -7,7 +7,6 @@ Contents
    :maxdepth: 1
 
    nhl_scrape_functions
-   nwhl_scrape_functions
    live_scrape
    license_link
 

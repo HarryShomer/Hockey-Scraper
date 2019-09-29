@@ -57,12 +57,18 @@
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="nhl_scrape_functions.html">NHL Scraping Functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="nwhl_scrape_functions.html">NWHL Scraping Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="live_scrape.html">Live Scraping</a></li>
 <li class="toctree-l1"><a class="reference internal" href="license_link.html">License</a></li>
 </ul>
 </div>
-<p><strong>Note: Due to changes in the NHL API and ESPN&#8217;s website, coordinates are only scraped when using version 1.33 and higher.</strong></p>
+<dl class="docutils">
+<dt><strong>Notes:</strong></dt>
+<dd><ul class="first last simple">
+<li>Coordinates are only scraped from ESPN for versions 1.33+</li>
+<li>NWHL usage has been deprecated due to the removal of the pbp information for each game.</li>
+</ul>
+</dd>
+</dl>
 </div>
 <div class="section" id="purpose">
 <h2>Purpose<a class="headerlink" href="#purpose" title="Permalink to this headline">¶</a></h2>
@@ -202,36 +208,9 @@ stored (it must exist beforehand).</p>
             <span class="n">to_csv</span><span class="p">(</span><span class="n">game</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="nwhl-usage">
-<h2>NWHL Usage<a class="headerlink" href="#nwhl-usage" title="Permalink to this headline">¶</a></h2>
-<p>Scrape data on a season by season level:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">hockey_scraper</span>
-
-<span class="c1"># Scrapes the 2015 &amp; 2016 season and stores the data in a Csv file</span>
-<span class="n">hockey_scraper</span><span class="o">.</span><span class="n">nwhl</span><span class="o">.</span><span class="n">scrape_seasons</span><span class="p">([</span><span class="mi">2015</span><span class="p">,</span> <span class="mi">2016</span><span class="p">])</span>
-
-<span class="c1"># Scrapes the 2008 season and returns a Pandas DataFrame containing the pbp</span>
-<span class="n">scraped_data</span> <span class="o">=</span> <span class="n">hockey_scraper</span><span class="o">.</span><span class="n">nwhl</span><span class="o">.</span><span class="n">scrape_seasons</span><span class="p">([</span><span class="mi">2017</span><span class="p">],</span> <span class="n">data_format</span><span class="o">=</span><span class="s1">&#39;Pandas&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Scrape a list of games:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">hockey_scraper</span>
-
-<span class="c1"># Scrape some games and store the results in a Csv file</span>
-<span class="c1"># Also saves the scraped pages</span>
-<span class="n">hockey_scraper</span><span class="o">.</span><span class="n">nwhl</span><span class="o">.</span><span class="n">scrape_games</span><span class="p">([</span><span class="mi">14694271</span><span class="p">,</span> <span class="mi">14814946</span><span class="p">,</span> <span class="mi">14689491</span><span class="p">],</span> <span class="n">docs_dir</span><span class="o">=</span><span class="s2">&quot;...Path you specified&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Scrape all games in a given date range:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">hockey_scraper</span>
-
-<span class="c1"># Scrapes all games between 2016-10-10 and 2017-01-01 and returns a Pandas DataFrame containing the pbp</span>
-<span class="n">hockey_scraper</span><span class="o">.</span><span class="n">nwhl</span><span class="o">.</span><span class="n">scrape_date_range</span><span class="p">(</span><span class="s1">&#39;2016-10-10&#39;</span><span class="p">,</span> <span class="s1">&#39;2017-01-01&#39;</span><span class="p">,</span> <span class="n">data_format</span><span class="o">=</span><span class="s1">&#39;pandas&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
+<hr class="docutils" />
 <p>The full documentation can be found <a class="reference external" href="http://hockey-scraper.readthedocs.io/en/latest/">here</a>.</p>
+</div>
 </div>
 <div class="section" id="contact">
 <h2>Contact<a class="headerlink" href="#contact" title="Permalink to this headline">¶</a></h2>
@@ -266,7 +245,6 @@ Otherwise you can email me at <a class="reference external" href="mailto:Harrysh
 <li><a class="reference internal" href="#live-scraping">Live Scraping</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#nwhl-usage">NWHL Usage</a></li>
 <li><a class="reference internal" href="#contact">Contact</a></li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
