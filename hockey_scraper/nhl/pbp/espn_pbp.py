@@ -92,7 +92,7 @@ def get_espn_date(date):
     :return: response 
     """
     page_info = {
-        "url": 'http://www.espn.com/nhl/scoreboard?date={}'.format(date.replace('-', '')),
+        "url": 'http://www.espn.com/nhl/scoreboard/_/date/{}'.format(date.replace('-', '')),
         "name": date,
         "type": "espn_scoreboard",
         "season": shared.get_season(date),
@@ -109,7 +109,7 @@ def get_espn_date(date):
 def get_espn_game_id(date, home_team, away_team):
     """
     Scrapes the day's schedule and gets the id for the given game
-    Ex: http://www.espn.com/nhl/scoreboard?date=20161024
+    Ex: http://www.espn.com/nhl/scoreboard/_/date/20161024
     
     :param date: format-> YearMonthDay-> 20161024
     :param home_team: home team

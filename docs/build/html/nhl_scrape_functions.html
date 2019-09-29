@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>NHL Scraping Functions &#8212; hockey_scraper 1.32 documentation</title>
+    <title>NHL Scraping Functions &#8212; hockey_scraper 1.34 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '1.32',
+        VERSION:     '1.34',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -45,7 +45,7 @@
         <li class="right" >
           <a href="index.html" title="Hockey-Scraper"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">hockey_scraper 1.32 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">hockey_scraper 1.34 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -1353,7 +1353,7 @@ Ex: <a class="reference external" href="http://www.espn.com/nhl/gamecast/data/ma
 <dt id="hockey_scraper.nhl.pbp.espn_pbp.get_espn_game_id">
 <code class="descclassname">hockey_scraper.nhl.pbp.espn_pbp.</code><code class="descname">get_espn_game_id</code><span class="sig-paren">(</span><em>date</em>, <em>home_team</em>, <em>away_team</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.espn_pbp.get_espn_game_id" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrapes the day&#8217;s schedule and gets the id for the given game
-Ex: <a class="reference external" href="http://www.espn.com/nhl/scoreboard?date=20161024">http://www.espn.com/nhl/scoreboard?date=20161024</a></p>
+Ex: <a class="reference external" href="http://www.espn.com/nhl/scoreboard/_/date/20161024">http://www.espn.com/nhl/scoreboard/_/date/20161024</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1392,6 +1392,8 @@ Ex: <a class="reference external" href="http://www.espn.com/nhl/scoreboard?date=
 <dt id="hockey_scraper.nhl.pbp.espn_pbp.get_teams">
 <code class="descclassname">hockey_scraper.nhl.pbp.espn_pbp.</code><code class="descname">get_teams</code><span class="sig-paren">(</span><em>response</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.espn_pbp.get_teams" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extract Teams for date from doc</p>
+<p>ul-&gt; class = ScoreCell__Competitors</p>
+<p>div -&gt; class = ScoreCell__TeamName ScoreCell__TeamName&#8211;shortDisplayName truncate db</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -2219,11 +2221,11 @@ Contains the url, name, type, and season</td>
         <li class="right" >
           <a href="index.html" title="Hockey-Scraper"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">hockey_scraper 1.32 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">hockey_scraper 1.34 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2018, Harry Shomer.
+        &#169; Copyright 2019, Harry Shomer.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
     </div>
   </body>
