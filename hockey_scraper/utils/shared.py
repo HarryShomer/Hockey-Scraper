@@ -8,6 +8,7 @@ import os
 import time
 import warnings
 import requests
+import datetime
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 from . import save_pages as sp
@@ -187,8 +188,11 @@ def convert_to_seconds(minutes):
     if minutes == '-16:0-':
         return '1200'      # Sometimes in the html at the end of the game the time is -16:0-
 
-    import datetime
-    x = time.strptime(minutes.strip(' '), '%M:%S')
+    # If the time is junk not much i can do
+    try:
+        x = time.strptime(minutes.strip(' '), '%M:%S')
+    except ValueError:
+        return None
 
     return datetime.timedelta(hours=x.tm_hour, minutes=x.tm_min, seconds=x.tm_sec).total_seconds()
 
