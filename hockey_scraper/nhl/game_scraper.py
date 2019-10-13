@@ -148,8 +148,6 @@ def combine_html_json_pbp(json_df, html_df, game_id, date):
     json_df = json_df.drop(['p1_name', 'p2_name', 'p2_ID', 'p3_name', 'p3_ID'], axis=1)
 
     try:
-        html_df.Period = html_df.Period.astype(int)
-
         # If they aren't equal it's usually due to the HTML containing a challenge event
         if html_df.shape[0] == json_df.shape[0]:
             json_df = json_df[['period', 'event', 'seconds_elapsed', 'xC', 'yC']]
@@ -158,12 +156,12 @@ def combine_html_json_pbp(json_df, html_df, game_id, date):
             # We always merge if they aren't equal but we check if it's due to a challenge so we can print out a better
             # warning message for the user.
             # NOTE: May be slightly incorrect. It's possible for there to be a challenge and another issue for one game.
-            if'CHL' in list(html_df.Event):
-                shared.print_warning("The number of columns in the Html and Json pbp are different because the"
+            if 'CHL' in list(html_df.Event):
+                shared.print_warning("The number of rows in the Html and Json pbp are different because the"
                                      " Json pbp, for some reason, does not include challenges. Will instead merge on "
                                      "Period, Event, Time, and p1_id.")
             else:
-                shared.print_warning("The number of columns in the Html and json pbp are different because "
+                shared.print_warning("The number of rows in the Html and json pbp are different because "
                                      "someone fucked up. Will instead merge on Period, Event, Time, and p1_id.")
 
             # Actual Merging
@@ -199,7 +197,6 @@ def combine_espn_html_pbp(html_df, espn_df, game_id, date, away_team, home_team)
     """
     if espn_df is not None:
         try:
-            espn_df.period = espn_df.period.astype(int)
             game_df = pd.merge(html_df, espn_df, left_on=['Period', 'Seconds_Elapsed', 'Event'],
                                right_on=['period', 'time_elapsed', 'event'], how='left')
 

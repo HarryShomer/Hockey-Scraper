@@ -235,4 +235,9 @@ def scrape_game(date, home_team, away_team, game_id=None):
         shared.print_warning("Error parsing Espn pbp for game {a} {b} {c} {d}".format(a=date, b=home_team, c=away_team, d=e))
         return None
 
+    espn_df.period = espn_df.period.astype(int)
+    
     return espn_df
+
+
+

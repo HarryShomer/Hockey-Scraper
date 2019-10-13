@@ -808,6 +808,10 @@ def scrape_pbp(game_html, game_id, players, teams):
         shared.print_warning('Error parsing Html pbp for game {} {}'.format(game_id, e))
         return None
 
+    # These sometimes end up as objects
+    game_df.Period = game_df.Period.astype(int)
+    game_df.Seconds_Elapsed = game_df.Seconds_Elapsed.astype(float)
+
     return game_df
 
 

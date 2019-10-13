@@ -181,7 +181,7 @@ Here is a simple example of a way to setup live scraping. I strongly suggest che
 
 
 .. NWHL Usage
-----------
+.. -------------
 
 .. Scrape data on a season by season level:
 
