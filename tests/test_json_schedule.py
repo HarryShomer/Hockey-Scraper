@@ -19,9 +19,6 @@ def test_scrape_schedule():
 
 def test_get_dates():
     """Test to see that it returns the correct dates for given game id's"""
-    #print(json_schedule.get_dates([2015010002])[0])
-    #print(json_schedule.get_dates([2017020275])[0])
-    #print(json_schedule.get_dates([2014030416])[0])
     assert json_schedule.get_dates([2015010002])[0] == {'game_id': 2015010002, 'date': '2015-09-20',
                                                         'start_time': datetime.datetime(2015, 9, 20, 20, 30),
                                                         'home_team': 'NSH', 'away_team': 'FLA', 'status': 'Final'}
