@@ -178,16 +178,12 @@ stored (it must exist beforehand).</p>
     <span class="c1"># 2. Not in Intermission</span>
     <span class="c1"># 3. Not Over</span>
     <span class="k">if</span> <span class="n">game</span><span class="o">.</span><span class="n">is_ongoing</span><span class="p">():</span>
-        <span class="c1"># Get both DataFrames</span>
-        <span class="n">pbp_df</span> <span class="o">=</span> <span class="n">game</span><span class="o">.</span><span class="n">get_pbp</span><span class="p">()</span>
-        <span class="n">shifts_df</span> <span class="o">=</span> <span class="n">game</span><span class="o">.</span><span class="n">get_shifts</span><span class="p">()</span>
-
         <span class="c1"># Print the description of the last event</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">game</span><span class="o">.</span><span class="n">game_id</span><span class="p">,</span> <span class="s2">&quot;-&gt;&quot;</span><span class="p">,</span> <span class="n">pbp_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;Description&#39;</span><span class="p">])</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">game</span><span class="o">.</span><span class="n">game_id</span><span class="p">,</span> <span class="s2">&quot;-&gt;&quot;</span><span class="p">,</span> <span class="n">game</span><span class="o">.</span><span class="n">pbp_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;Description&#39;</span><span class="p">])</span>
 
         <span class="c1"># Store in CSV files</span>
-        <span class="n">pbp_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;../hockey_scraper_data/</span><span class="si">{game.game_id}</span><span class="s2">_pbp.csv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
-        <span class="n">shifts_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;../hockey_scraper_data/</span><span class="si">{game.game_id}</span><span class="s2">_shifts.csv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+        <span class="n">game</span><span class="o">.</span><span class="n">pbp_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;../hockey_scraper_data/</span><span class="si">{game.game_id}</span><span class="s2">_pbp.csv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+        <span class="n">game</span><span class="o">.</span><span class="n">shifts_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;../hockey_scraper_data/</span><span class="si">{game.game_id}</span><span class="s2">_shifts.csv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
 
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="c1"># B4 we start set the directory to store the files</span>
@@ -208,7 +204,6 @@ stored (it must exist beforehand).</p>
             <span class="n">to_csv</span><span class="p">(</span><span class="n">game</span><span class="p">)</span>
 </pre></div>
 </div>
-<hr class="docutils" />
 <p>The full documentation can be found <a class="reference external" href="http://hockey-scraper.readthedocs.io/en/latest/">here</a>.</p>
 </div>
 </div>

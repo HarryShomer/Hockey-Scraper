@@ -78,8 +78,6 @@ def get_teams(response):
     # Make a list of both teams for each game
     games = [teams[i:i + 2] for i in range(0, len(teams), 2)]
 
-    print(games)
-
     return games
 
 

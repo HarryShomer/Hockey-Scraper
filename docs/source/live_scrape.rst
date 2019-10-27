@@ -33,10 +33,10 @@ pbp and shift data for that game. Here are all the attributes for the LiveGame c
     :param int intermission_time_remaining: Time remaining in the intermission. 0 if not in intermission
     :param dict players: Player info for both teams
     :param dict head_coaches: Head coaches for both teams
-    :param DataFrame pbp_df: Holds most recent pbp data
-    :param DataFrame shifts_df: Holds most recent shift data
-    :param DataFrame prev_pbp_df: Holds the previous pbp data (for just in case)
-    :param DataFrame prev_shifts_df: Holds the previous shift data (for just in case)
+    :param DataFrame _pbp_df: Holds most recent pbp data
+    :param DataFrame _shifts_df: Holds most recent shift data
+    :param DataFrame _prev_pbp_df: Holds the previous pbp data (for just in case)
+    :param DataFrame _prev_shifts_df: Holds the previous shift data (for just in case)
     """
 
 Here's a simple example of scraping the games continuously for a single date. This will run until every game is finished:
@@ -60,16 +60,12 @@ Here's a simple example of scraping the games continuously for a single date. Th
        # 2. Not in Intermission
        # 3. Not Over
        if game.is_ongoing():
-           # Get both DataFrames
-           pbp_df = game.get_pbp()
-           shifts_df = game.get_shifts()
-
            # Print the description of the last event
-           print(game.game_id, "->", pbp_df.iloc[-1]['Description'])
+           print(game.game_id, "->", game.pbp_df.iloc[-1]['Description'])
 
            # Store in CSV files
-           pbp_df.to_csv(f"../hockey_scraper_data/{game.game_id}_pbp.csv", sep=',')
-           shifts_df.to_csv(f"../hockey_scraper_data/{game.game_id}_shifts.csv", sep=',')
+           game.pbp_df.to_csv(f"../hockey_scraper_data/{game.game_id}_pbp.csv", sep=',')
+           game.shifts_df.to_csv(f"../hockey_scraper_data/{game.game_id}_shifts.csv", sep=',')
 
    if __name__ == "__main__":
        # B4 we start set the directory to store the files
@@ -179,29 +175,29 @@ whether the game is in intermission or whether it's over.
 
     def is_game_over(self, prev=False):
         """
-        Check if the game is over for both the html and json pbp
-
+        Check if the game is over for both the html and json pbp. If prev=True check for the previous event
+        
         :param prev: Check the game status for the previous event
-
+        
         :return: Boolean - True if over
         """
         if not prev:
-            return True if self.html_game_status == self.api_game_status == "Final" else False
+            return self.html_game_status == self.api_game_status == "Final"
         else:
-            return True if self.prev_html_game_status == self.prev_api_game_status == "Final" else False
+            return self.prev_html_game_status == self.prev_api_game_status == "Final"
 
     def is_intermission(self, prev=False):
         """
-        Check if in intermission for both the html and json pbp
-
+        Check if in intermission for both the html and json pbp. If prev=True check for the previous event
+        
         :param prev: Check the game status for the previous event
 
         :return: Boolean - True if yes
         """
         if not prev:
-            return True if self.html_game_status == self.api_game_status == "Intermission" else False
+            return self.html_game_status == self.api_game_status == "Intermission"
         else:
-            return True if self.prev_html_game_status == self.prev_api_game_status == "Intermission" else False
+            return self.prev_html_game_status == self.prev_api_game_status == "Intermission"
 
 Two things probably stand out is the option to check the status for the previous event (why do we care what it was earlier?)
 and the fact that two statuses exist.
@@ -230,7 +226,7 @@ is currently being played. Which means the game: Started, is not in intermission
         # The game is currently being played
         if self.time_until_game() == 0 and not self.is_game_over() and not self.is_intermission() and self.pbp_df.shape[0] > 0:
             return True
-        # If it's not being played check if game is over and if it was over for the previous event
+        # Since it's not being played check if game is over and if it wasn't for the previous
         elif self.is_game_over() and not self.is_game_over(prev=True):
             return True
         # Check if it's in intermission and the if it was for the previous event

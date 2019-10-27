@@ -25,7 +25,6 @@ def set_docs_dir(user_dir):
     """
     # We always want to rescrape since the files are being updated constantly
     shared.if_rescrape(True)
-
     shared.add_dir(user_dir)
 
 
@@ -44,6 +43,7 @@ def check_date_format(date):
                          "(ex: '2016-10-01').")
 
 
+# TODO: Should I denote more member variables as private?
 class LiveGame:
     """ 
     This is a class holds all the information for a given game
@@ -60,10 +60,10 @@ class LiveGame:
     :param int intermission_time_remaining: Time remaining in the intermission. 0 if not in intermission
     :param dict players: Player info for both teams
     :param dict head_coaches: Head coaches for both teams
-    :param DataFrame pbp_df: Holds most recent pbp data
-    :param DataFrame shifts_df: Holds most recent shift data
-    :param DataFrame prev_pbp_df: Holds the previous pbp data (for just in case)
-    :param DataFrame prev_shifts_df: Holds the previous shift data (for just in case)
+    :param DataFrame _pbp_df: Holds most recent pbp data
+    :param DataFrame _shifts_df: Holds most recent shift data
+    :param DataFrame _prev_pbp_df: Holds the previous pbp data (for just in case)
+    :param DataFrame _prev_shifts_df: Holds the previous shift data (for just in case)
     """
 
     def __init__(self, game_id, start_time, home_team, away_team, status, espn_id, date, if_scrape_shifts):
@@ -90,14 +90,47 @@ class LiveGame:
 
         # Pbp and shift data - Will be filled in later
         # Also hold previous pair for checking for changes
-        self.pbp_df = pd.DataFrame()
-        self.shifts_df = pd.DataFrame()
-        self.prev_pbp_df = pd.DataFrame()
-        self.prev_shifts_df = pd.DataFrame()
+        self._pbp_df = pd.DataFrame()
+        self._shifts_df = pd.DataFrame()
+        self._prev_pbp_df = pd.DataFrame()
+        self._prev_shifts_df = pd.DataFrame()
 
         # Object creation message
-        print("The LiveGame object for game {game_id} has been created. ".format(game_id=game_id))
-        print("Game starts in {time} seconds.".format(time=self.time_until_game()))
+        print("The LiveGame object for game {game_id} has been created. ".format(game_id=game_id), end="")
+        if self.time_until_game() <= 0:
+            print("The game has started.")
+        else:
+            print("The game starts in {time} seconds.".format(time=self.time_until_game()))
+
+
+    @property
+    def pbp_df(self):
+        if isinstance(self._pbp_df, pd.DataFrame):
+            return self._pbp_df
+        else:
+            return pd.DataFrame()
+
+    @property
+    def shifts_df(self):
+        if isinstance(self._shifts_df, pd.DataFrame):
+            return self._shifts_df
+        else:
+            return pd.DataFrame()
+
+    @property
+    def prev_pbp_df(self):
+        if isinstance(self._prev_pbp_df, pd.DataFrame):
+            return self._prev_pbp_df
+        else:
+            return pd.DataFrame()
+
+    @property
+    def prev_pbp_df(self):
+        if isinstance(self._prev_shifts_df, pd.DataFrame):
+            return self._prev_shifts_df
+        else:
+            return pd.DataFrame()
+
 
     def scrape(self, force=False):
         """
@@ -111,6 +144,7 @@ class LiveGame:
         # 2. force = True: We always scrape
         if (self.time_until_game() == 0 and not self.is_game_over(prev=True)) or force:
             self.scrape_live_game(force=force)
+
 
     def scrape_live_game(self, force=False):
         """
@@ -131,8 +165,8 @@ class LiveGame:
         self.prev_html_game_status = self.html_game_status
 
         # Swap old pbp & shift DataFrames
-        self.prev_pbp_df = self.pbp_df
-        self.prev_shifts_df = self.shifts_df
+        self._prev_pbp_df = self._pbp_df
+        self._prev_shifts_df = self._shifts_df
 
         # If json is in intermission:
         # Update self.api_game_status, get minutes remaining in intermission, and check if html is intermission too.
@@ -170,13 +204,14 @@ class LiveGame:
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
             # pay attention to each argument
-            self.pbp_df, self.html_game_status = game_scraper.scrape_pbp_live(self.game_id, self.date,
+            self._pbp_df, self.html_game_status = game_scraper.scrape_pbp_live(self.game_id, self.date,
                                                                               {"head_coaches": self.head_coaches},
                                                                               game_json, self.players,
                                                                               {"Home": self.home_team, "Away": self.away_team},
                                                                               espn_id=self.espn_id)
             if self.if_scrape_shifts:
-                self.shifts_df = game_scraper.scrape_shifts(self.game_id, self.players, self.date)
+                self._shifts_df = game_scraper.scrape_shifts(self.game_id, self.players, self.date)
+
 
     def is_ongoing(self):
         """
@@ -193,7 +228,7 @@ class LiveGame:
         # The game is currently being played
         if self.time_until_game() == 0 and not self.is_game_over() and not self.is_intermission() and self.pbp_df.shape[0] > 0:
             return True
-        # If it's not being played check if game is over and if it was over for the previous event
+        # Since it's not being played check if game is over and if it wasn't for the previous
         elif self.is_game_over() and not self.is_game_over(prev=True):
             return True
         # Check if it's in intermission and the if it was for the previous event
@@ -201,6 +236,7 @@ class LiveGame:
             return True
         else:
             return False
+
 
     def time_until_game(self):
         """
@@ -213,6 +249,7 @@ class LiveGame:
             return delta.seconds
         else:
             return 0
+
 
     def is_game_over(self, prev=False):
         """
@@ -227,6 +264,7 @@ class LiveGame:
         else:
             return self.prev_html_game_status == self.prev_api_game_status == "Final"
 
+
     def is_intermission(self, prev=False):
         """
         Check if in intermission for both the html and json pbp. If prev=True check for the previous event
@@ -240,27 +278,6 @@ class LiveGame:
         else:
             return self.prev_html_game_status == self.prev_api_game_status == "Intermission"
 
-    def get_pbp(self):
-        """
-        Return the pbp ensure it's not None
-        
-        :return: DataFrame
-        """
-        if isinstance(self.pbp_df, pd.DataFrame):
-            return self.pbp_df
-        else:
-            return pd.DataFrame()
-
-    def get_shifts(self):
-        """
-        Return the shifts ensure it's not None
-
-        :return: DataFrame
-        """
-        if isinstance(self.shifts_df, pd.DataFrame):
-            return self.shifts_df
-        else:
-            return pd.DataFrame()
 
 
 class ScrapeLiveGames:
@@ -294,6 +311,7 @@ class ScrapeLiveGames:
         self.live_games = self.get_games()          # Hold list of LiveGame objects for that day
         self.pause = pause
 
+
     def get_games(self):
         """
         Get initial game info -> Called with object creation. Includes: players, espn_ids, standard game info
@@ -317,6 +335,7 @@ class ScrapeLiveGames:
 
         return game_objs
 
+
     def get_espn_ids(self, games):
         """
         Get espn game ids for all games that day
@@ -338,6 +357,7 @@ class ScrapeLiveGames:
 
         return games
 
+
     def update_live_games(self, force=False, sleep_next=False):
         """
         Scrape the pbp & shifts of ongoing games
@@ -355,6 +375,7 @@ class ScrapeLiveGames:
             game.scrape(force=force)
 
         time.sleep(self.pause)
+
 
     def sleep_next_game(self):
         """
@@ -376,6 +397,7 @@ class ScrapeLiveGames:
             if min_game.time_until_game() > 0:
                 print("\nSleeping for {} seconds until the next earliest game starts.".format(min_game.time_until_game()))
                 time.sleep(min_game.time_until_game())
+
 
     def finished(self):
         """

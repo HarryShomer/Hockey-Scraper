@@ -149,16 +149,12 @@ Here is a simple example of a way to setup live scraping. I strongly suggest che
        # 2. Not in Intermission
        # 3. Not Over
        if game.is_ongoing():
-           # Get both DataFrames
-           pbp_df = game.get_pbp()
-           shifts_df = game.get_shifts()
-
            # Print the description of the last event
-           print(game.game_id, "->", pbp_df.iloc[-1]['Description'])
+           print(game.game_id, "->", game.pbp_df.iloc[-1]['Description'])
 
            # Store in CSV files
-           pbp_df.to_csv(f"../hockey_scraper_data/{game.game_id}_pbp.csv", sep=',')
-           shifts_df.to_csv(f"../hockey_scraper_data/{game.game_id}_shifts.csv", sep=',')
+           game.pbp_df.to_csv(f"../hockey_scraper_data/{game.game_id}_pbp.csv", sep=',')
+           game.shifts_df.to_csv(f"../hockey_scraper_data/{game.game_id}_shifts.csv", sep=',')
 
    if __name__ == "__main__":
        # B4 we start set the directory to store the files
