@@ -2,7 +2,6 @@
 Functions to scrape by season, games, and date range
 """
 import random
-
 import pandas as pd
 
 from . import html_schedule, json_pbp
@@ -149,11 +148,7 @@ def scrape_seasons(seasons, data_format='csv', rescrape=False, docs_dir=None):
     master_pbps = []
 
     for season in seasons:
-        from_date = '-'.join([str(season), '9', '1'])
-        to_date = '-'.join([str(season + 1), '8', '31'])
-
-        # Get dates and convert to just a list of game ids
-        games = html_schedule.scrape_dates(from_date, to_date)
+        games = html_schedule.scrape_seasons(season)
         game_ids = [game['game_id'] for game in games]
 
         # Scrape all PBP

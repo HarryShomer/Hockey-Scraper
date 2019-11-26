@@ -11,7 +11,12 @@ import requests
 import datetime
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from . import save_pages as sp
+
+options = Options()
+options.add_argument("--headless")
 
 
 # Own warning...gets rid of junk when printing
@@ -154,6 +159,11 @@ def get_team(team):
     return TEAMS.get(team, team).upper()
 
 
+def print_warning(msg):
+    """Print the Warning"""
+    warnings.warn(msg)
+
+
 def get_season(date):
     """
     Get Season based on from_date
@@ -230,11 +240,6 @@ def scrape_page(url):
     return page
 
 
-def print_warning(msg):
-    """Print the Warning"""
-    warnings.warn(msg)
-
-
 def if_rescrape(user_rescrape):
     """
     If you want to re_scrape. If someone is a dumbass and feeds it a non-boolean it terminates the program
@@ -271,8 +276,7 @@ def add_dir(user_dir):
         return
 
     # Something was given
-    # Either True or stirng to directory
-    # We tell by the type
+    # Either True or string to directory
     # If boolean refer to the home directory
     if isinstance(user_dir, bool):
         docs_dir = os.path.join(os.path.expanduser('~'), "hockey_scraper_data")
@@ -305,22 +309,14 @@ def get_file(file_info):
 
     :return: page
     """
-    original_path = os.getcwd()
     file_info['dir'] = docs_dir
 
-    # If something is provided...we try to change the cwd
-    if file_info['dir']:
-        os.chdir(file_info['dir'])
-
     # If everything checks out we'll retrieve it, otherwise we scrape it
-    if docs_dir and sp.check_file_exists(file_info) and re_scrape is False:
+    if docs_dir and sp.check_file_exists(file_info) and not re_scrape:
         page = sp.get_page(file_info)
     else:
         page = scrape_page(file_info['url'])
-        sp.save_page(page, file_info, docs_dir)
-
-    # Change back to current cwd to avoid any potential issues
-    os.chdir(original_path)
+        sp.save_page(page, file_info)
 
     return page
 
