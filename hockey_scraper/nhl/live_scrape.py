@@ -321,7 +321,7 @@ class ScrapeLiveGames:
         game_objs = []
 
         # Get the initial schedule & espn game ids just in case
-        games = json_schedule.scrape_schedule(self.date, self.date, live=True, preseason=self.preseason)
+        games = json_schedule.scrape_schedule(self.date, self.date, not_over=True, preseason=self.preseason)
         games = self.get_espn_ids(games)
 
         # Only keep the games we want if the user specified games

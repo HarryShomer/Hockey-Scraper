@@ -116,7 +116,7 @@ def scrape_game(game_id):
     shifts_json = get_shifts(game_id)
 
     if not shifts_json:
-        shared.print_warning("Json shifts for game {} is either not there or can't be obtained".format(game_id))
+        #shared.print_warning("Json shifts for game {} is either not there or can't be obtained".format(game_id))
         return None
 
     try:

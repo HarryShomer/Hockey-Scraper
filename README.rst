@@ -125,6 +125,21 @@ stored (it must exist beforehand).
     hockey_scraper.scrape_seasons([2015, 2016], True, docs_dir=USER_PATH, rescrape=True)
 
 
+Schedule
+~~~~~~~~
+
+The schedule for any past or future games can be scraped as follows:
+
+::
+
+    import hockey_scraper
+
+    # As oppossed to the other calls the default format is 'Pandas' which returns a DataFrame
+    sched_df = hockey_scraper.scrape_schedule("2019-10-01", "2020-07-01")
+
+The columns returned are: ['game_id', 'date', 'venue', 'home_team', 'away_team', 'start_time', 'home_score', 'away_score', 'status']
+
+
 Live Scraping
 ~~~~~~~~~~~~~
 

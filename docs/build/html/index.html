@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Hockey-Scraper &#8212; hockey_scraper 1.34 documentation</title>
+    <title>Hockey-Scraper &#8212; hockey_scraper 1.35 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '1.34',
+        VERSION:     '1.35',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="nhl_scrape_functions.html" title="NHL Scraping Functions"
              accesskey="N">next</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">hockey_scraper 1.34 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="#">hockey_scraper 1.35 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -157,6 +157,17 @@ stored (it must exist beforehand).</p>
 </pre></div>
 </div>
 </div>
+<div class="section" id="schedule">
+<h3>Schedule<a class="headerlink" href="#schedule" title="Permalink to this headline">¶</a></h3>
+<p>The schedule for any past or future games can be scraped as follows:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">hockey_scraper</span>
+
+<span class="c1"># As oppossed to the other calls the default format is &#39;Pandas&#39; which returns a DataFrame</span>
+<span class="n">sched_df</span> <span class="o">=</span> <span class="n">hockey_scraper</span><span class="o">.</span><span class="n">scrape_schedule</span><span class="p">(</span><span class="s2">&quot;2019-10-01&quot;</span><span class="p">,</span> <span class="s2">&quot;2020-07-01&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The columns returned are: [&#8216;game_id&#8217;, &#8216;date&#8217;, &#8216;venue&#8217;, &#8216;home_team&#8217;, &#8216;away_team&#8217;, &#8216;start_time&#8217;, &#8216;home_score&#8217;, &#8216;away_score&#8217;, &#8216;status&#8217;]</p>
+</div>
 <div class="section" id="live-scraping">
 <h3>Live Scraping<a class="headerlink" href="#live-scraping" title="Permalink to this headline">¶</a></h3>
 <p>Here is a simple example of a way to setup live scraping. I strongly suggest checking out
@@ -237,6 +248,7 @@ Otherwise you can email me at <a class="reference external" href="mailto:Harrysh
 <li><a class="reference internal" href="#installation">Installation</a></li>
 <li><a class="reference internal" href="#nhl-usage">NHL Usage</a><ul>
 <li><a class="reference internal" href="#standard-scrape-functions">Standard Scrape Functions</a></li>
+<li><a class="reference internal" href="#schedule">Schedule</a></li>
 <li><a class="reference internal" href="#live-scraping">Live Scraping</a></li>
 </ul>
 </li>
@@ -282,7 +294,7 @@ Otherwise you can email me at <a class="reference external" href="mailto:Harrysh
         <li class="right" >
           <a href="nhl_scrape_functions.html" title="NHL Scraping Functions"
              >next</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">hockey_scraper 1.34 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="#">hockey_scraper 1.35 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

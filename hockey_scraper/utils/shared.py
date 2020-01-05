@@ -11,12 +11,7 @@ import requests
 import datetime
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 from . import save_pages as sp
-
-options = Options()
-options.add_argument("--headless")
 
 
 # Own warning...gets rid of junk when printing
@@ -175,16 +170,10 @@ def get_season(date):
     year = date[:4]
     date = time.strptime(date, "%Y-%m-%d")
 
-    if date > time.strptime('-'.join([year, '01-01']), "%Y-%m-%d"):
-        if date < time.strptime('-'.join([year, '09-01']), "%Y-%m-%d"):
-            return int(year) - 1
-        else:
-            return int(year)
+    if time.strptime('-'.join([year, '01-01']), "%Y-%m-%d") <= date <= time.strptime('-'.join([year, '08-01']), "%Y-%m-%d"):
+        return int(year) - 1
     else:
-        if date > time.strptime('-'.join([year, '07-01']), "%Y-%m-%d"):
-            return int(year)
-        else:
-            return int(year) - 1
+        return int(year)
 
 
 def convert_to_seconds(minutes):
@@ -229,7 +218,7 @@ def scrape_page(url):
         # If it times out and it's the schedule print an error message...otherwise just make the page = None
         if "schedule" in url:
             raise Exception("Timeout Error: The NHL API took too long to respond to our request. "
-                                "\nPlease Try Again (you may need to try a few times before it works). ")
+                                "Please Try Again (you may need to try a few times before it works). ")
         else:
             print_warning("Timeout Error: The server took too long to respond to our request.")
             page = None
@@ -352,36 +341,27 @@ def check_valid_dates(from_date, to_date):
                             "(ex: '2016-10-01').")
 
 
-def to_csv(base_file_name, pbp_df, shifts_df, league):
+def to_csv(base_file_name, df, league, file_type):
     """
-    Write DataFrame(s) to csv file(s)
+    Write DataFrame to csv file
 
     :param base_file_name: name of file
-    :param pbp_df: pbp DataFrame
-    :param shifts_df: shifts DataFrame
+    :param df: DataFrame
     :param league: nhl or nwhl
+    :param file_type: type of file despoiting
 
     :return: None
     """
-    pbp_file = shifts_file = base_file_name
-
     # This was a late addition so we add support here
     if isinstance(docs_dir, str) and not os.path.isdir(os.path.join(docs_dir, "csvs")):
         os.mkdir(os.path.join(docs_dir, "csvs"))
 
-    if pbp_df is not None:
+    if df is not None:
         if isinstance(docs_dir, str):
-            pbp_file = os.path.join(docs_dir, "csvs", '{}_pbp{}.csv'.format(league, base_file_name))
+            file_name = os.path.join(docs_dir, "csvs", '{}_{}_{}.csv'.format(league, file_type, base_file_name))
         else:
-            pbp_file = '{}_pbp{}.csv'.format(league, pbp_file)
+            file_name = '{}_{}_{}.csv'.format(league, file_type, base_file_name)
 
-        print("\nPbp data deposited in file - " + pbp_file)
-        pbp_df.to_csv(pbp_file, sep=',', encoding='utf-8')
-    if shifts_df is not None:
-        if isinstance(docs_dir, str):
-            shifts_file = os.path.join(docs_dir, "csvs", '{}_shifts{}.csv'.format(league, base_file_name))
-        else:
-            shifts_file = '{}_shifts{}.csv'.format(league, shifts_file)
+        print("---> {} {} data deposited in file - {}".format(league, file_type, file_name))
+        df.to_csv(file_name, sep=',', encoding='utf-8')
 
-        print("Shift data deposited in file - " + shifts_file)
-        shifts_df.to_csv(shifts_file, sep=',', encoding='utf-8')

@@ -32,38 +32,37 @@ def scrape_page(url):
 
     :return n pages - each have period info
     """
-    browser = webdriver.Chrome(chrome_options=options)
-    wait = WebDriverWait(browser, 10)
+    driver = webdriver.Chrome(chrome_options=options)
+    wait = WebDriverWait(driver, 10)
 
-    browser.get(url)
+    driver.get(url)
     time.sleep(8)
 
     for _ in range(5):
-        browser.execute_script("window.scrollTo(0,document.body.scrollHeight)")
+        driver.execute_script("window.scrollTo(0,document.body.scrollHeight)")
         time.sleep(.2)
+    #['SO', 'OT', 'OT1', 'OT2', '3', '2', '1']:
 
-    for period in ['3', '2', '1']: #['SO', 'OT', 'OT1', 'OT2', '3', '2', '1']:
+
+    for period in ['3', '2', '1']: 
         btn = '//a[@ng-click="ctrl.period = \'{}\'"]'.format(period)
-
 
         try:
             wait.until(EC.element_to_be_clickable((By.XPATH, btn)))
-            btn_elem = browser.find_element_by_xpath(btn)
-            ActionChains(browser).move_to_element(btn_elem).click().perform()
+            #driver.find_element_by_xpath(btn).click()
+            btn_elem = driver.find_element_by_xpath(btn)
+            ActionChains(driver).move_to_element(btn_elem).click().perform()
         except (TimeoutException, ElementNotVisibleException, WebDriverException) as e:
             print(e)
-            
 
-        with open("game_{}.txt".format(period), "w") as f:
-            f.write(browser.page_source)
-
-        soup = BeautifulSoup(browser.page_source, "lxml")
+        ### This just print the last row in the list to see if we are correctly toggling between periods
+        soup = BeautifulSoup(driver.page_source, "lxml")
         plays_table = soup.find("table", {"class": "play-by-play"})
         plays = plays_table.find_all("tr")
         print(plays[-1])
 
-    pg = browser.page_source
-    browser.close()
+    pg = driver.page_source
+    driver.close()
 
     return pg
 

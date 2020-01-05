@@ -57,6 +57,17 @@ Scrape all games between a specified date range. All dates must be written in a 
     hockey_scraper.scrape_date_range('2014-09-15', '2014-11-01', True, preseason=True)
 
 
+\4. *Scrape Schedule*
+
+Scrape the schedule between any given date range for past and future games. All dates must be written in a "yyyy-mm-dd" format. The default data_format is equal to 'Pandas'. This returns a DataFrame and not a dictionary like others. The columns returned are: ['game_id', 'date', 'venue', 'home_team', 'away_team', 'start_time', 'home_score', 'away_score', 'status']
+
+::
+
+    import hockey_scraper
+
+    sched_df = hockey_scraper.scrape_schedule("2019-10-01", "2020-07-01")
+
+
 **Saving Files**
 
 The option also exists to save the scraped files in another directory. This would speed up re-scraping any games since

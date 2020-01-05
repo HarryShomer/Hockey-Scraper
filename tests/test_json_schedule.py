@@ -19,12 +19,42 @@ def test_scrape_schedule():
 
 def test_get_dates():
     """Test to see that it returns the correct dates for given game id's"""
-    assert json_schedule.get_dates([2015010002])[0] == {'game_id': 2015010002, 'date': '2015-09-20',
-                                                        'start_time': datetime.datetime(2015, 9, 20, 20, 30),
-                                                        'home_team': 'NSH', 'away_team': 'FLA', 'status': 'Final'}
-    assert json_schedule.get_dates([2017020275])[0] == {'game_id': 2017020275, 'date': '2017-11-15',
-                                                        'start_time': datetime.datetime(2017, 11, 16, 0, 30),
-                                                        'home_team': 'DET', 'away_team': 'CGY', 'status': 'Final'}
-    assert json_schedule.get_dates([2014030416])[0] == {'game_id': 2014030416, 'date': '2015-06-15',
-                                                        'start_time': datetime.datetime(2015, 6, 16, 0, 0),
-                                                        'home_team': 'CHI', 'away_team': 'T.B', 'status': 'Final'}
+    assert json_schedule.get_dates([2015010002])[0] == {'game_id': 2015010002, 'date': '2015-09-20', 
+                                                        'start_time': datetime.datetime(2015, 9, 20, 20, 30), 
+                                                        'venue': 'Bridgestone Arena', 'home_team': 'NSH', 
+                                                        'away_team': 'FLA', 'home_score': 5, 'away_score': 2, 
+                                                        'status': 'Final'}
+    assert json_schedule.get_dates([2017020275])[0] == {'game_id': 2017020275, 'date': '2017-11-15', 
+                                                        'start_time': datetime.datetime(2017, 11, 16, 0, 30), 
+                                                        'venue': 'Little Caesars Arena', 'home_team': 'DET', 
+                                                        'away_team': 'CGY', 'home_score': 8, 'away_score': 2, 
+                                                        'status': 'Final'}
+    assert json_schedule.get_dates([2014030416])[0] == {'game_id': 2014030416, 'date': '2015-06-15', 
+                                                        'start_time': datetime.datetime(2015, 6, 16, 0, 0), 
+                                                        'venue': 'United Center', 'home_team': 'CHI', 
+                                                        'away_team': 'T.B', 'home_score': 2, 'away_score': 0, 
+                                                        'status': 'Final'}
+
+
+def test_chunk_schedule_calls():
+    """
+    Test that we appropriately chunk calls in a range. Do so by by checking # of days in each chunk
+
+    Note: Won't always go to 120 due to some days not having games
+    """
+    # 1 day
+    x = json_schedule.chunk_schedule_calls('2019-10-10', '2019-10-10')
+    assert [len(day) for chunk in x] == [1]
+
+    # > 120
+    x = json_schedule.chunk_schedule_calls('2018-10-10', '2019-04-10')
+    assert [len(day) for chunk in x] == [112, 60]
+
+    # 1 < x < 120
+    x = json_schedule.chunk_schedule_calls('2018-10-10', '2018-12-01')
+    assert [len(day) for chunk in x] == [51]
+
+
+
+
+

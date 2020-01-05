@@ -34,3 +34,8 @@ v1.34
 -----
   * Reflected change in url for ESPN scoreboard
   * Deprecated NWHL usage due as pbp parser isn't applicable due to UI changes (new source unknown)
+
+v1.35
+-----
+  * Added nhl.scrape_function.scrape_schedule function
+  * Now chunk calls to the nhl schedule api
