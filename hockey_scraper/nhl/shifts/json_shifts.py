@@ -12,14 +12,14 @@ import hockey_scraper.utils.shared as shared
 def get_shifts(game_id):
     """
     Given a game_id it returns the raw json
-    Ex: http://www.nhl.com/stats/rest/shiftcharts?cayenneExp=gameId=2010020001
+    Ex: https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId=2019020001
     
     :param game_id: the game
     
     :return: json or None
     """
     page_info = {
-        "url": 'http://www.nhl.com/stats/rest/shiftcharts?cayenneExp=gameId={}'.format(game_id),
+        "url": 'https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId={}'.format(game_id),
         "name": str(game_id),
         "type": "json_shifts",
         "season": str(game_id)[:4],

@@ -32,11 +32,13 @@ def scrape_page(url):
 
     :return n pages - each have period info
     """
-    driver = webdriver.Chrome(chrome_options=options)
+    driver = webdriver.Firefox()
     wait = WebDriverWait(driver, 10)
 
     driver.get(url)
     time.sleep(8)
+
+    """
 
     for _ in range(5):
         driver.execute_script("window.scrollTo(0,document.body.scrollHeight)")
@@ -60,6 +62,8 @@ def scrape_page(url):
         plays_table = soup.find("table", {"class": "play-by-play"})
         plays = plays_table.find_all("tr")
         print(plays[-1])
+
+    """
 
     pg = driver.page_source
     driver.close()

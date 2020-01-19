@@ -20,7 +20,6 @@ def test_scrape_shifts():
     scraped_shifts = json_shifts.scrape_game("2016020001")
 
     assert isinstance(scraped_shifts, pd.DataFrame)
-
     assert scraped_shifts.shape[0] == 850
 
     shift_columns = ['Game_Id', 'Period', 'Team', 'Player', 'Player_Id', 'Start', 'End', 'Duration']

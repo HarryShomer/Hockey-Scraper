@@ -44,15 +44,15 @@ def test_chunk_schedule_calls():
     """
     # 1 day
     x = json_schedule.chunk_schedule_calls('2019-10-10', '2019-10-10')
-    assert [len(day) for chunk in x] == [1]
+    assert [len(chunk) for chunk in x] == [1]
 
     # > 120
     x = json_schedule.chunk_schedule_calls('2018-10-10', '2019-04-10')
-    assert [len(day) for chunk in x] == [112, 60]
+    assert [len(chunk) for chunk in x] == [95, 77]
 
     # 1 < x < 120
     x = json_schedule.chunk_schedule_calls('2018-10-10', '2018-12-01')
-    assert [len(day) for chunk in x] == [51]
+    assert [len(chunk) for chunk in x] == [51]
 
 
 

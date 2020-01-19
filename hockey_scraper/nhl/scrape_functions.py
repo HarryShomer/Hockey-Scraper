@@ -89,8 +89,7 @@ def scrape_list_of_games(games, if_scrape_shifts):
         pbp_df.apply(lambda row: game_scraper.check_goalie(row), axis=1)
 
     if if_scrape_shifts:
-        shifts_df = pd.concat(shifts_dfs)
-        shifts_df = shifts_df.reset_index(drop=True)
+        shifts_df = pd.concat(shifts_dfs).reset_index(drop=True)
     else:
         shifts_df = None
 
