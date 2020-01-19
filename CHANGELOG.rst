@@ -39,3 +39,4 @@ v1.35
 -----
   * Added nhl.scrape_function.scrape_schedule function
   * Now chunk calls to the nhl schedule api
+  # Fixed nhl shift json endpoint
