@@ -36,11 +36,11 @@ def check_goalie(row):
     
     :return: None
     """
-    if row['Away_Goalie'] != '' and row['Away_Goalie_Id'] == 'NA':
+    if row['Away_Goalie'] != '' and row['Away_Goalie_Id'] is None:
         if [row['Away_Goalie'], row['Game_Id']] not in players_missing_ids:
             players_missing_ids.extend([[row['Away_Goalie'], row['Game_Id']]])
 
-    if row['Home_Goalie'] != '' and row['Home_Goalie_Id'] == 'NA':
+    if row['Home_Goalie'] != '' and row['Home_Goalie_Id'] is None:
         if [row['Home_Goalie'], row['Game_Id']] not in players_missing_ids:
             players_missing_ids.extend([[row['Home_Goalie'], row['Game_Id']]])
 
@@ -76,7 +76,7 @@ def get_players_json(players_json):
             players[name]['id'] = players_json[key]['id']
         except KeyError:
             shared.print_warning('{name} is missing an ID number in the pbp json'.format(name=name))
-            players[name]['id'] = 'NA'
+            players[name]['id'] = None
 
     return players
 
@@ -106,7 +106,7 @@ def combine_players_lists(json_players, roster_players, game_id):
                 if not player[3] and player[1] != 'G':
                     player.extend([game_id])
                     players_missing_ids.extend([[player[2], player[4]]])
-                    players[venue][name] = {'id': 'NA', 'number': player[0], 'last_name': ''}
+                    players[venue][name] = {'id': None, 'number': player[0], 'last_name': ''}
 
     return players
 
@@ -146,6 +146,9 @@ def combine_html_json_pbp(json_df, html_df, game_id, date):
     """
     # Don't need those columns to merge in
     json_df = json_df.drop(['p1_name', 'p2_name', 'p2_ID', 'p3_name', 'p3_ID'], axis=1)
+
+    # print("json", json_df.dtypes)
+    # print("html", html_df.dtypes)
 
     try:
         # If they aren't equal it's usually due to the HTML containing a challenge event

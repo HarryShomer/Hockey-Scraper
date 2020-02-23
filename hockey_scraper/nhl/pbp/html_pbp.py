@@ -681,10 +681,10 @@ def populate_players(event_dict, players, away_players, home_players):
                 event_dict['{}Player{}'.format(venue, j + 1)] = name
                 event_dict['{}Player{}_id'.format(venue, j + 1)] = players[foo][name]['id']
             except KeyError:
-                event_dict['{}Player{}_id'.format(venue, j + 1)] = 'NA'
+                event_dict['{}Player{}_id'.format(venue, j + 1)] = None
             except IndexError:
-                event_dict['{}Player{}'.format(venue, j + 1)] = ''
-                event_dict['{}Player{}_id'.format(venue, j + 1)] = ''
+                event_dict['{}Player{}'.format(venue, j + 1)] = None
+                event_dict['{}Player{}_id'.format(venue, j + 1)] = None
 
     # Did this because above method assumes the goalie is at end of player list
     for x in away_players:
@@ -693,10 +693,10 @@ def populate_players(event_dict, players, away_players, home_players):
             try:
                 event_dict['Away_Goalie_Id'] = players['Away'][event_dict['Away_Goalie']]['id']
             except KeyError:
-                event_dict['Away_Goalie_Id'] = 'NA'
+                event_dict['Away_Goalie_Id'] = None
         else:
-            event_dict['Away_Goalie'] = ''
-            event_dict['Away_Goalie_Id'] = ''
+            event_dict['Away_Goalie'] = None
+            event_dict['Away_Goalie_Id'] = None
 
     for x in home_players:
         if x[2] == 'G':
@@ -704,10 +704,10 @@ def populate_players(event_dict, players, away_players, home_players):
             try:
                 event_dict['Home_Goalie_Id'] = players['Home'][event_dict['Home_Goalie']]['id']
             except KeyError:
-                event_dict['Home_Goalie_Id'] = 'NA'
+                event_dict['Home_Goalie_Id'] = None
         else:
-            event_dict['Home_Goalie'] = ''
-            event_dict['Home_Goalie_Id'] = ''
+            event_dict['Home_Goalie'] = None
+            event_dict['Home_Goalie_Id'] = None
 
     event_dict['Away_Players'] = len(away_players)
     event_dict['Home_Players'] = len(home_players)
@@ -776,6 +776,7 @@ def parse_html(html, players, teams):
     # This is seen sometimes...it's a duplicate row
     df.drop(df[df.Time_Elapsed == '-16:0-'].index, inplace=True)
 
+    df['p1_ID'] = df['p1_ID'].astype("float64")
     df['Away_Team'] = teams['Away']
     df['Home_Team'] = teams['Home']
 
