@@ -7,7 +7,7 @@ def read():
 
 setup(
     name='hockey_scraper',
-    version='1.36',
+    version='1.36.2',
     description="""This package is designed to allow one to scrape the raw data for both the National Hockey League
                    (NHL) and the National Women's Hockey League (NWHL) off of their respective API and websites.""",
     long_description=read(),
@@ -22,7 +22,7 @@ setup(
     url='https://github.com/HarryShomer/Hockey-Scraper',
     author='Harry Shomer',
     author_email='Harryshomer@gmail.com',
-    license='MIT',
+    license='GNU General Public License v3 (GPLv3)',
     packages=find_packages(),
     install_requires=['BeautifulSoup4', 'requests', 'lxml', 'html5lib', 'pandas', 'pytest'],
     zip_safe=False

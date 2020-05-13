@@ -284,7 +284,7 @@ def add_time(event_dict, event):
     if event[3] != '':
         event_dict['Seconds_Elapsed'] = shared.convert_to_seconds(event[3])
     else:
-        event_dict['Seconds_Elapsed'] = ''
+        event_dict['Seconds_Elapsed'] = 0.0
 
 
 def add_score(event_dict, event, current_score, home_team):
