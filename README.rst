@@ -19,10 +19,9 @@ Hockey-Scraper
 Purpose
 -------
 
-This package is designed to allow people to scrape both NHL and NWHL data. For the NHL, one can scrape the Play by Play
+This package is designed to allow people to scrape both NHL data. One can scrape the Play by Play
 and Shift data off of the National Hockey League (NHL) API and website for all preseason, regular season, and playoff
-games since the 2007-2008 season. For the NWHL, one is able to scrape the Play by Play data off of their API and website
-for all preseason, regular season, and playoff games since the 2015-2016 season.
+games since the 2007-2008 season. 
 
 Prerequisites
 -------------
