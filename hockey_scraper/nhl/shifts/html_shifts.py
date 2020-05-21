@@ -49,7 +49,7 @@ def get_soup(shifts_html):
     parsers = ["lxml", "html.parser", "html5lib"]
 
     for parser in parsers:
-        soup = BeautifulSoup(shifts_html, "lxml")
+        soup = BeautifulSoup(shifts_html, parser)
         td = soup.findAll(True, {'class': ['playerHeading + border', 'lborder + bborder']})
 
         if len(td) > 0:
