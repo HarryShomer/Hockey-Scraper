@@ -794,18 +794,18 @@ def scrape_pbp(game_html, game_id, players, teams):
     :return: DataFrame of game info or None if it fails
     """
     if not game_html:
-        shared.print_warning("Html pbp for game {} is either not there or can't be obtained".format(game_id))
+        shared.print_error("Html pbp for game {} is either not there or can't be obtained".format(game_id))
         return None
 
     cleaned_html = clean_html_pbp(game_html)
     if len(cleaned_html) == 0:
-        shared.print_warning("Html pbp contains no plays, this game can't be scraped")
+        shared.print_error("Html pbp contains no plays, this game can't be scraped")
         return None
 
     try:
         game_df = parse_html(cleaned_html, players, teams)
     except Exception as e:
-        shared.print_warning('Error parsing Html pbp for game {} {}'.format(game_id, e))
+        shared.print_error('Error parsing Html pbp for game {} {}'.format(game_id, e))
         return None
 
     # These sometimes end up as objects

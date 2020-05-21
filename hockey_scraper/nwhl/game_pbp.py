@@ -149,7 +149,7 @@ def parse_json(game_json, game_id,):
 
     # B4 anything - if there are no plays we leave
     if len(game_json['plays']) == 0:
-        shared.print_warning("The Json pbp for game {} contains no plays and therefore can't be parsed".format(game_id))
+        shared.print_error("The Json pbp for game {} contains no plays and therefore can't be parsed".format(game_id))
         return pd.DataFrame()
 
     # Get all the players in the game
@@ -168,7 +168,7 @@ def parse_json(game_json, game_id,):
     try:
         events = [parse_event(play, score, teams, date, game_id, players) for play in game_json['plays']]
     except Exception as e:
-        shared.print_warning('Error parsing Json pbp for game {} {}'.format(game_id, e))
+        shared.print_error('Error parsing Json pbp for game {} {}'.format(game_id, e))
         return pd.DataFrame()
 
     df = pd.DataFrame(events, columns=cols)
@@ -192,13 +192,13 @@ def scrape_pbp(game_id):
     game_json = get_pbp(game_id)
 
     if not game_json:
-        shared.print_warning("Pbp for game {} is not either not there or can't be obtained".format(game_id))
+        shared.print_error("Pbp for game {} is not either not there or can't be obtained".format(game_id))
         return pd.DataFrame()
 
     try:
         game_df = parse_json(game_json, game_id)
     except Exception as e:
-        shared.print_warning('Error parsing the Pbp for game {} {}'.format(game_id, e))
+        shared.print_error('Error parsing the Pbp for game {} {}'.format(game_id, e))
         return pd.DataFrame()
 
     return game_df

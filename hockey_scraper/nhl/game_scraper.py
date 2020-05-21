@@ -69,13 +69,13 @@ def get_players_json(players_json):
     """
     players = dict()
 
-    for key in players_json.keys():
+    for key in players_json:
         name = shared.fix_name(players_json[key]['fullName'].upper())
         players[name] = {'id': ' ', 'last_name': players_json[key]['lastName'].upper()}
         try:
             players[name]['id'] = players_json[key]['id']
         except KeyError:
-            shared.print_warning('{name} is missing an ID number in the pbp json'.format(name=name))
+            shared.print_error('{name} is missing an ID number in the pbp json'.format(name=name))
             players[name]['id'] = 'NA'
 
     return players
@@ -126,7 +126,7 @@ def get_teams_and_players(game_json, roster, game_id):
         player_ids = get_players_json(game_json['gameData']['players'])
         players = combine_players_lists(player_ids, roster['players'], game_id)
     except Exception as e:
-        shared.print_warning('Problem with getting the teams or players')
+        shared.print_error('Problem with getting the teams or players')
         return None, None
 
     return players, teams
@@ -157,11 +157,11 @@ def combine_html_json_pbp(json_df, html_df, game_id, date):
             # warning message for the user.
             # NOTE: May be slightly incorrect. It's possible for there to be a challenge and another issue for one game.
             if 'CHL' in list(html_df.Event):
-                shared.print_warning("The number of rows in the Html and Json pbp are different because the"
+                shared.print_error("The number of rows in the Html and Json pbp are different because the"
                                      " Json pbp, for some reason, does not include challenges. Will instead merge on "
                                      "Period, Event, Time, and p1_id.")
             else:
-                shared.print_warning("The number of rows in the Html and json pbp are different because "
+                shared.print_error("The number of rows in the Html and json pbp are different because "
                                      "someone fucked up. Will instead merge on Period, Event, Time, and p1_id.")
 
             # Actual Merging
@@ -171,7 +171,7 @@ def combine_html_json_pbp(json_df, html_df, game_id, date):
         # This is always done - because merge doesn't work well with shootouts
         game_df = game_df.drop_duplicates(subset=['Period', 'Event', 'Description', 'Seconds_Elapsed'])
     except Exception as e:
-        shared.print_warning('Problem combining Html Json pbp for game {}'.format(game_id, e))
+        shared.print_error('Problem combining Html Json pbp for game {}'.format(game_id, e))
         return
 
     game_df['Game_Id'] = game_id[-5:]
@@ -205,7 +205,7 @@ def combine_espn_html_pbp(html_df, espn_df, game_id, date, away_team, home_team)
 
             df = game_df.drop(['period', 'time_elapsed', 'event'], axis=1)
         except Exception as e:
-            shared.print_warning('Error for combining espn and html pbp for game {}'.format(game_id))
+            shared.print_error('Error for combining espn and html pbp for game {}'.format(game_id))
             return None
     else:
         df = html_df
@@ -311,7 +311,7 @@ def scrape_shifts(game_id, players, date):
         shifts_df = html_shifts.scrape_game(game_id, players)
 
         if shifts_df is None:
-            shared.print_warning("Unable to scrape shifts for game" + game_id)
+            shared.print_error("Unable to scrape shifts for game" + game_id)
             broken_shifts_games.extend([[game_id, date]])
             return None   # Both failed so just return nothing
 

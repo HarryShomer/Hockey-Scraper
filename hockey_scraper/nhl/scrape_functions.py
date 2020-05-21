@@ -10,10 +10,6 @@ import hockey_scraper.nhl.game_scraper as game_scraper
 import hockey_scraper.nhl.json_schedule as json_schedule
 import hockey_scraper.utils.shared as shared
 
-# This hold the scraping errors in a string format.
-# This may seem pointless but I have a personal reason for it (I think...)
-errors = ''
-
 
 def print_errors():
     """
@@ -28,31 +24,23 @@ def print_errors():
 
     if game_scraper.broken_pbp_games:
         print('\nBroken pbp:')
-        errors += 'Broken pbp:'
         for x in game_scraper.broken_pbp_games:
             print(x[0], x[1])
-            errors = ' '.join([errors, str(x[0]), ","])
 
     if game_scraper.broken_shifts_games:
         print('\nBroken shifts:')
-        errors += 'Broken shifts:'
         for x in game_scraper.broken_shifts_games:
             print(x[0], x[1])
-            errors = ' '.join([errors, str(x[0]), ","])
 
     if game_scraper.players_missing_ids:
         print("\nPlayers missing ID's:")
-        errors += "Players missing ID's:"
         for x in game_scraper.players_missing_ids:
             print(x[0], x[1])
-            errors = ' '.join([errors, str(x[0]), ","])
 
     if game_scraper.missing_coords:
         print('\nGames missing coordinates:')
-        errors += 'Games missing coordinates:'
         for x in game_scraper.missing_coords:
             print(x[0], x[1])
-            errors = ' '.join([errors, str(x[0]), ","])
 
     # Clear them all out for the next call
     game_scraper.broken_shifts_games = []

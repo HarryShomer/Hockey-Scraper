@@ -37,19 +37,15 @@ def get_content(roster):
     
     :return: players and coaches
     """
-    soup = BeautifulSoup(roster, "lxml")
-    players = get_players(soup)
-    head_coaches = get_coaches(soup)
+    parsers = ["lxml", "html.parser", "html5lib"]
 
-    if len(players) == 0:
-        soup = BeautifulSoup(roster.text, "html.parser")
+    for parser in parsers:
+        soup = BeautifulSoup(roster, "lxml")
         players = get_players(soup)
         head_coaches = get_coaches(soup)
 
-        if len(players) == 0:
-            soup = BeautifulSoup(roster.text, "html5lib")
-            players = get_players(soup)
-            head_coaches = get_coaches(soup)
+        if len(players) > 0:
+            break
 
     return players, head_coaches
 
@@ -165,13 +161,13 @@ def scrape_roster(game_id):
     roster = get_roster(game_id)
 
     if not roster:
-        shared.print_warning("Roster for game {} is either not there or can't be obtained".format(game_id))
+        shared.print_error("Roster for game {} is either not there or can't be obtained".format(game_id))
         return None
 
     try:
         players, head_coaches = get_content(roster)
     except Exception as e:
-        shared.print_warning('Error parsing Roster for game {} {}'.format(game_id, e))
+        shared.print_error('Error parsing Roster for game {} {}'.format(game_id, e))
         return None
 
     return {'players': players, 'head_coaches': head_coaches}

@@ -15,7 +15,7 @@ from . import save_pages as sp
 
 
 # Own warning...gets rid of junk when printing
-def custom_formatwarning(msg, *args, **kwargs): return "Warning: " + str(msg) + '\n'
+def custom_formatwarning(msg, *args, **kwargs): return "Error: " + str(msg) + '\n'
 warnings.formatwarning = custom_formatwarning
 
 # Directory where to save pages
@@ -154,7 +154,7 @@ def get_team(team):
     return TEAMS.get(team, team).upper()
 
 
-def print_warning(msg):
+def print_error(msg):
     """Print the Warning"""
     warnings.warn(msg)
 
@@ -220,7 +220,7 @@ def scrape_page(url):
             raise Exception("Timeout Error: The NHL API took too long to respond to our request. "
                                 "Please Try Again (you may need to try a few times before it works). ")
         else:
-            print_warning("Timeout Error: The server took too long to respond to our request.")
+            print_error("Timeout Error: The server took too long to respond to our request.")
             page = None
 
     # Pause for 1 second - make it more if you want
@@ -271,16 +271,16 @@ def add_dir(user_dir):
         docs_dir = os.path.join(os.path.expanduser('~'), "hockey_scraper_data")
         # Create if needed
         if not os.path.isdir(docs_dir):
-            print_warning("Creating the hockey_scraper_data directory in the home directory")
+            print_error("Creating the hockey_scraper_data directory in the home directory")
             os.mkdir(docs_dir)
     elif isinstance(user_dir, str) and os.path.isdir(user_dir):
         docs_dir = user_dir
     elif not (isinstance(user_dir, str) and isinstance(user_dir, bool)):
         docs_dir = False
-        print_warning("The docs_dir argument provided is invalid")
+        print_error("The docs_dir argument provided is invalid")
     else:
         docs_dir = False
-        print_warning("The directory specified for the saving of scraped docs doesn't exist. Therefore:"
+        print_error("The directory specified for the saving of scraped docs doesn't exist. Therefore:"
               "\n1. All specified games will be scraped from their appropriate sources (NHL or ESPN)."
               "\n2. All scraped files will NOT be saved at all. Please either create the directory you want them to be "
               "deposited in or recheck the directory you typed in and start again.\n")

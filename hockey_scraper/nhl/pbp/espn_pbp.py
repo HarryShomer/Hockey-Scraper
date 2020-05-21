@@ -70,7 +70,7 @@ def get_teams(response):
 
         # If not found we'll let the user know...this may happens
         if actual_tm is None:
-            shared.print_warning("The team {} in the espn pbp is unknown. We use the supplied team name".format(tm))
+            shared.print_error("The team {} in the espn pbp is unknown. We use the supplied team name".format(tm))
             actual_tm = tm
 
         teams.append(actual_tm)
@@ -197,7 +197,7 @@ def parse_espn(espn_xml):
     try:
         tree = etree.fromstring(espn_xml)
     except etree.ParseError:
-        shared.print_warning("Espn pbp isn't valid xml, therefore coordinates can't be obtained for this game")
+        shared.print_error("Espn pbp isn't valid xml, therefore coordinates can't be obtained for this game")
         return pd.DataFrame([], columns=columns)
 
     events = tree[1]
@@ -219,10 +219,10 @@ def scrape_game(date, home_team, away_team, game_id=None):
     :return: DataFrame with info 
     """
     try:
-        shared.print_warning('Using espn for pbp')
+        shared.print_error('Using espn for pbp')
         espn_xml = get_espn_game(date, home_team, away_team, game_id)
     except Exception as e:
-        shared.print_warning("Espn pbp for game {a} {b} {c} is either not there or can't be obtained {d}".format(a=date,
+        shared.print_error("Espn pbp for game {a} {b} {c} is either not there or can't be obtained {d}".format(a=date,
                                                                                                                  b=home_team,
                                                                                                                  c=away_team, d=e))
         return None
@@ -230,7 +230,7 @@ def scrape_game(date, home_team, away_team, game_id=None):
     try:
         espn_df = parse_espn(espn_xml)
     except Exception as e:
-        shared.print_warning("Error parsing Espn pbp for game {a} {b} {c} {d}".format(a=date, b=home_team, c=away_team, d=e))
+        shared.print_error("Error parsing Espn pbp for game {a} {b} {c} {d}".format(a=date, b=home_team, c=away_team, d=e))
         return None
 
     espn_df.period = espn_df.period.astype(int)

@@ -127,7 +127,7 @@ def parse_json(game_json, game_id):
         plays = game_json['liveData']['plays']['allPlays']
         events = [parse_event(play) for play in plays if play['result']['event'].upper() not in events_to_ignore]
     except Exception as e:
-        shared.print_warning('Error parsing Json pbp for game {} {}'.format(game_id, e))
+        shared.print_error('Error parsing Json pbp for game {} {}'.format(game_id, e))
         return None
 
     # Sort by event id.
@@ -148,13 +148,13 @@ def scrape_game(game_id):
     game_json = get_pbp(game_id)
 
     if not game_json:
-        shared.print_warning("Json pbp for game {} is not either not there or can't be obtained".format(game_id))
+        shared.print_error("Json pbp for game {} is not either not there or can't be obtained".format(game_id))
         return None
 
     try:
         game_df = parse_json(game_json, game_id)
     except Exception as e:
-        shared.print_warning('Error parsing Json pbp for game {} {}'.format(game_id, e))
+        shared.print_error('Error parsing Json pbp for game {} {}'.format(game_id, e))
         return None
 
     return game_df
