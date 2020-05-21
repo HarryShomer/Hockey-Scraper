@@ -3,10 +3,8 @@ This module contains functions to scrape the Json Play by Play for any given gam
 """
 
 import json
-from operator import itemgetter
-
 import pandas as pd
-
+from operator import itemgetter
 import hockey_scraper.utils.shared as shared
 
 
@@ -94,7 +92,7 @@ def parse_event(event):
     play['seconds_elapsed'] = shared.convert_to_seconds(event['about']['periodTime'])
 
     # If there's a players key that means an event occurred on the play.
-    if 'players' in event.keys():
+    if 'players' in event:
         play['p1_name'] = shared.fix_name(event['players'][0]['player']['fullName'])
         play['p1_ID'] = event['players'][0]['player']['id']
 

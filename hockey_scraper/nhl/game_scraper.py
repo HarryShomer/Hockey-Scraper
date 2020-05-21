@@ -310,10 +310,10 @@ def scrape_shifts(game_id, players, date):
     if shared.get_season(date) >= 2010:
         shifts_df = json_shifts.scrape_game(game_id)
 
-    if shifts_df is None:
+    if shifts_df is None or shifts_df.empty:
         shifts_df = html_shifts.scrape_game(game_id, players)
 
-        if shifts_df is None:
+        if shifts_df is None or shifts_df.empty:
             shared.print_error("Unable to scrape shifts for game" + game_id)
             broken_shifts_games.extend([[game_id, date]])
             return None   # Both failed so just return nothing

@@ -13,7 +13,7 @@ import hockey_scraper.utils.shared as shared
 
 def event_type(play_description):
     """
-    Returns the event type (ex: a SHOT or a GOAL...etc) given the event description 
+    Returns the event type (ex: a SHOT or a GOAL...etc) given the event description. 
     
     :param play_description: description of play
     
@@ -22,7 +22,7 @@ def event_type(play_description):
     events = {'GOAL SCORED': 'GOAL', 'SHOT ON GOAL': 'SHOT', 'SHOT MISSED': 'MISS', 'SHOT BLOCKED': 'BLOCK',
               'PENALTY': 'PENL', 'FACEOFF': 'FAC', 'HIT': 'HIT', 'TAKEAWAY': 'TAKE', 'GIVEAWAY': 'GIVE'}
 
-    event = [events[e] for e in events.keys() if e in play_description]
+    event = [events[e] for e in events if e in play_description]
     return event[0] if event else None
 
 
@@ -137,7 +137,7 @@ def get_espn_game(date, home_team, away_team, game_id=None):
     
     :return: raw xml
     """
-    # Get if not provided
+    # Get if not provided - for live games
     if not game_id:
         game_id = get_espn_game_id(date, home_team.upper(), away_team.upper())
 
@@ -149,6 +149,7 @@ def get_espn_game(date, home_team, away_team, game_id=None):
     }
     response = shared.get_file(file_info)
 
+    ## Why here???
     if response is None:
         raise Exception
 

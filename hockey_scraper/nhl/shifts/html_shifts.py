@@ -18,23 +18,22 @@ def get_shifts(game_id):
     :return: Shifts or None
     """
     game_id = str(game_id)
-    venue_pgs = ()
+    venue_pgs = tuple()
 
     for venue in ["home", "away"]:
         venue_tag = "H" if venue == "home" else "V"
         venue_url = 'http://www.nhl.com/scores/htmlreports/{}{}/T{}{}.HTM'.format(game_id[:4], int(game_id[:4])+1, venue_tag, game_id[4:])
   
         page_info = {
-            "url": home_url,
+            "url": venue_url,
             "name": game_id,
             "type": "html_shifts_{}".format(venue),
             "season": game_id[:4],
         }
 
-        venue_file.append(shared.get_file(page_info))
+        venue_pgs += (shared.get_file(page_info), )
 
-
-    return home, away
+    return venue_pgs
 
 
 def get_soup(shifts_html):
@@ -92,8 +91,6 @@ def analyze_shifts(shift, name, team, home_team, player_ids):
     """
     shifts = dict()
 
-    regex = re.compile('\d+')  # Used to check if something contains a number
-
     shifts['Player'] = name.upper()
     shifts['Period'] = '4' if shift[1] == 'OT' else shift[1]
     shifts['Team'] = shared.get_team(team.strip(' '))
@@ -101,7 +98,7 @@ def analyze_shifts(shift, name, team, home_team, player_ids):
     shifts['Duration'] = shared.convert_to_seconds(shift[4].split('/')[0])
 
     # I've had problems with this one...if there are no digits the time is fucked up
-    if regex.findall(shift[3].split('/')[0]):
+    if re.compile('\d+').findall(shift[3].split('/')[0]):
         shifts['End'] = shared.convert_to_seconds(shift[3].split('/')[0])
     else:
         shifts['End'] = shifts['Start'] + shifts['Duration']
@@ -112,7 +109,7 @@ def analyze_shifts(shift, name, team, home_team, player_ids):
         else:
             shifts['Player_Id'] = player_ids['Away'][name.upper()]['id']
     except KeyError:
-        shifts['Player_Id'] = ''
+        shifts['Player_Id'] = None
 
     return shifts
 
@@ -182,20 +179,18 @@ def scrape_game(game_id, players):
 
     if home_html is None or away_html is None:
         shared.print_error("Html shifts for game {} is either not there or can't be obtained".format(game_id))
-        return None
+        return pd.DataFrame()
 
     try:
         away_df = parse_html(away_html, players, game_id)
         home_df = parse_html(home_html, players, game_id)
     except Exception as e:
         shared.print_error('Error parsing Html shifts for game {} {}'.format(game_id, e))
-        return None
+        return pd.DataFrame()
 
     # Combine the two
     game_df = pd.concat([away_df, home_df], ignore_index=True)
     game_df = pd.DataFrame(game_df, columns=columns)
-
     game_df = game_df.sort_values(by=['Period', 'Start'], ascending=[True, True])
-    game_df = game_df.reset_index(drop=True)
 
-    return game_df
+    return game_df.reset_index(drop=True)
