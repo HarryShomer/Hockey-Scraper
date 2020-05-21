@@ -88,7 +88,6 @@ def strip_html_pbp(td):
     
     :return: list of plays (which contain a list of info) stripped of html
     """
-
     for y in range(len(td)):
         # Get the 'br' tag for the time column...this get's us time remaining instead of elapsed and remaining combined
         if y == 3:

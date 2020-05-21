@@ -50,16 +50,14 @@ def get_soup(shifts_html):
     
     :return: "soupified" html and player_shifts portion of html (it's a bunch of td tags)
     """
-    soup = BeautifulSoup(shifts_html, "lxml")
-    td = soup.findAll(True, {'class': ['playerHeading + border', 'lborder + bborder']})
+    parsers = ["lxml", "html.parser", "html5lib"]
 
-    if len(td) == 0:
-        soup = BeautifulSoup(shifts_html, "html.parser")
+    for parser in parsers:
+        soup = BeautifulSoup(shifts_html, parser)
         td = soup.findAll(True, {'class': ['playerHeading + border', 'lborder + bborder']})
 
-        if len(td) == 0:
-            soup = BeautifulSoup(shifts_html, "html5lib")
-            td = soup.findAll(True, {'class': ['playerHeading + border', 'lborder + bborder']})
+        if len(td) > 0:
+            break
 
     return td, get_teams(soup)
 
