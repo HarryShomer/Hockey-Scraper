@@ -65,19 +65,22 @@ def get_soup(game_html):
     
     :return: "soupified" html 
     """
+    parsers = ["lxml", "html.parser", "html5lib"]
     strainer = SoupStrainer('td', attrs={'class': re.compile(r'bborder')})
-    soup = BeautifulSoup(game_html, "lxml", parse_only=strainer)
-    soup = soup.find_all("td", {"class": re.compile('.*bborder.*')})
 
-    if len(soup) == 0:
-        soup = BeautifulSoup(game_html, "html.parser", parse_only=strainer)
-        soup = soup.select('td.+.bborder')
+    for parser in parsers:
+        # parse_only only works with lxml for some reason
+        if parser == "lxml":
+            soup = BeautifulSoup(game_html, parser, parse_only=strainer)
+        else:
+            soup = BeautifulSoup(game_html, parser)
 
-        if len(soup) == 0:
-            soup = BeautifulSoup(game_html, "html5lib")
-            soup = soup.select('td.+.bborder')
+        tds = soup.find_all("td", {"class": re.compile('.*bborder.*')})
 
-    return soup
+        if len(tds) > 0:
+            break
+
+    return tds
 
 
 def strip_html_pbp(td):
