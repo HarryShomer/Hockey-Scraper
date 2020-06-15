@@ -118,7 +118,7 @@ def scrape_game(game_id):
         game_df = parse_json(shifts_json, game_id)
     except Exception as e:
         shared.print_error('Error parsing Json shifts for game {} {}'.format(game_id, e))
-        return None
+        return pd.DataFrame()
 
     return game_df
 

@@ -4,10 +4,8 @@ This module contains code to scrape coordinates for games off of espn for any gi
 
 import re
 import xml.etree.ElementTree as etree
-
 import pandas as pd
 from bs4 import BeautifulSoup
-
 import hockey_scraper.utils.shared as shared
 
 
@@ -226,7 +224,7 @@ def scrape_game(date, home_team, away_team, game_id=None):
         shared.print_error("Espn pbp for game {a} {b} {c} is either not there or can't be obtained {d}".format(a=date,
                                                                                                                  b=home_team,
                                                                                                                  c=away_team, d=e))
-        return None
+        return pd.DataFrame()
 
     try:
         espn_df = parse_espn(espn_xml)
@@ -236,7 +234,7 @@ def scrape_game(date, home_team, away_team, game_id=None):
 
     espn_df.period = espn_df.period.astype(int)
     
-    return espn_df
+    return pd.DataFrame()
 
 
 

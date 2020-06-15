@@ -3,10 +3,8 @@ This module contains functions to scrape the Html Play by Play for any given gam
 """
 
 import re
-
 import pandas as pd
 from bs4 import BeautifulSoup, SoupStrainer
-
 import hockey_scraper.utils.shared as shared
 
 
@@ -56,7 +54,8 @@ def get_pbp(game_id):
     return shared.get_file(page_info)
 
 
-def get_soup(game_html):
+
+def get_contents(game_html):
     """
     Uses Beautiful soup to parses the html document.
     Some parsers work for some pages but don't work for others....I'm not sure why so I just try them all here in order
@@ -65,19 +64,22 @@ def get_soup(game_html):
     
     :return: "soupified" html 
     """
+    parsers = ["lxml", "html.parser", "html5lib"]
     strainer = SoupStrainer('td', attrs={'class': re.compile(r'bborder')})
-    soup = BeautifulSoup(game_html, "lxml", parse_only=strainer)
-    soup = soup.find_all("td", {"class": re.compile('.*bborder.*')})
 
-    if len(soup) == 0:
-        soup = BeautifulSoup(game_html, "html.parser", parse_only=strainer)
-        soup = soup.select('td.+.bborder')
+    for parser in parsers:
+        # parse_only only works with lxml for some reason
+        if parser == "lxml":
+            soup = BeautifulSoup(game_html, parser, parse_only=strainer)
+        else:
+            soup = BeautifulSoup(game_html, parser)
 
-        if len(soup) == 0:
-            soup = BeautifulSoup(game_html, "html5lib")
-            soup = soup.select('td.+.bborder')
+        tds = soup.find_all("td", {"class": re.compile('.*bborder.*')})
 
-    return soup
+        if len(tds) > 0:
+            break
+
+    return tds
 
 
 def strip_html_pbp(td):
@@ -131,7 +133,7 @@ def clean_html_pbp(html):
     
     :return: a list with all the info
     """
-    soup = get_soup(html)
+    soup = get_contents(html)
 
     # Create a list of lists (each length 8)...corresponds to 8 columns in html pbp
     td = [soup[i:i + 8] for i in range(0, len(soup), 8)]

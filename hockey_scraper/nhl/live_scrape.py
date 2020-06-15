@@ -4,9 +4,7 @@ Module to scrape live game info
 import datetime
 import time
 import warnings
-
 import pandas as pd
-
 import hockey_scraper.nhl.game_scraper as game_scraper
 import hockey_scraper.nhl.json_schedule as json_schedule
 import hockey_scraper.nhl.pbp.espn_pbp as espn_pbp

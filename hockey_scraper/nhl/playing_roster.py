@@ -3,7 +3,6 @@ This module contains functions to scrape the Html game roster for any given game
 """
 
 from bs4 import BeautifulSoup
-
 import hockey_scraper.utils.shared as shared
 
 

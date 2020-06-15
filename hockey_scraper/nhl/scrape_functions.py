@@ -2,10 +2,8 @@
 Functions to scrape by season, games, and date range
 """
 
-import random
-
+import time
 import pandas as pd
-
 import hockey_scraper.nhl.game_scraper as game_scraper
 import hockey_scraper.nhl.json_schedule as json_schedule
 import hockey_scraper.utils.shared as shared
@@ -239,8 +237,8 @@ def scrape_games(games, if_scrape_shifts, data_format='csv', rescrape=False, doc
     pbp_df, shifts_df = scrape_list_of_games(games_list, if_scrape_shifts)
 
     if data_format.lower() == 'csv':
-        shared.to_csv(str(random.randint(1, 101)), pbp_df, "nhl", "pbp")
-        shared.to_csv(str(random.randint(1, 101)), shifts_df, "nhl", "shifts")
+        shared.to_csv(str(time.time()), pbp_df, "nhl", "pbp")
+        shared.to_csv(str(time.time()), shifts_df, "nhl", "shifts")
     else:
         return {"pbp": pbp_df, "shifts": shifts_df, "errors": errors} if if_scrape_shifts else {"pbp": pbp_df,
                                                                                                 "errors": errors}

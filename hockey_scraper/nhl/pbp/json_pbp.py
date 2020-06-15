@@ -40,8 +40,10 @@ def get_teams(pbp_json):
 
     :return: dict with home and away
     """
-    return {'Home': shared.get_team(pbp_json['gameData']['teams']['home']['name'].upper()),
-            'Away': shared.get_team(pbp_json['gameData']['teams']['away']['name'].upper())}
+    return {
+        'Home': shared.get_team(pbp_json['gameData']['teams']['home']['name'].upper()),
+        'Away': shared.get_team(pbp_json['gameData']['teams']['away']['name'].upper())
+    }
 
 
 def change_event_name(event):
@@ -114,7 +116,7 @@ def parse_json(game_json, game_id):
     :param game_json: raw json
     :param game_id: game id for game
     
-    :return: Either a DataFrame with info for the game 
+    :return: Either a DataFrame with info for the game or None when fail
     """
     columns = ['period', 'event', 'seconds_elapsed', 'p1_name', 'p1_ID', 'p2_name', 'p2_ID', 'p3_name', 'p3_ID', 'xC', 'yC']
 

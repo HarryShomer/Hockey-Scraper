@@ -5,7 +5,6 @@ This module contains functions to scrape the json schedule for any games or date
 from datetime import datetime, timedelta
 import json
 import time
-
 import hockey_scraper.utils.shared as shared
 
 
@@ -118,15 +117,16 @@ def scrape_schedule(date_from, date_to, preseason=False, not_over=False):
                     game_id = int(str(game['gamePk'])[5:])
 
                     if (game_id >= 20000 or preseason) and game_id < 40000:
-                        schedule.append({"game_id": game['gamePk'], 
-                                         "date": day['date'], 
-                                         "start_time": datetime.strptime(game['gameDate'][:-1], "%Y-%m-%dT%H:%M:%S"),
-                                         "venue": game['venue'].get('name'),
-                                         "home_team": shared.get_team(game['teams']['home']['team']['name'].upper()),
-                                         "away_team": shared.get_team(game['teams']['away']['team']['name'].upper()),
-                                         "home_score": game['teams']['home'].get("score"),
-                                         "away_score": game['teams']['away'].get("score"),
-                                         "status": game["status"]["abstractGameState"]
-                                         })
+                        schedule.append({
+                                "game_id": game['gamePk'], 
+                                 "date": day['date'], 
+                                 "start_time": datetime.strptime(game['gameDate'][:-1], "%Y-%m-%dT%H:%M:%S"),
+                                 "venue": game['venue'].get('name'),
+                                 "home_team": shared.get_team(game['teams']['home']['team']['name'].upper()),
+                                 "away_team": shared.get_team(game['teams']['away']['team']['name'].upper()),
+                                 "home_score": game['teams']['home'].get("score"),
+                                 "away_score": game['teams']['away'].get("score"),
+                                 "status": game["status"]["abstractGameState"]
+                        })
 
     return schedule
