@@ -2080,6 +2080,25 @@ It exits program with error message if input isn&#8217;t good.</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="hockey_scraper.utils.shared.custom_formatwarning">
+<code class="descclassname">hockey_scraper.utils.shared.</code><code class="descname">custom_formatwarning</code><span class="sig-paren">(</span><em>msg</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.custom_formatwarning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement own custom warning. Cleaner this way. Reason why i still use warning is so i can set to
+ignore them if i want to (e.g. live_scrape line 200).</p>
+<p>shared.print_error relies on this function.</p>
+<p>See here for more on ANSI escape codes - <a class="reference external" href="https://en.wikipedia.org/wiki/ANSI_escape_code">https://en.wikipedia.org/wiki/ANSI_escape_code</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> &#8211; Str to print</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
 <dt id="hockey_scraper.utils.shared.fix_name">
 <code class="descclassname">hockey_scraper.utils.shared.</code><code class="descname">fix_name</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.fix_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if a name falls under those that need fixing. If it does...fix it.</p>
