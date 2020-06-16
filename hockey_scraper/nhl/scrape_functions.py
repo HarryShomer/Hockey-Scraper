@@ -23,22 +23,26 @@ def print_errors():
     if game_scraper.broken_pbp_games:
         print('\nBroken pbp:')
         for x in game_scraper.broken_pbp_games:
-            print(x[0], x[1])
+            print("-", x[0], x[1])
+        print("")
 
     if game_scraper.broken_shifts_games:
-        print('\nBroken shifts:')
+        print('Broken shifts:')
         for x in game_scraper.broken_shifts_games:
-            print(x[0], x[1])
+            print("-", x[0], x[1])
+        print("")
 
     if game_scraper.players_missing_ids:
-        print("\nPlayers missing ID's:")
+        print("Players missing ID's:")
         for x in game_scraper.players_missing_ids:
-            print(x[0], x[1])
+            print("-", x[0], x[1])
+        print("")
 
     if game_scraper.missing_coords:
-        print('\nGames missing coordinates:')
+        print('Games missing coordinates:')
         for x in game_scraper.missing_coords:
-            print(x[0], x[1])
+            print("-", x[0], x[1])
+        print("")
 
     # Clear them all out for the next call
     game_scraper.broken_shifts_games = []
@@ -156,8 +160,7 @@ def scrape_date_range(from_date, to_date, if_scrape_shifts, data_format='csv', p
         shared.to_csv(from_date + '--' + to_date, pbp_df, "nhl", "pbp")
         shared.to_csv(from_date + '--' + to_date, shifts_df, "nhl", "shifts")
     else:
-        return {"pbp": pbp_df, "shifts": shifts_df, "errors": errors} if if_scrape_shifts else {"pbp": pbp_df,
-                                                                                                "errors": errors}
+        return {"pbp": pbp_df, "shifts": shifts_df} if if_scrape_shifts else {"pbp": pbp_df}
 
 
 def scrape_seasons(seasons, if_scrape_shifts, data_format='csv', preseason=False, rescrape=False, docs_dir=False):
@@ -203,9 +206,9 @@ def scrape_seasons(seasons, if_scrape_shifts, data_format='csv', preseason=False
 
     if data_format.lower() == 'pandas':
         if if_scrape_shifts:
-            return {"pbp": pd.concat(master_pbps), "shifts": pd.concat(master_shifts), "errors": errors}
+            return {"pbp": pd.concat(master_pbps), "shifts": pd.concat(master_shifts)}
         else:
-            return {"pbp": pd.concat(master_pbps), "errors": errors}
+            return {"pbp": pd.concat(master_pbps)}
 
 
 def scrape_games(games, if_scrape_shifts, data_format='csv', rescrape=False, docs_dir=False):
@@ -237,8 +240,7 @@ def scrape_games(games, if_scrape_shifts, data_format='csv', rescrape=False, doc
     pbp_df, shifts_df = scrape_list_of_games(games_list, if_scrape_shifts)
 
     if data_format.lower() == 'csv':
-        shared.to_csv(str(time.time()), pbp_df, "nhl", "pbp")
-        shared.to_csv(str(time.time()), shifts_df, "nhl", "shifts")
+        shared.to_csv(str(int(time.time())), pbp_df, "nhl", "pbp")
+        shared.to_csv(str(int(time.time())), shifts_df, "nhl", "shifts")
     else:
-        return {"pbp": pbp_df, "shifts": shifts_df, "errors": errors} if if_scrape_shifts else {"pbp": pbp_df,
-                                                                                                "errors": errors}
+        return {"pbp": pbp_df, "shifts": shifts_df} if if_scrape_shifts else {"pbp": pbp_df}

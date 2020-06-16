@@ -61,6 +61,9 @@ def get_sebastian_aho(player):
     return 8480222 if player[1] == 'D' else 8478427
 
 
+# TODO: Control for multiple players with the same name
+# Issue is player data in the json is dynamic team/position/number reflects current status as oppossed to html
+# which is as the time of the game
 def get_players_json(players_json):
     """
     Return dict of players for that game
@@ -73,12 +76,11 @@ def get_players_json(players_json):
 
     for key in players_json:
         name = shared.fix_name(players_json[key]['fullName'].upper())
-        players[name] = {'id': ' ', 'last_name': players_json[key]['lastName'].upper()}
+        players[name] = {'id': None, 'last_name': players_json[key]['lastName'].upper()}
         try:
             players[name]['id'] = players_json[key]['id']
         except KeyError:
             shared.print_warning('{name} is missing an ID number in the pbp json'.format(name=name))
-            players[name]['id'] = None
 
     return players
 
@@ -200,7 +202,7 @@ def combine_espn_html_pbp(html_df, espn_df, game_id, date, away_team, home_team)
     
     :return: merged DataFrame
     """
-    if espn_df is not None:
+    if espn_df is not None and not espn_df.empty:
         try:
             game_df = pd.merge(html_df, espn_df, left_on=['Period', 'Seconds_Elapsed', 'Event'],
                                right_on=['period', 'time_elapsed', 'event'], how='left')
@@ -210,7 +212,7 @@ def combine_espn_html_pbp(html_df, espn_df, game_id, date, away_team, home_team)
 
             df = game_df.drop(['period', 'time_elapsed', 'event'], axis=1)
         except Exception as e:
-            shared.print_error('Error for combining espn and html pbp for game {}'.format(game_id))
+            shared.print_error('Error combining espn and html pbp for game {}'.format(game_id))
             return None
     else:
         df = html_df
@@ -258,13 +260,12 @@ def scrape_pbp(game_id, date, roster, game_json, players, teams, espn_id=None, h
 
     :return: DataFrame with info or None if it fails
     """
-
     # Coordinates are only available in json from 2010 onwards
     # Note: This doesn't work as intended for second half of 2009 season...it still works just takes slightly longer
     if int(str(game_id)[:4]) >= 2010:
         json_df = json_pbp.parse_json(game_json, game_id)
-        if json_df is None:
-            return None   # Means there was an error parsing
+        if json_df is None or json_df.empty:
+            return None  
 
         if_json = True if len(game_json['liveData']['plays']['allPlays']) > 0 else False
     else:
@@ -274,8 +275,7 @@ def scrape_pbp(game_id, date, roster, game_json, players, teams, espn_id=None, h
     if not isinstance(html_df, pd.DataFrame):
         html_df = html_pbp.scrape_game(game_id, players, teams)
 
-    # Got nothing if it isn't there
-    if html_df is None:
+    if html_df is None or html_df.empty:
         return None
 
     # Check if the json is missing the plays...if it is scrape ESPN for the coordinates

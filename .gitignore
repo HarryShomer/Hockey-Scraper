@@ -3,6 +3,7 @@
 .csv/
 tests.py
 notes.txt
+build/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

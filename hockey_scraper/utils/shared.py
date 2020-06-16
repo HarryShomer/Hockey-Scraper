@@ -13,11 +13,6 @@ from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 from . import save_pages as sp
 
-
-# Own warning...gets rid of junk when printing
-def custom_formatwarning(msg, *args, **kwargs): return "Error: " + str(msg) + '\n'
-warnings.formatwarning = custom_formatwarning
-
 # Directory where to save pages
 docs_dir = False
 
@@ -134,7 +129,7 @@ Names = {
     'ALEXANDER PETROVIC': 'ALEX PETROVIC', 'ZACHARY ASTON-REESE': 'ZACH ASTON-REESE', 'J-F BERUBE': 'JEAN-FRANCOIS BERUBE',
     "DANNY O'REGAN": "DANIEL O'REGAN", "PATRICK MAROON": "PAT MAROON", "LEE  STEMPNIAK": "LEE STEMPNIAK",
     "JAMES REIMER ,": "JAMES REIMER", "CALVIN PETERSEN ,": "CALVIN PETERSEN", "CAL PETERSEN": "CALVIN PETERSEN",
-    "ALEXANDER NYLANDER": "ALEX NYLANDER"
+    "ALEXANDER NYLANDER": "ALEX NYLANDER", "CHRISTOPHER WAGNER": "CHRIS WAGNER"
 }
 
 
@@ -155,6 +150,26 @@ def get_team(team):
     """
     return TEAMS.get(team, team).upper()
 
+
+def custom_formatwarning(msg, *args, **kwargs): 
+    """
+    Implement own custom warning. Cleaner this way. Reason why i still use warning is so i can set to
+    ignore them if i want to (e.g. live_scrape line 200). 
+
+    shared.print_error relies on this function.
+
+    See here for more on ANSI escape codes - https://en.wikipedia.org/wiki/ANSI_escape_code
+
+    :param msg: Str to print
+
+    :return: str
+    """
+    ansi_red_code = '\033[0;31m'
+    ansi_no_color = '\033[0m'
+
+    return "{red}Error: {msg}\n{no_color}".format(red=ansi_red_code, no_color=ansi_no_color, msg=msg)
+    
+warnings.formatwarning = custom_formatwarning
 
 def print_error(msg):
     """Print the Error"""

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>NHL Scraping Functions &#8212; hockey_scraper 1.35 documentation</title>
+    <title>NHL Scraping Functions &#8212; hockey_scraper 1.36 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '1.35',
+        VERSION:     '1.36',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -45,7 +45,7 @@
         <li class="right" >
           <a href="index.html" title="Hockey-Scraper"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">hockey_scraper 1.35 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">hockey_scraper 1.36 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -608,7 +608,7 @@ xml is also scraped for coordinates.</p>
 <dd><p>Determines the zone relative to the home team and add it to event.</p>
 <p>Keep in mind that the &#8216;ev_zone&#8217; recorded is the zone relative to the event team. And for blocks the NHL counts
 the ev_team as the blocking team (I like counting the shooting team for blocks). Therefore, when it&#8217;s the home team
-the zone only gets flipped when it&#8217;s a block. For away teams it&#8217;s the opposite. Think about it...</p>
+the zone only gets flipped when it&#8217;s a block. For away teams it&#8217;s the opposite.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -790,6 +790,23 @@ the zone only gets flipped when it&#8217;s a block. For away teams it&#8217;s th
 </dd></dl>
 
 <dl class="function">
+<dt id="hockey_scraper.nhl.pbp.html_pbp.get_contents">
+<code class="descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="descname">get_contents</code><span class="sig-paren">(</span><em>game_html</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.get_contents" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uses Beautiful soup to parses the html document.
+Some parsers work for some pages but don&#8217;t work for others....I&#8217;m not sure why so I just try them all here in order</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>game_html</strong> &#8211; html doc</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">&#8220;soupified&#8221; html</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
 <dt id="hockey_scraper.nhl.pbp.html_pbp.get_pbp">
 <code class="descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="descname">get_pbp</code><span class="sig-paren">(</span><em>game_id</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.get_pbp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a game_id it returns the raw html
@@ -832,7 +849,7 @@ Ex: <a class="reference external" href="http://www.nhl.com/scores/htmlreports/20
 <dt id="hockey_scraper.nhl.pbp.html_pbp.get_player_name">
 <code class="descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="descname">get_player_name</code><span class="sig-paren">(</span><em>number</em>, <em>players</em>, <em>team</em>, <em>home_team</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.get_player_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function is used for the description field in the html. Given a last name and a number it return the player&#8217;s 
-full name and id.</p>
+full name and id. Done by searching in players for the team until we find him (then just break)</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -847,23 +864,6 @@ full name and id.</p>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">dict with full and and id</p>
 </td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="hockey_scraper.nhl.pbp.html_pbp.get_soup">
-<code class="descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="descname">get_soup</code><span class="sig-paren">(</span><em>game_html</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.get_soup" title="Permalink to this definition">¶</a></dt>
-<dd><p>Uses Beautiful soup to parses the html document.
-Some parsers work for some pages but don&#8217;t work for others....I&#8217;m not sure why so I just try them all here in order</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>game_html</strong> &#8211; html doc</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">&#8220;soupified&#8221; html</td>
 </tr>
 </tbody>
 </table>
@@ -1081,7 +1081,15 @@ TOR TAKEAWAY - #9 ARMSTRONG, Off. Zone</p>
 <dl class="function">
 <dt id="hockey_scraper.nhl.pbp.html_pbp.populate_players">
 <code class="descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="descname">populate_players</code><span class="sig-paren">(</span><em>event_dict</em>, <em>players</em>, <em>away_players</em>, <em>home_players</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.populate_players" title="Permalink to this definition">¶</a></dt>
-<dd><p>Populate away and home player info (and num skaters on each side)</p>
+<dd><p>Populate away and home player info (and num skaters on each side).</p>
+<dl class="docutils">
+<dt>These include:</dt>
+<dd><ol class="first last arabic simple">
+<li>HomePlayer &amp; AwayPlayers fields from 1-6 for name/id</li>
+<li>Home &amp; Away Goalie Fields for name/id</li>
+</ol>
+</dd>
+</dl>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1300,7 +1308,7 @@ Ex: <a class="reference external" href="http://statsapi.web.nhl.com/api/v1/game/
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Either a DataFrame with info for the game</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Either a DataFrame with info for the game or None when fail</p>
 </td>
 </tr>
 </tbody>
@@ -1330,7 +1338,7 @@ Ex: <a class="reference external" href="http://statsapi.web.nhl.com/api/v1/game/
 <dl class="function">
 <dt id="hockey_scraper.nhl.pbp.espn_pbp.event_type">
 <code class="descclassname">hockey_scraper.nhl.pbp.espn_pbp.</code><code class="descname">event_type</code><span class="sig-paren">(</span><em>play_description</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.espn_pbp.event_type" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the event type (ex: a SHOT or a GOAL...etc) given the event description</p>
+<dd><p>Returns the event type (ex: a SHOT or a GOAL...etc) given the event description.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1520,7 +1528,7 @@ Relevant for here: The first two are the x and y coordinates. And the 4th and 5t
 <dt id="hockey_scraper.nhl.shifts.json_shifts.get_shifts">
 <code class="descclassname">hockey_scraper.nhl.shifts.json_shifts.</code><code class="descname">get_shifts</code><span class="sig-paren">(</span><em>game_id</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.shifts.json_shifts.get_shifts" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a game_id it returns the raw json
-Ex: <a class="reference external" href="http://www.nhl.com/stats/rest/shiftcharts?cayenneExp=gameId=2010020001">http://www.nhl.com/stats/rest/shiftcharts?cayenneExp=gameId=2010020001</a></p>
+Ex: <a class="reference external" href="https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId=2019020001">https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId=2019020001</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1785,8 +1793,8 @@ Ex: <a class="reference external" href="https://statsapi.web.nhl.com/api/v1/sche
 <li><strong>date_from</strong> &#8211; scrape from this date</li>
 <li><strong>date_to</strong> &#8211; scrape until this date</li>
 <li><strong>preseason</strong> &#8211; Boolean indicating whether include preseason games (default if False)</li>
-<li><strong>not_over</strong> &#8211; Boolean indicating whether we scrape games not finished. Means we relax the requirement of checking if 
-the game is over.</li>
+<li><strong>not_over</strong> &#8211; Boolean indicating whether we scrape games not finished. 
+Means we relax the requirement of checking if the game is over.</li>
 </ul>
 </td>
 </tr>
@@ -2148,7 +2156,7 @@ Contains the url, name, type, and season</td>
 <dl class="function">
 <dt id="hockey_scraper.utils.shared.print_error">
 <code class="descclassname">hockey_scraper.utils.shared.</code><code class="descname">print_error</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.print_error" title="Permalink to this definition">¶</a></dt>
-<dd><p>Print the Warning</p>
+<dd><p>Print the Error</p>
 </dd></dl>
 
 <dl class="function">
@@ -2263,11 +2271,11 @@ Contains the url, name, type, and season</td>
         <li class="right" >
           <a href="index.html" title="Hockey-Scraper"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">hockey_scraper 1.35 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">hockey_scraper 1.36 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2019, Harry Shomer.
+        &#169; Copyright 2020, Harry Shomer.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
     </div>
   </body>

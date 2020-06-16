@@ -102,8 +102,8 @@ def scrape_schedule(date_from, date_to, preseason=False, not_over=False):
     :param date_from: scrape from this date
     :param date_to: scrape until this date
     :param preseason: Boolean indicating whether include preseason games (default if False)
-    :param not_over: Boolean indicating whether we scrape games not finished. Means we relax the requirement of checking if 
-                 the game is over. 
+    :param not_over: Boolean indicating whether we scrape games not finished. 
+                     Means we relax the requirement of checking if the game is over. 
     
     :return: list with all the game id's
     """
