@@ -19,24 +19,18 @@ Hockey-Scraper
 Purpose
 -------
 
-This package is designed to allow people to scrape both NHL data. One can scrape the Play by Play
-and Shift data off of the National Hockey League (NHL) API and website for all preseason, regular season, and playoff
-games since the 2007-2008 season. 
+Scrape NHL data off the NHL API and website. This includes the Play by Play and Shift data for each game. One can also scrape the schedule information. It currently supports all preseason, regular season, and playoff games from the 2007-2008 season onwards. 
 
 Prerequisites
 -------------
 
-You are going to need to have python installed for this. This should work for both python 2.7 and 3 (I recommend having
-from at least version 3.6.0 but earlier versions should be fine).
-
-If you don’t have python installed on your machine, I’d recommend installing it through the `anaconda distribution
-<https://www.continuum.io/downloads>`_. Anaconda comes with a bunch of libraries pre-installed so it’s easier to start off.
-
+You are going to need to have python installed for this. This should work for both python 2.7 and 3. I recommend having
+from at least version 3.6.0 but earlier versions should be fine.
 
 Installation
 ------------
 
-To install all you need to do is open up your terminal and type in:
+To install all you need to do is open up your terminal and run:
 
 ::
 
