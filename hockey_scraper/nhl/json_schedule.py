@@ -78,10 +78,11 @@ def get_dates(games):
 
     # If the last game is part of the ongoing season then only request the schedule until that day
     # We get strange errors if we don't do it like this
-    if year_to == shared.get_season(datetime.strftime(datetime.today(), "%Y-%m-%d")):
+    if int(year_to) == shared.get_season(datetime.strftime(datetime.today(), "%Y-%m-%d")):
         date_to = '-'.join([str(datetime.today().year), str(datetime.today().month), str(datetime.today().day)])
     else:
-        date_to = '-'.join([str(int(year_to) + 1), '7', '1'])  # Newest game in sample
+        # Due to 2020 Global Pandemic, games may happen until end of August
+        date_to = '-'.join([str(int(year_to) + 1), '8', '30'])  # Newest game in sample
 
     # TODO: Assume true is live here -> Workaround
     schedule = scrape_schedule(date_from, date_to, preseason=True, not_over=True)
