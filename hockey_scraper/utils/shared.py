@@ -187,7 +187,7 @@ def get_season(date):
     year = date[:4]
     date = time.strptime(date, "%Y-%m-%d")
 
-    if time.strptime('-'.join([year, '01-01']), "%Y-%m-%d") <= date <= time.strptime('-'.join([year, '08-01']), "%Y-%m-%d"):
+    if time.strptime('-'.join([year, '01-01']), "%Y-%m-%d") <= date <= time.strptime('-'.join([year, '08-30']), "%Y-%m-%d"):
         return int(year) - 1
     else:
         return int(year)
