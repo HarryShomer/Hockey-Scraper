@@ -13,6 +13,12 @@ from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 from . import save_pages as sp
 
+# def custom_formatwarning(msg, *args, **kwargs): 
+#     print("Queso----------{msg}")
+#     return msg
+
+# warnings.formatwarning = custom_formatwarning
+
 # Directory where to save pages
 docs_dir = False
 
@@ -153,8 +159,18 @@ def get_team(team):
 
 def custom_formatwarning(msg, *args, **kwargs): 
     """
-    Implement own custom warning. Cleaner this way. Reason why i still use warning is so i can set to
-    ignore them if i want to (e.g. live_scrape line 200). 
+    Override format for standard wanings
+    """
+    ansi_no_color = '\033[0m'
+    return "{msg}\n{no_color}".format(no_color=ansi_no_color, msg=msg)
+    
+warnings.formatwarning = custom_formatwarning
+
+
+def print_error(msg):
+    """
+    Implement own custom error using warning module.
+    Reason why i still use warning for errors is so i can set to ignore them if i want to (e.g. live_scrape line 200).
 
     shared.print_error relies on this function.
 
@@ -165,15 +181,28 @@ def custom_formatwarning(msg, *args, **kwargs):
     :return: str
     """
     ansi_red_code = '\033[0;31m'
-    ansi_no_color = '\033[0m'
+    warning_msg = "{}Error: {}".format(ansi_red_code, msg)
 
-    return "{red}Error: {msg}\n{no_color}".format(red=ansi_red_code, no_color=ansi_no_color, msg=msg)
-    
-warnings.formatwarning = custom_formatwarning
+    warnings.warn(warning_msg)
 
-def print_error(msg):
-    """Print the Error"""
-    warnings.warn(msg)
+
+def print_warning(msg):
+    """
+    Implement own custom warning using warning module.
+
+    shared.print_error relies on this function.
+
+    See here for more on ANSI escape codes - https://en.wikipedia.org/wiki/ANSI_escape_code
+
+    :param msg: Str to print
+
+    :return: str
+    """
+    ansi_yellow_code = '\033[0;33m'
+    warning_msg = "{}Warning: {}".format(ansi_yellow_code, msg)
+
+    warnings.warn(warning_msg)
+
 
 
 def get_season(date):
@@ -288,7 +317,7 @@ def add_dir(user_dir):
         docs_dir = os.path.join(os.path.expanduser('~'), "hockey_scraper_data")
         # Create if needed
         if not os.path.isdir(docs_dir):
-            print_error("Creating the hockey_scraper_data directory in the home directory")
+            print_warning("Creating the hockey_scraper_data directory in the home directory")
             os.mkdir(docs_dir)
     elif isinstance(user_dir, str) and os.path.isdir(user_dir):
         docs_dir = user_dir

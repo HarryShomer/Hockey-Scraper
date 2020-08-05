@@ -38,7 +38,7 @@ def chunk_schedule_calls(from_date, to_date):
     :return: raw json of schedule of date range
     """
     sched = []
-    days_per_call = 100
+    days_per_call = 50
 
     from_date = datetime.strptime(from_date, "%Y-%m-%d") 
     to_date = datetime.strptime(to_date, "%Y-%m-%d")

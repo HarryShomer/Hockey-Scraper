@@ -106,11 +106,9 @@ def scrape_schedule(from_date, to_date, data_format='pandas', rescrape=False, do
     """
     cols = ["game_id", "date", "venue", "home_team", "away_team", "start_time", "home_score", "away_score", "status"]
 
-    # First check if the inputs are good
     shared.check_data_format(data_format)
     shared.check_valid_dates(from_date, to_date)
 
-    # Check on the docs_dir and re_scrape
     shared.add_dir(docs_dir)
     shared.if_rescrape(rescrape)
 
@@ -145,11 +143,9 @@ def scrape_date_range(from_date, to_date, if_scrape_shifts, data_format='csv', p
     
     :return: Dictionary with DataFrames and errors or None
     """
-    # First check if the inputs are good
     shared.check_data_format(data_format)
     shared.check_valid_dates(from_date, to_date)
 
-    # Check on the docs_dir and re_scrape
     shared.add_dir(docs_dir)
     shared.if_rescrape(rescrape)
 
@@ -180,10 +176,7 @@ def scrape_seasons(seasons, if_scrape_shifts, data_format='csv', preseason=False
     
     :return: Dictionary with DataFrames and errors or None
     """
-    # First check if the inputs are good
     shared.check_data_format(data_format)
-
-    # Check on the docs_dir and re_scrape
     shared.add_dir(docs_dir)
     shared.if_rescrape(rescrape)
 
@@ -226,10 +219,7 @@ def scrape_games(games, if_scrape_shifts, data_format='csv', rescrape=False, doc
     
     :return: Dictionary with DataFrames and errors or None
     """
-    # First check if the inputs are good
     shared.check_data_format(data_format)
-
-    # Check on the docs_dir and re_scrape
     shared.add_dir(docs_dir)
     shared.if_rescrape(rescrape)
 

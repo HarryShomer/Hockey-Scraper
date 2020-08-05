@@ -164,11 +164,11 @@ def combine_html_json_pbp(json_df, html_df, game_id, date):
             # warning message for the user.
             # NOTE: May be slightly incorrect. It's possible for there to be a challenge and another issue for one game.
             if 'CHL' in list(html_df.Event):
-                shared.print_error("The number of rows in the Html and Json pbp are different because the"
+                shared.print_warning("The number of rows in the Html and Json pbp are different because the"
                                      " Json pbp, for some reason, does not include challenges. Will instead merge on "
                                      "Period, Event, Time, and p1_id.")
             else:
-                shared.print_error("The number of rows in the Html and json pbp are different because "
+                shared.print_warning("The number of rows in the Html and json pbp are different because "
                                      "someone fucked up. Will instead merge on Period, Event, Time, and p1_id.")
 
             # Actual Merging
@@ -178,6 +178,7 @@ def combine_html_json_pbp(json_df, html_df, game_id, date):
         # This is always done - because merge doesn't work well with shootouts
         game_df = game_df.drop_duplicates(subset=['Period', 'Event', 'Description', 'Seconds_Elapsed'])
     except Exception as e:
+        print(e)
         shared.print_error('Problem combining Html Json pbp for game {}'.format(game_id, e))
         return
 
@@ -227,7 +228,7 @@ def combine_espn_html_pbp(html_df, espn_df, game_id, date, away_team, home_team)
 
 def scrape_pbp_live(game_id, date, roster, game_json, players, teams, espn_id=None):
     """
-    Scrape the live pbp
+    Wrapper for scraping the live pbp
 
     :param game_id: json game id
     :param date: date of game
@@ -271,7 +272,7 @@ def scrape_pbp(game_id, date, roster, game_json, players, teams, espn_id=None, h
     else:
         if_json = False
 
-    # Only scrape if nothing provided
+    # For live sometimes the json lags the html so if given we don't bother
     if not isinstance(html_df, pd.DataFrame):
         html_df = html_pbp.scrape_game(game_id, players, teams)
 
@@ -318,7 +319,7 @@ def scrape_shifts(game_id, players, date):
         if shifts_df is None or shifts_df.empty:
             shared.print_error("Unable to scrape shifts for game" + game_id)
             broken_shifts_games.extend([[game_id, date]])
-            return None   # Both failed so just return nothing
+            return None
 
     shifts_df['Date'] = date
 
@@ -349,6 +350,7 @@ def scrape_game(game_id, date, if_scrape_shifts):
         broken_pbp_games.extend([[game_id, date]])
         if if_scrape_shifts:
             broken_shifts_games.extend([[game_id, date]])
+
         return None, None
 
     pbp_df = scrape_pbp(game_id, date, roster, game_json, players, teams)

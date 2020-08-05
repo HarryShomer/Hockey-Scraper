@@ -363,10 +363,6 @@ def get_player_name(number, players, team, home_team):
     player = None
     venue = "Home" if team == home_team else "Away"
 
-    # # Get the info when we get the same number for that team
-    # player = [{'name': name, 'id': players[venue][name]['id'], 'last_name': players[venue][name]['last_name']}
-    #           for name in players[venue] if players[venue][name]['number'] == number]
-
     for name in players[venue]:
         if players[venue][name]['number'] == number:
             player = {

@@ -38,21 +38,23 @@ def test_get_dates():
 
 def test_chunk_schedule_calls():
     """
-    Test that we appropriately chunk calls in a range. Do so by by checking # of days in each chunk
+    Test that we appropriately chunk calls in a range. Do so by by checking # of days in each chunk.
 
-    Note: Won't always go to 120 due to some days not having games
+    chunk_size = 50
+
+    Note: Won't always go to total days in interval as some days dont' have games
     """
     # 1 day
     x = json_schedule.chunk_schedule_calls('2019-10-10', '2019-10-10')
     assert [len(chunk) for chunk in x] == [1]
 
-    # > 120
+    # > 50
     x = json_schedule.chunk_schedule_calls('2018-10-10', '2019-04-10')
-    assert [len(chunk) for chunk in x] == [95, 77]
+    assert [len(chunk) for chunk in x] == [48, 47, 47, 30]
 
-    # 1 < x < 120
-    x = json_schedule.chunk_schedule_calls('2018-10-10', '2018-12-01')
-    assert [len(chunk) for chunk in x] == [51]
+    # 1 < x < 50
+    x = json_schedule.chunk_schedule_calls('2018-10-10', '2018-11-15')
+    assert [len(chunk) for chunk in x] == [36]
 
 
 
