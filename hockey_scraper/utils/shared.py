@@ -8,7 +8,7 @@ import os
 import time
 import warnings
 import requests
-import datetime
+from datetime import datetime, timedelta
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 from . import save_pages as sp
@@ -209,17 +209,41 @@ def get_season(date):
     """
     Get Season based on from_date
 
+    There is an exception for the 2019-2020 pandemic season. Accoding to the below url:
+        -  2019-2020 season ends in Oct. 2020
+        -  2020-2021 season begins in November 2020
+        -  https://nhl.nbcsports.com/2020/07/10/new-nhl-critical-dates-calendar-means-an-october-free-agent-frenzy/
+
     :param date: date
 
     :return: season -> ex: 2016 for 2016-2017 season
     """
     year = date[:4]
-    date = time.strptime(date, "%Y-%m-%d")
+    date = datetime.strptime(date, "%Y-%m-%d")
+    initial_bound = datetime.strptime('-'.join([year, '01-01']), "%Y-%m-%d")
 
-    if time.strptime('-'.join([year, '01-01']), "%Y-%m-%d") <= date <= time.strptime('-'.join([year, '08-30']), "%Y-%m-%d"):
+    # End bound for year1-year2 season is later for pandemic year
+    if initial_bound <= date <= season_end_bound(year):
         return int(year) - 1
-    else:
-        return int(year)
+
+    return int(year)
+
+
+def season_end_bound(year):
+    """
+    Determine the end bound of a given season. Changes depending on if it's the pandemic season or not
+
+    :param year: str of year for given date
+
+    :return: season
+    """
+    normal_end_bound = datetime.strptime('-'.join([str(year), '08-31']), "%Y-%m-%d")
+    pandemic_end_bound = datetime.strptime('-'.join([str(year), '10-31']), "%Y-%m-%d")
+
+    if int(year) == 2020:
+        return pandemic_end_bound
+
+    return normal_end_bound
 
 
 def convert_to_seconds(minutes):
@@ -239,7 +263,7 @@ def convert_to_seconds(minutes):
     except ValueError:
         return None
 
-    return datetime.timedelta(hours=x.tm_hour, minutes=x.tm_min, seconds=x.tm_sec).total_seconds()
+    return timedelta(hours=x.tm_hour, minutes=x.tm_min, seconds=x.tm_sec).total_seconds()
 
 
 def scrape_page(url):

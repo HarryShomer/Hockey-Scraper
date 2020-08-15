@@ -60,29 +60,28 @@ def get_dates(games):
     """
     Given a list game_ids it returns the dates for each game.
 
-    We go from the beginning of the earliest season in the sample to the end of the most recent
+    We sort all the games and retrieve the schedule from the beginning of the season from the earliest game
+    until the end of most recent season.
     
     :param games: list with game_id's ex: 2016020001
     
     :return: list with game_id and corresponding date for all games
     """
-    # TODO: Needed??? Scared to change
-    # Convert to str to avoid issues
-    games = list(map(str, games))
+    today = datetime.today()
 
     # Determine oldest and newest game
+    games = list(map(str, games))
     games.sort()
 
     date_from = '-'.join([games[0][:4], '9', '1']) 
-    year_to = games[-1][:4]
+    year_to = int(games[-1][:4])
 
-    # If the last game is part of the ongoing season then only request the schedule until that day
+    # If the last game is part of the ongoing season then only request the schedule until Today
     # We get strange errors if we don't do it like this
-    if int(year_to) == shared.get_season(datetime.strftime(datetime.today(), "%Y-%m-%d")):
-        date_to = '-'.join([str(datetime.today().year), str(datetime.today().month), str(datetime.today().day)])
+    if year_to == shared.get_season(datetime.strftime(today, "%Y-%m-%d")):
+        date_to = '-'.join([str(today.year), str(today.month), str(today.day)])
     else:
-        # Due to 2020 Global Pandemic, games may happen until end of August
-        date_to = '-'.join([str(int(year_to) + 1), '8', '30'])  # Newest game in sample
+        date_to = datetime.strftime(shared.season_end_bound(year_to+1), "%Y-%m-%d")  # Newest game in sample
 
     # TODO: Assume true is live here -> Workaround
     schedule = scrape_schedule(date_from, date_to, preseason=True, not_over=True)

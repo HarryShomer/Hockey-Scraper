@@ -47,6 +47,9 @@ def test_get_season():
     """ Tests that this function returns the correct season for a given date"""
     assert shared.get_season("2017-10-01") == 2017
     assert shared.get_season("2016-06-01") == 2015
+    assert shared.get_season("2020-08-29") == 2019
+    assert shared.get_season("2020-10-03") == 2019
+    assert shared.get_season("2020-11-15") == 2020
 
 
 def test_scrape_page(file_info):
