@@ -778,6 +778,7 @@ def parse_html(html, players, teams):
     df['p1_ID'] = df['p1_ID'].astype("float64")
     df['Away_Team'] = teams['Away']
     df['Home_Team'] = teams['Home']
+    df['Ev_Distance'] = df['Description'].str.extract(r'(\d{1,}(?= ft))')
 
     return df
 
