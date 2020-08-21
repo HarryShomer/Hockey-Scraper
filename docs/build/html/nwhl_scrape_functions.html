@@ -1,33 +1,21 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NWHL Scraping Functions &#8212; hockey_scraper 1.36 documentation</title>
-    
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '1.36',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" /> 
-  </head>
-  <body role="document">
+  </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -37,7 +25,8 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">hockey_scraper 1.36 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">hockey_scraper 1.36 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">NWHL Scraping Functions</a></li> 
       </ul>
     </div>  
 
@@ -54,7 +43,7 @@
 <p>1. <em>Scrape by Season</em>:</p>
 <p>Scrape games on a season by season level (Note: A given season is referred to by the first of the two years it spans.
 So you would refer to the 2016-2017 season as 2016).</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">hockey_scraper</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">hockey_scraper</span>
 
  <span class="c1"># Scrapes the 2015 &amp; 2016 season and stores the data in a Csv file (both are equivalent!!!)</span>
  <span class="n">hockey_scraper</span><span class="o">.</span><span class="n">nwhl</span><span class="o">.</span><span class="n">scrape_seasons</span><span class="p">([</span><span class="mi">2015</span><span class="p">,</span> <span class="mi">2016</span><span class="p">])</span>
@@ -66,7 +55,7 @@ So you would refer to the 2016-2017 season as 2016).</p>
 </div>
 <p>2. <em>Scrape by Game</em>:</p>
 <p>Scrape a list of games provided.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">hockey_scraper</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">hockey_scraper</span>
 
 <span class="c1"># Scrapes games and store in a Csv file</span>
 <span class="n">hockey_scraper</span><span class="o">.</span><span class="n">nwhl</span><span class="o">.</span><span class="n">scrape_games</span><span class="p">([</span><span class="mi">14694271</span><span class="p">,</span> <span class="mi">14814946</span><span class="p">,</span> <span class="mi">14689491</span><span class="p">],</span> <span class="kc">True</span><span class="p">)</span>
@@ -76,8 +65,8 @@ So you would refer to the 2016-2017 season as 2016).</p>
 </pre></div>
 </div>
 <p>3. <em>Scrape by Date Range</em>:</p>
-<p>Scrape all games between a specified date range. All dates must be written in a &#8220;yyyy-mm-dd&#8221; format.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">hockey_scraper</span>
+<p>Scrape all games between a specified date range. All dates must be written in a “yyyy-mm-dd” format.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">hockey_scraper</span>
 
 <span class="c1"># Scrapes all games between 2016-10-10 and 2017-01-01 and returns a Pandas DataFrame containing the pbp</span>
 <span class="n">hockey_scraper</span><span class="o">.</span><span class="n">nwhl</span><span class="o">.</span><span class="n">scrape_date_range</span><span class="p">(</span><span class="s1">&#39;2016-10-10&#39;</span><span class="p">,</span> <span class="s1">&#39;2017-01-01&#39;</span><span class="p">,</span> <span class="n">data_format</span><span class="o">=</span><span class="s1">&#39;pandas&#39;</span><span class="p">)</span>
@@ -96,12 +85,13 @@ So you would refer to the 2016-2017 season as 2016).</p>
 </div>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
+  <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">NWHL Scraping Functions</a><ul>
 <li><a class="reference internal" href="#scraping">Scraping</a><ul>
@@ -122,15 +112,15 @@ So you would refer to the 2016-2017 season as 2016).</p>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -144,12 +134,13 @@ So you would refer to the 2016-2017 season as 2016).</p>
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">hockey_scraper 1.36 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">hockey_scraper 1.36 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">NWHL Scraping Functions</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2020, Harry Shomer.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.2.1.
     </div>
   </body>
 </html>

@@ -40,6 +40,8 @@ To install all you need to do is open up your terminal and run:
 NHL Usage
 ---------
 
+The full documentation can be found `here <http://hockey-scraper.readthedocs.io/en/latest/>`_.
+
 Standard Scrape Functions
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -87,35 +89,10 @@ The dictionary returned by setting the default argument "data_format" equal to "
     {
       # Both of these are always included
       'pbp': pbp_df,
-      'errors': scraping_errors,
 
       # This is only included when the argument 'if_scrape_shifts' is set equal to True
       'shifts': shifts_df
     }
-
-
-Scraped files can also be saved in a separate directory if wanted. This allows one to re-scrape games quicker as we
-don't need to retrieve them. This is done by specifying the keyword argument 'docs_dir' equal to True to automatically
-create, store, and look in the home directory. Or you can provide your own directory where you want everything to be
-stored (it must exist beforehand).
-
-::
-
-    import hockey_scraper
-
-    # Create or try to refer to a directory in the home repository
-    # Will create a directory called 'hockey_scraper_data' in the home directory (if it doesn't exist)
-    hockey_scraper.scrape_seasons([2015, 2016], True, docs_dir=True)
-
-    # Path to the given directory
-    USER_PATH = "/...."
-
-    # Scrapes the 2015 & 2016 season with shifts and stores the data in a Csv file
-    # Also includes a path for an existing directory for the scraped files to be placed in or retrieved from.
-    hockey_scraper.scrape_seasons([2015, 2016], True, docs_dir=USER_PATH)
-
-    # Once could chose to re-scrape previously saved files by making the keyword argument rescrape=True
-    hockey_scraper.scrape_seasons([2015, 2016], True, docs_dir=USER_PATH, rescrape=True)
 
 
 Schedule
@@ -130,7 +107,44 @@ The schedule for any past or future games can be scraped as follows:
     # As oppossed to the other calls the default format is 'Pandas' which returns a DataFrame
     sched_df = hockey_scraper.scrape_schedule("2019-10-01", "2020-07-01")
 
-The columns returned are: ['game_id', 'date', 'venue', 'home_team', 'away_team', 'start_time', 'home_score', 'away_score', 'status']
+The columns returned are: `['game_id', 'date', 'venue', 'home_team', 'away_team', 'start_time', 'home_score', 'away_score', 'status']`
+
+
+Persistent Data
+~~~~~~~~~~~~~~~
+
+All files and API calls retrieved can also be saved in a separate directory if wanted. The advanatge of this is reducing the amount of time needed to re-scrape a game as we don't need to re-retrieve them. You can also later choose to parse the files yourself and glean any extra information not captured by this project.
+
+This is done by specifying the keyword argument `docs_dir` equal to `True` to automatically store and look for the data in a directory called `~/hockey_scraper_data`. Or you can provide your own directory where you want everything to be stored (it must exist beforehand). If no value is specified for `docs_dir` it will retrieve everything from the source and not from your saved directory.
+
+For example, let's say we are want to have the JSON PBP data for game `2019020001 <http://statsapi.web.nhl.com/api/v1/game/2019020001/feed/live>`_. If an argument is passed for `docs_dir` it will first check to see if that call was already made by checking in the supplied directory. If it was, it will simply load in the data from that file and not make a GET request to the NHL API. However if it doesn' exist, it will make a GET request and then save the output to our directory. This will ensure that next time you are requesting that data it can load it from a file.
+
+Here are some examples.
+
+Default saving location in `~/hockey_scraper_data`
+
+
+::
+
+    # Create or try to refer to a directory in the home directory
+    # Will create a directory called 'hockey_scraper_data' in the home directory (if it doesn't exist)
+    hockey_scraper.scrape_seasons([2015, 2016], True, docs_dir=True)
+
+
+User defined directory
+
+::
+
+    USER_PATH = "/...."
+    hockey_scraper.scrape_seasons([2015, 2016], True, docs_dir=USER_PATH)
+
+
+You can override the existing files by specifying `rescrape=True`. It will retrieve all the files from source and save the newer versions to `docs_dir`.
+
+::
+
+    hockey_scraper.scrape_seasons([2015, 2016], True, docs_dir=USER_PATH, rescrape=True)
+
 
 
 Live Scraping
@@ -218,8 +232,6 @@ Here is a simple example of a way to setup live scraping. I strongly suggest che
     # Scrapes all games between 2016-10-10 and 2017-01-01 and returns a Pandas DataFrame containing the pbp
     hockey_scraper.nwhl.scrape_date_range('2016-10-10', '2017-01-01', data_format='pandas')
 
-
-The full documentation can be found `here <http://hockey-scraper.readthedocs.io/en/latest/>`_.
 
 
 Contact

@@ -68,7 +68,7 @@ Scrape the schedule between any given date range for past and future games. All 
     sched_df = hockey_scraper.scrape_schedule("2019-10-01", "2020-07-01")
 
 
-**Saving Files**
+**Persistent Data**
 
 The option also exists to save the scraped files in another directory. This would speed up re-scraping any games since
 we already have the docs needed for it. It would also be useful if you want to grab any extra information from them
@@ -114,7 +114,6 @@ games are scraped at your own risk. There is no guarantee it will work or that t
    {
       # Both of these are always included
       'pbp': pbp_df,
-      'errors': scraping_errors,
 
       # This is only included when the argument 'if_scrape_shifts' is set equal to True
       'shifts': shifts_df
