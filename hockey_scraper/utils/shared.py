@@ -13,17 +13,14 @@ from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 from . import save_pages as sp
 
-# def custom_formatwarning(msg, *args, **kwargs): 
-#     print("Queso----------{msg}")
-#     return msg
-
-# warnings.formatwarning = custom_formatwarning
-
 # Directory where to save pages
 docs_dir = False
 
 # Boolean that tells us whether or not we should re-scrape a given page if it's already saved
 re_scrape = False
+
+# Whether to save docs_dir file as Gzip
+GZIP = False
 
 # All the corresponding tri-codes for team names
 TEAMS = {
@@ -375,7 +372,7 @@ def get_file(file_info):
         page = sp.get_page(file_info)
     else:
         page = scrape_page(file_info['url'])
-        sp.save_page(page, file_info)
+        sp.save_page(page, file_info, if_gzip=GZIP)
 
     return page
 

@@ -178,7 +178,6 @@ def combine_html_json_pbp(json_df, html_df, game_id, date):
         # This is always done - because merge doesn't work well with shootouts
         game_df = game_df.drop_duplicates(subset=['Period', 'Event', 'Description', 'Seconds_Elapsed'])
     except Exception as e:
-        print(e)
         shared.print_error('Problem combining Html Json pbp for game {}'.format(game_id, e))
         return
 
