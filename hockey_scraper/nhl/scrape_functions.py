@@ -4,6 +4,7 @@ Functions to scrape by season, games, and date range
 
 import time
 import pandas as pd
+from datetime import datetime
 import hockey_scraper.nhl.game_scraper as game_scraper
 import hockey_scraper.nhl.json_schedule as json_schedule
 import hockey_scraper.utils.shared as shared
@@ -184,8 +185,8 @@ def scrape_seasons(seasons, if_scrape_shifts, data_format='csv', preseason=False
     master_pbps, master_shifts = [], []
 
     for season in seasons:
-        from_date = '-'.join([str(season), '9', '1'])
-        to_date = '-'.join([str(season + 1), '7', '1'])
+        from_date = shared.season_start_bound(season)
+        to_date = datetime.strftime(shared.season_end_bound(str(season + 1)), "%Y-%m-%d")
 
         games = json_schedule.scrape_schedule(from_date, to_date, preseason)
         pbp_df, shifts_df = scrape_list_of_games(games, if_scrape_shifts)

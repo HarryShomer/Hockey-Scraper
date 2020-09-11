@@ -8,19 +8,15 @@ v1.2.6
 
 v1.2.7
 ------
-
   * Added functionality to easier scrape live games
   * Fixed user warnings
 
-
 v1.3
 ----
-
   * Added functionality to scrape NWHL data
 
 v1.31
 -----
-
   * Added functionality to automatically create docs_dir
   * Added folder to store csv files
 
@@ -28,7 +24,6 @@ v1.33
 -----
   * Fixed bug with nhl changing contents of eventTypeId
   * Updated ESPN scraping after they changed the layout of the pages
-
 
 v1.34
 -----
@@ -47,3 +42,6 @@ v1.36
   * Added names to utils.shared.Names
   * Changed errors/warning to print red in the console
 
+v1.37
+-----
+  * Added ability to store pages saved in docs_dir as a GZIP

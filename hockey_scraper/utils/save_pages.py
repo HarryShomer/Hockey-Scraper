@@ -86,7 +86,7 @@ def check_file_exists(file_info):
 
     # May or may not be compressed
     non_compressed_file = os.path.isfile(create_base_file_path(file_info)) 
-    compressed_file = os.path.isfile(create_base_file_path(file_info) + ".gz")
+    compressed_file = is_compressed(file_info)
 
     return compressed_file or non_compressed_file
 

@@ -234,7 +234,7 @@ def scrape_game(date, home_team, away_team, game_id=None):
 
     espn_df.period = espn_df.period.astype(int)
     
-    return pd.DataFrame()
+    return espn_df
 
 
 

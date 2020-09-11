@@ -7,9 +7,8 @@ def read():
 
 setup(
     name='hockey_scraper',
-    version='1.36.6',
-    description="""This package is designed to allow one to scrape the raw data for both the National Hockey League
-                   (NHL) and the National Women's Hockey League (NWHL) off of their respective API and websites.""",
+    version='1.37',
+    description="""Python Package for scraping NHL Play-by-Play and Shift data.""",
     long_description=read(),
     classifiers=[
         "Development Status :: 5 - Production/Stable",
