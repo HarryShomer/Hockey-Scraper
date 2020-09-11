@@ -151,9 +151,6 @@ def combine_html_json_pbp(json_df, html_df, game_id, date):
     # Don't need those columns to merge in
     json_df = json_df.drop(['p1_name', 'p2_name', 'p2_ID', 'p3_name', 'p3_ID'], axis=1)
 
-    # print("json", json_df.dtypes)
-    # print("html", html_df.dtypes)
-
     try:
         # If they aren't equal it's usually due to the HTML containing a challenge event
         if html_df.shape[0] == json_df.shape[0]:
@@ -279,7 +276,7 @@ def scrape_pbp(game_id, date, roster, game_json, players, teams, espn_id=None, h
         return None
 
     # Check if the json is missing the plays...if it is scrape ESPN for the coordinates
-    if not json_df:
+    if json_df is None or json_df.empty:
         espn_df = espn_pbp.scrape_game(date, teams['Home'], teams['Away'], game_id=espn_id)
         game_df = combine_espn_html_pbp(html_df, espn_df, str(game_id), date, teams['Away'], teams['Home'])
 

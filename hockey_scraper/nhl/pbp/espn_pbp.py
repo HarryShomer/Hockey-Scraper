@@ -203,7 +203,10 @@ def parse_espn(espn_xml):
     plays = [parse_event(event.text) for event in events]
     plays = [play for play in plays if play is not None]    # Get rid of plays that are None
 
-    return pd.DataFrame(plays, columns=columns)
+    df = pd.DataFrame(plays, columns=columns)
+    df.period = df.period.astype(int)
+
+    return df
 
 
 def scrape_game(date, home_team, away_team, game_id=None):
@@ -230,11 +233,7 @@ def scrape_game(date, home_team, away_team, game_id=None):
         espn_df = parse_espn(espn_xml)
     except Exception as e:
         shared.print_error("Error parsing Espn pbp for game {a} {b} {c} {d}".format(a=date, b=home_team, c=away_team, d=e))
-        return None
-
-    espn_df.period = espn_df.period.astype(int)
+        return pd.DataFrame()
     
     return espn_df
-
-
 
