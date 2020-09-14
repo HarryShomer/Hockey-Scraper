@@ -26,7 +26,7 @@ def get_pbp(game_id):
     response = shared.get_file(page_info)
 
     if not response:
-        print("Json pbp for game {} is either not there or can't be obtained".format(game_id))
+        shared.print_error("Json pbp for game {} is either not there or can't be obtained".format(game_id))
         return {}
     else:
         return json.loads(response)
@@ -139,7 +139,9 @@ def parse_json(game_json, game_id):
 
 def scrape_game(game_id):
     """
-    Used for debugging. HTML depends on json so can't follow this structure
+    **Used for debugging** 
+
+    HTML depends on json so can't follow this structure
     
     :param game_id: game to scrape
     

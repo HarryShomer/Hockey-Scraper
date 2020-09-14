@@ -336,7 +336,7 @@ def get_penalty(play_description, players, home_team):
             player = get_player_name(numbers[0], players, play_description[:3], home_team)
 
         # Check if the number and player match up
-        if play_description.find(player['last_name']) != -1:
+        if player['last_name'] is not None and player['last_name'] in play_description:
             # beg_penalty_index is right after the penalty taker's last name (+1 for whitespace)
             # Then we take from after his last name to right after the parentheses
             beg_penalty_index = play_description.find(player['last_name']) + len(player['last_name']) + 1

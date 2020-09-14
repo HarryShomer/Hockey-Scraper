@@ -44,4 +44,5 @@ v1.36
 
 v1.37
 -----
-  * Added ability to store pages saved in docs_dir as a GZIP
+  * Now saves scraped pages in docs_dir as a GZIP
+  * Only print full error summary when the number of games scraped is >= 25

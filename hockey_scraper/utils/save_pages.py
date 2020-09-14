@@ -1,4 +1,5 @@
-"""Saves the scraped docs so you don't have to re-scrape them every time you want to parse the docs. 
+"""
+Saves the scraped docs so you don't have to re-scrape them every time you want to parse the docs. 
 
 \**** Don't mess with this unless you know what you're doing \****
 """
@@ -25,7 +26,7 @@ def create_base_file_path(file_info):
 
 def is_compressed(file_info):
     """
-    Check if stored file is compressed
+    Check if stored file is compressed as we used to not save them as compressed.
 
     :param file_info: Dictionary containing the info on the file. Includes the name, season, file type, and the dir
                       we want to deposit any data in.
@@ -84,7 +85,7 @@ def check_file_exists(file_info):
     if not os.path.isdir(os.path.join(file_info['dir'], 'docs', str(file_info['season']))):
         create_season_dirs(file_info)
 
-    # May or may not be compressed
+    # May or may not be compressed due to file saved under older versions
     non_compressed_file = os.path.isfile(create_base_file_path(file_info)) 
     compressed_file = is_compressed(file_info)
 
@@ -93,7 +94,9 @@ def check_file_exists(file_info):
 
 def get_page(file_info):
     """
-    Get the file so we don't need to re-scrape 
+    Get the file so we don't need to re-scrape.
+
+    Try both compressed and non-compressed for backwards compatability issues (formerly non-compressed)
 
     :param file_info: Dictionary containing the info on the file. Includes the name, season, file type, and the dir
                       we want to deposit any data in.
@@ -110,7 +113,7 @@ def get_page(file_info):
             return my_file.read().replace('\n', '')
 
 
-def save_page(page, file_info, if_gzip=False):
+def save_page(page, file_info):
     """
     Save the page we just scraped.
     
@@ -120,14 +123,9 @@ def save_page(page, file_info, if_gzip=False):
     :param page: File scraped
     :param file_info: Dictionary containing the info on the file. Includes the name, season, file type, and the dir
                       we want to deposit any data in.
-    :param if_gzip: Whether to compress to a gz. Defaults to False
 
     :return: None
     """
     if file_info['dir'] and page is not None and page != '':
-        if if_gzip:
-            with gzip.open(create_base_file_path(file_info) + ".gz", 'wb') as file:
-                file.write(page.encode()) 
-        else:
-            with open(create_base_file_path(file_info), 'w') as file:
-                file.write(page)
+        with gzip.open(create_base_file_path(file_info) + ".gz", 'wb') as file:
+            file.write(page.encode()) 

@@ -19,9 +19,6 @@ docs_dir = False
 # Boolean that tells us whether or not we should re-scrape a given page if it's already saved
 re_scrape = False
 
-# Whether to save docs_dir file as Gzip
-GZIP = False
-
 # All the corresponding tri-codes for team names
 TEAMS = {
     'ANAHEIM DUCKS': 'ANA', 'ARIZONA COYOTES': 'ARI', 'ATLANTA THRASHERS': 'ATL', 'BOSTON BRUINS': 'BOS',
@@ -389,7 +386,7 @@ def get_file(file_info):
         page = sp.get_page(file_info)
     else:
         page = scrape_page(file_info['url'])
-        sp.save_page(page, file_info, if_gzip=GZIP)
+        sp.save_page(page, file_info)
 
     return page
 

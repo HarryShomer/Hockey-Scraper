@@ -10,39 +10,40 @@ import hockey_scraper.nhl.json_schedule as json_schedule
 import hockey_scraper.utils.shared as shared
 
 
-def print_errors():
+def print_errors(detailed=True):
     """
     Print errors with scraping.
-    
-    Also puts errors in the "error" string (would just print the string but it would look like shit on one line. I
-    could store it as I "should" print it but that isn't how I want it). 
 
+    :param detailed: When False only print player IDs otherwise all
+    
     :return: None
     """
     global errors
 
-    if game_scraper.broken_pbp_games:
-        print('\nBroken pbp:')
+    print("")
+
+    if game_scraper.broken_pbp_games and detailed:
+        print('Broken pbp:')
         for x in game_scraper.broken_pbp_games:
-            print("-", x[0], x[1])
+            print("  -", x[0], x[1])
         print("")
 
-    if game_scraper.broken_shifts_games:
+    if game_scraper.broken_shifts_games and detailed:
         print('Broken shifts:')
         for x in game_scraper.broken_shifts_games:
-            print("-", x[0], x[1])
+            print("  -", x[0], x[1])
+        print("")
+
+    if game_scraper.missing_coords and detailed:
+        print('Games missing coordinates:')
+        for x in game_scraper.missing_coords:
+            print("  -", x[0], x[1])
         print("")
 
     if game_scraper.players_missing_ids:
-        print("Players missing ID's:")
+        print("Players missing IDs:")
         for x in game_scraper.players_missing_ids:
-            print("-", x[0], x[1])
-        print("")
-
-    if game_scraper.missing_coords:
-        print('Games missing coordinates:')
-        for x in game_scraper.missing_coords:
-            print("-", x[0], x[1])
+            print("  -", x[0], x[1])
         print("")
 
     # Clear them all out for the next call
@@ -84,8 +85,8 @@ def scrape_list_of_games(games, if_scrape_shifts):
     else:
         shifts_df = None
 
-    # Print all errors associated with scrape call
-    print_errors()
+    # Only print full details when # games > 25
+    print_errors(len(games) >= 25)
 
     return pbp_df, shifts_df
 
