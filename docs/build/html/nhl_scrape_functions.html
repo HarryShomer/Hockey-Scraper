@@ -146,13 +146,14 @@ but otherwise it will scrape as if no directory was provided.</p>
 <p>Functions to scrape by season, games, and date range</p>
 <dl class="py function">
 <dt id="hockey_scraper.nhl.scrape_functions.print_errors">
-<code class="sig-prename descclassname">hockey_scraper.nhl.scrape_functions.</code><code class="sig-name descname">print_errors</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.scrape_functions.print_errors" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">hockey_scraper.nhl.scrape_functions.</code><code class="sig-name descname">print_errors</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">detailed</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.scrape_functions.print_errors" title="Permalink to this definition">¶</a></dt>
 <dd><p>Print errors with scraping.</p>
-<p>Also puts errors in the “error” string (would just print the string but it would look like shit on one line. I
-could store it as I “should” print it but that isn’t how I want it).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>None</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>detailed</strong> – When False only print player IDs otherwise all</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -420,8 +421,11 @@ The pbp is automatically scraped, and the whether or not to scrape the shifts is
 <dl class="py function">
 <dt id="hockey_scraper.nhl.game_scraper.scrape_pbp">
 <code class="sig-prename descclassname">hockey_scraper.nhl.game_scraper.</code><code class="sig-name descname">scrape_pbp</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">game_id</span></em>, <em class="sig-param"><span class="n">date</span></em>, <em class="sig-param"><span class="n">roster</span></em>, <em class="sig-param"><span class="n">game_json</span></em>, <em class="sig-param"><span class="n">players</span></em>, <em class="sig-param"><span class="n">teams</span></em>, <em class="sig-param"><span class="n">espn_id</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">html_df</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.game_scraper.scrape_pbp" title="Permalink to this definition">¶</a></dt>
-<dd><p>Automatically scrapes the json and html, if the json is empty the html picks up some of the slack and the espn
-xml is also scraped for coordinates.</p>
+<dd><p>Scrape the Pbp info. The HTML is always scraped.</p>
+<p>The Json is parse whe season &gt;= 2010 and there are plays. Otherwise ESPN is gotten to supplement
+the HTML with coordinate.</p>
+<p>The espn_id and the html data can be fed as keyword argument to speed up execution. This is used by
+the live game scraping class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1124,7 +1128,8 @@ Ex: <a class="reference external" href="http://statsapi.web.nhl.com/api/v1/game/
 <dl class="py function">
 <dt id="hockey_scraper.nhl.pbp.json_pbp.scrape_game">
 <code class="sig-prename descclassname">hockey_scraper.nhl.pbp.json_pbp.</code><code class="sig-name descname">scrape_game</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">game_id</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.json_pbp.scrape_game" title="Permalink to this definition">¶</a></dt>
-<dd><p>Used for debugging. HTML depends on json so can’t follow this structure</p>
+<dd><p><strong>Used for debugging</strong></p>
+<p>HTML depends on json so can’t follow this structure</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>game_id</strong> – game to scrape</p>
@@ -1653,9 +1658,9 @@ we want to deposit any data in.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.utils.save_pages.create_file_path">
-<code class="sig-prename descclassname">hockey_scraper.utils.save_pages.</code><code class="sig-name descname">create_file_path</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file_info</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.save_pages.create_file_path" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates the file path for a given file</p>
+<dt id="hockey_scraper.utils.save_pages.create_base_file_path">
+<code class="sig-prename descclassname">hockey_scraper.utils.save_pages.</code><code class="sig-name descname">create_base_file_path</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file_info</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.save_pages.create_base_file_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates the base file path for a given file</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>file_info</strong> – Dictionary containing the info on the file. Includes the name, season, file type, and the dir
@@ -1665,6 +1670,14 @@ we want to deposit any data in.</p>
 <dd class="field-even"><p>path</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="hockey_scraper.utils.save_pages.create_dir_structure">
+<code class="sig-prename descclassname">hockey_scraper.utils.save_pages.</code><code class="sig-name descname">create_dir_structure</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dir_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.save_pages.create_dir_structure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create the basic directory structure for docs_dir if not done yet.
+Creates the docs and csvs subdir if it doesn’t exist</p>
+<p>:return None</p>
 </dd></dl>
 
 <dl class="py function">
@@ -1685,7 +1698,8 @@ we want to deposit any data in.</p>
 <dl class="py function">
 <dt id="hockey_scraper.utils.save_pages.get_page">
 <code class="sig-prename descclassname">hockey_scraper.utils.save_pages.</code><code class="sig-name descname">get_page</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file_info</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.save_pages.get_page" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the file so we don’t need to re-scrape</p>
+<dd><p>Get the file so we don’t need to re-scrape.</p>
+<p>Try both compressed and non-compressed for backwards compatability issues (formerly non-compressed)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>file_info</strong> – Dictionary containing the info on the file. Includes the name, season, file type, and the dir
@@ -1695,6 +1709,19 @@ we want to deposit any data in.</p>
 <dd class="field-even"><p>Response or None</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="hockey_scraper.utils.save_pages.is_compressed">
+<code class="sig-prename descclassname">hockey_scraper.utils.save_pages.</code><code class="sig-name descname">is_compressed</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file_info</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.save_pages.is_compressed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if stored file is compressed as we used to not save them as compressed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file_info</strong> – Dictionary containing the info on the file. Includes the name, season, file type, and the dir
+we want to deposit any data in.</p>
+</dd>
+</dl>
+<p>return Boolean</p>
 </dd></dl>
 
 <dl class="py function">
@@ -1918,7 +1945,22 @@ Reason why i still use warning for errors is so i can set to ignore them if i wa
 <dd class="field-odd"><p><strong>year</strong> – str of year for given date</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>season</p>
+<dd class="field-even"><p>Datetime obj of last date in season</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="hockey_scraper.utils.shared.season_start_bound">
+<code class="sig-prename descclassname">hockey_scraper.utils.shared.</code><code class="sig-name descname">season_start_bound</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">year</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.season_start_bound" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get start bound for a season.</p>
+<p>There is a bug in the schedule API for 2016 that causes the pushback to 09-30</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>year</strong> – str of year for given date</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>str of first date in season</p>
 </dd>
 </dl>
 </dd></dl>
