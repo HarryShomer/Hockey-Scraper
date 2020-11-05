@@ -103,6 +103,12 @@ class LiveGame:
 
     @property
     def pbp_df(self):
+        """
+        Returns a dataquality protobank protobuf.
+
+        Args:
+            self: (todo): write your description
+        """
         if isinstance(self._pbp_df, pd.DataFrame):
             return self._pbp_df
         else:
@@ -110,6 +116,12 @@ class LiveGame:
 
     @property
     def shifts_df(self):
+        """
+        Returns a pandas.
+
+        Args:
+            self: (todo): write your description
+        """
         if isinstance(self._shifts_df, pd.DataFrame):
             return self._shifts_df
         else:
@@ -117,6 +129,12 @@ class LiveGame:
 
     @property
     def prev_pbp_df(self):
+        """
+        The number of rows in this data frame.
+
+        Args:
+            self: (todo): write your description
+        """
         if isinstance(self._prev_pbp_df, pd.DataFrame):
             return self._prev_pbp_df
         else:
@@ -124,6 +142,12 @@ class LiveGame:
 
     @property
     def prev_pbp_df(self):
+        """
+        Returns the previous data frame.
+
+        Args:
+            self: (todo): write your description
+        """
         if isinstance(self._prev_shifts_df, pd.DataFrame):
             return self._prev_shifts_df
         else:

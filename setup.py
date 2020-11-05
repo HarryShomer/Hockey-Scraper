@@ -3,6 +3,11 @@ from setuptools import setup, find_packages
 
 
 def read():
+    """
+    Read file contents
+
+    Args:
+    """
     return open(os.path.join(os.path.dirname(__file__), 'README.rst')).read()
 
 setup(

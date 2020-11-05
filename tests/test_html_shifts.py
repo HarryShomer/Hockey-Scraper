@@ -9,15 +9,30 @@ from hockey_scraper.nhl.shifts import html_shifts
 
 @pytest.fixture
 def shift_cols():
+    """
+    Returns a list.
+
+    Args:
+    """
     return ['Game_Id', 'Period', 'Team', 'Player', 'Player_Id', 'Start', 'End', 'Duration']
 
 
 @pytest.fixture
 def game_id():
+    """
+    Return the game id.
+
+    Args:
+    """
     return '2009020001'
 
 @pytest.fixture
 def player_ids():
+    """
+    Get player ids.
+
+    Args:
+    """
     return {
         'Home': {
                   'DENNIS WIDEMAN': {'id': 8469770, 'number': '6', 'last_name': 'WIDEMAN'},
@@ -70,12 +85,25 @@ def player_ids():
 
 @pytest.fixture
 def shifts_html():
+    """
+    Return html for the home page.
+
+    Args:
+    """
     home, away = html_shifts.get_shifts("2009020001")
     return {'home': home, 'away': away}
 
 
 @pytest.fixture
 def shifts_dfs(shifts_html, player_ids, game_id):
+    """
+    Return a pandas dataframe with all the players.
+
+    Args:
+        shifts_html: (int): write your description
+        player_ids: (str): write your description
+        game_id: (todo): write your description
+    """
     home_df = html_shifts.parse_html(shifts_html['home'], player_ids, game_id)
     away_df = html_shifts.parse_html(shifts_html['away'], player_ids, game_id)
 

@@ -9,6 +9,11 @@ from hockey_scraper.nhl.pbp import json_pbp
 
 @pytest.fixture
 def players():
+    """
+    Return a list of players
+
+    Args:
+    """
     return {'Home':
                {'NOAH HANIFIN': {'id': 8478396, 'number': '5', 'last_name': 'HANIFIN'},
                 'KLAS DAHLBECK': {'id': 8476403, 'number': '6', 'last_name': 'DAHLBECK'},
@@ -61,6 +66,11 @@ def players():
 
 @pytest.fixture
 def pbp_columns():
+    """
+    Return a list of column names.
+
+    Args:
+    """
     return ['Game_Id', 'Date', 'Period', 'Event', 'Description', 'Time_Elapsed', 'Seconds_Elapsed', 'Strength',
             'Ev_Zone', 'Type', 'Ev_Team', 'Home_Zone', 'Away_Team', 'Home_Team', 'p1_name', 'p1_ID', 'p2_name', 'p2_ID',
             'p3_name', 'p3_ID', 'awayPlayer1', 'awayPlayer1_id', 'awayPlayer2', 'awayPlayer2_id', 'awayPlayer3',
@@ -74,6 +84,11 @@ def pbp_columns():
 
 @pytest.fixture
 def shifts_columns():
+    """
+    Returns a list of all the columns.
+
+    Args:
+    """
     return ['Game_Id', 'Period', 'Team', 'Player', 'Player_Id', 'Start', 'End', 'Duration', 'Date']
 
 
