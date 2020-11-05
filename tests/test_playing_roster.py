@@ -7,6 +7,11 @@ from hockey_scraper.nhl import playing_roster
 
 @pytest.fixture
 def scraped_roster():
+    """
+    Scraped roles for the roles.
+
+    Args:
+    """
     return playing_roster.scrape_roster("2016020475")
 
 

@@ -8,11 +8,21 @@ from hockey_scraper.nhl.pbp import espn_pbp
 
 @pytest.fixture
 def game_date():
+    """
+    Return the game date.
+
+    Args:
+    """
     return '2015-10-24'
 
 
 @pytest.fixture
 def teams():
+    """
+    Return a list of teams.
+
+    Args:
+    """
     return {'Home': 'PHI', 'Away': 'NYR'}
 
 

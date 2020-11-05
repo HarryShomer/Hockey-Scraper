@@ -11,16 +11,32 @@ from hockey_scraper.nhl.pbp import html_pbp
 
 @pytest.fixture
 def game_id():
+    """
+    Return the game id.
+
+    Args:
+    """
     return "2017020516"
 
 
 @pytest.fixture
 def cleaned_html(game_id):
+    """
+    Returns the game html object.
+
+    Args:
+        game_id: (todo): write your description
+    """
     return html_pbp.clean_html_pbp(html_pbp.get_pbp(game_id))
 
 
 @pytest.fixture
 def pbp_cols():
+    """
+    Return a list of column names.
+
+    Args:
+    """
     return ['Period', 'Event', 'Description', 'Time_Elapsed', 'Seconds_Elapsed', 'Strength', 'Ev_Zone', 'Type',
             'Ev_Team', 'Home_Zone', 'Away_Team', 'Home_Team', 'p1_name', 'p1_ID', 'p2_name', 'p2_ID', 'p3_name',
             'p3_ID', 'awayPlayer1', 'awayPlayer1_id', 'awayPlayer2', 'awayPlayer2_id', 'awayPlayer3', 'awayPlayer3_id',
@@ -34,6 +50,11 @@ def pbp_cols():
 
 @pytest.fixture
 def event():
+    """
+    Returns a list of an event.
+
+    Args:
+    """
     return ['112', '1', 'EV', '15:59', 'PENL', 'TOR #25 VAN RIEMSDYK\xa0Slashing(2 min), Off. Zone Drawn By: CAR #49 RASK',
             [['VICTOR RASK', '49', 'C'], ['JEFF SKINNER', '53', 'C'], ['TEUVO TERAVAINEN', '86', 'L'],
              ['NOAH HANIFIN', '5', 'D'], ['BRETT PESCE', '22', 'D'], ['SCOTT DARLING', '33', 'G']],
@@ -43,6 +64,11 @@ def event():
 
 @pytest.fixture
 def players():
+    """
+    Return a list of players.
+
+    Args:
+    """
     return {'Home':
                 {'RON HAINSEY': {'id': 8468493, 'number': '2', 'last_name': 'HAINSEY'},
                  'CONNOR CARRICK': {'id': 8476941, 'number': '8', 'last_name': 'CARRICK'},
@@ -95,11 +121,21 @@ def players():
 
 @pytest.fixture
 def teams():
+    """
+    Return a list of teams.
+
+    Args:
+    """
     return {'Home': 'TOR', 'Away': 'CAR'}
 
 
 @pytest.fixture
 def current_score():
+    """
+    Return the current score.
+
+    Args:
+    """
     return {'Home': 4, 'Away': 1}
 
 

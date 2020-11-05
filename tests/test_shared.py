@@ -10,6 +10,11 @@ from hockey_scraper.utils import shared
 
 @pytest.fixture
 def file_info():
+    """
+    Returns file info
+
+    Args:
+    """
     return {
         "url": 'http://statsapi.web.nhl.com/api/v1/game/{}/feed/live'.format(2017020001),
         "name": str(2017020001),
