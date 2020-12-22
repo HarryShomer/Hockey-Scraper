@@ -47,6 +47,55 @@ def check_goalie(row):
             players_missing_ids.extend([[row['Home_Goalie'], row['Game_Id']]])
 
 
+"""
+Below two functions assume no two players on the same team can have the same name
+"""
+
+def get_players_json_2(game_json):
+    """
+    `get_players_json` on team level
+    """
+    players = {"home": {}, "away": {}}
+
+    for venue in players:
+        team_players = game_json['liveData']['boxscore']['teams'][venue]['players']
+        team_name = shared.get_team(game_json['liveData']['boxscore']['teams'][venue]['team']['name'].upper())
+
+        for id_key in team_players: 
+            player_name = team_players[id_key]['person']['fullName'].upper()
+
+            players[venue][player_name] = {
+                "id": team_players[id_key]['person']['id'], 
+                "last_name": game_json['gameData']['players'][id_key]['lastName'].upper()
+            }
+
+    return players
+
+
+def combine_players_lists_2(json_players, roster_players, game_id):
+    """
+    `combine_players_list` using `get_players_json_2`
+    """
+    players = {'Home': dict(), 'Away': dict()}
+
+    for venue in players:
+        for player in roster_players[venue]:
+            try:
+                name = shared.fix_name(player[2])
+                player_id = json_players[venue.lower()][name]['id']
+                players[venue][name] = {'id': player_id, 'number': player[0], 'last_name': json_players[venue.lower()][name]['last_name']}
+            except KeyError:
+                # If he was listed as a scratch and not a goalie (check_goalie deals with goalies)
+                # As a whole the scratch list shouldn't be trusted but if a player is missing an id # and is on the
+                # scratch list I'm willing to assume that he didn't play
+                if not player[3] and player[1] != 'G':
+                    player.extend([game_id])
+                    players_missing_ids.extend([[player[2], player[4]]])
+                    players[venue][name] = {'id': None, 'number': player[0], 'last_name': ''}
+
+    return players
+
+
 def get_sebastian_aho(player):
     """
     This checks which Sebastian Aho it is based on the position. I have the player id's hardcoded here. 
@@ -77,12 +126,14 @@ def get_players_json(players_json):
     for key in players_json:
         name = shared.fix_name(players_json[key]['fullName'].upper())
         players[name] = {'id': None, 'last_name': players_json[key]['lastName'].upper()}
+
         try:
             players[name]['id'] = players_json[key]['id']
         except KeyError:
             shared.print_warning('{name} is missing an ID number in the pbp json'.format(name=name))
 
     return players
+
 
 
 def combine_players_lists(json_players, roster_players, game_id):
@@ -97,7 +148,7 @@ def combine_players_lists(json_players, roster_players, game_id):
     """
     players = {'Home': dict(), 'Away': dict()}
 
-    for venue in players.keys():
+    for venue in players:
         for player in roster_players[venue]:
             try:
                 name = shared.fix_name(player[2])
@@ -127,8 +178,8 @@ def get_teams_and_players(game_json, roster, game_id):
     """
     try:
         teams = json_pbp.get_teams(game_json)
-        player_ids = get_players_json(game_json['gameData']['players'])
-        players = combine_players_lists(player_ids, roster['players'], game_id)
+        player_ids = get_players_json_2(game_json)
+        players = combine_players_lists_2(player_ids, roster['players'], game_id)
     except Exception as e:
         shared.print_error('Problem with getting the teams or players')
         return None, None
