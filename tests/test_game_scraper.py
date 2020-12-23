@@ -105,7 +105,7 @@ def test_scrape_game(pbp_columns, shifts_columns):
 def test_combine_players_lists(players):
     """ Check that it combines the list of players from the json pbp and the html roster correctly """
     game_id = "2017020891"
-    json_players = game_scraper.get_players_json(json_pbp.get_pbp(game_id)['gameData']['players'])
+    json_players = game_scraper.get_players_json(json_pbp.get_pbp(game_id))
     roster = playing_roster.scrape_roster(game_id)['players']
 
     assert players == game_scraper.combine_players_lists(json_players, roster, game_id)

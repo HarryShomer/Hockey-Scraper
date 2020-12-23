@@ -6,8 +6,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NHL Scraping Functions &#8212; hockey_scraper 1.36 documentation</title>
-    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
@@ -352,30 +352,14 @@ same number of rows. If they don’t have the same number of rows, merge on: Per
 
 <dl class="py function">
 <dt id="hockey_scraper.nhl.game_scraper.get_players_json">
-<code class="sig-prename descclassname">hockey_scraper.nhl.game_scraper.</code><code class="sig-name descname">get_players_json</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">players_json</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.game_scraper.get_players_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return dict of players for that game</p>
+<code class="sig-prename descclassname">hockey_scraper.nhl.game_scraper.</code><code class="sig-name descname">get_players_json</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">game_json</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.game_scraper.get_players_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return dict of players for that game by team</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>players_json</strong> – players section of json</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>dict of players-&gt;keys are the name (in uppercase)</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt id="hockey_scraper.nhl.game_scraper.get_sebastian_aho">
-<code class="sig-prename descclassname">hockey_scraper.nhl.game_scraper.</code><code class="sig-name descname">get_sebastian_aho</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">player</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.game_scraper.get_sebastian_aho" title="Permalink to this definition">¶</a></dt>
-<dd><p>This checks which Sebastian Aho it is based on the position. I have the player id’s hardcoded here.</p>
-<p>This function is needed because “get_players_json” doesn’t control for when there are two Sebastian Aho’s (it just 
-writes over the first one).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>player</strong> – player info</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Player ID for specific Aho</p>
+<dd class="field-even"><p>{team -&gt; players}</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2064,7 +2048,7 @@ Reason why i still use warning for errors is so i can set to ignore them if i wa
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2020, Harry Shomer.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.2.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.3.1.
     </div>
   </body>
 </html>

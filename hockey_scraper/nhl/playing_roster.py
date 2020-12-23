@@ -169,4 +169,5 @@ def scrape_roster(game_id):
         shared.print_error('Error parsing Roster for game {} {}'.format(game_id, e))
         return None
 
+    
     return {'players': players, 'head_coaches': head_coaches}
