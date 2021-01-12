@@ -126,8 +126,7 @@ def scrape_schedule(from_date, to_date, data_format='pandas', rescrape=False, do
         return sched_df
 
 
-def scrape_date_range(from_date, to_date, if_scrape_shifts, data_format='csv', preseason=False, rescrape=False,
-                      docs_dir=False):
+def scrape_date_range(from_date, to_date, if_scrape_shifts, data_format='csv', preseason=False, rescrape=False, docs_dir=False):
     """
     Scrape games in given date range
     

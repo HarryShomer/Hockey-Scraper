@@ -177,7 +177,7 @@ def print_error(msg):
     ansi_red_code = '\033[0;31m'
     warning_msg = "{}Error: {}".format(ansi_red_code, msg)
 
-    warnings.warn(warning_msg)
+    warnings.warn(warning_msg) 
 
 
 def print_warning(msg):
@@ -196,7 +196,6 @@ def print_warning(msg):
     warning_msg = "{}Warning: {}".format(ansi_yellow_code, msg)
 
     warnings.warn(warning_msg)
-
 
 
 def get_season(date):
