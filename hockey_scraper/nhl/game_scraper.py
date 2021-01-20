@@ -59,10 +59,10 @@ def get_players_json(game_json):
 
     for venue in players:
         team_players = game_json['liveData']['boxscore']['teams'][venue]['players']
-        team_name = shared.get_team(game_json['liveData']['boxscore']['teams'][venue]['team']['name'].upper())
+        team_name = shared.get_team(game_json['liveData']['boxscore']['teams'][venue]['team']['name'])
 
         for id_key in team_players: 
-            player_name = shared.fix_name(team_players[id_key]['person']['fullName'].upper())
+            player_name = shared.fix_name(team_players[id_key]['person']['fullName'])
 
             players[venue][player_name] = {
                 "id": team_players[id_key]['person']['id'], 

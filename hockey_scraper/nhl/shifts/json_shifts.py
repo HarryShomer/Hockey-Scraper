@@ -65,7 +65,7 @@ def parse_shift(shift):
     if shift['eventDescription'] is not None:
         return {}
 
-    name = shared.fix_name(' '.join([shift['firstName'].strip(' ').upper(), shift['lastName'].strip(' ').upper()]))
+    name = shared.fix_name(' '.join([shift['firstName'].strip(' '), shift['lastName'].strip(' ')]))
     
     shift_dict['Player'] = name
     shift_dict['Player_Id'] = shift['playerId']

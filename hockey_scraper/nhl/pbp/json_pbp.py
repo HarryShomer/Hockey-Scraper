@@ -41,8 +41,8 @@ def get_teams(pbp_json):
     :return: dict with home and away
     """
     return {
-        'Home': shared.get_team(pbp_json['gameData']['teams']['home']['name'].upper()),
-        'Away': shared.get_team(pbp_json['gameData']['teams']['away']['name'].upper())
+        'Home': shared.get_team(pbp_json['gameData']['teams']['home']['name']),
+        'Away': shared.get_team(pbp_json['gameData']['teams']['away']['name'])
     }
 
 
@@ -100,7 +100,7 @@ def parse_event(event):
 
         for i in range(len(event['players'])):
             if event['players'][i]['playerType'] != 'Goalie':
-                play['p{}_name'.format(i + 1)] = shared.fix_name(event['players'][i]['player']['fullName'].upper())
+                play['p{}_name'.format(i + 1)] = shared.fix_name(event['players'][i]['player']['fullName'])
                 play['p{}_ID'.format(i + 1)] = event['players'][i]['player']['id']
 
         play['xC'] = event['coordinates'].get('x')

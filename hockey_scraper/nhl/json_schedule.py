@@ -118,12 +118,12 @@ def scrape_schedule(date_from, date_to, preseason=False, not_over=False):
 
                     if (game_id >= 20000 or preseason) and game_id < 40000:
                         schedule.append({
-                                "game_id": game['gamePk'], 
+                                 "game_id": game['gamePk'], 
                                  "date": day['date'], 
                                  "start_time": datetime.strptime(game['gameDate'][:-1], "%Y-%m-%dT%H:%M:%S"),
                                  "venue": game['venue'].get('name'),
-                                 "home_team": shared.get_team(game['teams']['home']['team']['name'].upper()),
-                                 "away_team": shared.get_team(game['teams']['away']['team']['name'].upper()),
+                                 "home_team": shared.get_team(game['teams']['home']['team']['name']),
+                                 "away_team": shared.get_team(game['teams']['away']['team']['name']),
                                  "home_score": game['teams']['home'].get("score"),
                                  "away_score": game['teams']['away'].get("score"),
                                  "status": game["status"]["abstractGameState"]

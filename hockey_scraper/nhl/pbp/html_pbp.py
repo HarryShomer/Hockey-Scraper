@@ -683,7 +683,7 @@ def populate_players(event_dict, players, away_players, home_players):
             # Deal with the Home & Away Player Fields
             try:
                 ven_player = home_players[j] if venue == "Home" else away_players[j]
-                name = shared.fix_name(ven_player[0].upper())
+                name = shared.fix_name(ven_player[0])
                 event_dict['{}Player{}'.format(venue.lower(), j + 1)] = name
                 event_dict['{}Player{}_id'.format(venue.lower(), j + 1)] = players[venue][name]['id']
             except KeyError:
