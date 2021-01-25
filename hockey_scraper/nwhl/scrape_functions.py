@@ -4,7 +4,7 @@ Functions to scrape by season, games, and date range
 import random
 import pandas as pd
 
-from . import html_schedule, json_pbp
+#from . import html_schedule, json_pbp
 import hockey_scraper.utils.shared as shared
 
 # All columns for the pbp

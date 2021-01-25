@@ -47,3 +47,4 @@ v1.37
   * Now saves scraped pages in docs_dir as a GZIP
   * Only print full error summary when the number of games scraped is >= 25
   * Remove hardcoded exception for Sebastian Aho. Updated process to work without it.
+  * Always rescrape schedule pages

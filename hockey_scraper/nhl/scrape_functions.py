@@ -194,11 +194,11 @@ def scrape_seasons(seasons, if_scrape_shifts, data_format='csv', preseason=False
         if data_format.lower() == 'csv':
             shared.to_csv(str(season) + str(season + 1), pbp_df, "nhl", "pbp")
             shared.to_csv(str(season) + str(season + 1), shifts_df, "nhl", "shifts")
-        else:
+        elif pbp_df is not None:
             master_pbps.append(pbp_df)
             master_shifts.append(shifts_df)
 
-    if data_format.lower() == 'pandas':
+    if data_format.lower() == 'pandas' and master_pbps:
         if if_scrape_shifts:
             return {"pbp": pd.concat(master_pbps), "shifts": pd.concat(master_shifts)}
         else:

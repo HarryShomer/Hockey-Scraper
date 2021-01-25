@@ -39,7 +39,7 @@ def scrape_dynamic(url):
     return pg
 
 
-def get_schedule(url, name):#
+def get_schedule(url, name):
     """
     Given a url it returns the raw html
 
@@ -50,7 +50,7 @@ def get_schedule(url, name):#
     """
     file_info = {
         "url": url,
-        "name": str(name),
+        "name": str(name) + "_schedule",
         "type": "html_schedule_nwhl",
         "season": "nwhl",
         'dir': shared.docs_dir
@@ -70,7 +70,7 @@ def get_season_codes():
     """
     They use fucked up codes instead of actual years to represent seasons in the url.
 
-    e.g. For 2015 - 'https://www.nwhl.zone/stats#/100/schedule?season_id=246
+    e.g. For 2019 - https://www.nwhl.zone/stats#/100/schedule?all&season_id=1950
 
     Instead of hardcoding it I just ping the base page and get the codes
 
@@ -96,7 +96,9 @@ def get_season_codes():
 
 def parse_game(game, season):
     """
-    Given a soup object for a given game parse out the info
+    Given a soup object for a given game parse out the info.
+
+    Skip over all-star game
 
     :param games: Soup object
     :param season: nwhl season
@@ -107,6 +109,10 @@ def parse_game(game, season):
 
     # Team info
     teams = game.find_all("span", {"class": "team-inline"})
+
+    if "All-Star" in teams[0].text:
+        return parsed_game
+
     parsed_game['away_team'] = teams[0].find("span").text
     parsed_game['home_team'] = teams[1].find("span").text
 
@@ -155,10 +161,9 @@ def get_season_games(season, season_code):
     games = sched.find_all("tr", {"class": re.compile("^ng-scope")})
 
     for game in games:
-        # For 2015 below each game is an additionak <tr> with the attendance
-        # We filter out by checking if the following attribute exists
-        if game.get('ng-if') is None:
-            parsed_games.append(parse_game(game, season))
+        g = parse_game(game, season)
+        if g:
+            parsed_games.append(g)
 
     return parsed_games
 

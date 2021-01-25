@@ -8,6 +8,9 @@ import time
 import hockey_scraper.utils.shared as shared
 
 
+# TODO: Currently rescraping page each time since the status of some games may have changed
+# (e.g. Scraped on 2020-01-20 and game on 2020-01-21 was not Final...when use old page again will still think not Final)
+# Need to find a more elegant way of doing this
 def get_schedule(date_from, date_to):
     """
     Scrapes games in date range
@@ -25,7 +28,7 @@ def get_schedule(date_from, date_to):
         "season": shared.get_season(date_from),
     }
 
-    return json.loads(shared.get_file(page_info))
+    return json.loads(shared.get_file(page_info, force=True))
 
 
 def chunk_schedule_calls(from_date, to_date):
@@ -128,5 +131,6 @@ def scrape_schedule(date_from, date_to, preseason=False, not_over=False):
                                  "away_score": game['teams']['away'].get("score"),
                                  "status": game["status"]["abstractGameState"]
                         })
+
 
     return schedule

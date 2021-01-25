@@ -271,7 +271,7 @@ def add_dir(user_dir):
               "deposited in or recheck the directory you typed in and start again.\n")
 
 
-def get_file(file_info):
+def get_file(file_info, force=False):
     """
     Get the specified file.
 
@@ -280,13 +280,14 @@ def get_file(file_info):
 
     :param file_info: Dictionary containing the info for the file.
                       Contains the url, name, type, and season
+    :param force: Force a rescrape. Default is False
 
     :return: page
     """
     file_info['dir'] = docs_dir
 
     # If everything checks out we'll retrieve it, otherwise we scrape it
-    if docs_dir and sp.check_file_exists(file_info) and not re_scrape:
+    if docs_dir and sp.check_file_exists(file_info) and not re_scrape and not force:
         page = sp.get_page(file_info)
     else:
         page = scrape_page(file_info['url'])
