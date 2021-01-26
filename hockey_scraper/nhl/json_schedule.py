@@ -10,7 +10,7 @@ import hockey_scraper.utils.shared as shared
 
 # TODO: Currently rescraping page each time since the status of some games may have changed
 # (e.g. Scraped on 2020-01-20 and game on 2020-01-21 was not Final...when use old page again will still think not Final)
-# Need to find a more elegant way of doing this
+# Need to find a more elegant way of doing this (Metadata???)
 def get_schedule(date_from, date_to):
     """
     Scrapes games in date range
