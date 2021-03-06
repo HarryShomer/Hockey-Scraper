@@ -5,6 +5,7 @@ tests.py
 notes.txt
 build/
 .pytest_cache
+update_season_data.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

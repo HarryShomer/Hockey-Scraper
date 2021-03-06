@@ -195,7 +195,7 @@ def parse_espn(espn_xml):
 
     try:
         tree = etree.fromstring(espn_xml)
-    except etree.ParseError:
+    except etree.ParseError as e:
         shared.print_error("Espn pbp isn't valid xml, therefore coordinates can't be obtained for this game")
         return pd.DataFrame([], columns=columns)
 

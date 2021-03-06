@@ -538,14 +538,17 @@ def parse_block(description, players, home_team):
     regex = re.compile(r'(.{3})\s+#(\d+)')
     desc = regex.findall(description)  # [[Team, num], [Team, num]]
 
-    p1 = get_player_name(desc[len(desc) - 1][1], players, desc[len(desc) - 1][0], home_team)
-    event_info['p1_name'] = p1['name']
-    event_info['p1_ID'] = p1['id']
+    if len(desc) == 0:
+        event_info['p1_name'] = event_info['p2_name'] = event_info['p1_ID'] = event_info['p2_ID'] = None
+    else:
+        p1 = get_player_name(desc[len(desc) - 1][1], players, desc[len(desc) - 1][0], home_team)
+        event_info['p1_name'] = p1['name']
+        event_info['p1_ID'] = p1['id']
 
-    if len(desc) > 1:
-        p2 = get_player_name(desc[0][1], players, desc[0][0], home_team)
-        event_info['p2_name'] = p2['name']
-        event_info['p2_ID'] = p2['id']
+        if len(desc) > 1:
+            p2 = get_player_name(desc[0][1], players, desc[0][0], home_team)
+            event_info['p2_name'] = p2['name']
+            event_info['p2_ID'] = p2['id']
 
     return event_info
 
@@ -805,8 +808,8 @@ def scrape_pbp(game_html, game_id, players, teams):
     try:
         game_df = parse_html(cleaned_html, players, teams)
     except Exception as e:
-        shared.print_error('Error parsing Html pbp for game {} {}'.format(game_id, e))
-        return None
+       shared.print_error('Error parsing Html pbp for game {} {}'.format(game_id, e))
+       return None
 
     # These sometimes end up as objects
     game_df.Period = game_df.Period.astype(int)

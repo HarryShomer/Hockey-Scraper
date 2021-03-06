@@ -1,32 +1,25 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """
 This file is a bunch of the shared functions or just general stuff used by the different scrapers in the package.
 """
-
 import os
 import time
 import json
+import logging
 import warnings
 import requests
 from datetime import datetime, timedelta
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 from . import save_pages as sp
-
-# Directory where to save pages
-docs_dir = False
-
-# Boolean that tells us whether or not we should re-scrape a given page if it's already saved
-re_scrape = False
+from . import config
+import inspect
 
 # Directory where this file lives
 FILE_DIR = os.path.dirname(os.path.realpath(__file__))
 
-
+# Name and Team fixes used 
 with open(os.path.join(FILE_DIR, "player_name_fixes.json"), "r") as f:
     Names = json.load(f)['fixes']
-
 
 with open(os.path.join(FILE_DIR, "team_tri_codes.json"), "r") as f:
     TEAMS = json.load(f)['teams']
@@ -63,39 +56,73 @@ warnings.formatwarning = custom_formatwarning
 
 def print_error(msg):
     """
-    Implement own custom error using warning module.
+    Implement own custom error using warning module. Prints in red
+
     Reason why i still use warning for errors is so i can set to ignore them if i want to (e.g. live_scrape line 200).
-
-    shared.print_error relies on this function.
-
-    See here for more on ANSI escape codes - https://en.wikipedia.org/wiki/ANSI_escape_code
 
     :param msg: Str to print
 
-    :return: str
+    :return: None
     """
     ansi_red_code = '\033[0;31m'
     warning_msg = "{}Error: {}".format(ansi_red_code, msg)
+
+    # if config.LOG:
+    #     caller_file = os.path.basename(inspect.stack()[1].filename)
+    #     get_logger(caller_file).error(msg + " " + verbose)
 
     warnings.warn(warning_msg) 
 
 
 def print_warning(msg):
     """
-    Implement own custom warning using warning module.
-
-    shared.print_error relies on this function.
-
-    See here for more on ANSI escape codes - https://en.wikipedia.org/wiki/ANSI_escape_code
+    Implement own custom warning using warning module. Prints in Orange.
 
     :param msg: Str to print
 
-    :return: str
+    :return: None
     """
     ansi_yellow_code = '\033[0;33m'
     warning_msg = "{}Warning: {}".format(ansi_yellow_code, msg)
 
     warnings.warn(warning_msg)
+
+
+def get_logger(python_file):
+    """
+    Create a basic logger to a log file
+
+    :param python_file: File that instantiates the logger instance
+    
+    :return: logger 
+    """
+    base_py_file = os.path.basename(python_file)
+
+    # If already exists we don't try to recreate it
+    if base_py_file in logging.Logger.manager.loggerDict.keys():
+        return logging.getLogger(base_py_file)
+
+    logger = logging.getLogger(base_py_file)
+    logger.setLevel(logging.INFO)  
+    
+    fh = logging.FileHandler("hockey_scraper_errors_{}.log".format(datetime.now().strftime("%Y-%m-%dT%H:%M:%S"))) 
+    fh.setFormatter(logging.Formatter('%(asctime)s\t%(name)s\t%(levelname)s\t%(message)s', datefmt='%Y-%m-%d %I:%M:%S'))
+    logger.addHandler(fh)
+
+    return logger
+
+
+def log_error(err, py_file):
+    """
+    Log error when Logging is specified
+
+    :param err: Error to log
+    :param python_file: File that instantiates the logger instance
+
+    :return: None
+    """
+    if config.LOG:
+        get_logger(py_file).error(err)
 
 
 def get_season(date):
@@ -181,6 +208,59 @@ def convert_to_seconds(minutes):
     return timedelta(hours=x.tm_hour, minutes=x.tm_min, seconds=x.tm_sec).total_seconds()
 
 
+def if_rescrape(user_rescrape):
+    """
+    If you want to re_scrape. If someone is a dumbass and feeds it a non-boolean it terminates the program
+
+    Note: Only matters when you have a directory specified
+
+    :param user_rescrape: Boolean
+
+    :return: None
+    """
+    if isinstance(user_rescrape, bool):
+        config.RESCRAPE = user_rescrape
+    else:
+        raise ValueError("Error: 'if_rescrape' must be a boolean. Not a {}".format(type(user_rescrape)))
+
+
+def add_dir(user_dir):
+    """
+    Add directory to store scraped docs if valid. Or create in the home dir
+
+    NOTE: After this functions docs_dir is either None or a valid directory
+
+    :param user_dir: If bool=True create in the home dire or if user provided directory on their machine
+
+    :return: None
+    """
+    # False so they don't want it
+    if not user_dir:
+        config.DOCS_DIR = False
+        return
+
+    # Something was given
+    # Either True or string to directory
+    # If boolean refer to the home directory
+    if isinstance(user_dir, bool):
+        config.DOCS_DIR = os.path.join(os.path.expanduser('~'), "hockey_scraper_data")
+        # Create if needed
+        if not os.path.isdir(config.DOCS_DIR):
+            print_warning("Creating the hockey_scraper_data directory in the home directory")
+            os.mkdir(config.DOCS_DIR)
+    elif isinstance(user_dir, str) and os.path.isdir(user_dir):
+        config.DOCS_DIR = user_dir
+    elif not (isinstance(user_dir, str) and isinstance(user_dir, bool)):
+        config.DOCS_DIR = False
+        print_error("The docs_dir argument provided is invalid")
+    else:
+        config.DOCS_DIR = False
+        print_error("The directory specified for the saving of scraped docs doesn't exist. Therefore:"
+              "\n1. All specified games will be scraped from their appropriate sources (NHL or ESPN)."
+              "\n2. All scraped files will NOT be saved at all. Please either create the directory you want them to be "
+              "deposited in or recheck the directory you typed in and start again.\n")
+
+
 def scrape_page(url):
     """
     Scrape a given url
@@ -214,62 +294,6 @@ def scrape_page(url):
     return page
 
 
-def if_rescrape(user_rescrape):
-    """
-    If you want to re_scrape. If someone is a dumbass and feeds it a non-boolean it terminates the program
-
-    Note: Only matters when you have a directory specified
-
-    :param user_rescrape: Boolean
-
-    :return: None
-    """
-    global re_scrape
-
-    if isinstance(user_rescrape, bool):
-        re_scrape = user_rescrape
-    else:
-        raise ValueError("Error: 'if_rescrape' must be a boolean. Not a {}".format(type(user_rescrape)))
-
-
-def add_dir(user_dir):
-    """
-    Add directory to store scraped docs if valid. Or create in the home dir
-
-    NOTE: After this functions docs_dir is either None or a valid directory
-
-    :param user_dir: If bool=True create in the home dire or if user provided directory on their machine
-
-    :return: None
-    """
-    global docs_dir
-
-    # False so they don't want it
-    if not user_dir:
-        docs_dir = False
-        return
-
-    # Something was given
-    # Either True or string to directory
-    # If boolean refer to the home directory
-    if isinstance(user_dir, bool):
-        docs_dir = os.path.join(os.path.expanduser('~'), "hockey_scraper_data")
-        # Create if needed
-        if not os.path.isdir(docs_dir):
-            print_warning("Creating the hockey_scraper_data directory in the home directory")
-            os.mkdir(docs_dir)
-    elif isinstance(user_dir, str) and os.path.isdir(user_dir):
-        docs_dir = user_dir
-    elif not (isinstance(user_dir, str) and isinstance(user_dir, bool)):
-        docs_dir = False
-        print_error("The docs_dir argument provided is invalid")
-    else:
-        docs_dir = False
-        print_error("The directory specified for the saving of scraped docs doesn't exist. Therefore:"
-              "\n1. All specified games will be scraped from their appropriate sources (NHL or ESPN)."
-              "\n2. All scraped files will NOT be saved at all. Please either create the directory you want them to be "
-              "deposited in or recheck the directory you typed in and start again.\n")
-
 
 def get_file(file_info, force=False):
     """
@@ -284,10 +308,10 @@ def get_file(file_info, force=False):
 
     :return: page
     """
-    file_info['dir'] = docs_dir
+    file_info['dir'] = config.DOCS_DIR
 
     # If everything checks out we'll retrieve it, otherwise we scrape it
-    if docs_dir and sp.check_file_exists(file_info) and not re_scrape and not force:
+    if file_info['dir'] and sp.check_file_exists(file_info) and not config.RESCRAPE and not force:
         page = sp.get_page(file_info)
     else:
         page = scrape_page(file_info['url'])
@@ -338,6 +362,8 @@ def to_csv(base_file_name, df, league, file_type):
 
     :return: None
     """
+    docs_dir = config.DOCS_DIR
+
     # This was a late addition so we add support here
     if isinstance(docs_dir, str) and not os.path.isdir(os.path.join(docs_dir, "csvs")):
         os.mkdir(os.path.join(docs_dir, "csvs"))

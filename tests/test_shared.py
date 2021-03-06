@@ -2,10 +2,9 @@
 
 import os
 import shutil
-
 import pytest
 
-from hockey_scraper.utils import shared
+from hockey_scraper.utils import shared, config
 
 
 @pytest.fixture
@@ -60,20 +59,6 @@ def test_scrape_page(file_info):
     assert len(file) > 0
 
 
-def test_add_dir():
-    """ Test if this function correctly tells if a directory exists on the machine"""
-
-    # Check when it does exist (will always be good for this file)
-    user_dir = os.path.dirname(os.path.realpath(__file__))
-    shared.add_dir(user_dir)
-    assert shared.docs_dir is not None
-
-    # Checks when it doesn't exist
-    user_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "hopefully_this_path_doesnt_exist")
-    shared.add_dir(user_dir)
-    assert shared.docs_dir is False
-
-
 def test_get_file(file_info):
     """ Test getting the file...it's either scraped or loaded from a file """
     original_path = os.getcwd()
@@ -97,3 +82,17 @@ def test_get_file(file_info):
     shutil.rmtree("docs")
     shutil.rmtree("csvs")
     os.chdir(original_path)
+
+
+def test_add_dir():
+    """ Test if this function correctly tells if a directory exists on the machine"""
+
+    # Check when it does exist (will always be good for this file)
+    user_dir = os.path.dirname(os.path.realpath(__file__))
+    shared.add_dir(user_dir)
+    assert config.DOCS_DIR is not None
+
+    # Checks when it doesn't exist
+    user_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "hopefully_this_path_doesnt_exist")
+    shared.add_dir(user_dir)
+    assert config.DOCS_DIR is False

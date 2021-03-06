@@ -41,6 +41,8 @@ def create_dir_structure(dir_name):
     Create the basic directory structure for docs_dir if not done yet.
     Creates the docs and csvs subdir if it doesn't exist
 
+    :param dir_name: Name of dir to create
+
     :return None
     """
     if not os.path.isdir(os.path.join(dir_name, 'docs')):
