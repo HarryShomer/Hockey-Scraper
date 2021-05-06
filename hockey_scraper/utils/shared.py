@@ -18,10 +18,10 @@ import inspect
 FILE_DIR = os.path.dirname(os.path.realpath(__file__))
 
 # Name and Team fixes used 
-with open(os.path.join(FILE_DIR, "player_name_fixes.json"), "r") as f:
+with open(os.path.join(FILE_DIR, "player_name_fixes.json"), "r" ,encoding="utf-8") as f:
     Names = json.load(f)['fixes']
 
-with open(os.path.join(FILE_DIR, "team_tri_codes.json"), "r") as f:
+with open(os.path.join(FILE_DIR, "team_tri_codes.json"), "r" ,encoding="utf-8") as f:
     TEAMS = json.load(f)['teams']
 
 
