@@ -14,12 +14,16 @@ def print_errors(detailed=True):
     """
     Print errors with scraping.
 
+    Detailed parameter controls if certain errors should be *re-printed* after scraping all games.
+    For example if the pbp for a game is broken it's always printed immediately after that game.
+    But a summary of broken games will be printed if over 25 games are scraped. The logic is that
+    it'll be easier when you've scraped a lot of games to see all the errors at the end than scrolling
+    though all the output and potentially missing it.
+
     :param detailed: When False only print player IDs otherwise all
     
     :return: None
     """
-    global errors
-
     print("")
 
     if game_scraper.broken_pbp_games and detailed:

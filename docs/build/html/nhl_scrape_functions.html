@@ -6,13 +6,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NHL Scraping Functions &#8212; hockey_scraper 1.37.3 documentation</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/nature.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Live Scraping" href="live_scrape.html" />
@@ -145,9 +144,14 @@ but otherwise it will scrape as if no directory was provided.</p>
 <span id="scrape-functions"></span><h3>Scrape Functions<a class="headerlink" href="#module-hockey_scraper.nhl.scrape_functions" title="Permalink to this headline">¶</a></h3>
 <p>Functions to scrape by season, games, and date range</p>
 <dl class="py function">
-<dt id="hockey_scraper.nhl.scrape_functions.print_errors">
-<code class="sig-prename descclassname">hockey_scraper.nhl.scrape_functions.</code><code class="sig-name descname">print_errors</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">detailed</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.scrape_functions.print_errors" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.scrape_functions.print_errors">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.scrape_functions.</span></span><span class="sig-name descname"><span class="pre">print_errors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">detailed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.scrape_functions.print_errors" title="Permalink to this definition">¶</a></dt>
 <dd><p>Print errors with scraping.</p>
+<p>Detailed parameter controls if certain errors should be <em>re-printed</em> after scraping all games.
+For example if the pbp for a game is broken it’s always printed immediately after that game.
+But a summary of broken games will be printed if over 25 games are scraped. The logic is that
+it’ll be easier when you’ve scraped a lot of games to see all the errors at the end than scrolling
+though all the output and potentially missing it.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>detailed</strong> – When False only print player IDs otherwise all</p>
@@ -159,8 +163,8 @@ but otherwise it will scrape as if no directory was provided.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.scrape_functions.scrape_date_range">
-<code class="sig-prename descclassname">hockey_scraper.nhl.scrape_functions.</code><code class="sig-name descname">scrape_date_range</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">from_date</span></em>, <em class="sig-param"><span class="n">to_date</span></em>, <em class="sig-param"><span class="n">if_scrape_shifts</span></em>, <em class="sig-param"><span class="n">data_format</span><span class="o">=</span><span class="default_value">'csv'</span></em>, <em class="sig-param"><span class="n">preseason</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">rescrape</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">docs_dir</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.scrape_functions.scrape_date_range" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.scrape_functions.scrape_date_range">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.scrape_functions.</span></span><span class="sig-name descname"><span class="pre">scrape_date_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">from_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">if_scrape_shifts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'csv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preseason</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rescrape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">docs_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.scrape_functions.scrape_date_range" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape games in given date range</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -185,8 +189,8 @@ it won’t work (I won’t make it for you). When False the files won’t be sav
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.scrape_functions.scrape_games">
-<code class="sig-prename descclassname">hockey_scraper.nhl.scrape_functions.</code><code class="sig-name descname">scrape_games</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">games</span></em>, <em class="sig-param"><span class="n">if_scrape_shifts</span></em>, <em class="sig-param"><span class="n">data_format</span><span class="o">=</span><span class="default_value">'csv'</span></em>, <em class="sig-param"><span class="n">rescrape</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">docs_dir</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.scrape_functions.scrape_games" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.scrape_functions.scrape_games">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.scrape_functions.</span></span><span class="sig-name descname"><span class="pre">scrape_games</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">games</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">if_scrape_shifts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'csv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rescrape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">docs_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.scrape_functions.scrape_games" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape a list of games</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -208,8 +212,8 @@ it won’t work (I won’t make it for you). When False the files won’t be sav
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.scrape_functions.scrape_list_of_games">
-<code class="sig-prename descclassname">hockey_scraper.nhl.scrape_functions.</code><code class="sig-name descname">scrape_list_of_games</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">games</span></em>, <em class="sig-param"><span class="n">if_scrape_shifts</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.scrape_functions.scrape_list_of_games" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.scrape_functions.scrape_list_of_games">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.scrape_functions.</span></span><span class="sig-name descname"><span class="pre">scrape_list_of_games</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">games</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">if_scrape_shifts</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.scrape_functions.scrape_list_of_games" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a list of game_id’s (and a date for each game) it scrapes them</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -225,8 +229,8 @@ it won’t work (I won’t make it for you). When False the files won’t be sav
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.scrape_functions.scrape_schedule">
-<code class="sig-prename descclassname">hockey_scraper.nhl.scrape_functions.</code><code class="sig-name descname">scrape_schedule</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">from_date</span></em>, <em class="sig-param"><span class="n">to_date</span></em>, <em class="sig-param"><span class="n">data_format</span><span class="o">=</span><span class="default_value">'pandas'</span></em>, <em class="sig-param"><span class="n">rescrape</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">docs_dir</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.scrape_functions.scrape_schedule" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.scrape_functions.scrape_schedule">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.scrape_functions.</span></span><span class="sig-name descname"><span class="pre">scrape_schedule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">from_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'pandas'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rescrape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">docs_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.scrape_functions.scrape_schedule" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape the games schedule in a given range.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -248,8 +252,8 @@ it won’t work (I won’t make it for you). When False the files won’t be sav
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.scrape_functions.scrape_seasons">
-<code class="sig-prename descclassname">hockey_scraper.nhl.scrape_functions.</code><code class="sig-name descname">scrape_seasons</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">seasons</span></em>, <em class="sig-param"><span class="n">if_scrape_shifts</span></em>, <em class="sig-param"><span class="n">data_format</span><span class="o">=</span><span class="default_value">'csv'</span></em>, <em class="sig-param"><span class="n">preseason</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">rescrape</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">docs_dir</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.scrape_functions.scrape_seasons" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.scrape_functions.scrape_seasons">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.scrape_functions.</span></span><span class="sig-name descname"><span class="pre">scrape_seasons</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seasons</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">if_scrape_shifts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'csv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preseason</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rescrape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">docs_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.scrape_functions.scrape_seasons" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given list of seasons it scrapes all the seasons</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -277,8 +281,8 @@ it won’t work (I won’t make it for you). When False the files won’t be sav
 <span id="game-scraper"></span><h3>Game Scraper<a class="headerlink" href="#module-hockey_scraper.nhl.game_scraper" title="Permalink to this headline">¶</a></h3>
 <p>This module contains code to scrape data for a single game</p>
 <dl class="py function">
-<dt id="hockey_scraper.nhl.game_scraper.check_goalie">
-<code class="sig-prename descclassname">hockey_scraper.nhl.game_scraper.</code><code class="sig-name descname">check_goalie</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">row</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.game_scraper.check_goalie" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.game_scraper.check_goalie">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.game_scraper.</span></span><span class="sig-name descname"><span class="pre">check_goalie</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">row</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.game_scraper.check_goalie" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks for bad goalie names (you can tell by them having no player id)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -291,8 +295,8 @@ it won’t work (I won’t make it for you). When False the files won’t be sav
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.game_scraper.combine_espn_html_pbp">
-<code class="sig-prename descclassname">hockey_scraper.nhl.game_scraper.</code><code class="sig-name descname">combine_espn_html_pbp</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">html_df</span></em>, <em class="sig-param"><span class="n">espn_df</span></em>, <em class="sig-param"><span class="n">game_id</span></em>, <em class="sig-param"><span class="n">date</span></em>, <em class="sig-param"><span class="n">away_team</span></em>, <em class="sig-param"><span class="n">home_team</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.game_scraper.combine_espn_html_pbp" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.game_scraper.combine_espn_html_pbp">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.game_scraper.</span></span><span class="sig-name descname"><span class="pre">combine_espn_html_pbp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">html_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">espn_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">game_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">away_team</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">home_team</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.game_scraper.combine_espn_html_pbp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Merge the coordinate from the espn feed into the html DataFrame</p>
 <p>Can’t join here on event_id because the plays are often out of order and pre-2009 are often missing events.</p>
 <dl class="field-list simple">
@@ -313,8 +317,8 @@ it won’t work (I won’t make it for you). When False the files won’t be sav
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.game_scraper.combine_html_json_pbp">
-<code class="sig-prename descclassname">hockey_scraper.nhl.game_scraper.</code><code class="sig-name descname">combine_html_json_pbp</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">json_df</span></em>, <em class="sig-param"><span class="n">html_df</span></em>, <em class="sig-param"><span class="n">game_id</span></em>, <em class="sig-param"><span class="n">date</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.game_scraper.combine_html_json_pbp" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.game_scraper.combine_html_json_pbp">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.game_scraper.</span></span><span class="sig-name descname"><span class="pre">combine_html_json_pbp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">html_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">game_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.game_scraper.combine_html_json_pbp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Join both data sources. First try merging on event id (which is the DataFrame index) if both DataFrames have the
 same number of rows. If they don’t have the same number of rows, merge on: Period’, Event, Seconds_Elapsed, p1_ID.</p>
 <dl class="field-list simple">
@@ -333,8 +337,8 @@ same number of rows. If they don’t have the same number of rows, merge on: Per
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.game_scraper.combine_players_lists">
-<code class="sig-prename descclassname">hockey_scraper.nhl.game_scraper.</code><code class="sig-name descname">combine_players_lists</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">json_players</span></em>, <em class="sig-param"><span class="n">roster_players</span></em>, <em class="sig-param"><span class="n">game_id</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.game_scraper.combine_players_lists" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.game_scraper.combine_players_lists">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.game_scraper.</span></span><span class="sig-name descname"><span class="pre">combine_players_lists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_players</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">roster_players</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">game_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.game_scraper.combine_players_lists" title="Permalink to this definition">¶</a></dt>
 <dd><p>Combine the json list of players (which contains id’s) with the list in the roster html</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -351,8 +355,8 @@ same number of rows. If they don’t have the same number of rows, merge on: Per
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.game_scraper.get_players_json">
-<code class="sig-prename descclassname">hockey_scraper.nhl.game_scraper.</code><code class="sig-name descname">get_players_json</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">game_json</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.game_scraper.get_players_json" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.game_scraper.get_players_json">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.game_scraper.</span></span><span class="sig-name descname"><span class="pre">get_players_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game_json</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.game_scraper.get_players_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return dict of players for that game by team</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -365,8 +369,8 @@ same number of rows. If they don’t have the same number of rows, merge on: Per
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.game_scraper.get_teams_and_players">
-<code class="sig-prename descclassname">hockey_scraper.nhl.game_scraper.</code><code class="sig-name descname">get_teams_and_players</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">game_json</span></em>, <em class="sig-param"><span class="n">roster</span></em>, <em class="sig-param"><span class="n">game_id</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.game_scraper.get_teams_and_players" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.game_scraper.get_teams_and_players">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.game_scraper.</span></span><span class="sig-name descname"><span class="pre">get_teams_and_players</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game_json</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">roster</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">game_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.game_scraper.get_teams_and_players" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get list of players and teams for game</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -383,8 +387,8 @@ same number of rows. If they don’t have the same number of rows, merge on: Per
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.game_scraper.scrape_game">
-<code class="sig-prename descclassname">hockey_scraper.nhl.game_scraper.</code><code class="sig-name descname">scrape_game</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">game_id</span></em>, <em class="sig-param"><span class="n">date</span></em>, <em class="sig-param"><span class="n">if_scrape_shifts</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.game_scraper.scrape_game" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.game_scraper.scrape_game">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.game_scraper.</span></span><span class="sig-name descname"><span class="pre">scrape_game</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">if_scrape_shifts</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.game_scraper.scrape_game" title="Permalink to this definition">¶</a></dt>
 <dd><p>This scrapes the info for the game.
 The pbp is automatically scraped, and the whether or not to scrape the shifts is left up to the user.</p>
 <dl class="field-list simple">
@@ -403,8 +407,8 @@ The pbp is automatically scraped, and the whether or not to scrape the shifts is
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.game_scraper.scrape_pbp">
-<code class="sig-prename descclassname">hockey_scraper.nhl.game_scraper.</code><code class="sig-name descname">scrape_pbp</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">game_id</span></em>, <em class="sig-param"><span class="n">date</span></em>, <em class="sig-param"><span class="n">roster</span></em>, <em class="sig-param"><span class="n">game_json</span></em>, <em class="sig-param"><span class="n">players</span></em>, <em class="sig-param"><span class="n">teams</span></em>, <em class="sig-param"><span class="n">espn_id</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">html_df</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.game_scraper.scrape_pbp" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.game_scraper.scrape_pbp">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.game_scraper.</span></span><span class="sig-name descname"><span class="pre">scrape_pbp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">roster</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">game_json</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">players</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">teams</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">espn_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">html_df</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.game_scraper.scrape_pbp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape the Pbp info. The HTML is always scraped.</p>
 <p>The Json is parse whe season &gt;= 2010 and there are plays. Otherwise ESPN is gotten to supplement
 the HTML with coordinate.</p>
@@ -430,8 +434,8 @@ the live game scraping class.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.game_scraper.scrape_pbp_live">
-<code class="sig-prename descclassname">hockey_scraper.nhl.game_scraper.</code><code class="sig-name descname">scrape_pbp_live</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">game_id</span></em>, <em class="sig-param"><span class="n">date</span></em>, <em class="sig-param"><span class="n">roster</span></em>, <em class="sig-param"><span class="n">game_json</span></em>, <em class="sig-param"><span class="n">players</span></em>, <em class="sig-param"><span class="n">teams</span></em>, <em class="sig-param"><span class="n">espn_id</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.game_scraper.scrape_pbp_live" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.game_scraper.scrape_pbp_live">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.game_scraper.</span></span><span class="sig-name descname"><span class="pre">scrape_pbp_live</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">roster</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">game_json</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">players</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">teams</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">espn_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.game_scraper.scrape_pbp_live" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wrapper for scraping the live pbp</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -452,8 +456,8 @@ the live game scraping class.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.game_scraper.scrape_shifts">
-<code class="sig-prename descclassname">hockey_scraper.nhl.game_scraper.</code><code class="sig-name descname">scrape_shifts</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">game_id</span></em>, <em class="sig-param"><span class="n">players</span></em>, <em class="sig-param"><span class="n">date</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.game_scraper.scrape_shifts" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.game_scraper.scrape_shifts">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.game_scraper.</span></span><span class="sig-name descname"><span class="pre">scrape_shifts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">players</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.game_scraper.scrape_shifts" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape the Shift charts (or TOI tables)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -474,8 +478,8 @@ the live game scraping class.</p>
 <span id="html-pbp"></span><h3>Html PBP<a class="headerlink" href="#module-hockey_scraper.nhl.pbp.html_pbp" title="Permalink to this headline">¶</a></h3>
 <p>This module contains functions to scrape the Html Play by Play for any given game</p>
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.html_pbp.add_event_players">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="sig-name descname">add_event_players</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">event_dict</span></em>, <em class="sig-param"><span class="n">event</span></em>, <em class="sig-param"><span class="n">players</span></em>, <em class="sig-param"><span class="n">home_team</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.add_event_players" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.html_pbp.add_event_players">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">add_event_players</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">players</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">home_team</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.add_event_players" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add players involved in the event to event_dict</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -493,8 +497,8 @@ the live game scraping class.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.html_pbp.add_event_team">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="sig-name descname">add_event_team</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">event_dict</span></em>, <em class="sig-param"><span class="n">event</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.add_event_team" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.html_pbp.add_event_team">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">add_event_team</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.add_event_team" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add event team for event</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -510,8 +514,8 @@ the live game scraping class.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.html_pbp.add_home_zone">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="sig-name descname">add_home_zone</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">event_dict</span></em>, <em class="sig-param"><span class="n">home_team</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.add_home_zone" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.html_pbp.add_home_zone">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">add_home_zone</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">home_team</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.add_home_zone" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determines the zone relative to the home team and add it to event.</p>
 <p>Keep in mind that the ‘ev_zone’ recorded is the zone relative to the event team. And for blocks the NHL counts
 the ev_team as the blocking team (I like counting the shooting team for blocks). Therefore, when it’s the home team
@@ -530,8 +534,8 @@ the zone only gets flipped when it’s a block. For away teams it’s the opposi
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.html_pbp.add_period">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="sig-name descname">add_period</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">event_dict</span></em>, <em class="sig-param"><span class="n">event</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.add_period" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.html_pbp.add_period">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">add_period</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.add_period" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add period for event</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -547,8 +551,8 @@ the zone only gets flipped when it’s a block. For away teams it’s the opposi
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.html_pbp.add_score">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="sig-name descname">add_score</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">event_dict</span></em>, <em class="sig-param"><span class="n">event</span></em>, <em class="sig-param"><span class="n">current_score</span></em>, <em class="sig-param"><span class="n">home_team</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.add_score" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.html_pbp.add_score">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">add_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_score</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">home_team</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.add_score" title="Permalink to this definition">¶</a></dt>
 <dd><p>Change if someone scored…also change current score</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -566,8 +570,8 @@ the zone only gets flipped when it’s a block. For away teams it’s the opposi
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.html_pbp.add_strength">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="sig-name descname">add_strength</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">event_dict</span></em>, <em class="sig-param"><span class="n">home_players</span></em>, <em class="sig-param"><span class="n">away_players</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.add_strength" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.html_pbp.add_strength">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">add_strength</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">home_players</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">away_players</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.add_strength" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get strength for event -&gt; It’s home then away</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -584,8 +588,8 @@ the zone only gets flipped when it’s a block. For away teams it’s the opposi
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.html_pbp.add_time">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="sig-name descname">add_time</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">event_dict</span></em>, <em class="sig-param"><span class="n">event</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.add_time" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.html_pbp.add_time">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">add_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.add_time" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fill in time and seconds elapsed</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -601,8 +605,8 @@ the zone only gets flipped when it’s a block. For away teams it’s the opposi
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.html_pbp.add_type">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="sig-name descname">add_type</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">event_dict</span></em>, <em class="sig-param"><span class="n">event</span></em>, <em class="sig-param"><span class="n">players</span></em>, <em class="sig-param"><span class="n">home_team</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.add_type" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.html_pbp.add_type">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">add_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">players</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">home_team</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.add_type" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add “type” for event -&gt; either a penalty or a shot type</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -620,8 +624,8 @@ the zone only gets flipped when it’s a block. For away teams it’s the opposi
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.html_pbp.add_zone">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="sig-name descname">add_zone</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">event_dict</span></em>, <em class="sig-param"><span class="n">play_description</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.add_zone" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.html_pbp.add_zone">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">add_zone</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">play_description</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.add_zone" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determine which zone the play occurred in (unless one isn’t listed) and add it to dict</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -637,8 +641,8 @@ the zone only gets flipped when it’s a block. For away teams it’s the opposi
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.html_pbp.clean_html_pbp">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="sig-name descname">clean_html_pbp</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">html</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.clean_html_pbp" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.html_pbp.clean_html_pbp">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">clean_html_pbp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">html</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.clean_html_pbp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get rid of html and format the data</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -651,8 +655,8 @@ the zone only gets flipped when it’s a block. For away teams it’s the opposi
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.html_pbp.cur_game_status">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="sig-name descname">cur_game_status</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">doc</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.cur_game_status" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.html_pbp.cur_game_status">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">cur_game_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">doc</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.cur_game_status" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the game status</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -665,8 +669,8 @@ the zone only gets flipped when it’s a block. For away teams it’s the opposi
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.html_pbp.get_contents">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="sig-name descname">get_contents</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">game_html</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.get_contents" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.html_pbp.get_contents">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">get_contents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game_html</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.get_contents" title="Permalink to this definition">¶</a></dt>
 <dd><p>Uses Beautiful soup to parses the html document.
 Some parsers work for some pages but don’t work for others….I’m not sure why so I just try them all here in order</p>
 <dl class="field-list simple">
@@ -680,8 +684,8 @@ Some parsers work for some pages but don’t work for others….I’m not sure w
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.html_pbp.get_pbp">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="sig-name descname">get_pbp</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">game_id</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.get_pbp" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.html_pbp.get_pbp">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">get_pbp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.get_pbp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a game_id it returns the raw html
 Ex: <a class="reference external" href="http://www.nhl.com/scores/htmlreports/20162017/PL020475.HTM">http://www.nhl.com/scores/htmlreports/20162017/PL020475.HTM</a></p>
 <dl class="field-list simple">
@@ -695,8 +699,8 @@ Ex: <a class="reference external" href="http://www.nhl.com/scores/htmlreports/20
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.html_pbp.get_penalty">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="sig-name descname">get_penalty</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">play_description</span></em>, <em class="sig-param"><span class="n">players</span></em>, <em class="sig-param"><span class="n">home_team</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.get_penalty" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.html_pbp.get_penalty">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">get_penalty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">play_description</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">players</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">home_team</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.get_penalty" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the penalty info</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -713,8 +717,8 @@ Ex: <a class="reference external" href="http://www.nhl.com/scores/htmlreports/20
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.html_pbp.get_player_name">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="sig-name descname">get_player_name</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">number</span></em>, <em class="sig-param"><span class="n">players</span></em>, <em class="sig-param"><span class="n">team</span></em>, <em class="sig-param"><span class="n">home_team</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.get_player_name" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.html_pbp.get_player_name">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">get_player_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">players</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">team</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">home_team</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.get_player_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function is used for the description field in the html. Given a last name and a number it return the player’s 
 full name and id. Done by searching in players for the team until we find him (then just break)</p>
 <dl class="field-list simple">
@@ -733,8 +737,8 @@ full name and id. Done by searching in players for the team until we find him (t
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.html_pbp.if_valid_event">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="sig-name descname">if_valid_event</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">event</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.if_valid_event" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.html_pbp.if_valid_event">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">if_valid_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.if_valid_event" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks if it’s a valid event (‘#’ is meaningless and I don’t like those other one’s) to parse</p>
 <p>Don’t remember what ‘GOFF’ is but ‘EGT’ is for emergency goaltender. The reason I get rid of it is because it’s not
 in the json and there’s another ‘EGPID’ that can be found in both (not sure why ‘EGT’ exists then).</p>
@@ -751,8 +755,8 @@ idea why.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.html_pbp.parse_block">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="sig-name descname">parse_block</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">description</span></em>, <em class="sig-param"><span class="n">players</span></em>, <em class="sig-param"><span class="n">home_team</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.parse_block" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.html_pbp.parse_block">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">parse_block</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">description</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">players</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">home_team</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.parse_block" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse the description field for a BLOCK</p>
 <p>MTL #76 SUBBAN BLOCKED BY TOR #2 SCHENN, Wrist, Def. Zone</p>
 <dl class="field-list simple">
@@ -770,8 +774,8 @@ idea why.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.html_pbp.parse_event">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="sig-name descname">parse_event</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">event</span></em>, <em class="sig-param"><span class="n">players</span></em>, <em class="sig-param"><span class="n">home_team</span></em>, <em class="sig-param"><span class="n">current_score</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.parse_event" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.html_pbp.parse_event">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">parse_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">players</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">home_team</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_score</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.parse_event" title="Permalink to this definition">¶</a></dt>
 <dd><p>Receives an event and parses it</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -789,8 +793,8 @@ idea why.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.html_pbp.parse_fac">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="sig-name descname">parse_fac</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">description</span></em>, <em class="sig-param"><span class="n">players</span></em>, <em class="sig-param"><span class="n">ev_team</span></em>, <em class="sig-param"><span class="n">home_team</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.parse_fac" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.html_pbp.parse_fac">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">parse_fac</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">description</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">players</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ev_team</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">home_team</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.parse_fac" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse the description field for a face-off
 MTL won Neu. Zone - MTL #11 GOMEZ vs TOR #37 BRENT</p>
 <dl class="field-list simple">
@@ -809,8 +813,8 @@ MTL won Neu. Zone - MTL #11 GOMEZ vs TOR #37 BRENT</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.html_pbp.parse_goal">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="sig-name descname">parse_goal</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">description</span></em>, <em class="sig-param"><span class="n">players</span></em>, <em class="sig-param"><span class="n">ev_team</span></em>, <em class="sig-param"><span class="n">home_team</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.parse_goal" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.html_pbp.parse_goal">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">parse_goal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">description</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">players</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ev_team</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">home_team</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.parse_goal" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse the description field for a GOAL</p>
 <p>TOR #81 KESSEL(1), Wrist, Off. Zone, 14 ft. Assists: #42 BOZAK(1); #8 KOMISAREK(1)</p>
 <dl class="field-list simple">
@@ -829,8 +833,8 @@ MTL won Neu. Zone - MTL #11 GOMEZ vs TOR #37 BRENT</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.html_pbp.parse_hit">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="sig-name descname">parse_hit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">description</span></em>, <em class="sig-param"><span class="n">players</span></em>, <em class="sig-param"><span class="n">home_team</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.parse_hit" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.html_pbp.parse_hit">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">parse_hit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">description</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">players</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">home_team</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.parse_hit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse the description field for a HIT</p>
 <p>MTL #20 O’BYRNE HIT TOR #18 BROWN, Def. Zone</p>
 <dl class="field-list simple">
@@ -848,8 +852,8 @@ MTL won Neu. Zone - MTL #11 GOMEZ vs TOR #37 BRENT</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.html_pbp.parse_html">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="sig-name descname">parse_html</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">html</span></em>, <em class="sig-param"><span class="n">players</span></em>, <em class="sig-param"><span class="n">teams</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.parse_html" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.html_pbp.parse_html">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">parse_html</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">html</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">players</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">teams</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.parse_html" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse html game pbp</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -866,8 +870,8 @@ MTL won Neu. Zone - MTL #11 GOMEZ vs TOR #37 BRENT</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.html_pbp.parse_penalty">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="sig-name descname">parse_penalty</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">description</span></em>, <em class="sig-param"><span class="n">players</span></em>, <em class="sig-param"><span class="n">home_team</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.parse_penalty" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.html_pbp.parse_penalty">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">parse_penalty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">description</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">players</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">home_team</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.parse_penalty" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse the description field for a Penalty</p>
 <p>MTL #81 ELLER Hooking(2 min), Def. Zone Drawn By: TOR #11 SJOSTROM</p>
 <dl class="field-list simple">
@@ -885,8 +889,8 @@ MTL won Neu. Zone - MTL #11 GOMEZ vs TOR #37 BRENT</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.html_pbp.parse_shot_miss_take_give">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="sig-name descname">parse_shot_miss_take_give</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">description</span></em>, <em class="sig-param"><span class="n">players</span></em>, <em class="sig-param"><span class="n">ev_team</span></em>, <em class="sig-param"><span class="n">home_team</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.parse_shot_miss_take_give" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.html_pbp.parse_shot_miss_take_give">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">parse_shot_miss_take_give</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">description</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">players</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ev_team</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">home_team</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.parse_shot_miss_take_give" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse the description field for a: SHOT, MISS, TAKE, GIVE</p>
 <p>MTL ONGOAL - #81 ELLER, Wrist, Off. Zone, 11 ft.
 ANA #23 BEAUCHEMIN, Slap, Wide of Net, Off. Zone, 42 ft.
@@ -908,8 +912,8 @@ TOR TAKEAWAY - #9 ARMSTRONG, Off. Zone</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.html_pbp.populate_players">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="sig-name descname">populate_players</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">event_dict</span></em>, <em class="sig-param"><span class="n">players</span></em>, <em class="sig-param"><span class="n">away_players</span></em>, <em class="sig-param"><span class="n">home_players</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.populate_players" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.html_pbp.populate_players">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">populate_players</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">players</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">away_players</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">home_players</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.populate_players" title="Permalink to this definition">¶</a></dt>
 <dd><p>Populate away and home player info (and num skaters on each side).</p>
 <dl class="simple">
 <dt>These include:</dt><dd><ol class="arabic simple">
@@ -934,8 +938,8 @@ TOR TAKEAWAY - #9 ARMSTRONG, Off. Zone</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.html_pbp.return_name_html">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="sig-name descname">return_name_html</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">info</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.return_name_html" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.html_pbp.return_name_html">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">return_name_html</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.return_name_html" title="Permalink to this definition">¶</a></dt>
 <dd><p>In the PBP html the name is in a format like: ‘Center - MIKE RICHARDS’
 Some also have a hyphen in their last name so can’t just split by ‘-‘</p>
 <dl class="field-list simple">
@@ -949,8 +953,8 @@ Some also have a hyphen in their last name so can’t just split by ‘-‘</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.html_pbp.scrape_game">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="sig-name descname">scrape_game</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">game_id</span></em>, <em class="sig-param"><span class="n">players</span></em>, <em class="sig-param"><span class="n">teams</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.scrape_game" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.html_pbp.scrape_game">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">scrape_game</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">players</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">teams</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.scrape_game" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape the data for the game when not live</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -967,8 +971,8 @@ Some also have a hyphen in their last name so can’t just split by ‘-‘</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.html_pbp.scrape_game_live">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="sig-name descname">scrape_game_live</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">game_id</span></em>, <em class="sig-param"><span class="n">players</span></em>, <em class="sig-param"><span class="n">teams</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.scrape_game_live" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.html_pbp.scrape_game_live">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">scrape_game_live</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">players</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">teams</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.scrape_game_live" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape the data for the game when it’s live</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -985,8 +989,8 @@ Some also have a hyphen in their last name so can’t just split by ‘-‘</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.html_pbp.scrape_pbp">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="sig-name descname">scrape_pbp</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">game_html</span></em>, <em class="sig-param"><span class="n">game_id</span></em>, <em class="sig-param"><span class="n">players</span></em>, <em class="sig-param"><span class="n">teams</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.scrape_pbp" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.html_pbp.scrape_pbp">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">scrape_pbp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game_html</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">game_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">players</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">teams</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.scrape_pbp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape the data for the pbp</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1004,8 +1008,8 @@ Some also have a hyphen in their last name so can’t just split by ‘-‘</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.html_pbp.shot_type">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="sig-name descname">shot_type</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">play_description</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.shot_type" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.html_pbp.shot_type">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">shot_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">play_description</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.shot_type" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determine which zone the play occurred in (unless one isn’t listed)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1018,9 +1022,9 @@ Some also have a hyphen in their last name so can’t just split by ‘-‘</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.html_pbp.strip_html_pbp">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.html_pbp.</code><code class="sig-name descname">strip_html_pbp</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">td</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.strip_html_pbp" title="Permalink to this definition">¶</a></dt>
-<dd><p>Strip html tags and such</p>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.html_pbp.strip_html_pbp">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">strip_html_pbp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">td</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.strip_html_pbp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Strip html tags and such. (Note to Self: Don’t touch this!!!)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>td</strong> – pbp</p>
@@ -1036,8 +1040,8 @@ Some also have a hyphen in their last name so can’t just split by ‘-‘</p>
 <span id="json-pbp"></span><h3>Json PBP<a class="headerlink" href="#module-hockey_scraper.nhl.pbp.json_pbp" title="Permalink to this headline">¶</a></h3>
 <p>This module contains functions to scrape the Json Play by Play for any given game</p>
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.json_pbp.change_event_name">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.json_pbp.</code><code class="sig-name descname">change_event_name</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">event</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.json_pbp.change_event_name" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.json_pbp.change_event_name">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.json_pbp.</span></span><span class="sig-name descname"><span class="pre">change_event_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.json_pbp.change_event_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Change event names from json style to html (ex: BLOCKED_SHOT to BLOCK).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1050,8 +1054,8 @@ Some also have a hyphen in their last name so can’t just split by ‘-‘</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.json_pbp.get_pbp">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.json_pbp.</code><code class="sig-name descname">get_pbp</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">game_id</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.json_pbp.get_pbp" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.json_pbp.get_pbp">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.json_pbp.</span></span><span class="sig-name descname"><span class="pre">get_pbp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.json_pbp.get_pbp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a game_id it returns the raw json
 Ex: <a class="reference external" href="http://statsapi.web.nhl.com/api/v1/game/2016020475/feed/live">http://statsapi.web.nhl.com/api/v1/game/2016020475/feed/live</a></p>
 <dl class="field-list simple">
@@ -1065,8 +1069,8 @@ Ex: <a class="reference external" href="http://statsapi.web.nhl.com/api/v1/game/
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.json_pbp.get_teams">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.json_pbp.</code><code class="sig-name descname">get_teams</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pbp_json</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.json_pbp.get_teams" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.json_pbp.get_teams">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.json_pbp.</span></span><span class="sig-name descname"><span class="pre">get_teams</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pbp_json</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.json_pbp.get_teams" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get teams</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1079,8 +1083,8 @@ Ex: <a class="reference external" href="http://statsapi.web.nhl.com/api/v1/game/
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.json_pbp.parse_event">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.json_pbp.</code><code class="sig-name descname">parse_event</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">event</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.json_pbp.parse_event" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.json_pbp.parse_event">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.json_pbp.</span></span><span class="sig-name descname"><span class="pre">parse_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.json_pbp.parse_event" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parses a single event when the info is in a json format</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1093,8 +1097,8 @@ Ex: <a class="reference external" href="http://statsapi.web.nhl.com/api/v1/game/
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.json_pbp.parse_json">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.json_pbp.</code><code class="sig-name descname">parse_json</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">game_json</span></em>, <em class="sig-param"><span class="n">game_id</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.json_pbp.parse_json" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.json_pbp.parse_json">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.json_pbp.</span></span><span class="sig-name descname"><span class="pre">parse_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game_json</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">game_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.json_pbp.parse_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape the json for a game</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1110,8 +1114,8 @@ Ex: <a class="reference external" href="http://statsapi.web.nhl.com/api/v1/game/
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.json_pbp.scrape_game">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.json_pbp.</code><code class="sig-name descname">scrape_game</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">game_id</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.json_pbp.scrape_game" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.json_pbp.scrape_game">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.json_pbp.</span></span><span class="sig-name descname"><span class="pre">scrape_game</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.json_pbp.scrape_game" title="Permalink to this definition">¶</a></dt>
 <dd><p><strong>Used for debugging</strong></p>
 <p>HTML depends on json so can’t follow this structure</p>
 <dl class="field-list simple">
@@ -1129,8 +1133,8 @@ Ex: <a class="reference external" href="http://statsapi.web.nhl.com/api/v1/game/
 <span id="espn-pbp"></span><h3>Espn PBP<a class="headerlink" href="#module-hockey_scraper.nhl.pbp.espn_pbp" title="Permalink to this headline">¶</a></h3>
 <p>This module contains code to scrape coordinates for games off of espn for any given game</p>
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.espn_pbp.event_type">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.espn_pbp.</code><code class="sig-name descname">event_type</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">play_description</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.espn_pbp.event_type" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.espn_pbp.event_type">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.espn_pbp.</span></span><span class="sig-name descname"><span class="pre">event_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">play_description</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.espn_pbp.event_type" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the event type (ex: a SHOT or a GOAL…etc) given the event description.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1143,8 +1147,8 @@ Ex: <a class="reference external" href="http://statsapi.web.nhl.com/api/v1/game/
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.espn_pbp.get_espn_date">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.espn_pbp.</code><code class="sig-name descname">get_espn_date</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">date</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.espn_pbp.get_espn_date" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.espn_pbp.get_espn_date">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.espn_pbp.</span></span><span class="sig-name descname"><span class="pre">get_espn_date</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">date</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.espn_pbp.get_espn_date" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the page that contains all the games for that day</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1157,8 +1161,8 @@ Ex: <a class="reference external" href="http://statsapi.web.nhl.com/api/v1/game/
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.espn_pbp.get_espn_game">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.espn_pbp.</code><code class="sig-name descname">get_espn_game</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">date</span></em>, <em class="sig-param"><span class="n">home_team</span></em>, <em class="sig-param"><span class="n">away_team</span></em>, <em class="sig-param"><span class="n">game_id</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.espn_pbp.get_espn_game" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.espn_pbp.get_espn_game">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.espn_pbp.</span></span><span class="sig-name descname"><span class="pre">get_espn_game</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">home_team</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">away_team</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">game_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.espn_pbp.get_espn_game" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the ESPN pbp feed 
 Ex: <a class="reference external" href="http://www.espn.com/nhl/gamecast/data/masterFeed?lang=en&amp;isAll=true&amp;gameId=400885300">http://www.espn.com/nhl/gamecast/data/masterFeed?lang=en&amp;isAll=true&amp;gameId=400885300</a></p>
 <dl class="field-list simple">
@@ -1177,8 +1181,8 @@ Ex: <a class="reference external" href="http://www.espn.com/nhl/gamecast/data/ma
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.espn_pbp.get_espn_game_id">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.espn_pbp.</code><code class="sig-name descname">get_espn_game_id</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">date</span></em>, <em class="sig-param"><span class="n">home_team</span></em>, <em class="sig-param"><span class="n">away_team</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.espn_pbp.get_espn_game_id" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.espn_pbp.get_espn_game_id">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.espn_pbp.</span></span><span class="sig-name descname"><span class="pre">get_espn_game_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">home_team</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">away_team</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.espn_pbp.get_espn_game_id" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrapes the day’s schedule and gets the id for the given game
 Ex: <a class="reference external" href="http://www.espn.com/nhl/scoreboard/_/date/20161024">http://www.espn.com/nhl/scoreboard/_/date/20161024</a></p>
 <dl class="field-list simple">
@@ -1196,8 +1200,8 @@ Ex: <a class="reference external" href="http://www.espn.com/nhl/scoreboard/_/dat
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.espn_pbp.get_game_ids">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.espn_pbp.</code><code class="sig-name descname">get_game_ids</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">response</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.espn_pbp.get_game_ids" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.espn_pbp.get_game_ids">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.espn_pbp.</span></span><span class="sig-name descname"><span class="pre">get_game_ids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">response</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.espn_pbp.get_game_ids" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get game_ids for date from doc</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1210,8 +1214,8 @@ Ex: <a class="reference external" href="http://www.espn.com/nhl/scoreboard/_/dat
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.espn_pbp.get_teams">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.espn_pbp.</code><code class="sig-name descname">get_teams</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">response</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.espn_pbp.get_teams" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.espn_pbp.get_teams">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.espn_pbp.</span></span><span class="sig-name descname"><span class="pre">get_teams</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">response</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.espn_pbp.get_teams" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extract Teams for date from doc</p>
 <p>ul-&gt; class = ScoreCell__Competitors</p>
 <p>div -&gt; class = ScoreCell__TeamName ScoreCell__TeamName–shortDisplayName truncate db</p>
@@ -1226,8 +1230,8 @@ Ex: <a class="reference external" href="http://www.espn.com/nhl/scoreboard/_/dat
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.espn_pbp.parse_espn">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.espn_pbp.</code><code class="sig-name descname">parse_espn</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">espn_xml</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.espn_pbp.parse_espn" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.espn_pbp.parse_espn">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.espn_pbp.</span></span><span class="sig-name descname"><span class="pre">parse_espn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">espn_xml</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.espn_pbp.parse_espn" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse feed</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1240,8 +1244,8 @@ Ex: <a class="reference external" href="http://www.espn.com/nhl/scoreboard/_/dat
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.espn_pbp.parse_event">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.espn_pbp.</code><code class="sig-name descname">parse_event</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">event</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.espn_pbp.parse_event" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.espn_pbp.parse_event">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.espn_pbp.</span></span><span class="sig-name descname"><span class="pre">parse_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.espn_pbp.parse_event" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse each event. In the string each field is separated by a ‘~’. 
 Relevant for here: The first two are the x and y coordinates. And the 4th and 5th are the time elapsed and period.</p>
 <dl class="field-list simple">
@@ -1255,8 +1259,8 @@ Relevant for here: The first two are the x and y coordinates. And the 4th and 5t
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.pbp.espn_pbp.scrape_game">
-<code class="sig-prename descclassname">hockey_scraper.nhl.pbp.espn_pbp.</code><code class="sig-name descname">scrape_game</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">date</span></em>, <em class="sig-param"><span class="n">home_team</span></em>, <em class="sig-param"><span class="n">away_team</span></em>, <em class="sig-param"><span class="n">game_id</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.espn_pbp.scrape_game" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.espn_pbp.scrape_game">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.espn_pbp.</span></span><span class="sig-name descname"><span class="pre">scrape_game</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">home_team</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">away_team</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">game_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.espn_pbp.scrape_game" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape the game</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1278,8 +1282,8 @@ Relevant for here: The first two are the x and y coordinates. And the 4th and 5t
 <span id="json-shifts"></span><h3>Json Shifts<a class="headerlink" href="#module-hockey_scraper.nhl.shifts.json_shifts" title="Permalink to this headline">¶</a></h3>
 <p>This module contains functions to scrape the Json toi/shifts for any given game</p>
 <dl class="py function">
-<dt id="hockey_scraper.nhl.shifts.json_shifts.fix_team_tricode">
-<code class="sig-prename descclassname">hockey_scraper.nhl.shifts.json_shifts.</code><code class="sig-name descname">fix_team_tricode</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tricode</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.shifts.json_shifts.fix_team_tricode" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.shifts.json_shifts.fix_team_tricode">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.shifts.json_shifts.</span></span><span class="sig-name descname"><span class="pre">fix_team_tricode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tricode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.shifts.json_shifts.fix_team_tricode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Some of the tricodes are different than how I want them</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1292,8 +1296,8 @@ Relevant for here: The first two are the x and y coordinates. And the 4th and 5t
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.shifts.json_shifts.get_shifts">
-<code class="sig-prename descclassname">hockey_scraper.nhl.shifts.json_shifts.</code><code class="sig-name descname">get_shifts</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">game_id</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.shifts.json_shifts.get_shifts" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.shifts.json_shifts.get_shifts">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.shifts.json_shifts.</span></span><span class="sig-name descname"><span class="pre">get_shifts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.shifts.json_shifts.get_shifts" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a game_id it returns the raw json
 Ex: <a class="reference external" href="https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId=2019020001">https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId=2019020001</a></p>
 <dl class="field-list simple">
@@ -1307,8 +1311,8 @@ Ex: <a class="reference external" href="https://api.nhle.com/stats/rest/en/shift
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.shifts.json_shifts.parse_json">
-<code class="sig-prename descclassname">hockey_scraper.nhl.shifts.json_shifts.</code><code class="sig-name descname">parse_json</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">shift_json</span></em>, <em class="sig-param"><span class="n">game_id</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.shifts.json_shifts.parse_json" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.shifts.json_shifts.parse_json">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.shifts.json_shifts.</span></span><span class="sig-name descname"><span class="pre">parse_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shift_json</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">game_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.shifts.json_shifts.parse_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse the json</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1324,8 +1328,8 @@ Ex: <a class="reference external" href="https://api.nhle.com/stats/rest/en/shift
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.shifts.json_shifts.parse_shift">
-<code class="sig-prename descclassname">hockey_scraper.nhl.shifts.json_shifts.</code><code class="sig-name descname">parse_shift</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">shift</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.shifts.json_shifts.parse_shift" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.shifts.json_shifts.parse_shift">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.shifts.json_shifts.</span></span><span class="sig-name descname"><span class="pre">parse_shift</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shift</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.shifts.json_shifts.parse_shift" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse shift for json</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1338,8 +1342,8 @@ Ex: <a class="reference external" href="https://api.nhle.com/stats/rest/en/shift
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.shifts.json_shifts.scrape_game">
-<code class="sig-prename descclassname">hockey_scraper.nhl.shifts.json_shifts.</code><code class="sig-name descname">scrape_game</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">game_id</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.shifts.json_shifts.scrape_game" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.shifts.json_shifts.scrape_game">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.shifts.json_shifts.</span></span><span class="sig-name descname"><span class="pre">scrape_game</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.shifts.json_shifts.scrape_game" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape the game.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1356,8 +1360,8 @@ Ex: <a class="reference external" href="https://api.nhle.com/stats/rest/en/shift
 <span id="html-shifts"></span><h3>Html Shifts<a class="headerlink" href="#module-hockey_scraper.nhl.shifts.html_shifts" title="Permalink to this headline">¶</a></h3>
 <p>This module contains functions to scrape the Html Toi Tables (or shifts) for any given game</p>
 <dl class="py function">
-<dt id="hockey_scraper.nhl.shifts.html_shifts.analyze_shifts">
-<code class="sig-prename descclassname">hockey_scraper.nhl.shifts.html_shifts.</code><code class="sig-name descname">analyze_shifts</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">shift</span></em>, <em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">team</span></em>, <em class="sig-param"><span class="n">home_team</span></em>, <em class="sig-param"><span class="n">player_ids</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.shifts.html_shifts.analyze_shifts" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.shifts.html_shifts.analyze_shifts">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.shifts.html_shifts.</span></span><span class="sig-name descname"><span class="pre">analyze_shifts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shift</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">team</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">home_team</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">player_ids</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.shifts.html_shifts.analyze_shifts" title="Permalink to this definition">¶</a></dt>
 <dd><p>Analyze shifts for each player when using.
 Prior to this each player (in a dictionary) has a list with each entry being a shift.</p>
 <dl class="field-list simple">
@@ -1377,8 +1381,8 @@ Prior to this each player (in a dictionary) has a list with each entry being a s
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.shifts.html_shifts.get_shifts">
-<code class="sig-prename descclassname">hockey_scraper.nhl.shifts.html_shifts.</code><code class="sig-name descname">get_shifts</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">game_id</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.shifts.html_shifts.get_shifts" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.shifts.html_shifts.get_shifts">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.shifts.html_shifts.</span></span><span class="sig-name descname"><span class="pre">get_shifts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.shifts.html_shifts.get_shifts" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a game_id it returns a the shifts for both teams
 Ex: <a class="reference external" href="http://www.nhl.com/scores/htmlreports/20162017/TV020971.HTM">http://www.nhl.com/scores/htmlreports/20162017/TV020971.HTM</a></p>
 <dl class="field-list simple">
@@ -1392,8 +1396,8 @@ Ex: <a class="reference external" href="http://www.nhl.com/scores/htmlreports/20
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.shifts.html_shifts.get_soup">
-<code class="sig-prename descclassname">hockey_scraper.nhl.shifts.html_shifts.</code><code class="sig-name descname">get_soup</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">shifts_html</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.shifts.html_shifts.get_soup" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.shifts.html_shifts.get_soup">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.shifts.html_shifts.</span></span><span class="sig-name descname"><span class="pre">get_soup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shifts_html</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.shifts.html_shifts.get_soup" title="Permalink to this definition">¶</a></dt>
 <dd><p>Uses Beautiful soup to parses the html document.
 Some parsers work for some pages but don’t work for others….I’m not sure why so I just try them all here in order</p>
 <dl class="field-list simple">
@@ -1407,8 +1411,8 @@ Some parsers work for some pages but don’t work for others….I’m not sure w
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.shifts.html_shifts.get_teams">
-<code class="sig-prename descclassname">hockey_scraper.nhl.shifts.html_shifts.</code><code class="sig-name descname">get_teams</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">soup</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.shifts.html_shifts.get_teams" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.shifts.html_shifts.get_teams">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.shifts.html_shifts.</span></span><span class="sig-name descname"><span class="pre">get_teams</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">soup</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.shifts.html_shifts.get_teams" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the team for the TOI tables and the home team</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1421,8 +1425,8 @@ Some parsers work for some pages but don’t work for others….I’m not sure w
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.shifts.html_shifts.parse_html">
-<code class="sig-prename descclassname">hockey_scraper.nhl.shifts.html_shifts.</code><code class="sig-name descname">parse_html</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">html</span></em>, <em class="sig-param"><span class="n">player_ids</span></em>, <em class="sig-param"><span class="n">game_id</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.shifts.html_shifts.parse_html" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.shifts.html_shifts.parse_html">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.shifts.html_shifts.</span></span><span class="sig-name descname"><span class="pre">parse_html</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">html</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">player_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">game_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.shifts.html_shifts.parse_html" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse the html</p>
 <p>Note: Don’t fuck with this!!! I’m not exactly sure how or why but it works.</p>
 <dl class="field-list simple">
@@ -1440,8 +1444,8 @@ Some parsers work for some pages but don’t work for others….I’m not sure w
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.shifts.html_shifts.scrape_game">
-<code class="sig-prename descclassname">hockey_scraper.nhl.shifts.html_shifts.</code><code class="sig-name descname">scrape_game</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">game_id</span></em>, <em class="sig-param"><span class="n">players</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.shifts.html_shifts.scrape_game" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.shifts.html_shifts.scrape_game">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.shifts.html_shifts.</span></span><span class="sig-name descname"><span class="pre">scrape_game</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">players</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.shifts.html_shifts.scrape_game" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape the game.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1461,8 +1465,8 @@ Some parsers work for some pages but don’t work for others….I’m not sure w
 <span id="schedule"></span><h3>Schedule<a class="headerlink" href="#module-hockey_scraper.nhl.json_schedule" title="Permalink to this headline">¶</a></h3>
 <p>This module contains functions to scrape the json schedule for any games or date range</p>
 <dl class="py function">
-<dt id="hockey_scraper.nhl.json_schedule.chunk_schedule_calls">
-<code class="sig-prename descclassname">hockey_scraper.nhl.json_schedule.</code><code class="sig-name descname">chunk_schedule_calls</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">from_date</span></em>, <em class="sig-param"><span class="n">to_date</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.json_schedule.chunk_schedule_calls" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.json_schedule.chunk_schedule_calls">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.json_schedule.</span></span><span class="sig-name descname"><span class="pre">chunk_schedule_calls</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">from_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_date</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.json_schedule.chunk_schedule_calls" title="Permalink to this definition">¶</a></dt>
 <dd><p>The schedule endpoint sucks when handling a big date range. So instead I call in increments of n days.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1478,8 +1482,8 @@ Some parsers work for some pages but don’t work for others….I’m not sure w
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.json_schedule.get_dates">
-<code class="sig-prename descclassname">hockey_scraper.nhl.json_schedule.</code><code class="sig-name descname">get_dates</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">games</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.json_schedule.get_dates" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.json_schedule.get_dates">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.json_schedule.</span></span><span class="sig-name descname"><span class="pre">get_dates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">games</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.json_schedule.get_dates" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a list game_ids it returns the dates for each game.</p>
 <p>We sort all the games and retrieve the schedule from the beginning of the season from the earliest game
 until the end of most recent season.</p>
@@ -1494,8 +1498,8 @@ until the end of most recent season.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.json_schedule.get_schedule">
-<code class="sig-prename descclassname">hockey_scraper.nhl.json_schedule.</code><code class="sig-name descname">get_schedule</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">date_from</span></em>, <em class="sig-param"><span class="n">date_to</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.json_schedule.get_schedule" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.json_schedule.get_schedule">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.json_schedule.</span></span><span class="sig-name descname"><span class="pre">get_schedule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">date_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date_to</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.json_schedule.get_schedule" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrapes games in date range
 Ex: <a class="reference external" href="https://statsapi.web.nhl.com/api/v1/schedule?startDate=2010-10-03&amp;endDate=2011-06-20">https://statsapi.web.nhl.com/api/v1/schedule?startDate=2010-10-03&amp;endDate=2011-06-20</a></p>
 <dl class="field-list simple">
@@ -1512,8 +1516,8 @@ Ex: <a class="reference external" href="https://statsapi.web.nhl.com/api/v1/sche
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.json_schedule.scrape_schedule">
-<code class="sig-prename descclassname">hockey_scraper.nhl.json_schedule.</code><code class="sig-name descname">scrape_schedule</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">date_from</span></em>, <em class="sig-param"><span class="n">date_to</span></em>, <em class="sig-param"><span class="n">preseason</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">not_over</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.json_schedule.scrape_schedule" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.json_schedule.scrape_schedule">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.json_schedule.</span></span><span class="sig-name descname"><span class="pre">scrape_schedule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">date_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preseason</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">not_over</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.json_schedule.scrape_schedule" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calls getSchedule and scrapes the raw schedule Json</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1536,8 +1540,8 @@ Means we relax the requirement of checking if the game is over.</p></li>
 <span id="playing-roster"></span><h3>Playing Roster<a class="headerlink" href="#module-hockey_scraper.nhl.playing_roster" title="Permalink to this headline">¶</a></h3>
 <p>This module contains functions to scrape the Html game roster for any given game</p>
 <dl class="py function">
-<dt id="hockey_scraper.nhl.playing_roster.fix_name">
-<code class="sig-prename descclassname">hockey_scraper.nhl.playing_roster.</code><code class="sig-name descname">fix_name</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">player</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.playing_roster.fix_name" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.playing_roster.fix_name">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.playing_roster.</span></span><span class="sig-name descname"><span class="pre">fix_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.playing_roster.fix_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get rid of (A) or (C) when a player has it attached to their name</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1550,8 +1554,8 @@ Means we relax the requirement of checking if the game is over.</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.playing_roster.get_coaches">
-<code class="sig-prename descclassname">hockey_scraper.nhl.playing_roster.</code><code class="sig-name descname">get_coaches</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">soup</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.playing_roster.get_coaches" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.playing_roster.get_coaches">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.playing_roster.</span></span><span class="sig-name descname"><span class="pre">get_coaches</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">soup</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.playing_roster.get_coaches" title="Permalink to this definition">¶</a></dt>
 <dd><p>scrape head coaches</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1564,8 +1568,8 @@ Means we relax the requirement of checking if the game is over.</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.playing_roster.get_content">
-<code class="sig-prename descclassname">hockey_scraper.nhl.playing_roster.</code><code class="sig-name descname">get_content</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">roster</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.playing_roster.get_content" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.playing_roster.get_content">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.playing_roster.</span></span><span class="sig-name descname"><span class="pre">get_content</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">roster</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.playing_roster.get_content" title="Permalink to this definition">¶</a></dt>
 <dd><p>Uses Beautiful soup to parses the html document.
 Some parsers work for some pages but don’t work for others….I’m not sure why so I just try them all here in order</p>
 <dl class="field-list simple">
@@ -1579,8 +1583,8 @@ Some parsers work for some pages but don’t work for others….I’m not sure w
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.playing_roster.get_players">
-<code class="sig-prename descclassname">hockey_scraper.nhl.playing_roster.</code><code class="sig-name descname">get_players</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">soup</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.playing_roster.get_players" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.playing_roster.get_players">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.playing_roster.</span></span><span class="sig-name descname"><span class="pre">get_players</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">soup</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.playing_roster.get_players" title="Permalink to this definition">¶</a></dt>
 <dd><p>scrape roster for players</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1593,8 +1597,8 @@ Some parsers work for some pages but don’t work for others….I’m not sure w
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.playing_roster.get_roster">
-<code class="sig-prename descclassname">hockey_scraper.nhl.playing_roster.</code><code class="sig-name descname">get_roster</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">game_id</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.playing_roster.get_roster" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.playing_roster.get_roster">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.playing_roster.</span></span><span class="sig-name descname"><span class="pre">get_roster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.playing_roster.get_roster" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a game_id it returns the raw html
 Ex: <a class="reference external" href="http://www.nhl.com/scores/htmlreports/20162017/RO020475.HTM">http://www.nhl.com/scores/htmlreports/20162017/RO020475.HTM</a></p>
 <dl class="field-list simple">
@@ -1608,8 +1612,8 @@ Ex: <a class="reference external" href="http://www.nhl.com/scores/htmlreports/20
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.nhl.playing_roster.scrape_roster">
-<code class="sig-prename descclassname">hockey_scraper.nhl.playing_roster.</code><code class="sig-name descname">scrape_roster</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">game_id</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.playing_roster.scrape_roster" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.nhl.playing_roster.scrape_roster">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.playing_roster.</span></span><span class="sig-name descname"><span class="pre">scrape_roster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.playing_roster.scrape_roster" title="Permalink to this definition">¶</a></dt>
 <dd><p>For a given game scrapes the roster</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1627,8 +1631,8 @@ Ex: <a class="reference external" href="http://www.nhl.com/scores/htmlreports/20
 <p>Saves the scraped docs so you don’t have to re-scrape them every time you want to parse the docs.</p>
 <p>**** Don’t mess with this unless you know what you’re doing ****</p>
 <dl class="py function">
-<dt id="hockey_scraper.utils.save_pages.check_file_exists">
-<code class="sig-prename descclassname">hockey_scraper.utils.save_pages.</code><code class="sig-name descname">check_file_exists</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file_info</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.save_pages.check_file_exists" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.utils.save_pages.check_file_exists">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.utils.save_pages.</span></span><span class="sig-name descname"><span class="pre">check_file_exists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.save_pages.check_file_exists" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks if the file exists. Also check if structure for holding scraped file exists to. If not, it creates it.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1642,8 +1646,8 @@ we want to deposit any data in.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.utils.save_pages.create_base_file_path">
-<code class="sig-prename descclassname">hockey_scraper.utils.save_pages.</code><code class="sig-name descname">create_base_file_path</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file_info</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.save_pages.create_base_file_path" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.utils.save_pages.create_base_file_path">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.utils.save_pages.</span></span><span class="sig-name descname"><span class="pre">create_base_file_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.save_pages.create_base_file_path" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates the base file path for a given file</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1657,16 +1661,21 @@ we want to deposit any data in.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.utils.save_pages.create_dir_structure">
-<code class="sig-prename descclassname">hockey_scraper.utils.save_pages.</code><code class="sig-name descname">create_dir_structure</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dir_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.save_pages.create_dir_structure" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.utils.save_pages.create_dir_structure">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.utils.save_pages.</span></span><span class="sig-name descname"><span class="pre">create_dir_structure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.save_pages.create_dir_structure" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create the basic directory structure for docs_dir if not done yet.
 Creates the docs and csvs subdir if it doesn’t exist</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>dir_name</strong> – Name of dir to create</p>
+</dd>
+</dl>
 <p>:return None</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.utils.save_pages.create_season_dirs">
-<code class="sig-prename descclassname">hockey_scraper.utils.save_pages.</code><code class="sig-name descname">create_season_dirs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file_info</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.save_pages.create_season_dirs" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.utils.save_pages.create_season_dirs">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.utils.save_pages.</span></span><span class="sig-name descname"><span class="pre">create_season_dirs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.save_pages.create_season_dirs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates the infrastructure to hold all the scraped docs for a season</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1680,8 +1689,8 @@ we want to deposit any data in.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.utils.save_pages.get_page">
-<code class="sig-prename descclassname">hockey_scraper.utils.save_pages.</code><code class="sig-name descname">get_page</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file_info</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.save_pages.get_page" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.utils.save_pages.get_page">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.utils.save_pages.</span></span><span class="sig-name descname"><span class="pre">get_page</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.save_pages.get_page" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the file so we don’t need to re-scrape.</p>
 <p>Try both compressed and non-compressed for backwards compatability issues (formerly non-compressed)</p>
 <dl class="field-list simple">
@@ -1696,8 +1705,8 @@ we want to deposit any data in.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.utils.save_pages.is_compressed">
-<code class="sig-prename descclassname">hockey_scraper.utils.save_pages.</code><code class="sig-name descname">is_compressed</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file_info</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.save_pages.is_compressed" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.utils.save_pages.is_compressed">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.utils.save_pages.</span></span><span class="sig-name descname"><span class="pre">is_compressed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.save_pages.is_compressed" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if stored file is compressed as we used to not save them as compressed.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1709,8 +1718,8 @@ we want to deposit any data in.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.utils.save_pages.save_page">
-<code class="sig-prename descclassname">hockey_scraper.utils.save_pages.</code><code class="sig-name descname">save_page</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">page</span></em>, <em class="sig-param"><span class="n">file_info</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.save_pages.save_page" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.utils.save_pages.save_page">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.utils.save_pages.</span></span><span class="sig-name descname"><span class="pre">save_page</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">page</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.save_pages.save_page" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save the page we just scraped.</p>
 <p>Note: It’ll only get saved if the directory already exists!!!!!!. I’m not dealing with any fuck ups. That would 
 involve checking if it’s even a valid path and creating it. Make sure you get it right.</p>
@@ -1733,8 +1742,8 @@ we want to deposit any data in.</p></li>
 <span id="shared-functions"></span><h3>Shared Functions<a class="headerlink" href="#module-hockey_scraper.utils.shared" title="Permalink to this headline">¶</a></h3>
 <p>This file is a bunch of the shared functions or just general stuff used by the different scrapers in the package.</p>
 <dl class="py function">
-<dt id="hockey_scraper.utils.shared.add_dir">
-<code class="sig-prename descclassname">hockey_scraper.utils.shared.</code><code class="sig-name descname">add_dir</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user_dir</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.add_dir" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.utils.shared.add_dir">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.utils.shared.</span></span><span class="sig-name descname"><span class="pre">add_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_dir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.add_dir" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add directory to store scraped docs if valid. Or create in the home dir</p>
 <p>NOTE: After this functions docs_dir is either None or a valid directory</p>
 <dl class="field-list simple">
@@ -1748,8 +1757,8 @@ we want to deposit any data in.</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.utils.shared.check_data_format">
-<code class="sig-prename descclassname">hockey_scraper.utils.shared.</code><code class="sig-name descname">check_data_format</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data_format</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.check_data_format" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.utils.shared.check_data_format">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.utils.shared.</span></span><span class="sig-name descname"><span class="pre">check_data_format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_format</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.check_data_format" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks if data_format specified (if it is at all) is either None, ‘Csv’, or ‘pandas’.
 It exits program with error message if input isn’t good.</p>
 <dl class="field-list simple">
@@ -1763,8 +1772,8 @@ It exits program with error message if input isn’t good.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.utils.shared.check_valid_dates">
-<code class="sig-prename descclassname">hockey_scraper.utils.shared.</code><code class="sig-name descname">check_valid_dates</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">from_date</span></em>, <em class="sig-param"><span class="n">to_date</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.check_valid_dates" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.utils.shared.check_valid_dates">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.utils.shared.</span></span><span class="sig-name descname"><span class="pre">check_valid_dates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">from_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_date</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.check_valid_dates" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if it’s a valid date range</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1780,8 +1789,8 @@ It exits program with error message if input isn’t good.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.utils.shared.convert_to_seconds">
-<code class="sig-prename descclassname">hockey_scraper.utils.shared.</code><code class="sig-name descname">convert_to_seconds</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">minutes</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.convert_to_seconds" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.utils.shared.convert_to_seconds">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.utils.shared.</span></span><span class="sig-name descname"><span class="pre">convert_to_seconds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minutes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.convert_to_seconds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return minutes elapsed in time format to seconds elapsed</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1794,14 +1803,14 @@ It exits program with error message if input isn’t good.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.utils.shared.custom_formatwarning">
-<code class="sig-prename descclassname">hockey_scraper.utils.shared.</code><code class="sig-name descname">custom_formatwarning</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">msg</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.custom_formatwarning" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.utils.shared.custom_formatwarning">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.utils.shared.</span></span><span class="sig-name descname"><span class="pre">custom_formatwarning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.custom_formatwarning" title="Permalink to this definition">¶</a></dt>
 <dd><p>Override format for standard wanings</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.utils.shared.fix_name">
-<code class="sig-prename descclassname">hockey_scraper.utils.shared.</code><code class="sig-name descname">fix_name</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.fix_name" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.utils.shared.fix_name">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.utils.shared.</span></span><span class="sig-name descname"><span class="pre">fix_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.fix_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if a name falls under those that need fixing. If it does…fix it.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1814,15 +1823,18 @@ It exits program with error message if input isn’t good.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.utils.shared.get_file">
-<code class="sig-prename descclassname">hockey_scraper.utils.shared.</code><code class="sig-name descname">get_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file_info</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.get_file" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.utils.shared.get_file">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.utils.shared.</span></span><span class="sig-name descname"><span class="pre">get_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.get_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the specified file.</p>
 <p>If a docs_dir is provided we check if it exists. If it does we see if it contains that page (and saves if it
 doesn’t). If the docs_dir doesn’t exist we just scrape from the source and not save.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>file_info</strong> – Dictionary containing the info for the file.
-Contains the url, name, type, and season</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_info</strong> – Dictionary containing the info for the file.
+Contains the url, name, type, and season</p></li>
+<li><p><strong>force</strong> – Force a rescrape. Default is False</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>page</p>
@@ -1831,8 +1843,22 @@ Contains the url, name, type, and season</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.utils.shared.get_season">
-<code class="sig-prename descclassname">hockey_scraper.utils.shared.</code><code class="sig-name descname">get_season</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">date</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.get_season" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.utils.shared.get_logger">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.utils.shared.</span></span><span class="sig-name descname"><span class="pre">get_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">python_file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.get_logger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a basic logger to a log file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>python_file</strong> – File that instantiates the logger instance</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>logger</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hockey_scraper.utils.shared.get_season">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.utils.shared.</span></span><span class="sig-name descname"><span class="pre">get_season</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">date</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.get_season" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get Season based on from_date</p>
 <dl class="simple">
 <dt>There is an exception for the 2019-2020 pandemic season. Accoding to the below url:</dt><dd><ul class="simple">
@@ -1853,14 +1879,14 @@ Contains the url, name, type, and season</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.utils.shared.get_team">
-<code class="sig-prename descclassname">hockey_scraper.utils.shared.</code><code class="sig-name descname">get_team</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">team</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.get_team" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.utils.shared.get_team">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.utils.shared.</span></span><span class="sig-name descname"><span class="pre">get_team</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">team</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.get_team" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the fucking team</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.utils.shared.if_rescrape">
-<code class="sig-prename descclassname">hockey_scraper.utils.shared.</code><code class="sig-name descname">if_rescrape</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user_rescrape</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.if_rescrape" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.utils.shared.if_rescrape">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.utils.shared.</span></span><span class="sig-name descname"><span class="pre">if_rescrape</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_rescrape</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.if_rescrape" title="Permalink to this definition">¶</a></dt>
 <dd><p>If you want to re_scrape. If someone is a dumbass and feeds it a non-boolean it terminates the program</p>
 <p>Note: Only matters when you have a directory specified</p>
 <dl class="field-list simple">
@@ -1874,41 +1900,54 @@ Contains the url, name, type, and season</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.utils.shared.print_error">
-<code class="sig-prename descclassname">hockey_scraper.utils.shared.</code><code class="sig-name descname">print_error</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">msg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.print_error" title="Permalink to this definition">¶</a></dt>
-<dd><p>Implement own custom error using warning module.
-Reason why i still use warning for errors is so i can set to ignore them if i want to (e.g. live_scrape line 200).</p>
-<p>shared.print_error relies on this function.</p>
-<p>See here for more on ANSI escape codes - <a class="reference external" href="https://en.wikipedia.org/wiki/ANSI_escape_code">https://en.wikipedia.org/wiki/ANSI_escape_code</a></p>
+<dt class="sig sig-object py" id="hockey_scraper.utils.shared.log_error">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.utils.shared.</span></span><span class="sig-name descname"><span class="pre">log_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">err</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">py_file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Log error when Logging is specified</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>msg</strong> – Str to print</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>err</strong> – Error to log</p></li>
+<li><p><strong>python_file</strong> – File that instantiates the logger instance</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>str</p>
+<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.utils.shared.print_warning">
-<code class="sig-prename descclassname">hockey_scraper.utils.shared.</code><code class="sig-name descname">print_warning</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">msg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.print_warning" title="Permalink to this definition">¶</a></dt>
-<dd><p>Implement own custom warning using warning module.</p>
-<p>shared.print_error relies on this function.</p>
-<p>See here for more on ANSI escape codes - <a class="reference external" href="https://en.wikipedia.org/wiki/ANSI_escape_code">https://en.wikipedia.org/wiki/ANSI_escape_code</a></p>
+<dt class="sig sig-object py" id="hockey_scraper.utils.shared.print_error">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.utils.shared.</span></span><span class="sig-name descname"><span class="pre">print_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.print_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement own custom error using warning module. Prints in red</p>
+<p>Reason why i still use warning for errors is so i can set to ignore them if i want to (e.g. live_scrape line 200).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>msg</strong> – Str to print</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>str</p>
+<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.utils.shared.scrape_page">
-<code class="sig-prename descclassname">hockey_scraper.utils.shared.</code><code class="sig-name descname">scrape_page</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">url</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.scrape_page" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.utils.shared.print_warning">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.utils.shared.</span></span><span class="sig-name descname"><span class="pre">print_warning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.print_warning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement own custom warning using warning module. Prints in Orange.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>msg</strong> – Str to print</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hockey_scraper.utils.shared.scrape_page">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.utils.shared.</span></span><span class="sig-name descname"><span class="pre">scrape_page</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.scrape_page" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape a given url</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1921,8 +1960,8 @@ Reason why i still use warning for errors is so i can set to ignore them if i wa
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.utils.shared.season_end_bound">
-<code class="sig-prename descclassname">hockey_scraper.utils.shared.</code><code class="sig-name descname">season_end_bound</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">year</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.season_end_bound" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.utils.shared.season_end_bound">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.utils.shared.</span></span><span class="sig-name descname"><span class="pre">season_end_bound</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">year</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.season_end_bound" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determine the end bound of a given season. Changes depending on if it’s the pandemic season or not</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1935,8 +1974,8 @@ Reason why i still use warning for errors is so i can set to ignore them if i wa
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.utils.shared.season_start_bound">
-<code class="sig-prename descclassname">hockey_scraper.utils.shared.</code><code class="sig-name descname">season_start_bound</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">year</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.season_start_bound" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.utils.shared.season_start_bound">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.utils.shared.</span></span><span class="sig-name descname"><span class="pre">season_start_bound</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">year</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.season_start_bound" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get start bound for a season.</p>
 <dl class="simple">
 <dt>Notes:</dt><dd><ul class="simple">
@@ -1956,8 +1995,8 @@ Reason why i still use warning for errors is so i can set to ignore them if i wa
 </dd></dl>
 
 <dl class="py function">
-<dt id="hockey_scraper.utils.shared.to_csv">
-<code class="sig-prename descclassname">hockey_scraper.utils.shared.</code><code class="sig-name descname">to_csv</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">base_file_name</span></em>, <em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">league</span></em>, <em class="sig-param"><span class="n">file_type</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.to_csv" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="hockey_scraper.utils.shared.to_csv">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.utils.shared.</span></span><span class="sig-name descname"><span class="pre">to_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_file_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">league</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.to_csv" title="Permalink to this definition">¶</a></dt>
 <dd><p>Write DataFrame to csv file</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -2054,7 +2093,7 @@ Reason why i still use warning for errors is so i can set to ignore them if i wa
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2020, Harry Shomer.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.3.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.3.
     </div>
   </body>
 </html>

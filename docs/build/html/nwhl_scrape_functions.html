@@ -6,13 +6,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NWHL Scraping Functions &#8212; hockey_scraper 1.37.3 documentation</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/nature.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" /> 
   </head><body>
@@ -72,8 +71,95 @@ So you would refer to the 2016-2017 season as 2016).</p>
 <span class="n">hockey_scraper</span><span class="o">.</span><span class="n">nwhl</span><span class="o">.</span><span class="n">scrape_date_range</span><span class="p">(</span><span class="s1">&#39;2016-10-10&#39;</span><span class="p">,</span> <span class="s1">&#39;2017-01-01&#39;</span><span class="p">,</span> <span class="n">data_format</span><span class="o">=</span><span class="s1">&#39;pandas&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="section" id="scrape-functions">
-<h3>Scrape Functions<a class="headerlink" href="#scrape-functions" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="module-hockey_scraper.nwhl.scrape_functions">
+<span id="scrape-functions"></span><h3>Scrape Functions<a class="headerlink" href="#module-hockey_scraper.nwhl.scrape_functions" title="Permalink to this headline">¶</a></h3>
+<p>Functions to scrape by season, games, and date range</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="hockey_scraper.nwhl.scrape_functions.print_errors">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nwhl.scrape_functions.</span></span><span class="sig-name descname"><span class="pre">print_errors</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nwhl.scrape_functions.print_errors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print any scraping errors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hockey_scraper.nwhl.scrape_functions.scrape_date_range">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nwhl.scrape_functions.</span></span><span class="sig-name descname"><span class="pre">scrape_date_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">from_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'csv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rescrape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">docs_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nwhl.scrape_functions.scrape_date_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scrape games in given date range</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>from_date</strong> – date you want to scrape from</p></li>
+<li><p><strong>to_date</strong> – date you want to scrape to</p></li>
+<li><p><strong>data_format</strong> – format you want data in - csv or pandas (csv is default)</p></li>
+<li><p><strong>rescrape</strong> – If you want to rescrape pages already scraped. Only applies if you supply a docs dir. (def. = None)</p></li>
+<li><p><strong>docs_dir</strong> – Directory that either contains previously scraped docs or one that you want them to be deposited 
+in after scraping. (default is None)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dictionary with DataFrames and errors or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hockey_scraper.nwhl.scrape_functions.scrape_games">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nwhl.scrape_functions.</span></span><span class="sig-name descname"><span class="pre">scrape_games</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">games</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'csv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rescrape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">docs_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nwhl.scrape_functions.scrape_games" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scrape a list of games</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>games</strong> – list of game_ids</p></li>
+<li><p><strong>data_format</strong> – format you want data in - csv or pandas (csv is default)</p></li>
+<li><p><strong>rescrape</strong> – If you want to rescrape pages already scraped. Only applies if you supply a docs dir.</p></li>
+<li><p><strong>docs_dir</strong> – Directory that either contains previously scraped docs or one that you want them to be deposited 
+in after scraping</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dictionary with DataFrames or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hockey_scraper.nwhl.scrape_functions.scrape_list_of_games">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nwhl.scrape_functions.</span></span><span class="sig-name descname"><span class="pre">scrape_list_of_games</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">games</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nwhl.scrape_functions.scrape_list_of_games" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scrape an arbitrary list of games given the game id’s</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>games</strong> – List of game_id’s to scrape</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>DataFrame of pbp info</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hockey_scraper.nwhl.scrape_functions.scrape_seasons">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nwhl.scrape_functions.</span></span><span class="sig-name descname"><span class="pre">scrape_seasons</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seasons</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'csv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rescrape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">docs_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nwhl.scrape_functions.scrape_seasons" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given list of seasons it scrapes all the seasons</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>seasons</strong> – list of seasons</p></li>
+<li><p><strong>data_format</strong> – format you want data in - csv or pandas (csv is default)</p></li>
+<li><p><strong>rescrape</strong> – If you want to rescrape pages already scraped. Only applies if you supply a docs dir.</p></li>
+<li><p><strong>docs_dir</strong> – Directory that either contains previously scraped docs or one that you want them to be deposited 
+in after scraping</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dictionary with DataFrames and errors or None</p>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 <div class="section" id="html-schedule">
 <h3>Html Schedule<a class="headerlink" href="#html-schedule" title="Permalink to this headline">¶</a></h3>
@@ -95,7 +181,7 @@ So you would refer to the 2016-2017 season as 2016).</p>
   <ul>
 <li><a class="reference internal" href="#">NWHL Scraping Functions</a><ul>
 <li><a class="reference internal" href="#scraping">Scraping</a><ul>
-<li><a class="reference internal" href="#scrape-functions">Scrape Functions</a></li>
+<li><a class="reference internal" href="#module-hockey_scraper.nwhl.scrape_functions">Scrape Functions</a></li>
 <li><a class="reference internal" href="#html-schedule">Html Schedule</a></li>
 <li><a class="reference internal" href="#json-pbp">Json PBP</a></li>
 </ul>
@@ -140,7 +226,7 @@ So you would refer to the 2016-2017 season as 2016).</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2020, Harry Shomer.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.3.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.3.
     </div>
   </body>
 </html>

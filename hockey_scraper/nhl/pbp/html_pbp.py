@@ -84,7 +84,7 @@ def get_contents(game_html):
 
 def strip_html_pbp(td):
     """
-    Strip html tags and such 
+    Strip html tags and such. (Note to Self: Don't touch this!!!) 
     
     :param td: pbp
     
