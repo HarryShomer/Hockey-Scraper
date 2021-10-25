@@ -499,7 +499,8 @@ the live game scraping class.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.html_pbp.add_event_team">
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">add_event_team</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.add_event_team" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add event team for event</p>
+<dd><p>Add event team for event.</p>
+<p>Always first thing in description</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -726,8 +727,8 @@ full name and id. Done by searching in players for the team until we find him (t
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>number</strong> – player’s number</p></li>
 <li><p><strong>players</strong> – all players with info</p></li>
-<li><p><strong>team</strong> – team of player</p></li>
-<li><p><strong>home_team</strong> – home team</p></li>
+<li><p><strong>team</strong> – team of player listed in html</p></li>
+<li><p><strong>home_team</strong> – home team defined b4 hand (from json)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -1800,6 +1801,13 @@ It exits program with error message if input isn’t good.</p>
 <dd class="field-even"><p>time elapsed in seconds</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hockey_scraper.utils.shared.convert_tricode">
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.utils.shared.</span></span><span class="sig-name descname"><span class="pre">convert_tricode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tri</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.convert_tricode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert the tri-code if found in ‘tri_code_conversion.json’</p>
+<p>:return Fixed tri-code or original</p>
 </dd></dl>
 
 <dl class="py function">
