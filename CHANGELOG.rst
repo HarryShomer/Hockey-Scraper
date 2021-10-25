@@ -48,3 +48,7 @@ v1.37
   * Only print full error summary when the number of games scraped is >= 25
   * Remove hardcoded exception for Sebastian Aho. Updated process to work without it.
   * Always rescrape schedule pages
+
+v1.3.8
+------
+  * Convert tri-codes from new format to old in Html PBP. Mappings stored in utils/tri_code_conversion.json. 

@@ -240,7 +240,9 @@ def add_strength(event_dict, home_players, away_players):
 
 def add_event_team(event_dict, event):
     """
-    Add event team for event 
+    Add event team for event. 
+
+    Always first thing in description 
     
     :param event_dict: dict of event info
     :param event: list with parsed event info
@@ -248,8 +250,7 @@ def add_event_team(event_dict, event):
     :return: None
     """
     if event_dict['Event'] in ['GOAL', 'SHOT', 'MISS', 'BLOCK', 'PENL', 'FAC', 'HIT', 'TAKE', 'GIVE']:
-        # Split the description and take the first thing (which is the team)
-        event_dict['Ev_Team'] = event[5].split()[0]
+        event_dict['Ev_Team'] = shared.convert_tricode(event[5].split()[0])
     else:
         event_dict['Ev_Team'] = ''
 
@@ -355,12 +356,13 @@ def get_player_name(number, players, team, home_team):
     
     :param number: player's number
     :param players: all players with info
-    :param team: team of player
-    :param home_team: home team
+    :param team: team of player listed in html
+    :param home_team: home team defined b4 hand (from json)
     
     :return: dict with full and and id
     """
     player = None
+    team = shared.convert_tricode(team) # Needed to convert from new format to old
     venue = "Home" if team == home_team else "Away"
 
     for name in players[venue]:
@@ -644,9 +646,9 @@ def add_event_players(event_dict, event, players, home_team):
     
     :return: None
     """
-    description = event[5].strip()
-    ev_team = description.split()[0]
     event_info = {}
+    description = event[5].strip()
+    ev_team = shared.convert_tricode(description.split()[0])
 
     if event[4] == 'FAC':
         event_info = parse_fac(description, players, ev_team, home_team)

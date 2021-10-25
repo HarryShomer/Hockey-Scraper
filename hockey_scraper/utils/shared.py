@@ -24,6 +24,8 @@ with open(os.path.join(FILE_DIR, "player_name_fixes.json"), "r" ,encoding="utf-8
 with open(os.path.join(FILE_DIR, "team_tri_codes.json"), "r" ,encoding="utf-8") as f:
     TEAMS = json.load(f)['teams']
 
+with open(os.path.join(FILE_DIR, "tri_code_conversion.json"), "r" ,encoding="utf-8") as f:
+    TRI_CODES = json.load(f)['tri_codes']
 
 
 def fix_name(name):
@@ -42,6 +44,15 @@ def get_team(team):
     Get the fucking team
     """
     return TEAMS.get(team.upper(), team.upper()).upper()
+
+
+def convert_tricode(tri):
+    """
+    Convert the tri-code if found in 'tri_code_conversion.json'
+
+    :return Fixed tri-code or original
+    """
+    return TRI_CODES.get(tri.upper(), tri.upper()).upper()
 
 
 def custom_formatwarning(msg, *args, **kwargs): 

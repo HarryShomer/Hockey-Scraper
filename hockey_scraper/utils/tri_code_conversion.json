@@ -1,0 +1,10 @@
+{
+    "_description": "Conversion of new tri-code to old",
+
+    "tri_codes": {  
+        "NJD": "N.J",
+        "TBL": "T.B",
+        "LAK": "L.A",
+        "SJS": "S.J"
+    }
+}
