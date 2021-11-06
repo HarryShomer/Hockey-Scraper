@@ -11,11 +11,6 @@ Hockey-Scraper
 .. inclusion-marker-for-sphinx
 
 
-**Note:**
- * Coordinates are only scraped from ESPN for versions 1.33+
- * NWHL usage has been deprecated due to the removal of the pbp information for each game.
-
-
 Purpose
 -------
 
