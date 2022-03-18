@@ -4,8 +4,9 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NHL Scraping Functions &#8212; hockey_scraper 1.37.3 documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>NHL Scraping Functions &#8212; hockey_scraper 1.38.1 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/nature.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
@@ -32,7 +33,7 @@
         <li class="right" >
           <a href="index.html" title="Hockey-Scraper"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">hockey_scraper 1.37.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">hockey_scraper 1.38.1 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">NHL Scraping Functions</a></li> 
       </ul>
     </div>  
@@ -42,9 +43,9 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="nhl-scraping-functions">
+  <section id="nhl-scraping-functions">
 <h1>NHL Scraping Functions<a class="headerlink" href="#nhl-scraping-functions" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="scraping">
+<section id="scraping">
 <h2>Scraping<a class="headerlink" href="#scraping" title="Permalink to this headline">¶</a></h2>
 <p>There are three ways to scrape games:</p>
 <p>1. <em>Scrape by Season</em>:</p>
@@ -140,7 +141,7 @@ games are scraped at your own risk. There is no guarantee it will work or that t
 </div>
 <p>5. When including a directory, it must be a valid directory. It will not create it for you. You’ll get an error message
 but otherwise it will scrape as if no directory was provided.</p>
-<div class="section" id="module-hockey_scraper.nhl.scrape_functions">
+<section id="module-hockey_scraper.nhl.scrape_functions">
 <span id="scrape-functions"></span><h3>Scrape Functions<a class="headerlink" href="#module-hockey_scraper.nhl.scrape_functions" title="Permalink to this headline">¶</a></h3>
 <p>Functions to scrape by season, games, and date range</p>
 <dl class="py function">
@@ -164,7 +165,7 @@ though all the output and potentially missing it.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="hockey_scraper.nhl.scrape_functions.scrape_date_range">
-<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.scrape_functions.</span></span><span class="sig-name descname"><span class="pre">scrape_date_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">from_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">if_scrape_shifts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'csv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preseason</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rescrape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">docs_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.scrape_functions.scrape_date_range" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.scrape_functions.</span></span><span class="sig-name descname"><span class="pre">scrape_date_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">from_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">if_scrape_shifts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'csv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preseason</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rescrape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">docs_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.scrape_functions.scrape_date_range" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape games in given date range</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -182,15 +183,18 @@ directory. When provided a string it’ll try to use that. Here it must be a val
 it won’t work (I won’t make it for you). When False the files won’t be saved.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Dictionary with DataFrames and errors or None</p>
+<dt class="field-even">Params verbose</dt>
+<dd class="field-even"><p>Override default verbosity when printing errors</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Dictionary with DataFrames and errors or None</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="hockey_scraper.nhl.scrape_functions.scrape_games">
-<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.scrape_functions.</span></span><span class="sig-name descname"><span class="pre">scrape_games</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">games</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">if_scrape_shifts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'csv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rescrape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">docs_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.scrape_functions.scrape_games" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.scrape_functions.</span></span><span class="sig-name descname"><span class="pre">scrape_games</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">games</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">if_scrape_shifts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'csv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rescrape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">docs_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.scrape_functions.scrape_games" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape a list of games</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -205,15 +209,18 @@ directory. When provided a string it’ll try to use that. Here it must be a val
 it won’t work (I won’t make it for you). When False the files won’t be saved.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Dictionary with DataFrames and errors or None</p>
+<dt class="field-even">Params verbose</dt>
+<dd class="field-even"><p>Override default verbosity when printing errors</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Dictionary with DataFrames and errors or None</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="hockey_scraper.nhl.scrape_functions.scrape_list_of_games">
-<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.scrape_functions.</span></span><span class="sig-name descname"><span class="pre">scrape_list_of_games</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">games</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">if_scrape_shifts</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.scrape_functions.scrape_list_of_games" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.scrape_functions.</span></span><span class="sig-name descname"><span class="pre">scrape_list_of_games</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">games</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">if_scrape_shifts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.scrape_functions.scrape_list_of_games" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a list of game_id’s (and a date for each game) it scrapes them</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -222,8 +229,11 @@ it won’t work (I won’t make it for you). When False the files won’t be sav
 <li><p><strong>if_scrape_shifts</strong> – Boolean indicating whether to also scrape shifts</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>DataFrame of pbp info, also shifts if specified</p>
+<dt class="field-even">Params verbose</dt>
+<dd class="field-even"><p>Verbosity when printing errors. Defaults to False</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>DataFrame of pbp info, also shifts if specified</p>
 </dd>
 </dl>
 </dd></dl>
@@ -253,7 +263,7 @@ it won’t work (I won’t make it for you). When False the files won’t be sav
 
 <dl class="py function">
 <dt class="sig sig-object py" id="hockey_scraper.nhl.scrape_functions.scrape_seasons">
-<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.scrape_functions.</span></span><span class="sig-name descname"><span class="pre">scrape_seasons</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seasons</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">if_scrape_shifts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'csv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preseason</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rescrape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">docs_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.scrape_functions.scrape_seasons" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.scrape_functions.</span></span><span class="sig-name descname"><span class="pre">scrape_seasons</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seasons</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">if_scrape_shifts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'csv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preseason</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rescrape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">docs_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.scrape_functions.scrape_seasons" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given list of seasons it scrapes all the seasons</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -270,14 +280,17 @@ directory. When provided a string it’ll try to use that. Here it must be a val
 it won’t work (I won’t make it for you). When False the files won’t be saved.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Dictionary with DataFrames and errors or None</p>
+<dt class="field-even">Params verbose</dt>
+<dd class="field-even"><p>Override default verbosity when printing errors</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Dictionary with DataFrames and errors or None</p>
 </dd>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="module-hockey_scraper.nhl.game_scraper">
+</section>
+<section id="module-hockey_scraper.nhl.game_scraper">
 <span id="game-scraper"></span><h3>Game Scraper<a class="headerlink" href="#module-hockey_scraper.nhl.game_scraper" title="Permalink to this headline">¶</a></h3>
 <p>This module contains code to scrape data for a single game</p>
 <dl class="py function">
@@ -473,8 +486,8 @@ the live game scraping class.</p>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="module-hockey_scraper.nhl.pbp.html_pbp">
+</section>
+<section id="module-hockey_scraper.nhl.pbp.html_pbp">
 <span id="html-pbp"></span><h3>Html PBP<a class="headerlink" href="#module-hockey_scraper.nhl.pbp.html_pbp" title="Permalink to this headline">¶</a></h3>
 <p>This module contains functions to scrape the Html Play by Play for any given game</p>
 <dl class="py function">
@@ -942,7 +955,7 @@ TOR TAKEAWAY - #9 ARMSTRONG, Off. Zone</p>
 <dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.html_pbp.return_name_html">
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">return_name_html</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.return_name_html" title="Permalink to this definition">¶</a></dt>
 <dd><p>In the PBP html the name is in a format like: ‘Center - MIKE RICHARDS’
-Some also have a hyphen in their last name so can’t just split by ‘-‘</p>
+Some also have a hyphen in their last name so can’t just split by ‘-’</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>info</strong> – position and name</p>
@@ -1036,8 +1049,8 @@ Some also have a hyphen in their last name so can’t just split by ‘-‘</p>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="module-hockey_scraper.nhl.pbp.json_pbp">
+</section>
+<section id="module-hockey_scraper.nhl.pbp.json_pbp">
 <span id="json-pbp"></span><h3>Json PBP<a class="headerlink" href="#module-hockey_scraper.nhl.pbp.json_pbp" title="Permalink to this headline">¶</a></h3>
 <p>This module contains functions to scrape the Json Play by Play for any given game</p>
 <dl class="py function">
@@ -1129,8 +1142,8 @@ Ex: <a class="reference external" href="http://statsapi.web.nhl.com/api/v1/game/
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="module-hockey_scraper.nhl.pbp.espn_pbp">
+</section>
+<section id="module-hockey_scraper.nhl.pbp.espn_pbp">
 <span id="espn-pbp"></span><h3>Espn PBP<a class="headerlink" href="#module-hockey_scraper.nhl.pbp.espn_pbp" title="Permalink to this headline">¶</a></h3>
 <p>This module contains code to scrape coordinates for games off of espn for any given game</p>
 <dl class="py function">
@@ -1278,8 +1291,8 @@ Relevant for here: The first two are the x and y coordinates. And the 4th and 5t
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="module-hockey_scraper.nhl.shifts.json_shifts">
+</section>
+<section id="module-hockey_scraper.nhl.shifts.json_shifts">
 <span id="json-shifts"></span><h3>Json Shifts<a class="headerlink" href="#module-hockey_scraper.nhl.shifts.json_shifts" title="Permalink to this headline">¶</a></h3>
 <p>This module contains functions to scrape the Json toi/shifts for any given game</p>
 <dl class="py function">
@@ -1356,8 +1369,8 @@ Ex: <a class="reference external" href="https://api.nhle.com/stats/rest/en/shift
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="module-hockey_scraper.nhl.shifts.html_shifts">
+</section>
+<section id="module-hockey_scraper.nhl.shifts.html_shifts">
 <span id="html-shifts"></span><h3>Html Shifts<a class="headerlink" href="#module-hockey_scraper.nhl.shifts.html_shifts" title="Permalink to this headline">¶</a></h3>
 <p>This module contains functions to scrape the Html Toi Tables (or shifts) for any given game</p>
 <dl class="py function">
@@ -1461,8 +1474,8 @@ Some parsers work for some pages but don’t work for others….I’m not sure w
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="module-hockey_scraper.nhl.json_schedule">
+</section>
+<section id="module-hockey_scraper.nhl.json_schedule">
 <span id="schedule"></span><h3>Schedule<a class="headerlink" href="#module-hockey_scraper.nhl.json_schedule" title="Permalink to this headline">¶</a></h3>
 <p>This module contains functions to scrape the json schedule for any games or date range</p>
 <dl class="py function">
@@ -1536,8 +1549,8 @@ Means we relax the requirement of checking if the game is over.</p></li>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="module-hockey_scraper.nhl.playing_roster">
+</section>
+<section id="module-hockey_scraper.nhl.playing_roster">
 <span id="playing-roster"></span><h3>Playing Roster<a class="headerlink" href="#module-hockey_scraper.nhl.playing_roster" title="Permalink to this headline">¶</a></h3>
 <p>This module contains functions to scrape the Html game roster for any given game</p>
 <dl class="py function">
@@ -1626,8 +1639,8 @@ Ex: <a class="reference external" href="http://www.nhl.com/scores/htmlreports/20
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="module-hockey_scraper.utils.save_pages">
+</section>
+<section id="module-hockey_scraper.utils.save_pages">
 <span id="save-pages"></span><h3>Save Pages<a class="headerlink" href="#module-hockey_scraper.utils.save_pages" title="Permalink to this headline">¶</a></h3>
 <p>Saves the scraped docs so you don’t have to re-scrape them every time you want to parse the docs.</p>
 <p>**** Don’t mess with this unless you know what you’re doing ****</p>
@@ -1738,8 +1751,8 @@ we want to deposit any data in.</p></li>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="module-hockey_scraper.utils.shared">
+</section>
+<section id="module-hockey_scraper.utils.shared">
 <span id="shared-functions"></span><h3>Shared Functions<a class="headerlink" href="#module-hockey_scraper.utils.shared" title="Permalink to this headline">¶</a></h3>
 <p>This file is a bunch of the shared functions or just general stuff used by the different scrapers in the package.</p>
 <dl class="py function">
@@ -2021,9 +2034,9 @@ Contains the url, name, type, and season</p></li>
 </dl>
 </dd></dl>
 
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
             <div class="clearer"></div>
@@ -2070,7 +2083,7 @@ Contains the url, name, type, and season</p></li>
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -2095,13 +2108,13 @@ Contains the url, name, type, and season</p></li>
         <li class="right" >
           <a href="index.html" title="Hockey-Scraper"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">hockey_scraper 1.37.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">hockey_scraper 1.38.1 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">NHL Scraping Functions</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2020, Harry Shomer.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.1.
     </div>
   </body>
 </html>

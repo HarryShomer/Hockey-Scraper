@@ -57,12 +57,13 @@ def print_errors(detailed=True):
     game_scraper.missing_coords = []
 
 
-def scrape_list_of_games(games, if_scrape_shifts):
+def scrape_list_of_games(games, if_scrape_shifts, verbose=False):
     """
     Given a list of game_id's (and a date for each game) it scrapes them
     
     :param games: list of [game_id, date]
-    :param if_scrape_shifts: Boolean indicating whether to also scrape shifts     
+    :param if_scrape_shifts: Boolean indicating whether to also scrape shifts
+    :params verbose: Verbosity when printing errors. Defaults to False    
     
     :return: DataFrame of pbp info, also shifts if specified
     """
@@ -89,8 +90,9 @@ def scrape_list_of_games(games, if_scrape_shifts):
     else:
         shifts_df = None
 
-    # Only print full details when # games > 25
-    print_errors(len(games) >= 25)
+    # Only print full details when # games > 25 or verbose=True
+    error_verbosity = verbose or len(games) >= 25
+    print_errors(error_verbosity)
 
     return pbp_df, shifts_df
 
@@ -130,7 +132,7 @@ def scrape_schedule(from_date, to_date, data_format='pandas', rescrape=False, do
         return sched_df
 
 
-def scrape_date_range(from_date, to_date, if_scrape_shifts, data_format='csv', preseason=False, rescrape=False, docs_dir=False):
+def scrape_date_range(from_date, to_date, if_scrape_shifts, data_format='csv', preseason=False, rescrape=False, docs_dir=False, verbose=False):
     """
     Scrape games in given date range
     
@@ -145,7 +147,8 @@ def scrape_date_range(from_date, to_date, if_scrape_shifts, data_format='csv', p
                      in after scraping. When True it'll refer to (or if needed create) such a repository in the home
                      directory. When provided a string it'll try to use that. Here it must be a valid directory otheriwse
                      it won't work (I won't make it for you). When False the files won't be saved.
-    
+    :params verbose: Override default verbosity when printing errors
+
     :return: Dictionary with DataFrames and errors or None
     """
     shared.check_data_format(data_format)
@@ -155,7 +158,7 @@ def scrape_date_range(from_date, to_date, if_scrape_shifts, data_format='csv', p
     shared.if_rescrape(rescrape)
 
     games = json_schedule.scrape_schedule(from_date, to_date, preseason)
-    pbp_df, shifts_df = scrape_list_of_games(games, if_scrape_shifts)
+    pbp_df, shifts_df = scrape_list_of_games(games, if_scrape_shifts, verbose)
 
     if data_format.lower() == 'csv':
         shared.to_csv(from_date + '--' + to_date, pbp_df, "nhl", "pbp")
@@ -164,7 +167,7 @@ def scrape_date_range(from_date, to_date, if_scrape_shifts, data_format='csv', p
         return {"pbp": pbp_df, "shifts": shifts_df} if if_scrape_shifts else {"pbp": pbp_df}
 
 
-def scrape_seasons(seasons, if_scrape_shifts, data_format='csv', preseason=False, rescrape=False, docs_dir=False):
+def scrape_seasons(seasons, if_scrape_shifts, data_format='csv', preseason=False, rescrape=False, docs_dir=False, verbose=False):
     """
     Given list of seasons it scrapes all the seasons 
     
@@ -178,7 +181,8 @@ def scrape_seasons(seasons, if_scrape_shifts, data_format='csv', preseason=False
                      in after scraping. When True it'll refer to (or if needed create) such a repository in the home
                      directory. When provided a string it'll try to use that. Here it must be a valid directory otheriwse
                      it won't work (I won't make it for you). When False the files won't be saved.
-    
+    :params verbose: Override default verbosity when printing errors
+
     :return: Dictionary with DataFrames and errors or None
     """
     shared.check_data_format(data_format)
@@ -190,10 +194,10 @@ def scrape_seasons(seasons, if_scrape_shifts, data_format='csv', preseason=False
 
     for season in seasons:
         from_date = shared.season_start_bound(season)
-        to_date = datetime.strftime(shared.season_end_bound(str(season + 1)), "%Y-%m-%d")
+        to_date = datetime.strftime(shared.season_end_bound(str(int(season) + 1)), "%Y-%m-%d")
 
         games = json_schedule.scrape_schedule(from_date, to_date, preseason)
-        pbp_df, shifts_df = scrape_list_of_games(games, if_scrape_shifts)
+        pbp_df, shifts_df = scrape_list_of_games(games, if_scrape_shifts, verbose)
 
         if data_format.lower() == 'csv':
             shared.to_csv(str(season) + str(season + 1), pbp_df, "nhl", "pbp")
@@ -209,7 +213,7 @@ def scrape_seasons(seasons, if_scrape_shifts, data_format='csv', preseason=False
             return {"pbp": pd.concat(master_pbps)}
 
 
-def scrape_games(games, if_scrape_shifts, data_format='csv', rescrape=False, docs_dir=False):
+def scrape_games(games, if_scrape_shifts, data_format='csv', rescrape=False, docs_dir=False, verbose=False):
     """
     Scrape a list of games
     
@@ -221,7 +225,8 @@ def scrape_games(games, if_scrape_shifts, data_format='csv', rescrape=False, doc
                      in after scraping. When True it'll refer to (or if needed create) such a repository in the home
                      directory. When provided a string it'll try to use that. Here it must be a valid directory otheriwse
                      it won't work (I won't make it for you). When False the files won't be saved. 
-    
+    :params verbose: Override default verbosity when printing errors
+
     :return: Dictionary with DataFrames and errors or None
     """
     shared.check_data_format(data_format)
@@ -232,7 +237,7 @@ def scrape_games(games, if_scrape_shifts, data_format='csv', rescrape=False, doc
     games_list = json_schedule.get_dates(games)
 
     # Scrape pbp and shifts
-    pbp_df, shifts_df = scrape_list_of_games(games_list, if_scrape_shifts)
+    pbp_df, shifts_df = scrape_list_of_games(games_list, if_scrape_shifts, verbose)
 
     if data_format.lower() == 'csv':
         shared.to_csv(str(int(time.time())), pbp_df, "nhl", "pbp")

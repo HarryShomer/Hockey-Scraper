@@ -7,7 +7,6 @@ from hockey_scraper.nhl import json_schedule
 def test_get_schedule():
     """Tests to see we get something when scraping. We want it to return a dictionary"""
     assert isinstance(json_schedule.get_schedule("2018-03-28", "2018-07-01"), dict)
-    assert isinstance(json_schedule.get_schedule("2017-09-01", "2018-09-15"), dict)
 
 
 def test_scrape_schedule():
@@ -40,7 +39,7 @@ def test_chunk_schedule_calls():
     """
     Test that we appropriately chunk calls in a range. Do so by by checking # of days in each chunk.
 
-    chunk_size = 50
+    chunk_size = 30
 
     Note: Won't always go to total days in interval as some days dont' have games
     """
@@ -50,11 +49,11 @@ def test_chunk_schedule_calls():
 
     # > 50
     x = json_schedule.chunk_schedule_calls('2018-10-10', '2019-04-10')
-    assert [len(chunk) for chunk in x] == [48, 47, 47, 30]
+    assert [len(chunk) for chunk in x] == [29, 29, 27, 27, 30, 29, 1]
 
     # 1 < x < 50
     x = json_schedule.chunk_schedule_calls('2018-10-10', '2018-11-15')
-    assert [len(chunk) for chunk in x] == [36]
+    assert [len(chunk) for chunk in x] == [29, 7]
 
 
 

@@ -4,8 +4,9 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hockey-Scraper &#8212; hockey_scraper 1.37.3 documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Hockey-Scraper &#8212; hockey_scraper 1.38.1 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/nature.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
@@ -28,7 +29,7 @@
         <li class="right" >
           <a href="nhl_scrape_functions.html" title="NHL Scraping Functions"
              accesskey="N">next</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">hockey_scraper 1.37.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="#">hockey_scraper 1.38.1 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Hockey-Scraper</a></li> 
       </ul>
     </div>  
@@ -38,9 +39,9 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="hockey-scraper">
+  <section id="hockey-scraper">
 <h1>Hockey-Scraper<a class="headerlink" href="#hockey-scraper" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="contents">
+<section id="contents">
 <h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
@@ -49,34 +50,27 @@
 <li class="toctree-l1"><a class="reference internal" href="license_link.html">License</a></li>
 </ul>
 </div>
-<dl class="simple">
-<dt><strong>Note:</strong></dt><dd><ul class="simple">
-<li><p>Coordinates are only scraped from ESPN for versions 1.33+</p></li>
-<li><p>NWHL usage has been deprecated due to the removal of the pbp information for each game.</p></li>
-</ul>
-</dd>
-</dl>
-</div>
-<div class="section" id="purpose">
+</section>
+<section id="purpose">
 <h2>Purpose<a class="headerlink" href="#purpose" title="Permalink to this headline">¶</a></h2>
 <p>Scrape NHL data off the NHL API and website. This includes the Play by Play and Shift data for each game. One can also scrape the schedule information. It currently supports all preseason, regular season, and playoff games from the 2007-2008 season onwards.</p>
-</div>
-<div class="section" id="prerequisites">
+</section>
+<section id="prerequisites">
 <h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
 <p>You are going to need to have python installed for this. This should work for both python 2.7 and 3. I recommend having
 from at least version 3.6.0 but earlier versions should be fine.</p>
-</div>
-<div class="section" id="installation">
+</section>
+<section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <p>To install all you need to do is open up your terminal and run:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">hockey_scraper</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="nhl-usage">
+</section>
+<section id="nhl-usage">
 <h2>NHL Usage<a class="headerlink" href="#nhl-usage" title="Permalink to this headline">¶</a></h2>
 <p>The full documentation can be found <a class="reference external" href="http://hockey-scraper.readthedocs.io/en/latest/">here</a>.</p>
-<div class="section" id="standard-scrape-functions">
+<section id="standard-scrape-functions">
 <h3>Standard Scrape Functions<a class="headerlink" href="#standard-scrape-functions" title="Permalink to this headline">¶</a></h3>
 <p>Scrape data on a season by season level:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">hockey_scraper</span>
@@ -118,8 +112,8 @@ from at least version 3.6.0 but earlier versions should be fine.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="schedule">
+</section>
+<section id="schedule">
 <h3>Schedule<a class="headerlink" href="#schedule" title="Permalink to this headline">¶</a></h3>
 <p>The schedule for any past or future games can be scraped as follows:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">hockey_scraper</span>
@@ -129,8 +123,8 @@ from at least version 3.6.0 but earlier versions should be fine.</p>
 </pre></div>
 </div>
 <p>The columns returned are: <cite>[‘game_id’, ‘date’, ‘venue’, ‘home_team’, ‘away_team’, ‘start_time’, ‘home_score’, ‘away_score’, ‘status’]</cite></p>
-</div>
-<div class="section" id="persistent-data">
+</section>
+<section id="persistent-data">
 <h3>Persistent Data<a class="headerlink" href="#persistent-data" title="Permalink to this headline">¶</a></h3>
 <p>All files and API calls retrieved can also be saved in a separate directory if wanted. The advanatge of this is reducing the amount of time needed to re-scrape a game as we don’t need to re-retrieve them. You can also later choose to parse the files yourself and glean any extra information not captured by this project.</p>
 <p>This is done by specifying the keyword argument <cite>docs_dir</cite> equal to <cite>True</cite> to automatically store and look for the data in a directory called <cite>~/hockey_scraper_data</cite>. Or you can provide your own directory where you want everything to be stored (it must exist beforehand). If no value is specified for <cite>docs_dir</cite> it will retrieve everything from the source and not from your saved directory.</p>
@@ -151,8 +145,8 @@ from at least version 3.6.0 but earlier versions should be fine.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">hockey_scraper</span><span class="o">.</span><span class="n">scrape_seasons</span><span class="p">([</span><span class="mi">2015</span><span class="p">,</span> <span class="mi">2016</span><span class="p">],</span> <span class="kc">True</span><span class="p">,</span> <span class="n">docs_dir</span><span class="o">=</span><span class="n">USER_PATH</span><span class="p">,</span> <span class="n">rescrape</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="live-scraping">
+</section>
+<section id="live-scraping">
 <h3>Live Scraping<a class="headerlink" href="#live-scraping" title="Permalink to this headline">¶</a></h3>
 <p>Here is a simple example of a way to setup live scraping. I strongly suggest checking out
 <a class="reference external" href="https://hockey-scraper.readthedocs.io/en/latest/live_scrape.html">this section</a> of the docs if you plan on using this.</p>
@@ -199,22 +193,22 @@ from at least version 3.6.0 but earlier versions should be fine.</p>
             <span class="n">to_csv</span><span class="p">(</span><span class="n">game</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="contact">
+</section>
+</section>
+<section id="contact">
 <h2>Contact<a class="headerlink" href="#contact" title="Permalink to this headline">¶</a></h2>
 <p>Please contact me for any issues or suggestions. For any bugs or anything related to the code please open an issue.
 Otherwise you can email me at <a class="reference external" href="mailto:Harryshomer&#37;&#52;&#48;gmail&#46;com">Harryshomer<span>&#64;</span>gmail<span>&#46;</span>com</a>.</p>
-</div>
-<div class="section" id="indices-and-tables">
+</section>
+<section id="indices-and-tables">
 <h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
 <li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
 <li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
 </ul>
-</div>
-</div>
+</section>
+</section>
 
 
             <div class="clearer"></div>
@@ -257,7 +251,7 @@ Otherwise you can email me at <a class="reference external" href="mailto:Harrysh
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -279,13 +273,13 @@ Otherwise you can email me at <a class="reference external" href="mailto:Harrysh
         <li class="right" >
           <a href="nhl_scrape_functions.html" title="NHL Scraping Functions"
              >next</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">hockey_scraper 1.37.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="#">hockey_scraper 1.38.1 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Hockey-Scraper</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2020, Harry Shomer.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.1.
     </div>
   </body>
 </html>

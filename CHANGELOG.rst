@@ -52,3 +52,6 @@ v1.37
 v1.3.8
 ------
   * Convert tri-codes from new format to old in Html PBP. Mappings stored in utils/tri_code_conversion.json. 
+  * Added verbose option to top-level scrape functions
+  * Replaced default parser for HTML PBP with "html5lib" over "lxml". lxml was having issues with older games.
+  * Reduced chunk size in nhl.json_schedule.chunk_schedule_calls to 30 from 50. Was having some issues during tests. 

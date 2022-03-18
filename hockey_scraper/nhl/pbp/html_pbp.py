@@ -64,7 +64,7 @@ def get_contents(game_html):
     
     :return: "soupified" html 
     """
-    parsers = ["lxml", "html.parser", "html5lib"]
+    parsers = ["html5lib", "lxml", "html.parser"]
     strainer = SoupStrainer('td', attrs={'class': re.compile(r'bborder')})
 
     for parser in parsers:
@@ -803,6 +803,7 @@ def scrape_pbp(game_html, game_id, players, teams):
         return None
 
     cleaned_html = clean_html_pbp(game_html)
+
     if len(cleaned_html) == 0:
         shared.print_error("Html pbp contains no plays, this game can't be scraped")
         return None
@@ -810,8 +811,8 @@ def scrape_pbp(game_html, game_id, players, teams):
     try:
         game_df = parse_html(cleaned_html, players, teams)
     except Exception as e:
-       shared.print_error('Error parsing Html pbp for game {} {}'.format(game_id, e))
-       return None
+        shared.print_error('Error parsing Html pbp for game {} {}'.format(game_id, e))
+        return None
 
     # These sometimes end up as objects
     game_df.Period = game_df.Period.astype(int)
