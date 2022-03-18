@@ -204,7 +204,7 @@ Copyright
 ---------
 ::
 
-    Copyright (C) 2017-2022 Harry Shomer
+    Copyright (C) 2019-2022 Harry Shomer
     This file is part of hockey_scraper
 
     hockey_scraper is free software: you can redistribute it and/or modify
