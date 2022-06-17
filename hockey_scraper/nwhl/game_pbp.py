@@ -36,7 +36,7 @@ def scrape_page(url):
     wait = WebDriverWait(driver, 10)
 
     driver.get(url)
-    time.sleep(8)
+    time.sleep(5)
 
     """
 

@@ -26,7 +26,7 @@ def scrape_dynamic(url):
     """
     browser = webdriver.Chrome(chrome_options=options)
     browser.get(url)
-    time.sleep(5)
+    time.sleep(3)
 
     # Scroll down to get all the games - Do it a few times to make sure
     for _ in range(5):

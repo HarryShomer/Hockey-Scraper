@@ -241,7 +241,7 @@ def scrape_page(url):
             page = None
 
     # Pause for 1 second - make it more if you want
-    time.sleep(1)
+    time.sleep(.1)
 
     return page
 

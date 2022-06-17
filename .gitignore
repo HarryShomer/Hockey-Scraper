@@ -1,3 +1,6 @@
+pyvenv.cfg
+Scripts/
+Lib
 .DS_Store
 .idea/
 .csv/
