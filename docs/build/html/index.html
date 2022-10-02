@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
     <title>Hockey-Scraper &#8212; hockey_scraper 1.38.1 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
@@ -12,6 +12,7 @@
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -40,9 +41,9 @@
           <div class="body" role="main">
             
   <section id="hockey-scraper">
-<h1>Hockey-Scraper<a class="headerlink" href="#hockey-scraper" title="Permalink to this headline">¶</a></h1>
+<h1>Hockey-Scraper<a class="headerlink" href="#hockey-scraper" title="Permalink to this heading">¶</a></h1>
 <section id="contents">
-<h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
+<h2>Contents<a class="headerlink" href="#contents" title="Permalink to this heading">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="nhl_scrape_functions.html">NHL Scraping Functions</a></li>
@@ -52,26 +53,27 @@
 </div>
 </section>
 <section id="purpose">
-<h2>Purpose<a class="headerlink" href="#purpose" title="Permalink to this headline">¶</a></h2>
-<p>Scrape NHL data off the NHL API and website. This includes the Play by Play and Shift data for each game. One can also scrape the schedule information. It currently supports all preseason, regular season, and playoff games from the 2007-2008 season onwards.</p>
+<h2>Purpose<a class="headerlink" href="#purpose" title="Permalink to this heading">¶</a></h2>
+<p>Scrape NHL data off the NHL API and website. This includes the Play by Play and Shift data for each game and the schedule information.
+It currently supports all preseason, regular season, and playoff games from the 2007-2008 season onwards.</p>
 </section>
 <section id="prerequisites">
-<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this heading">¶</a></h2>
 <p>You are going to need to have python installed for this. This should work for both python 2.7 and 3. I recommend having
 from at least version 3.6.0 but earlier versions should be fine.</p>
 </section>
 <section id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">¶</a></h2>
 <p>To install all you need to do is open up your terminal and run:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">hockey_scraper</span>
 </pre></div>
 </div>
 </section>
 <section id="nhl-usage">
-<h2>NHL Usage<a class="headerlink" href="#nhl-usage" title="Permalink to this headline">¶</a></h2>
+<h2>NHL Usage<a class="headerlink" href="#nhl-usage" title="Permalink to this heading">¶</a></h2>
 <p>The full documentation can be found <a class="reference external" href="http://hockey-scraper.readthedocs.io/en/latest/">here</a>.</p>
 <section id="standard-scrape-functions">
-<h3>Standard Scrape Functions<a class="headerlink" href="#standard-scrape-functions" title="Permalink to this headline">¶</a></h3>
+<h3>Standard Scrape Functions<a class="headerlink" href="#standard-scrape-functions" title="Permalink to this heading">¶</a></h3>
 <p>Scrape data on a season by season level:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">hockey_scraper</span>
 
@@ -114,7 +116,7 @@ from at least version 3.6.0 but earlier versions should be fine.</p>
 </div>
 </section>
 <section id="schedule">
-<h3>Schedule<a class="headerlink" href="#schedule" title="Permalink to this headline">¶</a></h3>
+<h3>Schedule<a class="headerlink" href="#schedule" title="Permalink to this heading">¶</a></h3>
 <p>The schedule for any past or future games can be scraped as follows:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">hockey_scraper</span>
 
@@ -125,12 +127,17 @@ from at least version 3.6.0 but earlier versions should be fine.</p>
 <p>The columns returned are: <cite>[‘game_id’, ‘date’, ‘venue’, ‘home_team’, ‘away_team’, ‘start_time’, ‘home_score’, ‘away_score’, ‘status’]</cite></p>
 </section>
 <section id="persistent-data">
-<h3>Persistent Data<a class="headerlink" href="#persistent-data" title="Permalink to this headline">¶</a></h3>
-<p>All files and API calls retrieved can also be saved in a separate directory if wanted. The advanatge of this is reducing the amount of time needed to re-scrape a game as we don’t need to re-retrieve them. You can also later choose to parse the files yourself and glean any extra information not captured by this project.</p>
-<p>This is done by specifying the keyword argument <cite>docs_dir</cite> equal to <cite>True</cite> to automatically store and look for the data in a directory called <cite>~/hockey_scraper_data</cite>. Or you can provide your own directory where you want everything to be stored (it must exist beforehand). If no value is specified for <cite>docs_dir</cite> it will retrieve everything from the source and not from your saved directory.</p>
-<p>For example, let’s say we are want to have the JSON PBP data for game <a class="reference external" href="http://statsapi.web.nhl.com/api/v1/game/2019020001/feed/live">2019020001</a>. If an argument is passed for <cite>docs_dir</cite> it will first check to see if that call was already made by checking in the supplied directory. If it was, it will simply load in the data from that file and not make a GET request to the NHL API. However if it doesn’ exist, it will make a GET request and then save the output to our directory. This will ensure that next time you are requesting that data it can load it from a file.</p>
+<h3>Persistent Data<a class="headerlink" href="#persistent-data" title="Permalink to this heading">¶</a></h3>
+<p>All the raw game data files retrieved can also be saved to your disk. This allows for faster rescraping (we don’t need to re-retrieve them)
+and the ability to parse the data yourself.</p>
+<p>This is achieved by setting the keyword argument <cite>docs_dir=True</cite>. This will store the data in a directory called <cite>~/hockey_scraper_data</cite>.
+You can provide your own directory where you want everything to be stored (it must exist beforehand). By default <cite>docs_dir=False</cite>.</p>
+<p>For example, let’s say we are scraping the JSON PBP data for game <a class="reference external" href="http://statsapi.web.nhl.com/api/v1/game/2019020001/feed/live">2019020001</a>.
+If <cite>docs_dir</cite> isn’t <cite>False</cite> it will first check if the data is already in the directory. If so, it will load in the data from that file and not make a GET
+request to the NHL API. However if it doesn’t exist, it will make a GET request and then save the output to the directory.
+This will ensure that next time you are requesting that data it can load it from a file.</p>
 <p>Here are some examples.</p>
-<p>Default saving location in <cite>~/hockey_scraper_data</cite></p>
+<p>The default saving location is <cite>~/hockey_scraper_data</cite>.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create or try to refer to a directory in the home directory</span>
 <span class="c1"># Will create a directory called &#39;hockey_scraper_data&#39; in the home directory (if it doesn&#39;t exist)</span>
 <span class="n">hockey_scraper</span><span class="o">.</span><span class="n">scrape_seasons</span><span class="p">([</span><span class="mi">2015</span><span class="p">,</span> <span class="mi">2016</span><span class="p">],</span> <span class="kc">True</span><span class="p">,</span> <span class="n">docs_dir</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -147,7 +154,7 @@ from at least version 3.6.0 but earlier versions should be fine.</p>
 </div>
 </section>
 <section id="live-scraping">
-<h3>Live Scraping<a class="headerlink" href="#live-scraping" title="Permalink to this headline">¶</a></h3>
+<h3>Live Scraping<a class="headerlink" href="#live-scraping" title="Permalink to this heading">¶</a></h3>
 <p>Here is a simple example of a way to setup live scraping. I strongly suggest checking out
 <a class="reference external" href="https://hockey-scraper.readthedocs.io/en/latest/live_scrape.html">this section</a> of the docs if you plan on using this.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">hockey_scraper</span> <span class="k">as</span> <span class="nn">hs</span>
@@ -196,12 +203,32 @@ from at least version 3.6.0 but earlier versions should be fine.</p>
 </section>
 </section>
 <section id="contact">
-<h2>Contact<a class="headerlink" href="#contact" title="Permalink to this headline">¶</a></h2>
+<h2>Contact<a class="headerlink" href="#contact" title="Permalink to this heading">¶</a></h2>
 <p>Please contact me for any issues or suggestions. For any bugs or anything related to the code please open an issue.
 Otherwise you can email me at <a class="reference external" href="mailto:Harryshomer&#37;&#52;&#48;gmail&#46;com">Harryshomer<span>&#64;</span>gmail<span>&#46;</span>com</a>.</p>
 </section>
+<section id="copyright">
+<h2>Copyright<a class="headerlink" href="#copyright" title="Permalink to this heading">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Copyright</span> <span class="p">(</span><span class="n">C</span><span class="p">)</span> <span class="mi">2019</span><span class="o">-</span><span class="mi">2022</span> <span class="n">Harry</span> <span class="n">Shomer</span>
+<span class="n">This</span> <span class="n">file</span> <span class="ow">is</span> <span class="n">part</span> <span class="n">of</span> <span class="n">hockey_scraper</span>
+
+<span class="n">hockey_scraper</span> <span class="ow">is</span> <span class="n">free</span> <span class="n">software</span><span class="p">:</span> <span class="n">you</span> <span class="n">can</span> <span class="n">redistribute</span> <span class="n">it</span> <span class="ow">and</span><span class="o">/</span><span class="ow">or</span> <span class="n">modify</span>
+<span class="n">it</span> <span class="n">under</span> <span class="n">the</span> <span class="n">terms</span> <span class="n">of</span> <span class="n">the</span> <span class="n">GNU</span> <span class="n">General</span> <span class="n">Public</span> <span class="n">License</span> <span class="k">as</span> <span class="n">published</span> <span class="n">by</span>
+<span class="n">the</span> <span class="n">Free</span> <span class="n">Software</span> <span class="n">Foundation</span><span class="p">,</span> <span class="n">either</span> <span class="n">version</span> <span class="mi">3</span> <span class="n">of</span> <span class="n">the</span> <span class="n">License</span><span class="p">,</span> <span class="ow">or</span>
+<span class="p">(</span><span class="n">at</span> <span class="n">your</span> <span class="n">option</span><span class="p">)</span> <span class="nb">any</span> <span class="n">later</span> <span class="n">version</span><span class="o">.</span>
+
+<span class="n">This</span> <span class="n">program</span> <span class="ow">is</span> <span class="n">distributed</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">hope</span> <span class="n">that</span> <span class="n">it</span> <span class="n">will</span> <span class="n">be</span> <span class="n">useful</span><span class="p">,</span>
+<span class="n">but</span> <span class="n">WITHOUT</span> <span class="n">ANY</span> <span class="n">WARRANTY</span><span class="p">;</span> <span class="n">without</span> <span class="n">even</span> <span class="n">the</span> <span class="n">implied</span> <span class="n">warranty</span> <span class="n">of</span>
+<span class="n">MERCHANTABILITY</span> <span class="ow">or</span> <span class="n">FITNESS</span> <span class="n">FOR</span> <span class="n">A</span> <span class="n">PARTICULAR</span> <span class="n">PURPOSE</span><span class="o">.</span>  <span class="n">See</span> <span class="n">the</span>
+<span class="n">GNU</span> <span class="n">General</span> <span class="n">Public</span> <span class="n">License</span> <span class="k">for</span> <span class="n">more</span> <span class="n">details</span><span class="o">.</span>
+
+<span class="n">You</span> <span class="n">should</span> <span class="n">have</span> <span class="n">received</span> <span class="n">a</span> <span class="n">copy</span> <span class="n">of</span> <span class="n">the</span> <span class="n">GNU</span> <span class="n">General</span> <span class="n">Public</span> <span class="n">License</span>
+<span class="n">along</span> <span class="k">with</span> <span class="n">this</span> <span class="n">program</span><span class="o">.</span>  <span class="n">If</span> <span class="ow">not</span><span class="p">,</span> <span class="n">see</span> <span class="o">&lt;</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">gnu</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">licenses</span><span class="o">/&gt;.</span>
+</pre></div>
+</div>
+</section>
 <section id="indices-and-tables">
-<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h2>
+<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
 <li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
@@ -217,8 +244,9 @@ Otherwise you can email me at <a class="reference external" href="mailto:Harrysh
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="#">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="#">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Hockey-Scraper</a><ul>
 <li><a class="reference internal" href="#contents">Contents</a></li>
 <li><a class="reference internal" href="#purpose">Purpose</a></li>
@@ -232,14 +260,18 @@ Otherwise you can email me at <a class="reference external" href="mailto:Harrysh
 </ul>
 </li>
 <li><a class="reference internal" href="#contact">Contact</a></li>
+<li><a class="reference internal" href="#copyright">Copyright</a></li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
 </li>
 </ul>
 
-  <h4>Next topic</h4>
-  <p class="topless"><a href="nhl_scrape_functions.html"
-                        title="next chapter">NHL Scraping Functions</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="nhl_scrape_functions.html"
+                          title="next chapter">NHL Scraping Functions</a></p>
+  </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -256,7 +288,7 @@ Otherwise you can email me at <a class="reference external" href="mailto:Harrysh
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -279,7 +311,7 @@ Otherwise you can email me at <a class="reference external" href="mailto:Harrysh
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2020, Harry Shomer.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.1.1.
     </div>
   </body>
 </html>

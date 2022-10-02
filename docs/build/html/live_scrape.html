@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
     <title>Live Scraping &#8212; hockey_scraper 1.38.1 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
@@ -12,6 +12,7 @@
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -44,9 +45,9 @@
           <div class="body" role="main">
             
   <section id="live-scraping">
-<h1>Live Scraping<a class="headerlink" href="#live-scraping" title="Permalink to this headline">¶</a></h1>
+<h1>Live Scraping<a class="headerlink" href="#live-scraping" title="Permalink to this heading">¶</a></h1>
 <section id="standard-usage">
-<h2>Standard Usage<a class="headerlink" href="#standard-usage" title="Permalink to this headline">¶</a></h2>
+<h2>Standard Usage<a class="headerlink" href="#standard-usage" title="Permalink to this heading">¶</a></h2>
 <p>To get all the info for every game on a specific day we create a ScrapeLiveGames object.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">hockey_scraper</span> <span class="k">as</span> <span class="nn">hs</span>
 
@@ -152,7 +153,7 @@ rather than instantiating a LiveGame object (you will be on the hook for a lot o
 </div>
 </section>
 <section id="further-usage">
-<h2>Further Usage<a class="headerlink" href="#further-usage" title="Permalink to this headline">¶</a></h2>
+<h2>Further Usage<a class="headerlink" href="#further-usage" title="Permalink to this heading">¶</a></h2>
 <p>If you would like more control over what you are doing then you should be dealing directly with LiveGame objects. As
 mentioned previously, still use ScrapeLiveGames to get the game info but you can then just extract the list of games
 and do as you please.</p>
@@ -261,14 +262,14 @@ the most recent event if the game is over or in intermission. So if the last sta
 too we know we don’t need to scrape. But if the last status wasn’t the means we are missing some information (presumably
 something happened between the last event and the end of the period).</p>
 <section id="module-hockey_scraper.nhl.live_scrape">
-<span id="live-scrape"></span><h3>Live Scrape<a class="headerlink" href="#module-hockey_scraper.nhl.live_scrape" title="Permalink to this headline">¶</a></h3>
+<span id="live-scrape"></span><h3>Live Scrape<a class="headerlink" href="#module-hockey_scraper.nhl.live_scrape" title="Permalink to this heading">¶</a></h3>
 <p>Module to scrape live game info</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="hockey_scraper.nhl.live_scrape.LiveGame">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.live_scrape.</span></span><span class="sig-name descname"><span class="pre">LiveGame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">home_team</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">away_team</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">espn_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">if_scrape_shifts</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.live_scrape.LiveGame" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is a class holds all the information for a given game</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>game_id</strong> (<em>int</em>) – The NHL game id (ex: 2018020001)</p></li>
 <li><p><strong>start_time</strong> (<em>datetime</em>) – The UTC time of when the game begins</p></li>
@@ -294,10 +295,10 @@ something happened between the last event and the end of the period).</p>
 <span class="sig-name descname"><span class="pre">is_game_over</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prev</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.live_scrape.LiveGame.is_game_over" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if the game is over for both the html and json pbp. If prev=True check for the previous event</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>prev</strong> – Check the game status for the previous event</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Boolean - True if over</p>
 </dd>
 </dl>
@@ -308,10 +309,10 @@ something happened between the last event and the end of the period).</p>
 <span class="sig-name descname"><span class="pre">is_intermission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prev</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.live_scrape.LiveGame.is_intermission" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if in intermission for both the html and json pbp. If prev=True check for the previous event</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>prev</strong> – Check the game status for the previous event</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Boolean - True if yes</p>
 </dd>
 </dl>
@@ -327,7 +328,7 @@ recent events. They’ll be delayed for intermission and won’t place it at all
 previous event as a guide. If it’s currently in intermission or Final - we check the previous status. If it’s 
 the same the user already has the data. Otherwise we ‘lie’ and say the game is still ongoing.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Boolean</p>
 </dd>
 </dl>
@@ -338,10 +339,10 @@ the same the user already has the data. Otherwise we ‘lie’ and say the game 
 <span class="sig-name descname"><span class="pre">scrape</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.live_scrape.LiveGame.scrape" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape the given game. Check if currently ongoing or started</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>force</strong> (<em>bool</em>) – Whether or not to force it to scrape even if it’s over</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
 </dd>
 </dl>
@@ -352,10 +353,10 @@ the same the user already has the data. Otherwise we ‘lie’ and say the game 
 <span class="sig-name descname"><span class="pre">scrape_live_game</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.live_scrape.LiveGame.scrape_live_game" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape the live info for a given game</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>force</strong> – Whether to scrape no matter what (used for intermission here)</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
 </dd>
 </dl>
@@ -366,7 +367,7 @@ the same the user already has the data. Otherwise we ‘lie’ and say the game 
 <span class="sig-name descname"><span class="pre">time_until_game</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.live_scrape.LiveGame.time_until_game" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the seconds until the game starts</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>seconds until game</p>
 </dd>
 </dl>
@@ -379,7 +380,7 @@ the same the user already has the data. Otherwise we ‘lie’ and say the game 
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.live_scrape.</span></span><span class="sig-name descname"><span class="pre">ScrapeLiveGames</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preseason</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">if_scrape_shifts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pause</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">game_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.live_scrape.ScrapeLiveGames" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class than contains the info for all the games on a specific day</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>date</strong> (<em>str</em>) – Date of games (ex: 2018-10-30)</p></li>
 <li><p><strong>preseason</strong> (<em>bool</em>) – If you want to scrape preseason games</p></li>
@@ -394,7 +395,7 @@ the same the user already has the data. Otherwise we ‘lie’ and say the game 
 <span class="sig-name descname"><span class="pre">finished</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.live_scrape.ScrapeLiveGames.finished" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if done with all games</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Boolean</p>
 </dd>
 </dl>
@@ -405,10 +406,10 @@ the same the user already has the data. Otherwise we ‘lie’ and say the game 
 <span class="sig-name descname"><span class="pre">get_espn_ids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">games</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.live_scrape.ScrapeLiveGames.get_espn_ids" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get espn game ids for all games that day</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>games</strong> (<em>list</em>) – games today</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Games with corresponding espn game ids</p>
 </dd>
 </dl>
@@ -419,7 +420,7 @@ the same the user already has the data. Otherwise we ‘lie’ and say the game 
 <span class="sig-name descname"><span class="pre">get_games</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.live_scrape.ScrapeLiveGames.get_games" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get initial game info -&gt; Called with object creation. Includes: players, espn_ids, standard game info</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Dict - LiveGame objects for all games today</p>
 </dd>
 </dl>
@@ -430,7 +431,7 @@ the same the user already has the data. Otherwise we ‘lie’ and say the game 
 <span class="sig-name descname"><span class="pre">sleep_next_game</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.live_scrape.ScrapeLiveGames.sleep_next_game" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sleep until the next game starts. Otherwise just looping and doing nothing</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>None</p>
 </dd>
 </dl>
@@ -441,13 +442,13 @@ the same the user already has the data. Otherwise we ‘lie’ and say the game 
 <span class="sig-name descname"><span class="pre">update_live_games</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sleep_next</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.live_scrape.ScrapeLiveGames.update_live_games" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape the pbp &amp; shifts of ongoing games</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>force</strong> (<em>bool</em>) – Whether or not to force it to scrape even if it’s in intermission</p></li>
 <li><p><strong>sleep_next</strong> (<em>bool</em>) – Sleep until the next game starts</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
 </dd>
 </dl>
@@ -460,10 +461,10 @@ the same the user already has the data. Otherwise we ‘lie’ and say the game 
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.live_scrape.</span></span><span class="sig-name descname"><span class="pre">check_date_format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">date</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.live_scrape.check_date_format" title="Permalink to this definition">¶</a></dt>
 <dd><p>Verify the date format. If wrong raises a ValueError</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>date</strong> – User supplied date</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
 </dd>
 </dl>
@@ -474,10 +475,10 @@ the same the user already has the data. Otherwise we ‘lie’ and say the game 
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.live_scrape.</span></span><span class="sig-name descname"><span class="pre">set_docs_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_dir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.live_scrape.set_docs_dir" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the docs directory</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>user_dir</strong> – User specified directory for storing saves scraped files</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
 </dd>
 </dl>
@@ -494,8 +495,9 @@ the same the user already has the data. Otherwise we ‘lie’ and say the game 
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Live Scraping</a><ul>
 <li><a class="reference internal" href="#standard-usage">Standard Usage</a></li>
 <li><a class="reference internal" href="#further-usage">Further Usage</a><ul>
@@ -506,12 +508,17 @@ the same the user already has the data. Otherwise we ‘lie’ and say the game 
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="nhl_scrape_functions.html"
-                        title="previous chapter">NHL Scraping Functions</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="license_link.html"
-                        title="next chapter">License</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="nhl_scrape_functions.html"
+                          title="previous chapter">NHL Scraping Functions</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="license_link.html"
+                          title="next chapter">License</a></p>
+  </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -528,7 +535,7 @@ the same the user already has the data. Otherwise we ‘lie’ and say the game 
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -554,7 +561,7 @@ the same the user already has the data. Otherwise we ‘lie’ and say the game 
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2020, Harry Shomer.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.1.1.
     </div>
   </body>
 </html>
