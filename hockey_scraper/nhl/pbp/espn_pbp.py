@@ -147,7 +147,10 @@ def get_espn_game(date, home_team, away_team, game_id=None):
     }
     response = shared.get_file(file_info)
 
-    ## Why here???
+    print(file_info)
+
+
+    ## Needed?
     if response is None:
         raise Exception
 
@@ -240,3 +243,8 @@ def scrape_game(date, home_team, away_team, game_id=None):
     
     return espn_df
 
+
+
+
+# if __name__ == "__main__":
+#     get_espn_game('2022-10-08', 'SJS', 'NSH')

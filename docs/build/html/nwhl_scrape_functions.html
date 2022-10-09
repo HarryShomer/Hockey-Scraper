@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
     <title>NWHL Scraping Functions &#8212; hockey_scraper 1.38.1 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
@@ -12,7 +12,9 @@
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" /> 
   </head><body>
@@ -36,9 +38,9 @@
           <div class="body" role="main">
             
   <section id="nwhl-scraping-functions">
-<h1>NWHL Scraping Functions<a class="headerlink" href="#nwhl-scraping-functions" title="Permalink to this headline">¶</a></h1>
+<h1>NWHL Scraping Functions<a class="headerlink" href="#nwhl-scraping-functions" title="Permalink to this heading">¶</a></h1>
 <section id="scraping">
-<h2>Scraping<a class="headerlink" href="#scraping" title="Permalink to this headline">¶</a></h2>
+<h2>Scraping<a class="headerlink" href="#scraping" title="Permalink to this heading">¶</a></h2>
 <p>There are three ways to scrape games:</p>
 <p>1. <em>Scrape by Season</em>:</p>
 <p>Scrape games on a season by season level (Note: A given season is referred to by the first of the two years it spans.
@@ -73,14 +75,14 @@ So you would refer to the 2016-2017 season as 2016).</p>
 </pre></div>
 </div>
 <section id="module-hockey_scraper.nwhl.scrape_functions">
-<span id="scrape-functions"></span><h3>Scrape Functions<a class="headerlink" href="#module-hockey_scraper.nwhl.scrape_functions" title="Permalink to this headline">¶</a></h3>
+<span id="scrape-functions"></span><h3>Scrape Functions<a class="headerlink" href="#module-hockey_scraper.nwhl.scrape_functions" title="Permalink to this heading">¶</a></h3>
 <p>Functions to scrape by season, games, and date range</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="hockey_scraper.nwhl.scrape_functions.print_errors">
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nwhl.scrape_functions.</span></span><span class="sig-name descname"><span class="pre">print_errors</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nwhl.scrape_functions.print_errors" title="Permalink to this definition">¶</a></dt>
 <dd><p>Print any scraping errors.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>None</p>
 </dd>
 </dl>
@@ -91,7 +93,7 @@ So you would refer to the 2016-2017 season as 2016).</p>
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nwhl.scrape_functions.</span></span><span class="sig-name descname"><span class="pre">scrape_date_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">from_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'csv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rescrape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">docs_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nwhl.scrape_functions.scrape_date_range" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape games in given date range</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>from_date</strong> – date you want to scrape from</p></li>
 <li><p><strong>to_date</strong> – date you want to scrape to</p></li>
@@ -101,7 +103,7 @@ So you would refer to the 2016-2017 season as 2016).</p>
 in after scraping. (default is None)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Dictionary with DataFrames and errors or None</p>
 </dd>
 </dl>
@@ -112,7 +114,7 @@ in after scraping. (default is None)</p></li>
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nwhl.scrape_functions.</span></span><span class="sig-name descname"><span class="pre">scrape_games</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">games</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'csv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rescrape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">docs_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nwhl.scrape_functions.scrape_games" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape a list of games</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>games</strong> – list of game_ids</p></li>
 <li><p><strong>data_format</strong> – format you want data in - csv or pandas (csv is default)</p></li>
@@ -121,7 +123,7 @@ in after scraping. (default is None)</p></li>
 in after scraping</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Dictionary with DataFrames or None</p>
 </dd>
 </dl>
@@ -132,10 +134,10 @@ in after scraping</p></li>
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nwhl.scrape_functions.</span></span><span class="sig-name descname"><span class="pre">scrape_list_of_games</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">games</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nwhl.scrape_functions.scrape_list_of_games" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape an arbitrary list of games given the game id’s</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>games</strong> – List of game_id’s to scrape</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>DataFrame of pbp info</p>
 </dd>
 </dl>
@@ -146,7 +148,7 @@ in after scraping</p></li>
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nwhl.scrape_functions.</span></span><span class="sig-name descname"><span class="pre">scrape_seasons</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seasons</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'csv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rescrape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">docs_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nwhl.scrape_functions.scrape_seasons" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given list of seasons it scrapes all the seasons</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>seasons</strong> – list of seasons</p></li>
 <li><p><strong>data_format</strong> – format you want data in - csv or pandas (csv is default)</p></li>
@@ -155,7 +157,7 @@ in after scraping</p></li>
 in after scraping</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Dictionary with DataFrames and errors or None</p>
 </dd>
 </dl>
@@ -163,10 +165,10 @@ in after scraping</p></li>
 
 </section>
 <section id="html-schedule">
-<h3>Html Schedule<a class="headerlink" href="#html-schedule" title="Permalink to this headline">¶</a></h3>
+<h3>Html Schedule<a class="headerlink" href="#html-schedule" title="Permalink to this heading">¶</a></h3>
 </section>
 <section id="json-pbp">
-<h3>Json PBP<a class="headerlink" href="#json-pbp" title="Permalink to this headline">¶</a></h3>
+<h3>Json PBP<a class="headerlink" href="#json-pbp" title="Permalink to this heading">¶</a></h3>
 </section>
 </section>
 </section>
@@ -178,11 +180,19 @@ in after scraping</p></li>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">NWHL Scraping Functions</a><ul>
 <li><a class="reference internal" href="#scraping">Scraping</a><ul>
-<li><a class="reference internal" href="#module-hockey_scraper.nwhl.scrape_functions">Scrape Functions</a></li>
+<li><a class="reference internal" href="#module-hockey_scraper.nwhl.scrape_functions">Scrape Functions</a><ul>
+<li><a class="reference internal" href="#hockey_scraper.nwhl.scrape_functions.print_errors"><code class="docutils literal notranslate"><span class="pre">print_errors()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nwhl.scrape_functions.scrape_date_range"><code class="docutils literal notranslate"><span class="pre">scrape_date_range()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nwhl.scrape_functions.scrape_games"><code class="docutils literal notranslate"><span class="pre">scrape_games()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nwhl.scrape_functions.scrape_list_of_games"><code class="docutils literal notranslate"><span class="pre">scrape_list_of_games()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nwhl.scrape_functions.scrape_seasons"><code class="docutils literal notranslate"><span class="pre">scrape_seasons()</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#html-schedule">Html Schedule</a></li>
 <li><a class="reference internal" href="#json-pbp">Json PBP</a></li>
 </ul>
@@ -191,6 +201,7 @@ in after scraping</p></li>
 </li>
 </ul>
 
+  </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -207,7 +218,7 @@ in after scraping</p></li>
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -227,7 +238,7 @@ in after scraping</p></li>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2020, Harry Shomer.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.2.3.
     </div>
   </body>
 </html>

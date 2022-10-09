@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
     <title>NHL Scraping Functions &#8212; hockey_scraper 1.38.1 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
@@ -12,7 +12,9 @@
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Live Scraping" href="live_scrape.html" />
@@ -44,9 +46,9 @@
           <div class="body" role="main">
             
   <section id="nhl-scraping-functions">
-<h1>NHL Scraping Functions<a class="headerlink" href="#nhl-scraping-functions" title="Permalink to this headline">¶</a></h1>
+<h1>NHL Scraping Functions<a class="headerlink" href="#nhl-scraping-functions" title="Permalink to this heading">¶</a></h1>
 <section id="scraping">
-<h2>Scraping<a class="headerlink" href="#scraping" title="Permalink to this headline">¶</a></h2>
+<h2>Scraping<a class="headerlink" href="#scraping" title="Permalink to this heading">¶</a></h2>
 <p>There are three ways to scrape games:</p>
 <p>1. <em>Scrape by Season</em>:</p>
 <p>Scrape games on a season by season level (Note: A given season is referred to by the first of the two years it spans.
@@ -142,7 +144,7 @@ games are scraped at your own risk. There is no guarantee it will work or that t
 <p>5. When including a directory, it must be a valid directory. It will not create it for you. You’ll get an error message
 but otherwise it will scrape as if no directory was provided.</p>
 <section id="module-hockey_scraper.nhl.scrape_functions">
-<span id="scrape-functions"></span><h3>Scrape Functions<a class="headerlink" href="#module-hockey_scraper.nhl.scrape_functions" title="Permalink to this headline">¶</a></h3>
+<span id="scrape-functions"></span><h3>Scrape Functions<a class="headerlink" href="#module-hockey_scraper.nhl.scrape_functions" title="Permalink to this heading">¶</a></h3>
 <p>Functions to scrape by season, games, and date range</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="hockey_scraper.nhl.scrape_functions.print_errors">
@@ -154,10 +156,10 @@ But a summary of broken games will be printed if over 25 games are scraped. The 
 it’ll be easier when you’ve scraped a lot of games to see all the errors at the end than scrolling
 though all the output and potentially missing it.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>detailed</strong> – When False only print player IDs otherwise all</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
 </dd>
 </dl>
@@ -168,7 +170,7 @@ though all the output and potentially missing it.</p>
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.scrape_functions.</span></span><span class="sig-name descname"><span class="pre">scrape_date_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">from_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">if_scrape_shifts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'csv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preseason</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rescrape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">docs_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.scrape_functions.scrape_date_range" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape games in given date range</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>from_date</strong> – date you want to scrape from</p></li>
 <li><p><strong>to_date</strong> – date you want to scrape to</p></li>
@@ -183,10 +185,10 @@ directory. When provided a string it’ll try to use that. Here it must be a val
 it won’t work (I won’t make it for you). When False the files won’t be saved.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Params verbose</dt>
+<dt class="field-even">Params verbose<span class="colon">:</span></dt>
 <dd class="field-even"><p>Override default verbosity when printing errors</p>
 </dd>
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Dictionary with DataFrames and errors or None</p>
 </dd>
 </dl>
@@ -197,7 +199,7 @@ it won’t work (I won’t make it for you). When False the files won’t be sav
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.scrape_functions.</span></span><span class="sig-name descname"><span class="pre">scrape_games</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">games</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">if_scrape_shifts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'csv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rescrape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">docs_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.scrape_functions.scrape_games" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape a list of games</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>games</strong> – list of game_ids</p></li>
 <li><p><strong>if_scrape_shifts</strong> – Boolean indicating whether to also scrape shifts</p></li>
@@ -209,10 +211,10 @@ directory. When provided a string it’ll try to use that. Here it must be a val
 it won’t work (I won’t make it for you). When False the files won’t be saved.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Params verbose</dt>
+<dt class="field-even">Params verbose<span class="colon">:</span></dt>
 <dd class="field-even"><p>Override default verbosity when printing errors</p>
 </dd>
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Dictionary with DataFrames and errors or None</p>
 </dd>
 </dl>
@@ -223,16 +225,16 @@ it won’t work (I won’t make it for you). When False the files won’t be sav
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.scrape_functions.</span></span><span class="sig-name descname"><span class="pre">scrape_list_of_games</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">games</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">if_scrape_shifts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.scrape_functions.scrape_list_of_games" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a list of game_id’s (and a date for each game) it scrapes them</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>games</strong> – list of [game_id, date]</p></li>
 <li><p><strong>if_scrape_shifts</strong> – Boolean indicating whether to also scrape shifts</p></li>
 </ul>
 </dd>
-<dt class="field-even">Params verbose</dt>
+<dt class="field-even">Params verbose<span class="colon">:</span></dt>
 <dd class="field-even"><p>Verbosity when printing errors. Defaults to False</p>
 </dd>
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>DataFrame of pbp info, also shifts if specified</p>
 </dd>
 </dl>
@@ -243,7 +245,7 @@ it won’t work (I won’t make it for you). When False the files won’t be sav
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.scrape_functions.</span></span><span class="sig-name descname"><span class="pre">scrape_schedule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">from_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'pandas'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rescrape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">docs_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.scrape_functions.scrape_schedule" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape the games schedule in a given range.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>from_date</strong> – date you want to scrape from</p></li>
 <li><p><strong>to_date</strong> – date you want to scrape to</p></li>
@@ -255,7 +257,7 @@ directory. When provided a string it’ll try to use that. Here it must be a val
 it won’t work (I won’t make it for you). When False the files won’t be saved.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>DataFrame of None</p>
 </dd>
 </dl>
@@ -266,7 +268,7 @@ it won’t work (I won’t make it for you). When False the files won’t be sav
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.scrape_functions.</span></span><span class="sig-name descname"><span class="pre">scrape_seasons</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seasons</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">if_scrape_shifts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'csv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preseason</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rescrape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">docs_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.scrape_functions.scrape_seasons" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given list of seasons it scrapes all the seasons</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>seasons</strong> – list of seasons</p></li>
 <li><p><strong>if_scrape_shifts</strong> – Boolean indicating whether to also scrape shifts</p></li>
@@ -280,10 +282,10 @@ directory. When provided a string it’ll try to use that. Here it must be a val
 it won’t work (I won’t make it for you). When False the files won’t be saved.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Params verbose</dt>
+<dt class="field-even">Params verbose<span class="colon">:</span></dt>
 <dd class="field-even"><p>Override default verbosity when printing errors</p>
 </dd>
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Dictionary with DataFrames and errors or None</p>
 </dd>
 </dl>
@@ -291,17 +293,17 @@ it won’t work (I won’t make it for you). When False the files won’t be sav
 
 </section>
 <section id="module-hockey_scraper.nhl.game_scraper">
-<span id="game-scraper"></span><h3>Game Scraper<a class="headerlink" href="#module-hockey_scraper.nhl.game_scraper" title="Permalink to this headline">¶</a></h3>
+<span id="game-scraper"></span><h3>Game Scraper<a class="headerlink" href="#module-hockey_scraper.nhl.game_scraper" title="Permalink to this heading">¶</a></h3>
 <p>This module contains code to scrape data for a single game</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="hockey_scraper.nhl.game_scraper.check_goalie">
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.game_scraper.</span></span><span class="sig-name descname"><span class="pre">check_goalie</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">row</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.game_scraper.check_goalie" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks for bad goalie names (you can tell by them having no player id)</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>row</strong> – df row</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
 </dd>
 </dl>
@@ -313,7 +315,7 @@ it won’t work (I won’t make it for you). When False the files won’t be sav
 <dd><p>Merge the coordinate from the espn feed into the html DataFrame</p>
 <p>Can’t join here on event_id because the plays are often out of order and pre-2009 are often missing events.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>html_df</strong> – DataFrame with info from html pbp</p></li>
 <li><p><strong>espn_df</strong> – DataFrame with info from espn pbp</p></li>
@@ -323,7 +325,7 @@ it won’t work (I won’t make it for you). When False the files won’t be sav
 <li><p><strong>home_team</strong> – home team</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>merged DataFrame</p>
 </dd>
 </dl>
@@ -335,7 +337,7 @@ it won’t work (I won’t make it for you). When False the files won’t be sav
 <dd><p>Join both data sources. First try merging on event id (which is the DataFrame index) if both DataFrames have the
 same number of rows. If they don’t have the same number of rows, merge on: Period’, Event, Seconds_Elapsed, p1_ID.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>json_df</strong> – json pbp DataFrame</p></li>
 <li><p><strong>html_df</strong> – html pbp DataFrame</p></li>
@@ -343,7 +345,7 @@ same number of rows. If they don’t have the same number of rows, merge on: Per
 <li><p><strong>date</strong> – date of game</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>finished pbp</p>
 </dd>
 </dl>
@@ -354,14 +356,14 @@ same number of rows. If they don’t have the same number of rows, merge on: Per
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.game_scraper.</span></span><span class="sig-name descname"><span class="pre">combine_players_lists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_players</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">roster_players</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">game_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.game_scraper.combine_players_lists" title="Permalink to this definition">¶</a></dt>
 <dd><p>Combine the json list of players (which contains id’s) with the list in the roster html</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>json_players</strong> – dict of all players with id’s</p></li>
 <li><p><strong>roster_players</strong> – dict with home and and away keys for players</p></li>
 <li><p><strong>game_id</strong> – id of game</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>dict containing home and away keys -&gt; which contains list of info on each player</p>
 </dd>
 </dl>
@@ -372,10 +374,10 @@ same number of rows. If they don’t have the same number of rows, merge on: Per
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.game_scraper.</span></span><span class="sig-name descname"><span class="pre">get_players_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game_json</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.game_scraper.get_players_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return dict of players for that game by team</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>players_json</strong> – players section of json</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>{team -&gt; players}</p>
 </dd>
 </dl>
@@ -386,14 +388,14 @@ same number of rows. If they don’t have the same number of rows, merge on: Per
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.game_scraper.</span></span><span class="sig-name descname"><span class="pre">get_teams_and_players</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game_json</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">roster</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">game_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.game_scraper.get_teams_and_players" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get list of players and teams for game</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>game_json</strong> – json pbp for game</p></li>
 <li><p><strong>roster</strong> – players from roster html</p></li>
 <li><p><strong>game_id</strong> – id for game</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>dict for both - players and teams</p>
 </dd>
 </dl>
@@ -405,14 +407,14 @@ same number of rows. If they don’t have the same number of rows, merge on: Per
 <dd><p>This scrapes the info for the game.
 The pbp is automatically scraped, and the whether or not to scrape the shifts is left up to the user.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>game_id</strong> – game to scrap</p></li>
 <li><p><strong>date</strong> – ex: 2016-10-24</p></li>
 <li><p><strong>if_scrape_shifts</strong> – Boolean indicating whether to also scrape shifts</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>DataFrame of pbp info
 (optional) DataFrame with shift info otherwise just None</p>
 </dd>
@@ -428,7 +430,7 @@ the HTML with coordinate.</p>
 <p>The espn_id and the html data can be fed as keyword argument to speed up execution. This is used by
 the live game scraping class.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>game_id</strong> – json game id</p></li>
 <li><p><strong>date</strong> – date of game</p></li>
@@ -440,7 +442,7 @@ the live game scraping class.</p>
 <li><p><strong>html_df</strong> – Can provide DataFrame for html. Only done for live-scraping</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>DataFrame with info or None if it fails</p>
 </dd>
 </dl>
@@ -451,7 +453,7 @@ the live game scraping class.</p>
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.game_scraper.</span></span><span class="sig-name descname"><span class="pre">scrape_pbp_live</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">roster</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">game_json</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">players</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">teams</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">espn_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.game_scraper.scrape_pbp_live" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wrapper for scraping the live pbp</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>game_id</strong> – json game id</p></li>
 <li><p><strong>date</strong> – date of game</p></li>
@@ -462,7 +464,7 @@ the live game scraping class.</p>
 <li><p><strong>espn_id</strong> – Game Id for the espn game. Only provided when live scraping</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Tuple - pbp &amp; status</p>
 </dd>
 </dl>
@@ -473,14 +475,14 @@ the live game scraping class.</p>
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.game_scraper.</span></span><span class="sig-name descname"><span class="pre">scrape_shifts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">players</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.game_scraper.scrape_shifts" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape the Shift charts (or TOI tables)</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>game_id</strong> – json game id</p></li>
 <li><p><strong>players</strong> – dict of players with numbers and id’s</p></li>
 <li><p><strong>date</strong> – date of game</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>DataFrame with info or None if it fails</p>
 </dd>
 </dl>
@@ -488,14 +490,14 @@ the live game scraping class.</p>
 
 </section>
 <section id="module-hockey_scraper.nhl.pbp.html_pbp">
-<span id="html-pbp"></span><h3>Html PBP<a class="headerlink" href="#module-hockey_scraper.nhl.pbp.html_pbp" title="Permalink to this headline">¶</a></h3>
+<span id="html-pbp"></span><h3>Html PBP<a class="headerlink" href="#module-hockey_scraper.nhl.pbp.html_pbp" title="Permalink to this heading">¶</a></h3>
 <p>This module contains functions to scrape the Html Play by Play for any given game</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.html_pbp.add_event_players">
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">add_event_players</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">players</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">home_team</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.add_event_players" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add players involved in the event to event_dict</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>event_dict</strong> – dict of parsed event stuff</p></li>
 <li><p><strong>event</strong> – fixed up html</p></li>
@@ -503,7 +505,7 @@ the live game scraping class.</p>
 <li><p><strong>home_team</strong> – home team</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
 </dd>
 </dl>
@@ -515,13 +517,13 @@ the live game scraping class.</p>
 <dd><p>Add event team for event.</p>
 <p>Always first thing in description</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>event_dict</strong> – dict of event info</p></li>
 <li><p><strong>event</strong> – list with parsed event info</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
 </dd>
 </dl>
@@ -535,13 +537,13 @@ the live game scraping class.</p>
 the ev_team as the blocking team (I like counting the shooting team for blocks). Therefore, when it’s the home team
 the zone only gets flipped when it’s a block. For away teams it’s the opposite.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>event_dict</strong> – dict of event info</p></li>
 <li><p><strong>home_team</strong> – home team</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
 </dd>
 </dl>
@@ -552,13 +554,13 @@ the zone only gets flipped when it’s a block. For away teams it’s the opposi
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">add_period</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.add_period" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add period for event</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>event_dict</strong> – dict of event info</p></li>
 <li><p><strong>event</strong> – list with parsed event info</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
 </dd>
 </dl>
@@ -569,7 +571,7 @@ the zone only gets flipped when it’s a block. For away teams it’s the opposi
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">add_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_score</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">home_team</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.add_score" title="Permalink to this definition">¶</a></dt>
 <dd><p>Change if someone scored…also change current score</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>event_dict</strong> – dict of parsed event stuff</p></li>
 <li><p><strong>event</strong> – event info from pbp</p></li>
@@ -577,7 +579,7 @@ the zone only gets flipped when it’s a block. For away teams it’s the opposi
 <li><p><strong>home_team</strong> – home team for game</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
 </dd>
 </dl>
@@ -588,14 +590,14 @@ the zone only gets flipped when it’s a block. For away teams it’s the opposi
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">add_strength</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">home_players</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">away_players</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.add_strength" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get strength for event -&gt; It’s home then away</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>event_dict</strong> – dict of event info</p></li>
 <li><p><strong>home_players</strong> – list of players for home team</p></li>
 <li><p><strong>away_players</strong> – list of players for away team</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
 </dd>
 </dl>
@@ -606,13 +608,13 @@ the zone only gets flipped when it’s a block. For away teams it’s the opposi
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">add_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.add_time" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fill in time and seconds elapsed</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>event_dict</strong> – dict of parsed event stuff</p></li>
 <li><p><strong>event</strong> – event info from pbp</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
 </dd>
 </dl>
@@ -623,7 +625,7 @@ the zone only gets flipped when it’s a block. For away teams it’s the opposi
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">add_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">players</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">home_team</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.add_type" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add “type” for event -&gt; either a penalty or a shot type</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>event_dict</strong> – dict of event info</p></li>
 <li><p><strong>event</strong> – list with parsed event info</p></li>
@@ -631,7 +633,7 @@ the zone only gets flipped when it’s a block. For away teams it’s the opposi
 <li><p><strong>home_team</strong> – home team for game</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
 </dd>
 </dl>
@@ -642,13 +644,13 @@ the zone only gets flipped when it’s a block. For away teams it’s the opposi
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">add_zone</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">play_description</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.add_zone" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determine which zone the play occurred in (unless one isn’t listed) and add it to dict</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>event_dict</strong> – dict of event info</p></li>
 <li><p><strong>play_description</strong> – the zone would be included here</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Off, Def, Neu, or NA</p>
 </dd>
 </dl>
@@ -659,10 +661,10 @@ the zone only gets flipped when it’s a block. For away teams it’s the opposi
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">clean_html_pbp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">html</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.clean_html_pbp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get rid of html and format the data</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>html</strong> – the requested url</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>a list with all the info</p>
 </dd>
 </dl>
@@ -673,10 +675,10 @@ the zone only gets flipped when it’s a block. For away teams it’s the opposi
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">cur_game_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">doc</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.cur_game_status" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the game status</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>doc</strong> – Html text</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>String -&gt; one of [‘Final’, ‘Intermission’, ‘Progress’]</p>
 </dd>
 </dl>
@@ -688,10 +690,10 @@ the zone only gets flipped when it’s a block. For away teams it’s the opposi
 <dd><p>Uses Beautiful soup to parses the html document.
 Some parsers work for some pages but don’t work for others….I’m not sure why so I just try them all here in order</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>game_html</strong> – html doc</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>“soupified” html</p>
 </dd>
 </dl>
@@ -703,10 +705,10 @@ Some parsers work for some pages but don’t work for others….I’m not sure w
 <dd><p>Given a game_id it returns the raw html
 Ex: <a class="reference external" href="http://www.nhl.com/scores/htmlreports/20162017/PL020475.HTM">http://www.nhl.com/scores/htmlreports/20162017/PL020475.HTM</a></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>game_id</strong> – the game</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>raw html of game</p>
 </dd>
 </dl>
@@ -717,14 +719,14 @@ Ex: <a class="reference external" href="http://www.nhl.com/scores/htmlreports/20
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">get_penalty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">play_description</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">players</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">home_team</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.get_penalty" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the penalty info</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>play_description</strong> – description of play field</p></li>
 <li><p><strong>players</strong> – all players with info</p></li>
 <li><p><strong>home_team</strong> – home team for game</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>penalty info</p>
 </dd>
 </dl>
@@ -736,7 +738,7 @@ Ex: <a class="reference external" href="http://www.nhl.com/scores/htmlreports/20
 <dd><p>This function is used for the description field in the html. Given a last name and a number it return the player’s 
 full name and id. Done by searching in players for the team until we find him (then just break)</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>number</strong> – player’s number</p></li>
 <li><p><strong>players</strong> – all players with info</p></li>
@@ -744,7 +746,7 @@ full name and id. Done by searching in players for the team until we find him (t
 <li><p><strong>home_team</strong> – home team defined b4 hand (from json)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>dict with full and and id</p>
 </dd>
 </dl>
@@ -759,10 +761,10 @@ in the json and there’s another ‘EGPID’ that can be found in both (not sur
 <p>Events ‘PGSTR’, ‘PGEND’, and ‘ANTHEM’ have been included at the start of each game for the 2017 season…I have no
 idea why.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>event</strong> – list of stuff in pbp</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>boolean</p>
 </dd>
 </dl>
@@ -774,14 +776,14 @@ idea why.</p>
 <dd><p>Parse the description field for a BLOCK</p>
 <p>MTL #76 SUBBAN BLOCKED BY TOR #2 SCHENN, Wrist, Def. Zone</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>description</strong> – Play Description</p></li>
 <li><p><strong>players</strong> – players in game</p></li>
 <li><p><strong>home_team</strong> – Home Team for game</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Dict with info</p>
 </dd>
 </dl>
@@ -792,7 +794,7 @@ idea why.</p>
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">parse_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">players</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">home_team</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_score</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.parse_event" title="Permalink to this definition">¶</a></dt>
 <dd><p>Receives an event and parses it</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>event</strong> – event type</p></li>
 <li><p><strong>players</strong> – players in game</p></li>
@@ -800,7 +802,7 @@ idea why.</p>
 <li><p><strong>current_score</strong> – current score for both teams</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>dict with info</p>
 </dd>
 </dl>
@@ -812,7 +814,7 @@ idea why.</p>
 <dd><p>Parse the description field for a face-off
 MTL won Neu. Zone - MTL #11 GOMEZ vs TOR #37 BRENT</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>description</strong> – Play Description</p></li>
 <li><p><strong>players</strong> – players in game</p></li>
@@ -820,7 +822,7 @@ MTL won Neu. Zone - MTL #11 GOMEZ vs TOR #37 BRENT</p>
 <li><p><strong>home_team</strong> – Home Team for game</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Dict with info</p>
 </dd>
 </dl>
@@ -832,7 +834,7 @@ MTL won Neu. Zone - MTL #11 GOMEZ vs TOR #37 BRENT</p>
 <dd><p>Parse the description field for a GOAL</p>
 <p>TOR #81 KESSEL(1), Wrist, Off. Zone, 14 ft. Assists: #42 BOZAK(1); #8 KOMISAREK(1)</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>description</strong> – Play Description</p></li>
 <li><p><strong>players</strong> – players in game</p></li>
@@ -840,7 +842,7 @@ MTL won Neu. Zone - MTL #11 GOMEZ vs TOR #37 BRENT</p>
 <li><p><strong>home_team</strong> – Home Team for game</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Dict with info</p>
 </dd>
 </dl>
@@ -852,14 +854,14 @@ MTL won Neu. Zone - MTL #11 GOMEZ vs TOR #37 BRENT</p>
 <dd><p>Parse the description field for a HIT</p>
 <p>MTL #20 O’BYRNE HIT TOR #18 BROWN, Def. Zone</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>description</strong> – Play Description</p></li>
 <li><p><strong>players</strong> – players in game</p></li>
 <li><p><strong>home_team</strong> – Home Team for game</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Dict with info</p>
 </dd>
 </dl>
@@ -870,14 +872,14 @@ MTL won Neu. Zone - MTL #11 GOMEZ vs TOR #37 BRENT</p>
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">parse_html</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">html</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">players</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">teams</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.parse_html" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse html game pbp</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>html</strong> – raw html</p></li>
 <li><p><strong>players</strong> – players in the game (from json pbp)</p></li>
 <li><p><strong>teams</strong> – dict with home and away teams</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>DataFrame with info</p>
 </dd>
 </dl>
@@ -889,14 +891,14 @@ MTL won Neu. Zone - MTL #11 GOMEZ vs TOR #37 BRENT</p>
 <dd><p>Parse the description field for a Penalty</p>
 <p>MTL #81 ELLER Hooking(2 min), Def. Zone Drawn By: TOR #11 SJOSTROM</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>description</strong> – Play Description</p></li>
 <li><p><strong>players</strong> – players in game</p></li>
 <li><p><strong>home_team</strong> – Home Team for game</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Dict with info</p>
 </dd>
 </dl>
@@ -911,7 +913,7 @@ ANA #23 BEAUCHEMIN, Slap, Wide of Net, Off. Zone, 42 ft.
 TOR GIVEAWAY - #35 GIGUERE, Def. Zone
 TOR TAKEAWAY - #9 ARMSTRONG, Off. Zone</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>description</strong> – Play Description</p></li>
 <li><p><strong>players</strong> – players in game</p></li>
@@ -919,7 +921,7 @@ TOR TAKEAWAY - #9 ARMSTRONG, Off. Zone</p>
 <li><p><strong>home_team</strong> – Home Team for game</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Dict with info</p>
 </dd>
 </dl>
@@ -937,7 +939,7 @@ TOR TAKEAWAY - #9 ARMSTRONG, Off. Zone</p>
 </dd>
 </dl>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>event_dict</strong> – dict with event info</p></li>
 <li><p><strong>players</strong> – all players in game and info</p></li>
@@ -945,7 +947,7 @@ TOR TAKEAWAY - #9 ARMSTRONG, Off. Zone</p>
 <li><p><strong>home_players</strong> – players for home team</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
 </dd>
 </dl>
@@ -957,10 +959,10 @@ TOR TAKEAWAY - #9 ARMSTRONG, Off. Zone</p>
 <dd><p>In the PBP html the name is in a format like: ‘Center - MIKE RICHARDS’
 Some also have a hyphen in their last name so can’t just split by ‘-’</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>info</strong> – position and name</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>name</p>
 </dd>
 </dl>
@@ -971,14 +973,14 @@ Some also have a hyphen in their last name so can’t just split by ‘-’</p>
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">scrape_game</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">players</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">teams</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.scrape_game" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape the data for the game when not live</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>game_id</strong> – game to scrape</p></li>
 <li><p><strong>players</strong> – dict with player info</p></li>
 <li><p><strong>teams</strong> – dict with home and away teams</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>DataFrame of game info or None if it fails</p>
 </dd>
 </dl>
@@ -989,14 +991,14 @@ Some also have a hyphen in their last name so can’t just split by ‘-’</p>
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">scrape_game_live</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">players</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">teams</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.scrape_game_live" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape the data for the game when it’s live</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>game_id</strong> – game to scrape</p></li>
 <li><p><strong>players</strong> – dict with player info</p></li>
 <li><p><strong>teams</strong> – dict with home and away teams</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Tuple - get_pbp(), cur_game_status()</p>
 </dd>
 </dl>
@@ -1007,7 +1009,7 @@ Some also have a hyphen in their last name so can’t just split by ‘-’</p>
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">scrape_pbp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game_html</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">game_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">players</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">teams</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.scrape_pbp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape the data for the pbp</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>game_html</strong> – Html doc for the game</p></li>
 <li><p><strong>game_id</strong> – game to scrape</p></li>
@@ -1015,7 +1017,7 @@ Some also have a hyphen in their last name so can’t just split by ‘-’</p>
 <li><p><strong>teams</strong> – dict with home and away teams</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>DataFrame of game info or None if it fails</p>
 </dd>
 </dl>
@@ -1026,10 +1028,10 @@ Some also have a hyphen in their last name so can’t just split by ‘-’</p>
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">shot_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">play_description</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.shot_type" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determine which zone the play occurred in (unless one isn’t listed)</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>play_description</strong> – the type would be in here</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>the type if it’s there (otherwise just NA)</p>
 </dd>
 </dl>
@@ -1040,10 +1042,10 @@ Some also have a hyphen in their last name so can’t just split by ‘-’</p>
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.html_pbp.</span></span><span class="sig-name descname"><span class="pre">strip_html_pbp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">td</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.html_pbp.strip_html_pbp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Strip html tags and such. (Note to Self: Don’t touch this!!!)</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>td</strong> – pbp</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>list of plays (which contain a list of info) stripped of html</p>
 </dd>
 </dl>
@@ -1051,17 +1053,17 @@ Some also have a hyphen in their last name so can’t just split by ‘-’</p>
 
 </section>
 <section id="module-hockey_scraper.nhl.pbp.json_pbp">
-<span id="json-pbp"></span><h3>Json PBP<a class="headerlink" href="#module-hockey_scraper.nhl.pbp.json_pbp" title="Permalink to this headline">¶</a></h3>
+<span id="json-pbp"></span><h3>Json PBP<a class="headerlink" href="#module-hockey_scraper.nhl.pbp.json_pbp" title="Permalink to this heading">¶</a></h3>
 <p>This module contains functions to scrape the Json Play by Play for any given game</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.json_pbp.change_event_name">
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.json_pbp.</span></span><span class="sig-name descname"><span class="pre">change_event_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.json_pbp.change_event_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Change event names from json style to html (ex: BLOCKED_SHOT to BLOCK).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>event</strong> – event type</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>fixed event type</p>
 </dd>
 </dl>
@@ -1073,10 +1075,10 @@ Some also have a hyphen in their last name so can’t just split by ‘-’</p>
 <dd><p>Given a game_id it returns the raw json
 Ex: <a class="reference external" href="http://statsapi.web.nhl.com/api/v1/game/2016020475/feed/live">http://statsapi.web.nhl.com/api/v1/game/2016020475/feed/live</a></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>game_id</strong> – string - the game</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>raw json of game or None if couldn’t get game</p>
 </dd>
 </dl>
@@ -1087,10 +1089,10 @@ Ex: <a class="reference external" href="http://statsapi.web.nhl.com/api/v1/game/
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.json_pbp.</span></span><span class="sig-name descname"><span class="pre">get_teams</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pbp_json</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.json_pbp.get_teams" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get teams</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>pbp_json</strong> – raw play by play json</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>dict with home and away</p>
 </dd>
 </dl>
@@ -1101,10 +1103,10 @@ Ex: <a class="reference external" href="http://statsapi.web.nhl.com/api/v1/game/
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.json_pbp.</span></span><span class="sig-name descname"><span class="pre">parse_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.json_pbp.parse_event" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parses a single event when the info is in a json format</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>event</strong> – json of event</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>dictionary with the info</p>
 </dd>
 </dl>
@@ -1115,13 +1117,13 @@ Ex: <a class="reference external" href="http://statsapi.web.nhl.com/api/v1/game/
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.json_pbp.</span></span><span class="sig-name descname"><span class="pre">parse_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game_json</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">game_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.json_pbp.parse_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape the json for a game</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>game_json</strong> – raw json</p></li>
 <li><p><strong>game_id</strong> – game id for game</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Either a DataFrame with info for the game or None when fail</p>
 </dd>
 </dl>
@@ -1133,10 +1135,10 @@ Ex: <a class="reference external" href="http://statsapi.web.nhl.com/api/v1/game/
 <dd><p><strong>Used for debugging</strong></p>
 <p>HTML depends on json so can’t follow this structure</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>game_id</strong> – game to scrape</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>DataFrame of game info</p>
 </dd>
 </dl>
@@ -1144,17 +1146,17 @@ Ex: <a class="reference external" href="http://statsapi.web.nhl.com/api/v1/game/
 
 </section>
 <section id="module-hockey_scraper.nhl.pbp.espn_pbp">
-<span id="espn-pbp"></span><h3>Espn PBP<a class="headerlink" href="#module-hockey_scraper.nhl.pbp.espn_pbp" title="Permalink to this headline">¶</a></h3>
+<span id="espn-pbp"></span><h3>Espn PBP<a class="headerlink" href="#module-hockey_scraper.nhl.pbp.espn_pbp" title="Permalink to this heading">¶</a></h3>
 <p>This module contains code to scrape coordinates for games off of espn for any given game</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.espn_pbp.event_type">
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.espn_pbp.</span></span><span class="sig-name descname"><span class="pre">event_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">play_description</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.espn_pbp.event_type" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the event type (ex: a SHOT or a GOAL…etc) given the event description.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>play_description</strong> – description of play</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>event</p>
 </dd>
 </dl>
@@ -1165,10 +1167,10 @@ Ex: <a class="reference external" href="http://statsapi.web.nhl.com/api/v1/game/
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.espn_pbp.</span></span><span class="sig-name descname"><span class="pre">get_espn_date</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">date</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.espn_pbp.get_espn_date" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the page that contains all the games for that day</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>date</strong> – YYYY-MM-DD</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>response</p>
 </dd>
 </dl>
@@ -1180,7 +1182,7 @@ Ex: <a class="reference external" href="http://statsapi.web.nhl.com/api/v1/game/
 <dd><p>Gets the ESPN pbp feed 
 Ex: <a class="reference external" href="http://www.espn.com/nhl/gamecast/data/masterFeed?lang=en&amp;isAll=true&amp;gameId=400885300">http://www.espn.com/nhl/gamecast/data/masterFeed?lang=en&amp;isAll=true&amp;gameId=400885300</a></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>date</strong> – date of the game</p></li>
 <li><p><strong>home_team</strong> – home team</p></li>
@@ -1188,7 +1190,7 @@ Ex: <a class="reference external" href="http://www.espn.com/nhl/gamecast/data/ma
 <li><p><strong>game_id</strong> – Game id of we already have it - for live scraping. None if not there</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>raw xml</p>
 </dd>
 </dl>
@@ -1200,14 +1202,14 @@ Ex: <a class="reference external" href="http://www.espn.com/nhl/gamecast/data/ma
 <dd><p>Scrapes the day’s schedule and gets the id for the given game
 Ex: <a class="reference external" href="http://www.espn.com/nhl/scoreboard/_/date/20161024">http://www.espn.com/nhl/scoreboard/_/date/20161024</a></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>date</strong> – format-&gt; YearMonthDay-&gt; 20161024</p></li>
 <li><p><strong>home_team</strong> – home team</p></li>
 <li><p><strong>away_team</strong> – away team</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>9 digit game id as a string</p>
 </dd>
 </dl>
@@ -1218,10 +1220,10 @@ Ex: <a class="reference external" href="http://www.espn.com/nhl/scoreboard/_/dat
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.espn_pbp.</span></span><span class="sig-name descname"><span class="pre">get_game_ids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">response</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.espn_pbp.get_game_ids" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get game_ids for date from doc</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>response</strong> – doc</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>list of game_ids</p>
 </dd>
 </dl>
@@ -1234,10 +1236,10 @@ Ex: <a class="reference external" href="http://www.espn.com/nhl/scoreboard/_/dat
 <p>ul-&gt; class = ScoreCell__Competitors</p>
 <p>div -&gt; class = ScoreCell__TeamName ScoreCell__TeamName–shortDisplayName truncate db</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>response</strong> – doc</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>list of teams</p>
 </dd>
 </dl>
@@ -1248,10 +1250,10 @@ Ex: <a class="reference external" href="http://www.espn.com/nhl/scoreboard/_/dat
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.espn_pbp.</span></span><span class="sig-name descname"><span class="pre">parse_espn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">espn_xml</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.espn_pbp.parse_espn" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse feed</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>espn_xml</strong> – raw xml of feed</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>DataFrame with info</p>
 </dd>
 </dl>
@@ -1263,10 +1265,10 @@ Ex: <a class="reference external" href="http://www.espn.com/nhl/scoreboard/_/dat
 <dd><p>Parse each event. In the string each field is separated by a ‘~’. 
 Relevant for here: The first two are the x and y coordinates. And the 4th and 5th are the time elapsed and period.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>event</strong> – string with info</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>return dict with relevant info</p>
 </dd>
 </dl>
@@ -1277,7 +1279,7 @@ Relevant for here: The first two are the x and y coordinates. And the 4th and 5t
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.espn_pbp.</span></span><span class="sig-name descname"><span class="pre">scrape_game</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">home_team</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">away_team</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">game_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.espn_pbp.scrape_game" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape the game</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>date</strong> – ex: 2016-20-24</p></li>
 <li><p><strong>home_team</strong> – tricode</p></li>
@@ -1285,7 +1287,7 @@ Relevant for here: The first two are the x and y coordinates. And the 4th and 5t
 <li><p><strong>game_id</strong> – Only provided for live games.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>DataFrame with info</p>
 </dd>
 </dl>
@@ -1293,17 +1295,17 @@ Relevant for here: The first two are the x and y coordinates. And the 4th and 5t
 
 </section>
 <section id="module-hockey_scraper.nhl.shifts.json_shifts">
-<span id="json-shifts"></span><h3>Json Shifts<a class="headerlink" href="#module-hockey_scraper.nhl.shifts.json_shifts" title="Permalink to this headline">¶</a></h3>
+<span id="json-shifts"></span><h3>Json Shifts<a class="headerlink" href="#module-hockey_scraper.nhl.shifts.json_shifts" title="Permalink to this heading">¶</a></h3>
 <p>This module contains functions to scrape the Json toi/shifts for any given game</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="hockey_scraper.nhl.shifts.json_shifts.fix_team_tricode">
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.shifts.json_shifts.</span></span><span class="sig-name descname"><span class="pre">fix_team_tricode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tricode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.shifts.json_shifts.fix_team_tricode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Some of the tricodes are different than how I want them</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>tricode</strong> – 3 letter team name - ex: NYR</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>fixed tricode</p>
 </dd>
 </dl>
@@ -1315,10 +1317,10 @@ Relevant for here: The first two are the x and y coordinates. And the 4th and 5t
 <dd><p>Given a game_id it returns the raw json
 Ex: <a class="reference external" href="https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId=2019020001">https://api.nhle.com/stats/rest/en/shiftcharts?cayenneExp=gameId=2019020001</a></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>game_id</strong> – the game</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>json or None</p>
 </dd>
 </dl>
@@ -1329,13 +1331,13 @@ Ex: <a class="reference external" href="https://api.nhle.com/stats/rest/en/shift
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.shifts.json_shifts.</span></span><span class="sig-name descname"><span class="pre">parse_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shift_json</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">game_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.shifts.json_shifts.parse_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse the json</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>shift_json</strong> – raw json</p></li>
 <li><p><strong>game_id</strong> – if of game</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>DataFrame with info</p>
 </dd>
 </dl>
@@ -1346,10 +1348,10 @@ Ex: <a class="reference external" href="https://api.nhle.com/stats/rest/en/shift
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.shifts.json_shifts.</span></span><span class="sig-name descname"><span class="pre">parse_shift</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shift</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.shifts.json_shifts.parse_shift" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse shift for json</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>shift</strong> – json for shift</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>dict with shift info</p>
 </dd>
 </dl>
@@ -1360,10 +1362,10 @@ Ex: <a class="reference external" href="https://api.nhle.com/stats/rest/en/shift
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.shifts.json_shifts.</span></span><span class="sig-name descname"><span class="pre">scrape_game</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.shifts.json_shifts.scrape_game" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape the game.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>game_id</strong> – game</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>DataFrame with info for the game</p>
 </dd>
 </dl>
@@ -1371,7 +1373,7 @@ Ex: <a class="reference external" href="https://api.nhle.com/stats/rest/en/shift
 
 </section>
 <section id="module-hockey_scraper.nhl.shifts.html_shifts">
-<span id="html-shifts"></span><h3>Html Shifts<a class="headerlink" href="#module-hockey_scraper.nhl.shifts.html_shifts" title="Permalink to this headline">¶</a></h3>
+<span id="html-shifts"></span><h3>Html Shifts<a class="headerlink" href="#module-hockey_scraper.nhl.shifts.html_shifts" title="Permalink to this heading">¶</a></h3>
 <p>This module contains functions to scrape the Html Toi Tables (or shifts) for any given game</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="hockey_scraper.nhl.shifts.html_shifts.analyze_shifts">
@@ -1379,7 +1381,7 @@ Ex: <a class="reference external" href="https://api.nhle.com/stats/rest/en/shift
 <dd><p>Analyze shifts for each player when using.
 Prior to this each player (in a dictionary) has a list with each entry being a shift.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>shift</strong> – info on shift</p></li>
 <li><p><strong>name</strong> – player name</p></li>
@@ -1388,7 +1390,7 @@ Prior to this each player (in a dictionary) has a list with each entry being a s
 <li><p><strong>player_ids</strong> – dict with info on players</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>dict with info for shift</p>
 </dd>
 </dl>
@@ -1400,10 +1402,10 @@ Prior to this each player (in a dictionary) has a list with each entry being a s
 <dd><p>Given a game_id it returns a the shifts for both teams
 Ex: <a class="reference external" href="http://www.nhl.com/scores/htmlreports/20162017/TV020971.HTM">http://www.nhl.com/scores/htmlreports/20162017/TV020971.HTM</a></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>game_id</strong> – the game</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Shifts or None</p>
 </dd>
 </dl>
@@ -1415,10 +1417,10 @@ Ex: <a class="reference external" href="http://www.nhl.com/scores/htmlreports/20
 <dd><p>Uses Beautiful soup to parses the html document.
 Some parsers work for some pages but don’t work for others….I’m not sure why so I just try them all here in order</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>shifts_html</strong> – html doc</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>“soupified” html and player_shifts portion of html (it’s a bunch of td tags)</p>
 </dd>
 </dl>
@@ -1429,10 +1431,10 @@ Some parsers work for some pages but don’t work for others….I’m not sure w
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.shifts.html_shifts.</span></span><span class="sig-name descname"><span class="pre">get_teams</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">soup</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.shifts.html_shifts.get_teams" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the team for the TOI tables and the home team</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>soup</strong> – souped up html</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>list with team and home team</p>
 </dd>
 </dl>
@@ -1444,14 +1446,14 @@ Some parsers work for some pages but don’t work for others….I’m not sure w
 <dd><p>Parse the html</p>
 <p>Note: Don’t fuck with this!!! I’m not exactly sure how or why but it works.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>html</strong> – cleaned up html</p></li>
 <li><p><strong>player_ids</strong> – dict of home and away players</p></li>
 <li><p><strong>game_id</strong> – id for game</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>DataFrame with info</p>
 </dd>
 </dl>
@@ -1462,13 +1464,13 @@ Some parsers work for some pages but don’t work for others….I’m not sure w
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.shifts.html_shifts.</span></span><span class="sig-name descname"><span class="pre">scrape_game</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">players</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.shifts.html_shifts.scrape_game" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape the game.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>game_id</strong> – id for game</p></li>
 <li><p><strong>players</strong> – list of players</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>DataFrame with info for the game</p>
 </dd>
 </dl>
@@ -1476,20 +1478,20 @@ Some parsers work for some pages but don’t work for others….I’m not sure w
 
 </section>
 <section id="module-hockey_scraper.nhl.json_schedule">
-<span id="schedule"></span><h3>Schedule<a class="headerlink" href="#module-hockey_scraper.nhl.json_schedule" title="Permalink to this headline">¶</a></h3>
+<span id="schedule"></span><h3>Schedule<a class="headerlink" href="#module-hockey_scraper.nhl.json_schedule" title="Permalink to this heading">¶</a></h3>
 <p>This module contains functions to scrape the json schedule for any games or date range</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="hockey_scraper.nhl.json_schedule.chunk_schedule_calls">
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.json_schedule.</span></span><span class="sig-name descname"><span class="pre">chunk_schedule_calls</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">from_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_date</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.json_schedule.chunk_schedule_calls" title="Permalink to this definition">¶</a></dt>
 <dd><p>The schedule endpoint sucks when handling a big date range. So instead I call in increments of n days.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>date_from</strong> – scrape from this date</p></li>
 <li><p><strong>date_to</strong> – scrape until this date</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>raw json of schedule of date range</p>
 </dd>
 </dl>
@@ -1502,10 +1504,10 @@ Some parsers work for some pages but don’t work for others….I’m not sure w
 <p>We sort all the games and retrieve the schedule from the beginning of the season from the earliest game
 until the end of most recent season.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>games</strong> – list with game_id’s ex: 2016020001</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>list with game_id and corresponding date for all games</p>
 </dd>
 </dl>
@@ -1517,13 +1519,13 @@ until the end of most recent season.</p>
 <dd><p>Scrapes games in date range
 Ex: <a class="reference external" href="https://statsapi.web.nhl.com/api/v1/schedule?startDate=2010-10-03&amp;endDate=2011-06-20">https://statsapi.web.nhl.com/api/v1/schedule?startDate=2010-10-03&amp;endDate=2011-06-20</a></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>date_from</strong> – scrape from this date</p></li>
 <li><p><strong>date_to</strong> – scrape until this date</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>raw json of schedule of date range</p>
 </dd>
 </dl>
@@ -1534,7 +1536,7 @@ Ex: <a class="reference external" href="https://statsapi.web.nhl.com/api/v1/sche
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.json_schedule.</span></span><span class="sig-name descname"><span class="pre">scrape_schedule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">date_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preseason</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">not_over</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.json_schedule.scrape_schedule" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calls getSchedule and scrapes the raw schedule Json</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>date_from</strong> – scrape from this date</p></li>
 <li><p><strong>date_to</strong> – scrape until this date</p></li>
@@ -1543,7 +1545,7 @@ Ex: <a class="reference external" href="https://statsapi.web.nhl.com/api/v1/sche
 Means we relax the requirement of checking if the game is over.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>list with all the game id’s</p>
 </dd>
 </dl>
@@ -1551,17 +1553,17 @@ Means we relax the requirement of checking if the game is over.</p></li>
 
 </section>
 <section id="module-hockey_scraper.nhl.playing_roster">
-<span id="playing-roster"></span><h3>Playing Roster<a class="headerlink" href="#module-hockey_scraper.nhl.playing_roster" title="Permalink to this headline">¶</a></h3>
+<span id="playing-roster"></span><h3>Playing Roster<a class="headerlink" href="#module-hockey_scraper.nhl.playing_roster" title="Permalink to this heading">¶</a></h3>
 <p>This module contains functions to scrape the Html game roster for any given game</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="hockey_scraper.nhl.playing_roster.fix_name">
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.playing_roster.</span></span><span class="sig-name descname"><span class="pre">fix_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.playing_roster.fix_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get rid of (A) or (C) when a player has it attached to their name</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>player</strong> – list of player info -&gt; [number, position, name]</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>fixed list</p>
 </dd>
 </dl>
@@ -1572,10 +1574,10 @@ Means we relax the requirement of checking if the game is over.</p></li>
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.playing_roster.</span></span><span class="sig-name descname"><span class="pre">get_coaches</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">soup</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.playing_roster.get_coaches" title="Permalink to this definition">¶</a></dt>
 <dd><p>scrape head coaches</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>soup</strong> – html</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>dict of coaches for game</p>
 </dd>
 </dl>
@@ -1587,10 +1589,10 @@ Means we relax the requirement of checking if the game is over.</p></li>
 <dd><p>Uses Beautiful soup to parses the html document.
 Some parsers work for some pages but don’t work for others….I’m not sure why so I just try them all here in order</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>roster</strong> – doc</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>players and coaches</p>
 </dd>
 </dl>
@@ -1601,10 +1603,10 @@ Some parsers work for some pages but don’t work for others….I’m not sure w
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.playing_roster.</span></span><span class="sig-name descname"><span class="pre">get_players</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">soup</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.playing_roster.get_players" title="Permalink to this definition">¶</a></dt>
 <dd><p>scrape roster for players</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>soup</strong> – html</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>dict for home and away players</p>
 </dd>
 </dl>
@@ -1616,10 +1618,10 @@ Some parsers work for some pages but don’t work for others….I’m not sure w
 <dd><p>Given a game_id it returns the raw html
 Ex: <a class="reference external" href="http://www.nhl.com/scores/htmlreports/20162017/RO020475.HTM">http://www.nhl.com/scores/htmlreports/20162017/RO020475.HTM</a></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>game_id</strong> – the game</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>raw html of game</p>
 </dd>
 </dl>
@@ -1630,10 +1632,10 @@ Ex: <a class="reference external" href="http://www.nhl.com/scores/htmlreports/20
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.playing_roster.</span></span><span class="sig-name descname"><span class="pre">scrape_roster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.playing_roster.scrape_roster" title="Permalink to this definition">¶</a></dt>
 <dd><p>For a given game scrapes the roster</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>game_id</strong> – id for game</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>dict of players (home and away) an dict for both head coaches</p>
 </dd>
 </dl>
@@ -1641,7 +1643,7 @@ Ex: <a class="reference external" href="http://www.nhl.com/scores/htmlreports/20
 
 </section>
 <section id="module-hockey_scraper.utils.save_pages">
-<span id="save-pages"></span><h3>Save Pages<a class="headerlink" href="#module-hockey_scraper.utils.save_pages" title="Permalink to this headline">¶</a></h3>
+<span id="save-pages"></span><h3>Save Pages<a class="headerlink" href="#module-hockey_scraper.utils.save_pages" title="Permalink to this heading">¶</a></h3>
 <p>Saves the scraped docs so you don’t have to re-scrape them every time you want to parse the docs.</p>
 <p>**** Don’t mess with this unless you know what you’re doing ****</p>
 <dl class="py function">
@@ -1649,11 +1651,11 @@ Ex: <a class="reference external" href="http://www.nhl.com/scores/htmlreports/20
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.utils.save_pages.</span></span><span class="sig-name descname"><span class="pre">check_file_exists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.save_pages.check_file_exists" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks if the file exists. Also check if structure for holding scraped file exists to. If not, it creates it.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>file_info</strong> – Dictionary containing the info on the file. Includes the name, season, file type, and the dir
 we want to deposit any data in.</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Boolean - True if it exists</p>
 </dd>
 </dl>
@@ -1664,11 +1666,11 @@ we want to deposit any data in.</p>
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.utils.save_pages.</span></span><span class="sig-name descname"><span class="pre">create_base_file_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.save_pages.create_base_file_path" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates the base file path for a given file</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>file_info</strong> – Dictionary containing the info on the file. Includes the name, season, file type, and the dir
 we want to deposit any data in.</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>path</p>
 </dd>
 </dl>
@@ -1680,7 +1682,7 @@ we want to deposit any data in.</p>
 <dd><p>Create the basic directory structure for docs_dir if not done yet.
 Creates the docs and csvs subdir if it doesn’t exist</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>dir_name</strong> – Name of dir to create</p>
 </dd>
 </dl>
@@ -1692,11 +1694,11 @@ Creates the docs and csvs subdir if it doesn’t exist</p>
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.utils.save_pages.</span></span><span class="sig-name descname"><span class="pre">create_season_dirs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.save_pages.create_season_dirs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates the infrastructure to hold all the scraped docs for a season</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>file_info</strong> – Dictionary containing the info on the file. Includes the name, season, file type, and the dir
 we want to deposit any data in.</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
 </dd>
 </dl>
@@ -1708,11 +1710,11 @@ we want to deposit any data in.</p>
 <dd><p>Get the file so we don’t need to re-scrape.</p>
 <p>Try both compressed and non-compressed for backwards compatability issues (formerly non-compressed)</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>file_info</strong> – Dictionary containing the info on the file. Includes the name, season, file type, and the dir
 we want to deposit any data in.</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Response or None</p>
 </dd>
 </dl>
@@ -1723,7 +1725,7 @@ we want to deposit any data in.</p>
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.utils.save_pages.</span></span><span class="sig-name descname"><span class="pre">is_compressed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.save_pages.is_compressed" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if stored file is compressed as we used to not save them as compressed.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>file_info</strong> – Dictionary containing the info on the file. Includes the name, season, file type, and the dir
 we want to deposit any data in.</p>
 </dd>
@@ -1738,14 +1740,14 @@ we want to deposit any data in.</p>
 <p>Note: It’ll only get saved if the directory already exists!!!!!!. I’m not dealing with any fuck ups. That would 
 involve checking if it’s even a valid path and creating it. Make sure you get it right.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>page</strong> – File scraped</p></li>
 <li><p><strong>file_info</strong> – Dictionary containing the info on the file. Includes the name, season, file type, and the dir
 we want to deposit any data in.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
 </dd>
 </dl>
@@ -1753,7 +1755,7 @@ we want to deposit any data in.</p></li>
 
 </section>
 <section id="module-hockey_scraper.utils.shared">
-<span id="shared-functions"></span><h3>Shared Functions<a class="headerlink" href="#module-hockey_scraper.utils.shared" title="Permalink to this headline">¶</a></h3>
+<span id="shared-functions"></span><h3>Shared Functions<a class="headerlink" href="#module-hockey_scraper.utils.shared" title="Permalink to this heading">¶</a></h3>
 <p>This file is a bunch of the shared functions or just general stuff used by the different scrapers in the package.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="hockey_scraper.utils.shared.add_dir">
@@ -1761,10 +1763,10 @@ we want to deposit any data in.</p></li>
 <dd><p>Add directory to store scraped docs if valid. Or create in the home dir</p>
 <p>NOTE: After this functions docs_dir is either None or a valid directory</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>user_dir</strong> – If bool=True create in the home dire or if user provided directory on their machine</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
 </dd>
 </dl>
@@ -1776,10 +1778,10 @@ we want to deposit any data in.</p></li>
 <dd><p>Checks if data_format specified (if it is at all) is either None, ‘Csv’, or ‘pandas’.
 It exits program with error message if input isn’t good.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>data_format</strong> – data_format provided</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Boolean - True if good</p>
 </dd>
 </dl>
@@ -1790,13 +1792,13 @@ It exits program with error message if input isn’t good.</p>
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.utils.shared.</span></span><span class="sig-name descname"><span class="pre">check_valid_dates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">from_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_date</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.check_valid_dates" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if it’s a valid date range</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>from_date</strong> – date should scrape from</p></li>
 <li><p><strong>to_date</strong> – date should scrape to</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
 </dd>
 </dl>
@@ -1807,10 +1809,10 @@ It exits program with error message if input isn’t good.</p>
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.utils.shared.</span></span><span class="sig-name descname"><span class="pre">convert_to_seconds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minutes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.convert_to_seconds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return minutes elapsed in time format to seconds elapsed</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>minutes</strong> – time elapsed</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>time elapsed in seconds</p>
 </dd>
 </dl>
@@ -1834,10 +1836,10 @@ It exits program with error message if input isn’t good.</p>
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.utils.shared.</span></span><span class="sig-name descname"><span class="pre">fix_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.fix_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if a name falls under those that need fixing. If it does…fix it.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>name</strong> – name in pbp</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Either the given parameter or the fixed name</p>
 </dd>
 </dl>
@@ -1850,14 +1852,14 @@ It exits program with error message if input isn’t good.</p>
 <p>If a docs_dir is provided we check if it exists. If it does we see if it contains that page (and saves if it
 doesn’t). If the docs_dir doesn’t exist we just scrape from the source and not save.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>file_info</strong> – Dictionary containing the info for the file.
 Contains the url, name, type, and season</p></li>
 <li><p><strong>force</strong> – Force a rescrape. Default is False</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>page</p>
 </dd>
 </dl>
@@ -1868,10 +1870,10 @@ Contains the url, name, type, and season</p></li>
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.utils.shared.</span></span><span class="sig-name descname"><span class="pre">get_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">python_file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.get_logger" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a basic logger to a log file</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>python_file</strong> – File that instantiates the logger instance</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>logger</p>
 </dd>
 </dl>
@@ -1890,10 +1892,10 @@ Contains the url, name, type, and season</p></li>
 </dd>
 </dl>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>date</strong> – date</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>season -&gt; ex: 2016 for 2016-2017 season</p>
 </dd>
 </dl>
@@ -1911,10 +1913,10 @@ Contains the url, name, type, and season</p></li>
 <dd><p>If you want to re_scrape. If someone is a dumbass and feeds it a non-boolean it terminates the program</p>
 <p>Note: Only matters when you have a directory specified</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>user_rescrape</strong> – Boolean</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
 </dd>
 </dl>
@@ -1925,13 +1927,13 @@ Contains the url, name, type, and season</p></li>
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.utils.shared.</span></span><span class="sig-name descname"><span class="pre">log_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">err</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">py_file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.log_error" title="Permalink to this definition">¶</a></dt>
 <dd><p>Log error when Logging is specified</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>err</strong> – Error to log</p></li>
 <li><p><strong>python_file</strong> – File that instantiates the logger instance</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
 </dd>
 </dl>
@@ -1943,10 +1945,10 @@ Contains the url, name, type, and season</p></li>
 <dd><p>Implement own custom error using warning module. Prints in red</p>
 <p>Reason why i still use warning for errors is so i can set to ignore them if i want to (e.g. live_scrape line 200).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>msg</strong> – Str to print</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
 </dd>
 </dl>
@@ -1957,10 +1959,10 @@ Contains the url, name, type, and season</p></li>
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.utils.shared.</span></span><span class="sig-name descname"><span class="pre">print_warning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.print_warning" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implement own custom warning using warning module. Prints in Orange.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>msg</strong> – Str to print</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
 </dd>
 </dl>
@@ -1971,10 +1973,10 @@ Contains the url, name, type, and season</p></li>
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.utils.shared.</span></span><span class="sig-name descname"><span class="pre">scrape_page</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.scrape_page" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrape a given url</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>url</strong> – url for page</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>response object</p>
 </dd>
 </dl>
@@ -1985,10 +1987,10 @@ Contains the url, name, type, and season</p></li>
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.utils.shared.</span></span><span class="sig-name descname"><span class="pre">season_end_bound</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">year</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.season_end_bound" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determine the end bound of a given season. Changes depending on if it’s the pandemic season or not</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>year</strong> – str of year for given date</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Datetime obj of last date in season</p>
 </dd>
 </dl>
@@ -2006,10 +2008,10 @@ Contains the url, name, type, and season</p></li>
 </dd>
 </dl>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>year</strong> – str of year for given date</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>str of first date in season</p>
 </dd>
 </dl>
@@ -2020,7 +2022,7 @@ Contains the url, name, type, and season</p></li>
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.utils.shared.</span></span><span class="sig-name descname"><span class="pre">to_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_file_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">league</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.utils.shared.to_csv" title="Permalink to this definition">¶</a></dt>
 <dd><p>Write DataFrame to csv file</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>base_file_name</strong> – name of file</p></li>
 <li><p><strong>df</strong> – DataFrame</p></li>
@@ -2028,7 +2030,7 @@ Contains the url, name, type, and season</p></li>
 <li><p><strong>file_type</strong> – type of file despoiting</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
 </dd>
 </dl>
@@ -2045,33 +2047,170 @@ Contains the url, name, type, and season</p></li>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">NHL Scraping Functions</a><ul>
 <li><a class="reference internal" href="#scraping">Scraping</a><ul>
-<li><a class="reference internal" href="#module-hockey_scraper.nhl.scrape_functions">Scrape Functions</a></li>
-<li><a class="reference internal" href="#module-hockey_scraper.nhl.game_scraper">Game Scraper</a></li>
-<li><a class="reference internal" href="#module-hockey_scraper.nhl.pbp.html_pbp">Html PBP</a></li>
-<li><a class="reference internal" href="#module-hockey_scraper.nhl.pbp.json_pbp">Json PBP</a></li>
-<li><a class="reference internal" href="#module-hockey_scraper.nhl.pbp.espn_pbp">Espn PBP</a></li>
-<li><a class="reference internal" href="#module-hockey_scraper.nhl.shifts.json_shifts">Json Shifts</a></li>
-<li><a class="reference internal" href="#module-hockey_scraper.nhl.shifts.html_shifts">Html Shifts</a></li>
-<li><a class="reference internal" href="#module-hockey_scraper.nhl.json_schedule">Schedule</a></li>
-<li><a class="reference internal" href="#module-hockey_scraper.nhl.playing_roster">Playing Roster</a></li>
-<li><a class="reference internal" href="#module-hockey_scraper.utils.save_pages">Save Pages</a></li>
-<li><a class="reference internal" href="#module-hockey_scraper.utils.shared">Shared Functions</a></li>
+<li><a class="reference internal" href="#module-hockey_scraper.nhl.scrape_functions">Scrape Functions</a><ul>
+<li><a class="reference internal" href="#hockey_scraper.nhl.scrape_functions.print_errors"><code class="docutils literal notranslate"><span class="pre">print_errors()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.scrape_functions.scrape_date_range"><code class="docutils literal notranslate"><span class="pre">scrape_date_range()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.scrape_functions.scrape_games"><code class="docutils literal notranslate"><span class="pre">scrape_games()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.scrape_functions.scrape_list_of_games"><code class="docutils literal notranslate"><span class="pre">scrape_list_of_games()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.scrape_functions.scrape_schedule"><code class="docutils literal notranslate"><span class="pre">scrape_schedule()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.scrape_functions.scrape_seasons"><code class="docutils literal notranslate"><span class="pre">scrape_seasons()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-hockey_scraper.nhl.game_scraper">Game Scraper</a><ul>
+<li><a class="reference internal" href="#hockey_scraper.nhl.game_scraper.check_goalie"><code class="docutils literal notranslate"><span class="pre">check_goalie()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.game_scraper.combine_espn_html_pbp"><code class="docutils literal notranslate"><span class="pre">combine_espn_html_pbp()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.game_scraper.combine_html_json_pbp"><code class="docutils literal notranslate"><span class="pre">combine_html_json_pbp()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.game_scraper.combine_players_lists"><code class="docutils literal notranslate"><span class="pre">combine_players_lists()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.game_scraper.get_players_json"><code class="docutils literal notranslate"><span class="pre">get_players_json()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.game_scraper.get_teams_and_players"><code class="docutils literal notranslate"><span class="pre">get_teams_and_players()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.game_scraper.scrape_game"><code class="docutils literal notranslate"><span class="pre">scrape_game()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.game_scraper.scrape_pbp"><code class="docutils literal notranslate"><span class="pre">scrape_pbp()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.game_scraper.scrape_pbp_live"><code class="docutils literal notranslate"><span class="pre">scrape_pbp_live()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.game_scraper.scrape_shifts"><code class="docutils literal notranslate"><span class="pre">scrape_shifts()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-hockey_scraper.nhl.pbp.html_pbp">Html PBP</a><ul>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.html_pbp.add_event_players"><code class="docutils literal notranslate"><span class="pre">add_event_players()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.html_pbp.add_event_team"><code class="docutils literal notranslate"><span class="pre">add_event_team()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.html_pbp.add_home_zone"><code class="docutils literal notranslate"><span class="pre">add_home_zone()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.html_pbp.add_period"><code class="docutils literal notranslate"><span class="pre">add_period()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.html_pbp.add_score"><code class="docutils literal notranslate"><span class="pre">add_score()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.html_pbp.add_strength"><code class="docutils literal notranslate"><span class="pre">add_strength()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.html_pbp.add_time"><code class="docutils literal notranslate"><span class="pre">add_time()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.html_pbp.add_type"><code class="docutils literal notranslate"><span class="pre">add_type()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.html_pbp.add_zone"><code class="docutils literal notranslate"><span class="pre">add_zone()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.html_pbp.clean_html_pbp"><code class="docutils literal notranslate"><span class="pre">clean_html_pbp()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.html_pbp.cur_game_status"><code class="docutils literal notranslate"><span class="pre">cur_game_status()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.html_pbp.get_contents"><code class="docutils literal notranslate"><span class="pre">get_contents()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.html_pbp.get_pbp"><code class="docutils literal notranslate"><span class="pre">get_pbp()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.html_pbp.get_penalty"><code class="docutils literal notranslate"><span class="pre">get_penalty()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.html_pbp.get_player_name"><code class="docutils literal notranslate"><span class="pre">get_player_name()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.html_pbp.if_valid_event"><code class="docutils literal notranslate"><span class="pre">if_valid_event()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.html_pbp.parse_block"><code class="docutils literal notranslate"><span class="pre">parse_block()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.html_pbp.parse_event"><code class="docutils literal notranslate"><span class="pre">parse_event()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.html_pbp.parse_fac"><code class="docutils literal notranslate"><span class="pre">parse_fac()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.html_pbp.parse_goal"><code class="docutils literal notranslate"><span class="pre">parse_goal()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.html_pbp.parse_hit"><code class="docutils literal notranslate"><span class="pre">parse_hit()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.html_pbp.parse_html"><code class="docutils literal notranslate"><span class="pre">parse_html()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.html_pbp.parse_penalty"><code class="docutils literal notranslate"><span class="pre">parse_penalty()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.html_pbp.parse_shot_miss_take_give"><code class="docutils literal notranslate"><span class="pre">parse_shot_miss_take_give()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.html_pbp.populate_players"><code class="docutils literal notranslate"><span class="pre">populate_players()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.html_pbp.return_name_html"><code class="docutils literal notranslate"><span class="pre">return_name_html()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.html_pbp.scrape_game"><code class="docutils literal notranslate"><span class="pre">scrape_game()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.html_pbp.scrape_game_live"><code class="docutils literal notranslate"><span class="pre">scrape_game_live()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.html_pbp.scrape_pbp"><code class="docutils literal notranslate"><span class="pre">scrape_pbp()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.html_pbp.shot_type"><code class="docutils literal notranslate"><span class="pre">shot_type()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.html_pbp.strip_html_pbp"><code class="docutils literal notranslate"><span class="pre">strip_html_pbp()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-hockey_scraper.nhl.pbp.json_pbp">Json PBP</a><ul>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.json_pbp.change_event_name"><code class="docutils literal notranslate"><span class="pre">change_event_name()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.json_pbp.get_pbp"><code class="docutils literal notranslate"><span class="pre">get_pbp()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.json_pbp.get_teams"><code class="docutils literal notranslate"><span class="pre">get_teams()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.json_pbp.parse_event"><code class="docutils literal notranslate"><span class="pre">parse_event()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.json_pbp.parse_json"><code class="docutils literal notranslate"><span class="pre">parse_json()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.json_pbp.scrape_game"><code class="docutils literal notranslate"><span class="pre">scrape_game()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-hockey_scraper.nhl.pbp.espn_pbp">Espn PBP</a><ul>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.espn_pbp.event_type"><code class="docutils literal notranslate"><span class="pre">event_type()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.espn_pbp.get_espn_date"><code class="docutils literal notranslate"><span class="pre">get_espn_date()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.espn_pbp.get_espn_game"><code class="docutils literal notranslate"><span class="pre">get_espn_game()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.espn_pbp.get_espn_game_id"><code class="docutils literal notranslate"><span class="pre">get_espn_game_id()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.espn_pbp.get_game_ids"><code class="docutils literal notranslate"><span class="pre">get_game_ids()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.espn_pbp.get_teams"><code class="docutils literal notranslate"><span class="pre">get_teams()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.espn_pbp.parse_espn"><code class="docutils literal notranslate"><span class="pre">parse_espn()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.espn_pbp.parse_event"><code class="docutils literal notranslate"><span class="pre">parse_event()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.pbp.espn_pbp.scrape_game"><code class="docutils literal notranslate"><span class="pre">scrape_game()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-hockey_scraper.nhl.shifts.json_shifts">Json Shifts</a><ul>
+<li><a class="reference internal" href="#hockey_scraper.nhl.shifts.json_shifts.fix_team_tricode"><code class="docutils literal notranslate"><span class="pre">fix_team_tricode()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.shifts.json_shifts.get_shifts"><code class="docutils literal notranslate"><span class="pre">get_shifts()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.shifts.json_shifts.parse_json"><code class="docutils literal notranslate"><span class="pre">parse_json()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.shifts.json_shifts.parse_shift"><code class="docutils literal notranslate"><span class="pre">parse_shift()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.shifts.json_shifts.scrape_game"><code class="docutils literal notranslate"><span class="pre">scrape_game()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-hockey_scraper.nhl.shifts.html_shifts">Html Shifts</a><ul>
+<li><a class="reference internal" href="#hockey_scraper.nhl.shifts.html_shifts.analyze_shifts"><code class="docutils literal notranslate"><span class="pre">analyze_shifts()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.shifts.html_shifts.get_shifts"><code class="docutils literal notranslate"><span class="pre">get_shifts()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.shifts.html_shifts.get_soup"><code class="docutils literal notranslate"><span class="pre">get_soup()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.shifts.html_shifts.get_teams"><code class="docutils literal notranslate"><span class="pre">get_teams()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.shifts.html_shifts.parse_html"><code class="docutils literal notranslate"><span class="pre">parse_html()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.shifts.html_shifts.scrape_game"><code class="docutils literal notranslate"><span class="pre">scrape_game()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-hockey_scraper.nhl.json_schedule">Schedule</a><ul>
+<li><a class="reference internal" href="#hockey_scraper.nhl.json_schedule.chunk_schedule_calls"><code class="docutils literal notranslate"><span class="pre">chunk_schedule_calls()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.json_schedule.get_dates"><code class="docutils literal notranslate"><span class="pre">get_dates()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.json_schedule.get_schedule"><code class="docutils literal notranslate"><span class="pre">get_schedule()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.json_schedule.scrape_schedule"><code class="docutils literal notranslate"><span class="pre">scrape_schedule()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-hockey_scraper.nhl.playing_roster">Playing Roster</a><ul>
+<li><a class="reference internal" href="#hockey_scraper.nhl.playing_roster.fix_name"><code class="docutils literal notranslate"><span class="pre">fix_name()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.playing_roster.get_coaches"><code class="docutils literal notranslate"><span class="pre">get_coaches()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.playing_roster.get_content"><code class="docutils literal notranslate"><span class="pre">get_content()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.playing_roster.get_players"><code class="docutils literal notranslate"><span class="pre">get_players()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.playing_roster.get_roster"><code class="docutils literal notranslate"><span class="pre">get_roster()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.nhl.playing_roster.scrape_roster"><code class="docutils literal notranslate"><span class="pre">scrape_roster()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-hockey_scraper.utils.save_pages">Save Pages</a><ul>
+<li><a class="reference internal" href="#hockey_scraper.utils.save_pages.check_file_exists"><code class="docutils literal notranslate"><span class="pre">check_file_exists()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.utils.save_pages.create_base_file_path"><code class="docutils literal notranslate"><span class="pre">create_base_file_path()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.utils.save_pages.create_dir_structure"><code class="docutils literal notranslate"><span class="pre">create_dir_structure()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.utils.save_pages.create_season_dirs"><code class="docutils literal notranslate"><span class="pre">create_season_dirs()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.utils.save_pages.get_page"><code class="docutils literal notranslate"><span class="pre">get_page()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.utils.save_pages.is_compressed"><code class="docutils literal notranslate"><span class="pre">is_compressed()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.utils.save_pages.save_page"><code class="docutils literal notranslate"><span class="pre">save_page()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-hockey_scraper.utils.shared">Shared Functions</a><ul>
+<li><a class="reference internal" href="#hockey_scraper.utils.shared.add_dir"><code class="docutils literal notranslate"><span class="pre">add_dir()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.utils.shared.check_data_format"><code class="docutils literal notranslate"><span class="pre">check_data_format()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.utils.shared.check_valid_dates"><code class="docutils literal notranslate"><span class="pre">check_valid_dates()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.utils.shared.convert_to_seconds"><code class="docutils literal notranslate"><span class="pre">convert_to_seconds()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.utils.shared.convert_tricode"><code class="docutils literal notranslate"><span class="pre">convert_tricode()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.utils.shared.custom_formatwarning"><code class="docutils literal notranslate"><span class="pre">custom_formatwarning()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.utils.shared.fix_name"><code class="docutils literal notranslate"><span class="pre">fix_name()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.utils.shared.get_file"><code class="docutils literal notranslate"><span class="pre">get_file()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.utils.shared.get_logger"><code class="docutils literal notranslate"><span class="pre">get_logger()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.utils.shared.get_season"><code class="docutils literal notranslate"><span class="pre">get_season()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.utils.shared.get_team"><code class="docutils literal notranslate"><span class="pre">get_team()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.utils.shared.if_rescrape"><code class="docutils literal notranslate"><span class="pre">if_rescrape()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.utils.shared.log_error"><code class="docutils literal notranslate"><span class="pre">log_error()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.utils.shared.print_error"><code class="docutils literal notranslate"><span class="pre">print_error()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.utils.shared.print_warning"><code class="docutils literal notranslate"><span class="pre">print_warning()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.utils.shared.scrape_page"><code class="docutils literal notranslate"><span class="pre">scrape_page()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.utils.shared.season_end_bound"><code class="docutils literal notranslate"><span class="pre">season_end_bound()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.utils.shared.season_start_bound"><code class="docutils literal notranslate"><span class="pre">season_start_bound()</span></code></a></li>
+<li><a class="reference internal" href="#hockey_scraper.utils.shared.to_csv"><code class="docutils literal notranslate"><span class="pre">to_csv()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="index.html"
-                        title="previous chapter">Hockey-Scraper</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="live_scrape.html"
-                        title="next chapter">Live Scraping</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="index.html"
+                          title="previous chapter">Hockey-Scraper</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="live_scrape.html"
+                          title="next chapter">Live Scraping</a></p>
+  </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -2088,7 +2227,7 @@ Contains the url, name, type, and season</p></li>
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -2114,7 +2253,7 @@ Contains the url, name, type, and season</p></li>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2020, Harry Shomer.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.2.3.
     </div>
   </body>
 </html>

@@ -126,8 +126,8 @@ def parse_html(html, player_ids, game_id):
     
     :return: DataFrame with info
     """
+    all_shifts = []
     columns = ['Game_Id', 'Player', 'Player_Id', 'Period', 'Team', 'Start', 'End', 'Duration']
-    df = pd.DataFrame(columns=columns)
 
     td, teams = get_soup(html)
 
@@ -158,10 +158,12 @@ def parse_html(html, player_ids, game_id):
 
         # Parse each shift
         shifts = [analyze_shifts(shift, key, team, home_team, player_ids) for shift in players[key]['Shifts']]
-        df = df.append(shifts, ignore_index=True)
+        all_shifts.extend(shifts)
 
+    df = pd.DataFrame(all_shifts)
     df['Game_Id'] = str(game_id)[5:]
-    return df
+    
+    return df[columns]
 
 
 def scrape_game(game_id, players):
