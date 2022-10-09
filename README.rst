@@ -14,7 +14,8 @@ Hockey-Scraper
 Purpose
 -------
 
-Scrape NHL data off the NHL API and website. This includes the Play by Play and Shift data for each game. One can also scrape the schedule information. It currently supports all preseason, regular season, and playoff games from the 2007-2008 season onwards. 
+Scrape NHL data off the NHL API and website. This includes the Play by Play and Shift data for each game and the schedule information. 
+It currently supports all preseason, regular season, and playoff games from the 2007-2008 season onwards. 
 
 Prerequisites
 -------------
@@ -108,15 +109,20 @@ The columns returned are: `['game_id', 'date', 'venue', 'home_team', 'away_team'
 Persistent Data
 ~~~~~~~~~~~~~~~
 
-All files and API calls retrieved can also be saved in a separate directory if wanted. The advanatge of this is reducing the amount of time needed to re-scrape a game as we don't need to re-retrieve them. You can also later choose to parse the files yourself and glean any extra information not captured by this project.
+All the raw game data files retrieved can also be saved to your disk. This allows for faster rescraping (we don't need to re-retrieve them) 
+and the ability to parse the data yourself.
 
-This is done by specifying the keyword argument `docs_dir` equal to `True` to automatically store and look for the data in a directory called `~/hockey_scraper_data`. Or you can provide your own directory where you want everything to be stored (it must exist beforehand). If no value is specified for `docs_dir` it will retrieve everything from the source and not from your saved directory.
+This is achieved by setting the keyword argument `docs_dir=True`. This will store the data in a directory called `~/hockey_scraper_data`. 
+You can provide your own directory where you want everything to be stored (it must exist beforehand). By default `docs_dir=False`.
 
-For example, let's say we are want to have the JSON PBP data for game `2019020001 <http://statsapi.web.nhl.com/api/v1/game/2019020001/feed/live>`_. If an argument is passed for `docs_dir` it will first check to see if that call was already made by checking in the supplied directory. If it was, it will simply load in the data from that file and not make a GET request to the NHL API. However if it doesn' exist, it will make a GET request and then save the output to our directory. This will ensure that next time you are requesting that data it can load it from a file.
+For example, let's say we are scraping the JSON PBP data for game `2019020001 <http://statsapi.web.nhl.com/api/v1/game/2019020001/feed/live>`_. 
+If `docs_dir` isn't `False` it will first check if the data is already in the directory. If so, it will load in the data from that file and not make a GET 
+request to the NHL API. However if it doesn't exist, it will make a GET request and then save the output to the directory. 
+This will ensure that next time you are requesting that data it can load it from a file.
 
 Here are some examples.
 
-Default saving location in `~/hockey_scraper_data`
+The default saving location is `~/hockey_scraper_data`.
 
 
 ::

@@ -55,7 +55,8 @@
 </section>
 <section id="purpose">
 <h2>Purpose<a class="headerlink" href="#purpose" title="Permalink to this heading">¶</a></h2>
-<p>Scrape NHL data off the NHL API and website. This includes the Play by Play and Shift data for each game. One can also scrape the schedule information. It currently supports all preseason, regular season, and playoff games from the 2007-2008 season onwards.</p>
+<p>Scrape NHL data off the NHL API and website. This includes the Play by Play and Shift data for each game and the schedule information.
+It currently supports all preseason, regular season, and playoff games from the 2007-2008 season onwards.</p>
 </section>
 <section id="prerequisites">
 <h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this heading">¶</a></h2>
@@ -128,11 +129,16 @@ from at least version 3.6.0 but earlier versions should be fine.</p>
 </section>
 <section id="persistent-data">
 <h3>Persistent Data<a class="headerlink" href="#persistent-data" title="Permalink to this heading">¶</a></h3>
-<p>All files and API calls retrieved can also be saved in a separate directory if wanted. The advanatge of this is reducing the amount of time needed to re-scrape a game as we don’t need to re-retrieve them. You can also later choose to parse the files yourself and glean any extra information not captured by this project.</p>
-<p>This is done by specifying the keyword argument <cite>docs_dir</cite> equal to <cite>True</cite> to automatically store and look for the data in a directory called <cite>~/hockey_scraper_data</cite>. Or you can provide your own directory where you want everything to be stored (it must exist beforehand). If no value is specified for <cite>docs_dir</cite> it will retrieve everything from the source and not from your saved directory.</p>
-<p>For example, let’s say we are want to have the JSON PBP data for game <a class="reference external" href="http://statsapi.web.nhl.com/api/v1/game/2019020001/feed/live">2019020001</a>. If an argument is passed for <cite>docs_dir</cite> it will first check to see if that call was already made by checking in the supplied directory. If it was, it will simply load in the data from that file and not make a GET request to the NHL API. However if it doesn’ exist, it will make a GET request and then save the output to our directory. This will ensure that next time you are requesting that data it can load it from a file.</p>
+<p>All the raw game data files retrieved can also be saved to your disk. This allows for faster rescraping (we don’t need to re-retrieve them)
+and the ability to parse the data yourself.</p>
+<p>This is achieved by setting the keyword argument <cite>docs_dir=True</cite>. This will store the data in a directory called <cite>~/hockey_scraper_data</cite>.
+You can provide your own directory where you want everything to be stored (it must exist beforehand). By default <cite>docs_dir=False</cite>.</p>
+<p>For example, let’s say we are scraping the JSON PBP data for game <a class="reference external" href="http://statsapi.web.nhl.com/api/v1/game/2019020001/feed/live">2019020001</a>.
+If <cite>docs_dir</cite> isn’t <cite>False</cite> it will first check if the data is already in the directory. If so, it will load in the data from that file and not make a GET
+request to the NHL API. However if it doesn’t exist, it will make a GET request and then save the output to the directory.
+This will ensure that next time you are requesting that data it can load it from a file.</p>
 <p>Here are some examples.</p>
-<p>Default saving location in <cite>~/hockey_scraper_data</cite></p>
+<p>The default saving location is <cite>~/hockey_scraper_data</cite>.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create or try to refer to a directory in the home directory</span>
 <span class="c1"># Will create a directory called &#39;hockey_scraper_data&#39; in the home directory (if it doesn&#39;t exist)</span>
 <span class="n">hockey_scraper</span><span class="o">.</span><span class="n">scrape_seasons</span><span class="p">([</span><span class="mi">2015</span><span class="p">,</span> <span class="mi">2016</span><span class="p">],</span> <span class="kc">True</span><span class="p">,</span> <span class="n">docs_dir</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
