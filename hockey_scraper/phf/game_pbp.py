@@ -66,6 +66,7 @@ def scrape_page(url):
     """
 
     pg = driver.page_source
+    print('OHAI')
     driver.close()
 
     return pg
@@ -75,22 +76,23 @@ def scrape_page(url):
 
 def get_pbp(game_id):
     """
-    Get the response for a game (e.g. https://www.nwhl.zone/stats#/100/game/268087/play-by-play)
-    
+    Get the response for a game (e.g. https://www.premierhockeyfederation.com/stats#/100/game/268087/play-by-play)
+
     :param game_id: Given Game id (e.g. 268087)
-    
-    :return: 
+
+    :return:
     """
     file_info = {
-        "url": 'https://www.nwhl.zone/stats#/100/game/{}/play-by-play'.format(game_id),
+        "url": 'https://www.premierhockeyfederation.com/stats#/100/game/{}/play-by-play'.format(game_id),
         "name": str(game_id),
-        "type": "nwhl_json_pbp",
-        "season": "nwhl",
-        'dir': shared.docs_dir
+        "type": "phf_json_pbp",
+        "season": "phf",
+        # 'dir': shared.docs_dir
     }
-    
+
     # Saved pages logic is here bec. of button logic in scrape_pbp
-    if shared.docs_dir and sp.check_file_exists(file_info) and not shared.re_scrape:
+    # if shared.docs_dir and sp.check_file_exists(file_info) and not shared.re_scrape:
+    if False:
         # TODO: Regex matching game_id
         pgs = sp.get_page(file_info)
     else:
@@ -113,30 +115,30 @@ def parse_event(event, score, teams, date, game_id, players):
     """
     Parses a single event when the info is in a json format
 
-    :param event: json of event 
+    :param event: json of event
     :param score: Current score of the game
     :param teams: Teams dict (id -> name)
     :param date: date of the game
     :param game_id: game id for game
     :param players: Dict of player ids to player names
-    
+
     :return: dictionary with the info
     """
     play = dict()
 
-    
+
 
 
 def parse_json(game_json, game_id,):
     """
     Scrape the json for a game
-    
+
     plus, minus players
 
     :param game_json: raw json
     :param game_id: game id for game
 
-    :return: Either a DataFrame with info for the game 
+    :return: Either a DataFrame with info for the game
     """
     cols = ['game_id', 'date', 'season', 'period', 'seconds_elapsed', 'event', 'ev_team', 'home_team', 'away_team',
             'p1_name', 'p1_id', 'p2_name', 'p2_id', 'p3_name', 'p3_id',
@@ -184,9 +186,9 @@ def parse_json(game_json, game_id,):
 def scrape_pbp(game_id):
     """
     Scrape the pbp data for a given game
-    
+
     :param game_id: Given Game id (e.g. 18507472)
-    
+
     :return: DataFrame with pbp info
     """
     game_json = get_pbp(game_id)
