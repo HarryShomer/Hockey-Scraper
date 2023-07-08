@@ -64,9 +64,16 @@ def get_players_json(game_json):
         for id_key in team_players: 
             player_name = shared.fix_name(team_players[id_key]['person']['fullName'])
 
+            # Sometimes last name key isn't there
+            # In that case, just assign it from full name (could be mistakes...but this is rare enough)
+            if 'lastName' in game_json['gameData']['players'][id_key]:
+                last_name = game_json['gameData']['players'][id_key]['lastName'].upper()
+            else:
+                last_name = player_name.split(" ")[-1].upper()
+
             players[venue][player_name] = {
                 "id": team_players[id_key]['person']['id'], 
-                "last_name": game_json['gameData']['players'][id_key]['lastName'].upper()
+                "last_name": last_name
             }
 
     return players
