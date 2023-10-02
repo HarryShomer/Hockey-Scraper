@@ -11,14 +11,14 @@ import hockey_scraper.utils.shared as shared
 def get_pbp(game_id):
     """
     Given a game_id it returns the raw json
-    Ex: http://statsapi.web.nhl.com/api/v1/game/2016020475/feed/live
+    Ex: https://api-web.nhle.com/v1/gamecenter/2023010044/play-by-play
     
     :param game_id: string - the game
     
     :return: raw json of game or None if couldn't get game
     """
     page_info = {
-        "url": 'http://statsapi.web.nhl.com/api/v1/game/{}/feed/live'.format(game_id),
+        "url": 'https://api-web.nhle.com/v1/gamecenter/{}/play-by-play'.format(game_id),
         "name": game_id,
         "type": "json_pbp",
         "season": game_id[:4],
@@ -41,8 +41,8 @@ def get_teams(pbp_json):
     :return: dict with home and away
     """
     return {
-        'Home': shared.get_team(pbp_json['gameData']['teams']['home']['name']),
-        'Away': shared.get_team(pbp_json['gameData']['teams']['away']['name'])
+        'Home': pbp_json['homeTeam']['abbrev'],
+        'Away': pbp_json['awayTeam']['abbrev']
     }
 
 
@@ -55,16 +55,16 @@ def change_event_name(event):
     :return: fixed event type
     """
     event_types = {
-        'PERIOD START': 'PSTR',
+        'PERIOD-START': 'PSTR',
         'FACEOFF': 'FAC',
-        'BLOCKED SHOT': 'BLOCK',
-        'GAME END': 'GEND',
+        'BLOCKED-SHOT': 'BLOCK',
+        'GAME-END': 'GEND',
         'GIVEAWAY': 'GIVE',
         'GOAL': 'GOAL',
         'HIT': 'HIT',
         'MISSED SHOT': 'MISS',
-        'PERIOD END': 'PEND',
-        'SHOT': 'SHOT',
+        'PERIOD-END': 'PEND',
+        'SHOT-ON-GOAL': 'SHOT',
         'STOPPAGE': 'STOP',
         'TAKEAWAY': 'TAKE',
         'PENALTY': 'PENL',
@@ -88,23 +88,35 @@ def parse_event(event):
     """
     play = dict()
 
-    play['event_id'] = event['about']['eventIdx']
-    play['period'] = event['about']['period']
-    play['event'] = str(change_event_name(event['result']['event']))
-    play['seconds_elapsed'] = shared.convert_to_seconds(event['about']['periodTime'])
+    play['event_id'] = event['eventId']
+    play['period'] = event['period']
+    play['event'] = str(change_event_name(event['typeDescKey'].upper()))
+    play['seconds_elapsed'] = shared.convert_to_seconds(event['timeInPeriod'])
+    
+    play['p1_name'], play['p2_name'], play['p3_name'] = '', '', ''
+    if 'details' in event.keys():
+        details = event['details'].keys()
+        # If there's a players key that means an event occurred on the play.
 
-    # If there's a players key that means an event occurred on the play.
-    if 'players' in event:
-        play['p1_name'] = shared.fix_name(event['players'][0]['player']['fullName'])
-        play['p1_ID'] = event['players'][0]['player']['id']
+        if 'scoringPlayerId' in details:
+            play['p1_ID'] = event['details']['scoringPlayerId']
 
-        for i in range(len(event['players'])):
-            if event['players'][i]['playerType'] != 'Goalie':
-                play['p{}_name'.format(i + 1)] = shared.fix_name(event['players'][i]['player']['fullName'])
-                play['p{}_ID'.format(i + 1)] = event['players'][i]['player']['id']
+        if 'shootingPlayerId' in details:
+            play['p1_ID'] = event['details']['shootingPlayerId']
 
-        play['xC'] = event['coordinates'].get('x')
-        play['yC'] = event['coordinates'].get('y')
+        if 'assist1PlayerId' in details:
+            play['p2_ID'] = event['details']['assist1PlayerId']
+            
+        if 'assist2PlayerId' in details:
+            play['p3_ID'] = event['details']['assist2PlayerId']
+
+        if 'blockingPlayerId' in details:
+            play['p2_ID'] = event['details']['blockingPlayerId']
+
+        if 'xCoord' in details:
+            play['xC'] = event['details']['xCoord']
+            play['yC'] = event['details']['yCoord']
+        
 
     return play
 
@@ -124,8 +136,8 @@ def parse_json(game_json, game_id):
     events_to_ignore = ['PERIOD READY', 'PERIOD OFFICIAL', 'GAME READY', 'GAME OFFICIAL', 'GAME SCHEDULED']
 
     try:
-        plays = game_json['liveData']['plays']['allPlays']
-        events = [parse_event(play) for play in plays if play['result']['event'].upper() not in events_to_ignore]
+        plays = game_json['plays']
+        events = [parse_event(play) for play in plays if play['typeDescKey'].upper() not in events_to_ignore]
     except Exception as e:
         shared.print_error('Error parsing Json pbp for game {} {}'.format(game_id, e))
         return None
