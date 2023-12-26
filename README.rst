@@ -5,8 +5,7 @@
    :alt: Documentation Status
 
 
-**Please ensure your running version 1.40 or higher as earlier version won't work.**
-
+**Please upgrade to version 1.40 or higher as earlier versions won't work.**
 
 Hockey-Scraper
 ==============
