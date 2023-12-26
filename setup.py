@@ -7,7 +7,7 @@ def read():
 
 setup(
     name='hockey_scraper',
-    version='1.39',
+    version='1.40',
     description="""Python Package for scraping NHL Play-by-Play and Shift data.""",
     long_description=read(),
     classifiers=[
