@@ -55,20 +55,23 @@ def get_players_json(game_json):
 
     :return: {team -> players}
     """
-    players = {"home": {}, "away": {}}
+    players = {"Home": {}, "Away": {}}
+    homeid = game_json['homeTeam']['id']
+    awayid = game_json['awayTeam']['id']
 
-    for venue in players:
-        team_players = game_json['liveData']['boxscore']['teams'][venue]['players']
-        team_name = shared.get_team(game_json['liveData']['boxscore']['teams'][venue]['team']['name'])
-
-        for id_key in team_players: 
-            player_name = shared.fix_name(team_players[id_key]['person']['fullName'])
-
-            players[venue][player_name] = {
-                "id": team_players[id_key]['person']['id'], 
-                "last_name": game_json['gameData']['players'][id_key]['lastName'].upper()
+    for player in game_json['rosterSpots']:
+        if player['teamId'] == homeid:
+            players["Home"][str(player["firstName"] + " " + player["lastName"]).upper()] = {
+                "id": player['playerId'], 
+                "last_name": player["lastName"].upper()
             }
 
+        if player['teamId'] == awayid:
+            players["Away"][str(player["firstName"] + " " + player["lastName"]).upper()] = {
+                "id": player['playerId'],
+                "last_name": player["lastName"].upper()
+            }
+    
     return players
 
 
@@ -90,8 +93,8 @@ def combine_players_lists(json_players, roster_players, game_id):
         for player in roster_players[venue]:
             try:
                 name = shared.fix_name(player[2])
-                player_id = json_players[venue.lower()][name]['id']
-                players[venue][name] = {'id': player_id, 'number': player[0], 'last_name': json_players[venue.lower()][name]['last_name']}
+                player_id = json_players[venue][name]['id']
+                players[venue][name] = {'id': player_id, 'number': player[0], 'last_name': json_players[venue][name]['last_name']}
             except KeyError as e:
                 # If he was listed as a scratch and not a goalie (check_goalie deals with goalies)
                 # As a whole the scratch list shouldn't be trusted but if a player is missing an id # and is on the
@@ -253,7 +256,7 @@ def scrape_pbp(game_id, date, roster, game_json, players, teams, espn_id=None, h
     :return: DataFrame with info or None if it fails
     """
     # Coordinates are only available in json from 2010 onwards
-    if int(str(game_id)[:4]) >= 2010 and len(game_json['liveData']['plays']['allPlays']) > 0:
+    if int(str(game_id)[:4]) >= 2010 and len(game_json['plays']) > 0:
         json_df = json_pbp.parse_json(game_json, game_id)
     else:
         json_df = None

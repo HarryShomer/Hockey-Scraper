@@ -49,9 +49,13 @@ v1.37
   * Remove hardcoded exception for Sebastian Aho. Updated process to work without it.
   * Always rescrape schedule pages
 
-v1.3.8
+v1.38
 ------
   * Convert tri-codes from new format to old in Html PBP. Mappings stored in utils/tri_code_conversion.json. 
   * Added verbose option to top-level scrape functions
   * Replaced default parser for HTML PBP with "html5lib" over "lxml". lxml was having issues with older games.
   * Reduced chunk size in nhl.json_schedule.chunk_schedule_calls to 30 from 50. Was having some issues during tests. 
+
+v1.39
+------
+  * Changed API endpoints

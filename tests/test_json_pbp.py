@@ -35,81 +35,38 @@ def test_parse_event():
     """ Test to see that it parses an event correctly"""
 
     event = {
-        "players": [{
-          "player": {
-            "id": 8468575,
-            "fullName": "Dominic Moore",
-            "link": "/api/v1/people/8468575"
-          },
-          "playerType": "Scorer",
-          "seasonTotal": 3
-        }, {
-          "player": {
-            "id": 8470619,
-            "fullName": "Brian Boyle",
-            "link": "/api/v1/people/8470619"
-          },
-          "playerType": "Assist",
-          "seasonTotal": 4
-        }, {
-          "player": {
-            "id": 8474151,
-            "fullName": "Ryan McDonagh",
-            "link": "/api/v1/people/8474151"
-          },
-          "playerType": "Assist",
-          "seasonTotal": 10
-        }, {
-          "player": {
-            "id": 8474682,
-            "fullName": "Dustin Tokarski",
-            "link": "/api/v1/people/8474682"
-          },
-          "playerType": "Goalie"
-        } ],
-        "result": {
-          "event": "Goal",
-          "eventCode": "NYR294",
-          "eventTypeId": "GOAL",
-          "description": "Dominic Moore (3) Snap Shot, assists: Brian Boyle (4), Ryan McDonagh (10)",
-          "secondaryType": "Snap Shot",
-          "strength": {
-            "code": "EVEN",
-            "name": "Even"
-          },
-          "gameWinningGoal": True,
-          "emptyNet": False
-        },
-        "about": {
-          "eventIdx": 180,
-          "eventId": 294,
-          "period": 2,
-          "periodType": "REGULAR",
-          "ordinalNum": "2nd",
-          "periodTime": "18:07",
-          "periodTimeRemaining": "01:53",
-          "dateTime": "2014-05-30T01:36:12Z",
-          "goals": {
-            "away": 0,
-            "home": 1
-          }
-        },
-        "coordinates": {
-          "x": 77.0,
-          "y": 5.0
-        },
-        "team": {
-          "id": 3,
-          "name": "New York Rangers",
-          "link": "/api/v1/teams/3",
-          "triCode": "NYR"
+            "eventId": 201,
+            "period": 1,
+            "periodDescriptor": {
+                "number": 1,
+                "periodType": "REG"
+            },
+            "timeInPeriod": "00:32",
+            "timeRemaining": "19:28",
+            "situationCode": "1551",
+            "homeTeamDefendingSide": "right",
+            "typeCode": 505,
+            "typeDescKey": "goal",
+            "sortOrder": 20,
+            "details": {
+                "xCoord": -84,
+                "yCoord": 6,
+                "zoneCode": "O",
+                "shotType": "wrist",
+                "scoringPlayerId": 8478864,
+                "assist1PlayerId": 8482122,
+                "assist2PlayerId": 8475692,
+                "eventOwnerTeamId": 30,
+                "goalieInNetId": 8481020,
+                "awayScore": 0,
+                "homeScore": 1
+            }
         }
-    }
 
     parsed_event = {
-        'event_id': 180, 'period': 2, 'event': 'GOAL', 'seconds_elapsed': 1087.0, 'p1_name': 'DOMINIC MOORE',
-        'p1_ID': 8468575, 'p2_name': 'BRIAN BOYLE', 'p2_ID': 8470619, 'p3_name': 'RYAN MCDONAGH', 'p3_ID': 8474151,
-        'xC': 77.0, 'yC': 5.0
+        'event_id': 201, 'period': 1, 'event': 'GOAL', 'seconds_elapsed': 32.0, 'p1_name': '',
+        'p1_ID': 8478864, 'p2_name': '', 'p2_ID': 8482122, 'p3_name': '', 'p3_ID': 8475692,
+        'xC': -84.0, 'yC': 6.0
     }
 
     assert json_pbp.parse_event(event) == parsed_event
