@@ -53,7 +53,7 @@ def convert_tricode(tri):
     :return Fixed tri-code or original
     """
     return TRI_CODES.get(tri.upper(), tri.upper()).upper()
-
+    
 
 def custom_formatwarning(msg, *args, **kwargs): 
     """

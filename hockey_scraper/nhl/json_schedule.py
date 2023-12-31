@@ -3,6 +3,7 @@ This module contains functions to scrape the json schedule for any games or date
 """
 import json
 from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
 import hockey_scraper.utils.shared as shared
 
 from tqdm import tqdm
@@ -73,9 +74,12 @@ def scrape_schedule(date_from, date_to, preseason=False, not_over=False):
     """
     print("Scraping the schedule between {} and {}...please give it a momment".format(date_from, date_to))
 
-    from_date = datetime.strptime(date_from, "%Y-%m-%d") 
-    to_date = datetime.strptime(date_to, "%Y-%m-%d")
-    
+    # We need to include the timezone and cover the entire day
+    fds = list(map(int, date_from.split("-")))
+    fdate_est = datetime(fds[0], fds[1], fds[2], 0, 0, tzinfo=ZoneInfo("America/New_York"))
+    tds = list(map(int, date_to.split("-")))
+    tdate_est = datetime(tds[0], tds[1], tds[2], 23, 59, tzinfo=ZoneInfo("America/New_York"))
+
     schedule = []
     schedule_json = chunk_schedule_calls(date_from, date_to)
 
@@ -85,12 +89,13 @@ def scrape_schedule(date_from, date_to, preseason=False, not_over=False):
                 game_id = int(str(game['id'])[5:])
                 
                 # TODO: Confirm if OFF is correct
+                # Check game is over or scraping live
                 status_cond = game['gameState'] == 'OFF' or not_over
                 # No preseason or "special" games
                 valid_game_cond = (game_id >= 20000 or preseason) and game_id < 40000
                 # Within specified date ranges
-                game_date = datetime.strptime(game['startTimeUTC'][:10], "%Y-%m-%d")
-                date_cond = from_date <= game_date <= to_date
+                game_date = datetime.strptime(game['startTimeUTC'], "%Y-%m-%dT%H:%M:%S%z")
+                date_cond = fdate_est <= game_date.astimezone(ZoneInfo("America/New_York")) <= tdate_est
 
                 if status_cond and valid_game_cond and date_cond:
                     schedule.append({
@@ -98,8 +103,8 @@ def scrape_schedule(date_from, date_to, preseason=False, not_over=False):
                         "date": day['date'], 
                         "start_time": datetime.strptime(game['startTimeUTC'][:-1], "%Y-%m-%dT%H:%M:%S"),
                         "venue": game['venue'].get('default'),
-                        "home_team": shared.get_team(game['homeTeam']['abbrev']),
-                        "away_team": shared.get_team(game['awayTeam']['abbrev']),
+                        "home_team": shared.convert_tricode(game['homeTeam']['abbrev']),
+                        "away_team": shared.convert_tricode(game['awayTeam']['abbrev']),
                         "home_score": game['homeTeam'].get("score"),
                         "away_score": game['awayTeam'].get("score"),
                         "status": game["gameState"]

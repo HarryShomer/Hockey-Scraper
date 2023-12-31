@@ -41,8 +41,8 @@ def get_teams(pbp_json):
     :return: dict with home and away
     """
     return {
-        'Home': pbp_json['homeTeam']['abbrev'],
-        'Away': pbp_json['awayTeam']['abbrev']
+        'Home': shared.convert_tricode(pbp_json['homeTeam']['abbrev']),
+        'Away': shared.convert_tricode(pbp_json['awayTeam']['abbrev'])
     }
 
 
