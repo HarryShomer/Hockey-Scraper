@@ -31,7 +31,7 @@ sys.path.insert(0, os.path.abspath('../..'))
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = ['sphinx.ext.autodoc']
-
+autodoc_mock_imports = ['BeautifulSoup4', 'requests', 'lxml', 'html5lib', 'pandas', 'pytest', 'pytz', 'tqdm']
 
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:

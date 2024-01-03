@@ -2,8 +2,8 @@
 This module contains functions to scrape the json schedule for any games or date range
 """
 import json
+from pytz import timezone
 from datetime import datetime, timedelta
-from zoneinfo import ZoneInfo
 import hockey_scraper.utils.shared as shared
 
 from tqdm import tqdm
@@ -72,13 +72,15 @@ def scrape_schedule(date_from, date_to, preseason=False, not_over=False):
     
     :return: list with all the game id's
     """
-    print("Scraping the schedule between {} and {}...please give it a momment".format(date_from, date_to))
+    print("Scraping the schedule between {} and {}...please give it a moment".format(date_from, date_to))
+
+    est = timezone("America/New_York")
 
     # We need to include the timezone and cover the entire day
     fds = list(map(int, date_from.split("-")))
-    fdate_est = datetime(fds[0], fds[1], fds[2], 0, 0, tzinfo=ZoneInfo("America/New_York"))
+    fdate_est = datetime(fds[0], fds[1], fds[2], 0, 0, tzinfo=est)
     tds = list(map(int, date_to.split("-")))
-    tdate_est = datetime(tds[0], tds[1], tds[2], 23, 59, tzinfo=ZoneInfo("America/New_York"))
+    tdate_est = datetime(tds[0], tds[1], tds[2], 23, 59, tzinfo=est)
 
     schedule = []
     schedule_json = chunk_schedule_calls(date_from, date_to)
@@ -95,7 +97,7 @@ def scrape_schedule(date_from, date_to, preseason=False, not_over=False):
                 valid_game_cond = (game_id >= 20000 or preseason) and game_id < 40000
                 # Within specified date ranges
                 game_date = datetime.strptime(game['startTimeUTC'], "%Y-%m-%dT%H:%M:%S%z")
-                date_cond = fdate_est <= game_date.astimezone(ZoneInfo("America/New_York")) <= tdate_est
+                date_cond = fdate_est <= game_date.astimezone(est) <= tdate_est
 
                 if status_cond and valid_game_cond and date_cond:
                     schedule.append({
