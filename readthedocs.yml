@@ -1,7 +1,7 @@
 # .readthedocs.yml
 
 build:
-  # os: ubuntu-20.04  # <- add this line
+  os: ubuntu-20.04  # <- add this line
   image: latest
 
 python:
