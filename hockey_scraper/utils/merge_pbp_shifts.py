@@ -78,7 +78,7 @@ def group_shifts_type(shifts, player_cols, player_id_cols):
     # Now have rows for On and rows for Off
     grouped_df_on = group_shifts_cols(shifts, group_cols_start)
     grouped_df_off = group_shifts_cols(shifts, group_cols_end)
-    grouped_df = grouped_df_on.append(grouped_df_off)
+    grouped_df = pd.concat([grouped_df_on, grouped_df_off])
 
     # Convert the Column which contain a list to the appropriate columns for both player and player_id
     players = pd.DataFrame(grouped_df.player.values.tolist(), index=grouped_df.index).rename(
@@ -160,7 +160,7 @@ def merge(pbp_df, shifts_df):
     new_shifts = new_shifts.where((pd.notnull(new_shifts)), None)
 
     # Add in & order rows
-    new_pbp = pbp_df.append(new_shifts).reset_index(drop=True)
+    new_pbp = pd.concat(pbp_df, new_shifts).reset_index(drop=True)
     new_pbp['Priority'] = new_pbp.apply(label_priority, axis=1)
     new_pbp = new_pbp.sort_values(by=['Game_Id', 'Period', 'Seconds_Elapsed', 'Priority'])
 
