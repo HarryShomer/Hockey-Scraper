@@ -82,7 +82,7 @@ def scrape_games(games, data_format='csv', rescrape=False, docs_dir=None):
     print_errors()
 
     if data_format.lower() == 'csv':
-        shared.to_csv(str(random.randint(1, 101)), pbp_df, None, "nwhl")
+        shared.to_csv(str(random.randint(1, 101)), pbp_df, None, "phf")
     else:
         return pbp_df
 
@@ -120,7 +120,7 @@ def scrape_date_range(from_date, to_date, data_format='csv', rescrape=False, doc
 
     print_errors()
     if data_format.lower() == 'csv':
-        shared.to_csv(from_date + '--' + to_date, pbp_df, None, "nwhl")
+        shared.to_csv(from_date + '--' + to_date, pbp_df, None, "phf")
     else:
         return pbp_df
 
@@ -158,7 +158,7 @@ def scrape_seasons(seasons, data_format='csv', rescrape=False, docs_dir=None):
         pbp_df = pd.merge(pbp_df, pd.DataFrame(games, columns=['game_id', 'sub_type']), on="game_id", how="left")
 
         if data_format.lower() == 'csv':
-            shared.to_csv(str(season) + str(season + 1), pbp_df, None, "nwhl")
+            shared.to_csv(str(season) + str(season + 1), pbp_df, None, "phf")
         else:
             master_pbps.append(pbp_df)
 
