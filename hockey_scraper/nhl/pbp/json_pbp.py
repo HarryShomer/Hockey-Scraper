@@ -89,7 +89,7 @@ def parse_event(event):
     play = dict()
 
     play['event_id'] = event['eventId']
-    play['period'] = event['period']
+    play['period'] = event['periodDescriptor']['number']
     play['event'] = str(change_event_name(event['typeDescKey'].upper()))
     play['seconds_elapsed'] = shared.convert_to_seconds(event['timeInPeriod'])
     
