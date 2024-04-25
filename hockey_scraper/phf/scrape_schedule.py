@@ -1,5 +1,5 @@
 """
-Scrape the schedule info for nwhl games
+Scrape the schedule info for phf games
 """
 import time
 from datetime import datetime
@@ -51,8 +51,8 @@ def get_schedule(url, name):
     file_info = {
         "url": url,
         "name": str(name) + "_schedule",
-        "type": "html_schedule_nwhl",
-        "season": "nwhl",
+        "type": "html_schedule_phf",
+        "season": "phf",
         'dir': shared.docs_dir
     }
 
@@ -70,13 +70,13 @@ def get_season_codes():
     """
     They use fucked up codes instead of actual years to represent seasons in the url.
 
-    e.g. For 2019 - https://www.nwhl.zone/stats#/100/schedule?all&season_id=1950
+    e.g. For 2019 - https://www.premierhockeyfederation.com/stats#/100/schedule?all&season_id=1950
 
     Instead of hardcoding it I just ping the base page and get the codes
 
     :return dict - season -> season_code
     """
-    seed_url = 'https://www.nwhl.zone/stats#/100/schedule'
+    seed_url = 'https://www.premierhockeyfederation.com/stats#/100/schedule'
 
     pg = get_schedule(seed_url, "seed")
     soup = BeautifulSoup(pg, "lxml")
@@ -101,7 +101,7 @@ def parse_game(game, season):
     Skip over all-star game
 
     :param games: Soup object
-    :param season: nwhl season
+    :param season: phf season
 
     :return dict of info
     """
@@ -152,7 +152,7 @@ def get_season_games(season, season_code):
     """
     parsed_games = []
 
-    url = "https://www.nwhl.zone/stats#/100/schedule?season_id={}&all".format(season_code)
+    url = "https://www.premierhockeyfederation.com/stats#/100/schedule?season_id={}&all".format(season_code)
     pg = get_schedule(url, season)
     soup = BeautifulSoup(pg, "lxml")
 
