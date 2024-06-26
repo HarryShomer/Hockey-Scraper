@@ -1,13 +1,11 @@
-**This repository is not longer maintained. Feel free to fork it.**
+**This repository is no longer maintained. Feel free to fork it.**
 
-.. image:: https://badge.fury.io/py/hockey-scraper.svg
-   :target: https://badge.fury.io/py/hockey-scraper
-.. image:: https://readthedocs.org/projects/hockey-scraper/badge/?version=latest
-   :target: https://readthedocs.org/projects/hockey-scraper/?badge=latest
-   :alt: Documentation Status
+.. .. image:: https://badge.fury.io/py/hockey-scraper.svg
+..    :target: https://badge.fury.io/py/hockey-scraper
+.. .. image:: https://readthedocs.org/projects/hockey-scraper/badge/?version=latest
+..    :target: https://readthedocs.org/projects/hockey-scraper/?badge=latest
+..    :alt: Documentation Status
 
-
-**Please upgrade to version 1.40 or higher as earlier versions won't work.**
 
 Hockey-Scraper
 ==============
