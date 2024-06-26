@@ -1,9 +1,5 @@
-.. role:: red
-.. raw:: html
 
-    <style> .red {color:red} </style>
-
-:red:`This repository is no longer maintained. Feel free to fork it.`
+This repository is no longer maintained. Feel free to fork it.
 ==================================================================================
 
 
