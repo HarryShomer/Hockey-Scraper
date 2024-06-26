@@ -7,7 +7,7 @@ def read():
 
 setup(
     name='hockey_scraper',
-    version='1.39',
+    version='1.40.2',
     description="""Python Package for scraping NHL Play-by-Play and Shift data.""",
     long_description=read(),
     classifiers=[
@@ -21,7 +21,7 @@ setup(
     author_email='Harryshomer@gmail.com',
     license='GNU General Public License v3 (GPLv3)',
     packages=find_packages(),
-    install_requires=['BeautifulSoup4', 'requests', 'lxml', 'html5lib', 'pandas', 'pytest'],
+    install_requires=['BeautifulSoup4', 'requests', 'lxml', 'html5lib', 'pandas', 'pytest', 'pytz', 'tqdm'],
     zip_safe=False,
 
     package_data={

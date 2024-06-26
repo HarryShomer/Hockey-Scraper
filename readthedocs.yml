@@ -1,8 +1,10 @@
 # .readthedocs.yml
 
 build:
-  image: latest
+  os: ubuntu-20.04  # <- add this line
+  tools:
+    python: "3.9"
 
 python:
-  version: 3.6
+  version: 3.9
   setup_py_install: true

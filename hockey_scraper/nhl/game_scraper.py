@@ -60,6 +60,7 @@ def get_players_json(game_json):
     awayid = game_json['awayTeam']['id']
 
     for player in game_json['rosterSpots']:
+<<<<<<< HEAD
         if player['teamId'] == homeid:
             players["Home"][str(player["firstName"] + " " + player["lastName"]).upper()] = {
                 "id": player['playerId'], 
@@ -70,6 +71,19 @@ def get_players_json(game_json):
             players["Away"][str(player["firstName"] + " " + player["lastName"]).upper()] = {
                 "id": player['playerId'],
                 "last_name": player["lastName"].upper()
+=======
+        # print(player)
+        if player['teamId'] == homeid:
+            players["Home"][str(player["firstName"]['default'] + " " + player["lastName"]['default']).upper()] = {
+                "id": player['playerId'], 
+                "last_name": player["lastName"]['default'].upper()
+            }
+
+        if player['teamId'] == awayid:
+            players["Away"][str(player["firstName"]['default'] + " " + player["lastName"]['default']).upper()] = {
+                "id": player['playerId'],
+                "last_name": player["lastName"]['default'].upper()
+>>>>>>> 1029299054fbe671c3ca9c5d413cdfd102416853
             }
     
     return players

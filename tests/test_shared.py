@@ -10,7 +10,7 @@ from hockey_scraper.utils import shared, config
 @pytest.fixture
 def file_info():
     return {
-        "url": 'http://statsapi.web.nhl.com/api/v1/game/{}/feed/live'.format(2017020001),
+        "url": 'https://api-web.nhle.com/v1/schedule/{}'.format("2017-10-05"),
         "name": str(2017020001),
         "type": "json_pbp",
         "season": 2017,

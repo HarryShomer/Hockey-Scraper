@@ -6,13 +6,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>NHL Scraping Functions &#8212; hockey_scraper 1.38.1 documentation</title>
+    <title>NHL Scraping Functions &#8212; hockey_scraper 1.40 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/nature.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -35,7 +32,7 @@
         <li class="right" >
           <a href="index.html" title="Hockey-Scraper"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">hockey_scraper 1.38.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">hockey_scraper 1.40 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">NHL Scraping Functions</a></li> 
       </ul>
     </div>  
@@ -1073,7 +1070,7 @@ Some also have a hyphen in their last name so can’t just split by ‘-’</p>
 <dt class="sig sig-object py" id="hockey_scraper.nhl.pbp.json_pbp.get_pbp">
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.pbp.json_pbp.</span></span><span class="sig-name descname"><span class="pre">get_pbp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.pbp.json_pbp.get_pbp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a game_id it returns the raw json
-Ex: <a class="reference external" href="http://statsapi.web.nhl.com/api/v1/game/2016020475/feed/live">http://statsapi.web.nhl.com/api/v1/game/2016020475/feed/live</a></p>
+Ex: <a class="reference external" href="https://api-web.nhle.com/v1/gamecenter/2023010044/play-by-play">https://api-web.nhle.com/v1/gamecenter/2023010044/play-by-play</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>game_id</strong> – string - the game</p>
@@ -1483,7 +1480,8 @@ Some parsers work for some pages but don’t work for others….I’m not sure w
 <dl class="py function">
 <dt class="sig sig-object py" id="hockey_scraper.nhl.json_schedule.chunk_schedule_calls">
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.json_schedule.</span></span><span class="sig-name descname"><span class="pre">chunk_schedule_calls</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">from_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_date</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.json_schedule.chunk_schedule_calls" title="Permalink to this definition">¶</a></dt>
-<dd><p>The schedule endpoint sucks when handling a big date range. So instead I call in increments of n days.</p>
+<dd><p>Due to new API, we have to inividually GET games by week</p>
+<p>We filter out games not in range for the final week</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1515,15 +1513,12 @@ until the end of most recent season.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="hockey_scraper.nhl.json_schedule.get_schedule">
-<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.json_schedule.</span></span><span class="sig-name descname"><span class="pre">get_schedule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">date_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date_to</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.json_schedule.get_schedule" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.json_schedule.</span></span><span class="sig-name descname"><span class="pre">get_schedule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">date</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.json_schedule.get_schedule" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrapes games in date range
-Ex: <a class="reference external" href="https://statsapi.web.nhl.com/api/v1/schedule?startDate=2010-10-03&amp;endDate=2011-06-20">https://statsapi.web.nhl.com/api/v1/schedule?startDate=2010-10-03&amp;endDate=2011-06-20</a></p>
+Ex: <a class="reference external" href="https://api-web.nhle.com/v1/schedule/2011-06-20">https://api-web.nhle.com/v1/schedule/2011-06-20</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>date_from</strong> – scrape from this date</p></li>
-<li><p><strong>date_to</strong> – scrape until this date</p></li>
-</ul>
+<dd class="field-odd"><p><strong>date</strong> – scrape from this date</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>raw json of schedule of date range</p>
@@ -1535,6 +1530,7 @@ Ex: <a class="reference external" href="https://statsapi.web.nhl.com/api/v1/sche
 <dt class="sig sig-object py" id="hockey_scraper.nhl.json_schedule.scrape_schedule">
 <span class="sig-prename descclassname"><span class="pre">hockey_scraper.nhl.json_schedule.</span></span><span class="sig-name descname"><span class="pre">scrape_schedule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">date_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preseason</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">not_over</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hockey_scraper.nhl.json_schedule.scrape_schedule" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calls getSchedule and scrapes the raw schedule Json</p>
+<p>We filter out games not in range. Due to how new schedule API works</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -2247,13 +2243,13 @@ Contains the url, name, type, and season</p></li>
         <li class="right" >
           <a href="index.html" title="Hockey-Scraper"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">hockey_scraper 1.38.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">hockey_scraper 1.40 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">NHL Scraping Functions</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2020, Harry Shomer.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.2.3.
+        &#169; Copyright 2023, Harry Shomer.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 6.2.1.
     </div>
   </body>
 </html>

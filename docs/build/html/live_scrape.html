@@ -6,13 +6,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Live Scraping &#8212; hockey_scraper 1.38.1 documentation</title>
+    <title>Live Scraping &#8212; hockey_scraper 1.40 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/nature.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -35,7 +32,7 @@
         <li class="right" >
           <a href="nhl_scrape_functions.html" title="NHL Scraping Functions"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">hockey_scraper 1.38.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">hockey_scraper 1.40 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Live Scraping</a></li> 
       </ul>
     </div>  
@@ -59,7 +56,7 @@
 day. LiveGame objects hold all the pertinent game information for each game. This includes the most recent
 pbp and shift data for that game. Here are all the attributes for the LiveGame class:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">LiveGame</span><span class="p">:</span>
- <span class="sd">&quot;&quot;&quot;</span>
+<span class="w"> </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd"> This is a class holds all the information for a given game</span>
 
 <span class="sd"> :param int game_id: The NHL game id (ex: 2018020001)</span>
@@ -86,7 +83,7 @@ pbp and shift data for that game. Here are all the attributes for the LiveGame c
 
 
 <span class="k">def</span> <span class="nf">to_csv</span><span class="p">(</span><span class="n">game</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Store each game DataFrame in a file</span>
 
 <span class="sd">    :param game: LiveGame object</span>
@@ -199,7 +196,7 @@ until the game starts. Or maybe you want to use it another way. Either way it’
 <p>There are also a few methods that return the give information about the current status of the game. The first two return
 whether the game is in intermission or whether it’s over.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">is_game_over</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prev</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Check if the game is over for both the html and json pbp. If prev=True check for the previous event</span>
 
 <span class="sd">    :param prev: Check the game status for the previous event</span>
@@ -212,7 +209,7 @@ whether the game is in intermission or whether it’s over.</p>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">prev_html_game_status</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">prev_api_game_status</span> <span class="o">==</span> <span class="s2">&quot;Final&quot;</span>
 
 <span class="k">def</span> <span class="nf">is_intermission</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prev</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Check if in intermission for both the html and json pbp. If prev=True check for the previous event</span>
 
 <span class="sd">    :param prev: Check the game status for the previous event</span>
@@ -234,7 +231,7 @@ that both are aligned.</p>
 <p>The ‘prev’ keyword for both comes into play when we consider the last method ‘is_ongoing’. This checks whether the game
 is currently being played. Which means the game: Started, is not in intermission, and is not over. Here’s the method:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">is_ongoing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
- <span class="sd">&quot;&quot;&quot;</span>
+<span class="w"> </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd"> Check if the game is currently being played.</span>
 
 <span class="sd"> The logic here is that we run into an issue with intermission and the end of game. If the game is just changed</span>
@@ -577,13 +574,13 @@ the same the user already has the data. Otherwise we ‘lie’ and say the game 
         <li class="right" >
           <a href="nhl_scrape_functions.html" title="NHL Scraping Functions"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">hockey_scraper 1.38.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">hockey_scraper 1.40 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Live Scraping</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2020, Harry Shomer.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.2.3.
+        &#169; Copyright 2023, Harry Shomer.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 6.2.1.
     </div>
   </body>
 </html>

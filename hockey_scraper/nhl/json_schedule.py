@@ -1,31 +1,31 @@
 """
 This module contains functions to scrape the json schedule for any games or date range
 """
-
-from datetime import datetime, timedelta
 import json
-import time
+from pytz import timezone
+from datetime import datetime, timedelta
 import hockey_scraper.utils.shared as shared
+
+from tqdm import tqdm
 
 
 # TODO: Currently rescraping page each time since the status of some games may have changed
 # (e.g. Scraped on 2020-01-20 and game on 2020-01-21 was not Final...when use old page again will still think not Final)
 # Need to find a more elegant way of doing this (Metadata???)
-def get_schedule(date_from, date_to):
+def get_schedule(date):
     """
     Scrapes games in date range
-    Ex: https://statsapi.web.nhl.com/api/v1/schedule?startDate=2010-10-03&endDate=2011-06-20
+    Ex: https://api-web.nhle.com/v1/schedule/2011-06-20
     
-    :param date_from: scrape from this date
-    :param date_to: scrape until this date
+    :param date: scrape from this date
     
     :return: raw json of schedule of date range
     """
     page_info = {
-        "url": 'https://statsapi.web.nhl.com/api/v1/schedule?startDate={a}&endDate={b}'.format(a=date_from, b=date_to),
-        "name": date_from + "_" + date_to,
+        "url": 'https://api-web.nhle.com/v1/schedule/{a}'.format(a=date),
+        "name": "Schedule_" + date,
         "type": "json_schedule",
-        "season": shared.get_season(date_from),
+        "season": shared.get_season(date),
     }
 
     return json.loads(shared.get_file(page_info, force=True))
@@ -33,7 +33,9 @@ def get_schedule(date_from, date_to):
 
 def chunk_schedule_calls(from_date, to_date):
     """
-    The schedule endpoint sucks when handling a big date range. So instead I call in increments of n days.
+    Due to new API, we have to inividually GET games by week
+
+    We filter out games not in range for the final week
     
     :param date_from: scrape from this date
     :param date_to: scrape until this date
@@ -41,22 +43,76 @@ def chunk_schedule_calls(from_date, to_date):
     :return: raw json of schedule of date range
     """
     sched = []
-    days_per_call = 30
+    days_per_call = 7
 
     from_date = datetime.strptime(from_date, "%Y-%m-%d") 
     to_date = datetime.strptime(to_date, "%Y-%m-%d")
     num_days = (to_date - from_date).days + 1  # +1 since difference is looking for total number of days
 
-    for offset in range(0, num_days, days_per_call):
-        f_chunk = datetime.strftime(from_date + timedelta(days=offset), "%Y-%m-%d")
+    for offset in tqdm(range(0, num_days, days_per_call), "Scraping Schedule"):
+        date_chunk = datetime.strftime(from_date + timedelta(days=offset), "%Y-%m-%d")
+        chunk_sched = get_schedule(date_chunk)['gameWeek']
+        sched.append(chunk_sched)
 
-        # We need the min bec. if the chunks are evenly sized this prevents us from overshooting the max
-        t_chunk = datetime.strftime(from_date + timedelta(days=min(num_days-1, offset+days_per_call-1)), "%Y-%m-%d")
-
-        chunk_sched = get_schedule(f_chunk, t_chunk)
-        sched.append(chunk_sched['dates'])
-
+    
     return sched
+
+
+def scrape_schedule(date_from, date_to, preseason=False, not_over=False):
+    """
+    Calls getSchedule and scrapes the raw schedule Json
+
+    We filter out games not in range. Due to how new schedule API works
+    
+    :param date_from: scrape from this date
+    :param date_to: scrape until this date
+    :param preseason: Boolean indicating whether include preseason games (default if False)
+    :param not_over: Boolean indicating whether we scrape games not finished. 
+                     Means we relax the requirement of checking if the game is over. 
+    
+    :return: list with all the game id's
+    """
+    print("Scraping the schedule between {} and {}...please give it a moment".format(date_from, date_to))
+
+    est = timezone("America/New_York")
+
+    # We need to include the timezone and cover the entire day
+    fds = list(map(int, date_from.split("-")))
+    fdate_est = datetime(fds[0], fds[1], fds[2], 0, 0, tzinfo=est)
+    tds = list(map(int, date_to.split("-")))
+    tdate_est = datetime(tds[0], tds[1], tds[2], 23, 59, tzinfo=est)
+
+    schedule = []
+    schedule_json = chunk_schedule_calls(date_from, date_to)
+
+    for chunk in schedule_json:
+        for day in chunk:
+            for game in day['games']:
+                game_id = int(str(game['id'])[5:])
+                
+                # TODO: Confirm if OFF is correct
+                # Check game is over or scraping live
+                status_cond = game['gameState'] == 'OFF' or not_over
+                # No preseason or "special" games
+                valid_game_cond = (game_id >= 20000 or preseason) and game_id < 40000
+                # Within specified date ranges
+                game_date = datetime.strptime(game['startTimeUTC'], "%Y-%m-%dT%H:%M:%S%z")
+                date_cond = fdate_est <= game_date.astimezone(est) <= tdate_est
+
+                if status_cond and valid_game_cond and date_cond:
+                    schedule.append({
+                        "game_id": game['id'], 
+                        "date": day['date'], 
+                        "start_time": datetime.strptime(game['startTimeUTC'][:-1], "%Y-%m-%dT%H:%M:%S"),
+                        "venue": game['venue'].get('default'),
+                        "home_team": shared.convert_tricode(game['homeTeam']['abbrev']),
+                        "away_team": shared.convert_tricode(game['awayTeam']['abbrev']),
+                        "home_score": game['homeTeam'].get("score"),
+                        "away_score": game['awayTeam'].get("score"),
+                        "status": game["gameState"]
+                    })
+
+    return schedule
 
 
 def get_dates(games):
@@ -96,41 +152,3 @@ def get_dates(games):
             games_list.extend([game])
 
     return games_list
-
-
-def scrape_schedule(date_from, date_to, preseason=False, not_over=False):
-    """
-    Calls getSchedule and scrapes the raw schedule Json
-    
-    :param date_from: scrape from this date
-    :param date_to: scrape until this date
-    :param preseason: Boolean indicating whether include preseason games (default if False)
-    :param not_over: Boolean indicating whether we scrape games not finished. 
-                     Means we relax the requirement of checking if the game is over. 
-    
-    :return: list with all the game id's
-    """
-    schedule = []
-    schedule_json = chunk_schedule_calls(date_from, date_to)
-
-    for chunk in schedule_json:
-        for day in chunk:
-            for game in day['games']:
-                if game['status']['detailedState'] == 'Final' or not_over:
-                    game_id = int(str(game['gamePk'])[5:])
-
-                    if (game_id >= 20000 or preseason) and game_id < 40000:
-                        schedule.append({
-                                 "game_id": game['gamePk'], 
-                                 "date": day['date'], 
-                                 "start_time": datetime.strptime(game['gameDate'][:-1], "%Y-%m-%dT%H:%M:%S"),
-                                 "venue": game['venue'].get('name'),
-                                 "home_team": shared.get_team(game['teams']['home']['team']['name']),
-                                 "away_team": shared.get_team(game['teams']['away']['team']['name']),
-                                 "home_score": game['teams']['home'].get("score"),
-                                 "away_score": game['teams']['away'].get("score"),
-                                 "status": game["status"]["abstractGameState"]
-                        })
-
-
-    return schedule
