@@ -1,3 +1,5 @@
+**This repository is not longer maintained. Feel free to fork it.**
+
 .. image:: https://badge.fury.io/py/hockey-scraper.svg
    :target: https://badge.fury.io/py/hockey-scraper
 .. image:: https://readthedocs.org/projects/hockey-scraper/badge/?version=latest
